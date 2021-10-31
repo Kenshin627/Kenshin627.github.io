@@ -141,7 +141,11 @@ var _hmt = _hmt || [];
 <h3 id="原始类型"><a href="#原始类型" class="headerlink" title="原始类型"></a>原始类型</h3><p>JavaScript 原始类型也同样适应于 TypeScript 的类型系统，因此 string、number、boolean 也可以被用作类型注解.<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/1.png" alt="alt"></p>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>针对数组的类型注解使用 <strong>:TypeAnnotation[]</strong><br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/2.png" alt="alt"></p>
 <h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>typeScript核心特性,合并众多类型声明至一个类型声明<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/3.png" alt="alt"></p>
-<h3 id="内联类型注解"><a href="#内联类型注解" class="headerlink" title="内联类型注解"></a>内联类型注解</h3><p>内联类型能快速提供一个类型注解,不必为类型起单独的名称,然而,如果你发现需要多次使用相同的内联注解,应该把它重构为一个接口</p>
+<h3 id="内联类型注解"><a href="#内联类型注解" class="headerlink" title="内联类型注解"></a>内联类型注解</h3><p>内联类型能快速提供一个类型注解,不必为类型起单独的名称,然而,如果你发现需要多次使用相同的内联注解,应该把它重构为一个接口<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/4.png" alt="alt"></p>
+<h3 id="联合类型-amp-交叉类型"><a href="#联合类型-amp-交叉类型" class="headerlink" title="联合类型 &amp; 交叉类型"></a>联合类型 &amp; 交叉类型</h3><h4 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型(|)"></a>联合类型(|)</h4><p>所期望的属性是众多类型之一,如字符串或字符串数组,本质上是类型的并集操作,这正是typeScript中联合类型的用途,使用 | 作标记.</p>
+<p><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/5.png" alt="alt"></p>
+<h4 id="交叉类型-amp"><a href="#交叉类型-amp" class="headerlink" title="交叉类型(&amp;)"></a>交叉类型(&amp;)</h4><p>在 JavaScript 中， extend 是一种非常常见的模式，在这种模式中，你可以从两个对象中创建一个新对象，新对象拥有着两个对象所有的功能。交叉类型可以让你安全的使用此种模式<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/6.png" alt="alt"></p>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>元组类型和数组很相似,表示一个已知元素数量和类型的数组,各元素的类型不必相同.可以把元组看成严格版型的数组<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/7.png" alt="alt"><br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/8.png" alt="alt"></p>
 	  
 	</div>
 
