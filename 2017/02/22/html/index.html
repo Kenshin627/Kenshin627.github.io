@@ -1,101 +1,162 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Html学习笔记整理 | KenShin</title>
+  <meta name="author" content="KenShin">
+  
+  <meta name="description" content="引用标签引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：
+&amp;lt;q&amp;gt;引用标签&amp;lt;/q&amp;gt; //适用单行文本
+
+&amp;lt;blockquote&amp;gt;引用标签&amp;lt;/blockquote&amp;gt; //长段文本
+
+实体字符在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:&amp;amp;nbsp;
+地址&amp;lt;address&amp;gt;地址&amp;lt;/address&amp;gt; //显示地址
+
+程序代码&amp;lt;code&amp;gt;代码&amp;lt;/code&amp;gt;  //显示程序代码
+&amp;lt;pre&amp;gt;大段代码&amp;lt;/pre&amp;gt; //显示大段代码
+
+表格摘要  摘要的内容是不会在浏览器中显示出来的。它的作用是增加表格的可读性(语义化)，使搜索引擎更好的读懂表格内容，还可以使屏幕阅读器更好的帮助特殊用户读取表格内容。语法表示：
+&amp;lt;table summary=&amp;quot;表格简介文本&amp;quot;&amp;gt;&amp;lt;/table&amp;gt;
+
+使用mailto在网页中连接Email地址&amp;lt;a href=&amp;quot;mailto:yy@imooc.com?subject=&amp;#39;观了不起的盖茨比有感&amp;#39;&amp;amp;body=&amp;#39;你好，对此评论有些想法&amp;#39;&amp;quot;&amp;gt;发送邮件给我&amp;lt;/a&amp;gt;
+
+Label用于绑定input在用户点击label标签的文字后即可聚焦input，有两种绑定方式。方式一:
+123456&amp;lt;form action=&amp;quot; &amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;     &amp;lt;label for=”account”&amp;gt;账号&amp;lt;/label&amp;gt;     &amp;lt;input type=”text”  id=”account”/&amp;gt;     &amp;lt;label for=”pwd”&amp;gt;密码&amp;lt;/label&amp;gt;     &amp;lt;input type=”text” id=”pwd”&amp;gt; &amp;lt;/form&amp;gt;
+
+方式二：
+12345678&amp;lt;form action=&amp;quot; &amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;	&amp;lt;label&amp;gt;	  账号:&amp;lt;input type=”text”/&amp;gt;	&amp;lt;/label&amp;gt;	&amp;lt;label&amp;gt;	  密码:&amp;lt;input type=”password”/&amp;gt;	&amp;lt;/label&amp;gt;&amp;lt;/form&amp;gt;
+HTML5 DTD文档类型声明&amp;lt;!DOCTYPE html&amp;gt; //必须位于html文档的第一行">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Html学习笔记整理"/>
+  <meta property="og:site_name" content="KenShin"/>
+
+  
+    <meta property="og:image" content=""/>
   
 
   
-  <title>Html学习笔记整理 | KenShin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="引用标签引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式： &lt;q&gt;引用标签&lt;&#x2F;q&gt; &#x2F;&#x2F;适用单行文本  &lt;blockquote&gt;引用标签&lt;&#x2F;blockquote&gt; &#x2F;&#x2F;长段文本  实体字符在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:&amp;nbsp; 地址&lt;ad">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Html学习笔记整理">
-<meta property="og:url" content="http://example.com/2017/02/22/html/index.html">
-<meta property="og:site_name" content="KenShin">
-<meta property="og:description" content="引用标签引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式： &lt;q&gt;引用标签&lt;&#x2F;q&gt; &#x2F;&#x2F;适用单行文本  &lt;blockquote&gt;引用标签&lt;&#x2F;blockquote&gt; &#x2F;&#x2F;长段文本  实体字符在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:&amp;nbsp; 地址&lt;ad">
-<meta property="og:locale">
-<meta property="article:published_time" content="2017-02-22T06:23:37.000Z">
-<meta property="article:modified_time" content="2021-10-29T14:03:17.484Z">
-<meta property="article:author" content="KenShin">
-<meta property="article:tag" content="html">
-<meta property="article:tag" content="前端">
-<meta property="article:tag" content="基础">
-<meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="KenShin" type="application/atom+xml">
+    <link href="/favicon.png" rel="icon">
   
   
-    <link rel="icon" href="/favicon.png">
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
   
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70812759-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?cb5448498d7169c668b07c2b255d62c1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">KenShin</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">KenShin</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
       </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-html" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/22/html/" class="article-date">
-  <time datetime="2017-02-22T06:23:37.000Z" itemprop="datePublished">2017-02-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Html/">Html</a>►<a class="article-category-link" href="/categories/Html/%E5%89%8D%E7%AB%AF/">前端</a>
-  </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Html学习笔记整理
-    </h1>
-  
+  <div class="container">
+  	<div class="content">
+    	 
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="引用标签"><a href="#引用标签" class="headerlink" title="引用标签"></a>引用标签</h2><p>引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：</p>
+
+	
+		<div class="page-header">
+			<h1> Html学习笔记整理</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="引用标签"><a href="#引用标签" class="headerlink" title="引用标签"></a>引用标签</h2><p>引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：</p>
 <pre><code>&lt;q&gt;引用标签&lt;/q&gt; //适用单行文本
 
 &lt;blockquote&gt;引用标签&lt;/blockquote&gt; //长段文本
@@ -169,154 +230,130 @@
 <pre><code>&lt;marquee&gt;内容&lt;/marquee&gt;
 </code></pre>
 <p><strong>direction(left right up down):</strong> 设置内容滚动的方向<br><strong>scrollamount：</strong>设置滚动的速度，值越大越快<br><strong>loop：</strong>设置滚动次数，默认为-1，也就是无限滚动<br><strong>behavior：</strong>设置滚动类型，slide，滚动到边界即停止，alternate，滚动到边界即弹回。</p>
+	  
+	</div>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/02/22/html/" data-id="ckvejno1s000pq8vr3o0z7xdk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+	<div>
+  	<center>
+	<div class="pagination">
 
-    </footer>
-  </div>
-  
     
-<nav id="article-nav">
-  
-    <a href="/2017/02/22/css/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          CSS学习笔记整理
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/02/09/blog/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hexo+GitHub搭建个人博客</div>
-    </a>
-  
-</nav>
+    
+    <a href="/2017/02/22/css/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
 
-  
-</article>
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2017/02/09/blog/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
 
+    
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
 </section>
-        
-          <aside id="sidebar">
-  
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-02-22 
+	</div>
+	
+
+	<!-- categories -->
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/net/">.net</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Asp-Net-Core/">Asp.Net Core</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog%E5%BB%BA%E7%AB%99/">Blog建站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/%E5%89%8D%E7%AB%AF/">前端</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Html/">Html</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Html/%E5%89%8D%E7%AB%AF/">前端</a></li></ul></li></ul>
-    </div>
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Html/">Html<span>1</span></a></li> <li><a href="/categories/Html/前端/">前端<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/html/">html<span>1</span></a></li> <li><a href="/tags/前端/">前端<span>2</span></a></li> <li><a href="/tags/基础/">基础<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
   </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2021 KenShin
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
+     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
 
 
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/" rel="tag">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Asp-Net-Core/" rel="tag">Asp.Net Core</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IOC-DI/" rel="tag">IOC DI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webservice/" rel="tag">Webservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaScript/" rel="tag">javaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="tag">文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
-    </div>
-  </div>
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/net/" style="font-size: 10px;">.net</a> <a href="/tags/Asp-Net-Core/" style="font-size: 20px;">Asp.Net Core</a> <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IOC-DI/" style="font-size: 17.5px;">IOC DI</a> <a href="/tags/Webservice/" style="font-size: 10px;">Webservice</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javaScript/" style="font-size: 10px;">javaScript</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12.5px;">前端</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">文件系统</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">Asp.Net Core 文件系统</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/">Asp.Net Core DI-服务消费</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/">Asp.Net Core DI-服务注册</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/">Asp.Net Core DI框架</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/19/Ioc%E6%A8%A1%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">Ioc模式对应的几种设计模式</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2021 KenShin<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
 
 
-
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
 </body>
-</html>
+   </html>
