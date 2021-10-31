@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Asp.Net Core DI框架 | KenShin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Asp.NET Core DI框架概览毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式. 服务的注册与消费ASP.N">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Asp.Net Core DI框架">
+<meta property="og:url" content="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="Asp.NET Core DI框架概览毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式. 服务的注册与消费ASP.N">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/DI1.jpg">
+<meta property="article:published_time" content="2019-10-19T09:51:45.000Z">
+<meta property="article:modified_time" content="2021-10-29T14:03:17.467Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Asp.Net Core">
+<meta property="article:tag" content="IOC DI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/DI1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="KenShin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">KenShin</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Asp-Net-Core-DI框架" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/" class="article-date">
+  <time datetime="2019-10-19T09:51:45.000Z" itemprop="datePublished">2019-10-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Asp-Net-Core/">Asp.Net Core</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Asp.Net Core DI框架
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Asp-NET-Core-DI框架概览"><a href="#Asp-NET-Core-DI框架概览" class="headerlink" title="Asp.NET Core DI框架概览"></a>Asp.NET Core DI框架概览</h1><p>毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式.</p>
+<h2 id="服务的注册与消费"><a href="#服务的注册与消费" class="headerlink" title="服务的注册与消费"></a>服务的注册与消费</h2><p>ASP.NET Core中的依赖注入框架中,我们添加的服务注册被保存到通过 <strong>IServiceCollection</strong> 接口表示的集合之中,基于这个集合创建的DI容器体现为 <strong>IServiceProvider</strong>.</p>
+<p>DI框架提供了生产实例的三种生命周期模式,分别为:</p>
+<ul>
+<li><strong>Singleton</strong>:整个应用程序生命周期内单例</li>
+<li><strong>Scoped</strong>:单次服务请求内的单例</li>
+<li><strong>Transient</strong>:每次获取均会产生新的对象</li>
+</ul>
+<p>DI框架注册服务时通常会使用三种方式,分别为:</p>
+<ul>
+<li>指定注册非服务类型和实现类型.</li>
+<li>指定一个现有的服务实例.</li>
+<li>指定一个创建服务实例的委托对象.</li>
+</ul>
+<p>当我们在进行服务注册时,可以为同一类型添加一个服务注册,也可以添加多个,实际上添加的所有服务注册都是有效的,在完成服务注册之后，我们调用IServiceCollection接口的扩展方法  <strong>BuildServiceProvider</strong>创建出代表DI容器的IServiceProvider对象,并利用它调用后者的<strong>GetService<T><strong>方法来提供相应的服务实例,总时会返回一个服务实例,这里采用了”后来居上”的原则,即总是采用最近添加的服务注册来创建服务实例.如果我们调用另一个扩展方法</strong>GetServices<T></strong>,它将利用返回所有服务注册提供的服务实例.如下所示的代码片段.</p>
+<p><img src="Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/DI1.jpg" alt="alt"></p>
+<h2 id="生命周期管理"><a href="#生命周期管理" class="headerlink" title="生命周期管理"></a>生命周期管理</h2><p>IServiceProvider之间的层次结构造就了三种不同的生命周期模式：由于Singleton服务实例保存在作为根容器的IServiceProvider对象上，所以它能够在多个同根IServiceProvider对象之间提供真正的单例保证。Scoped服务实例被保存在当前IServiceProvider上，所以它只能在当前IServiceProvider对象的“服务范围”保证的单例的。没有实现IDisposable接口的Transient服务则采用“即用即取，用后即弃”的策略。</p>
+<p>接下来我们通过简单的实例来演示三种不同生命周期模式的差异。在如下所示的代码片段中我们创建了一个ServiceCollection对象并针对接口IFoo、IBar和IBaz注册了对应的服务，它们采用的生命周期模式分别为Transient、Scoped和Singleton。在利用ServiceCollection创建出代表DI容器的IServiceProvider对象之后，我们调用其CreateScope方法创建了两个所谓的“服务范围”，后者的ServiceProvider属性返回一个新的IServiceProvider对象，它实际上是当前IServiceProvider对象的子容器。我们最后利用作为子容器的IServiceProvider对象来提供相应的服务实例。</p>
+<pre><code>//根节点的ServiceProvider
+var root = new ServiceCollection()
+        .AddTransient&lt;IFoo, Foo&gt;()
+        .AddScoped&lt;IBar&gt;(_ =&gt; new Bar())
+        .AddSingleton&lt;IBaz, Baz&gt;()
+        .BuildServiceProvider();
+
+//子节点的ServiceProvider
+var provider1 = root.CreateScope().ServiceProvider;
+var provider2 = root.CreateScope().ServiceProvider;
+
+void GetServices&lt;TService&gt;(IServiceProvider provider)
+&#123;
+    provider.GetService&lt;TService&gt;();
+    provider.GetService&lt;TService&gt;();
+&#125;
+
+GetServices&lt;IFoo&gt;(provider1);
+GetServices&lt;IBar&gt;(provider1);
+GetServices&lt;IBaz&gt;(provider1);
+Console.WriteLine();
+GetServices&lt;IFoo&gt;(provider2);
+GetServices&lt;IBar&gt;(provider2);
+GetServices&lt;IBaz&gt;(provider2);
+
+输出:Foo Foo Bar Baz
+     Foo Foo Bar
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/" data-id="ckvejecwf0007y4vr7t37h8xl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Asp-Net-Core/" rel="tag">Asp.Net Core</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOC-DI/" rel="tag">IOC DI</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Asp.Net Core DI-服务注册
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/19/Ioc%E6%A8%A1%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Ioc模式对应的几种设计模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/net/">.net</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Asp-Net-Core/">Asp.Net Core</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog%E5%BB%BA%E7%AB%99/">Blog建站</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/%E5%89%8D%E7%AB%AF/">前端</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Html/">Html</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Html/%E5%89%8D%E7%AB%AF/">前端</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/net/" rel="tag">.net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Asp-Net-Core/" rel="tag">Asp.Net Core</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blog/" rel="tag">Blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IOC-DI/" rel="tag">IOC DI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webservice/" rel="tag">Webservice</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaScript/" rel="tag">javaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="tag">文件系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/net/" style="font-size: 10px;">.net</a> <a href="/tags/Asp-Net-Core/" style="font-size: 20px;">Asp.Net Core</a> <a href="/tags/Blog/" style="font-size: 10px;">Blog</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IOC-DI/" style="font-size: 17.5px;">IOC DI</a> <a href="/tags/Webservice/" style="font-size: 10px;">Webservice</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/javaScript/" style="font-size: 10px;">javaScript</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12.5px;">前端</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">文件系统</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">Asp.Net Core 文件系统</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/">Asp.Net Core DI-服务消费</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/">Asp.Net Core DI-服务注册</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/">Asp.Net Core DI框架</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/19/Ioc%E6%A8%A1%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">Ioc模式对应的几种设计模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 KenShin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
