@@ -157,13 +157,17 @@ var _hmt = _hmt || [];
 	
 		<h1 id="typeScript类型系统"><a href="#typeScript类型系统" class="headerlink" title="typeScript类型系统"></a>typeScript类型系统</h1><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2><p>基本注解采用 <strong>:TypeAnnotation</strong>语法,在类型声明空间中可用的任何内容都可以用作类型注解</p>
 <h3 id="原始类型"><a href="#原始类型" class="headerlink" title="原始类型"></a>原始类型</h3><p>JavaScript 原始类型也同样适应于 TypeScript 的类型系统，因此 string、number、boolean 也可以被用作类型注解.<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/1.png" alt="alt"></p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>针对数组的类型注解使用 <strong>:TypeAnnotation[]</strong><br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/2.png" alt="alt"></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>针对数组的类型注解有两种方式 <strong>:TypeAnnotation[]</strong> 或者 <strong>Array&lt;TypeAnnotation&gt;</strong>,这两种方式是等价的</p>
+<p><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/2.png" alt="alt"></p>
 <h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>typeScript核心特性,合并众多类型声明至一个类型声明<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/3.png" alt="alt"></p>
-<h3 id="内联类型注解"><a href="#内联类型注解" class="headerlink" title="内联类型注解"></a>内联类型注解</h3><p>内联类型能快速提供一个类型注解,不必为类型起单独的名称,然而,如果你发现需要多次使用相同的内联注解,应该把它重构为一个接口<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/4.png" alt="alt"></p>
+<h3 id="内联类型注解"><a href="#内联类型注解" class="headerlink" title="内联类型注解"></a>内联类型注解</h3><p>内联类型能快速提供一个类型注解,不必为类型起单独的名称,然而,如果你发现需要多次使用相同的内联注解,应该把它重构为一个接口</p>
+<p><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/4.png" alt="alt"></p>
 <h3 id="联合类型-amp-交叉类型"><a href="#联合类型-amp-交叉类型" class="headerlink" title="联合类型 &amp; 交叉类型"></a>联合类型 &amp; 交叉类型</h3><h4 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型(|)"></a>联合类型(|)</h4><p>所期望的属性是众多类型之一,如字符串或字符串数组,本质上是类型的并集操作,这正是typeScript中联合类型的用途,使用 | 作标记.</p>
 <p><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/5.png" alt="alt"></p>
 <h4 id="交叉类型-amp"><a href="#交叉类型-amp" class="headerlink" title="交叉类型(&amp;)"></a>交叉类型(&amp;)</h4><p>在 JavaScript 中， extend 是一种非常常见的模式，在这种模式中，你可以从两个对象中创建一个新对象，新对象拥有着两个对象所有的功能。交叉类型可以让你安全的使用此种模式<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/6.png" alt="alt"></p>
 <h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>元组类型和数组很相似,表示一个已知元素数量和类型的数组,各元素的类型不必相同.可以把元组看成严格版型的数组<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/7.png" alt="alt"><br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/8.png" alt="alt"></p>
+<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><p>TypeScript 提供了为类型注解设置别名的便捷语法，你可以使用 <strong>type SomeName = someValidTypeAnnotation</strong> 来创建别名：</p>
+<p><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/9.png" alt="alt"></p>
 
 	
 	</div>
@@ -692,37 +696,37 @@ public class Foo : IFoo
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
 		
 			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
+			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
 		
 			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
+		
+			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
+		
+			<li><a href="/tags/前端/">前端<span>2</span></a></li>
+		
+			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
+		
+			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
+		
+			<li><a href="/tags/net/">.net<span>1</span></a></li>
+		
+			<li><a href="/tags/基础/">基础<span>3</span></a></li>
+		
+			<li><a href="/tags/html/">html<span>1</span></a></li>
+		
+			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+		
+			<li><a href="/tags/typeScript/">typeScript<span>1</span></a></li>
 		
 			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
 		
 			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
 		
-			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
-		
-			<li><a href="/tags/typeScript/">typeScript<span>1</span></a></li>
-		
-			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
-		
-			<li><a href="/tags/基础/">基础<span>3</span></a></li>
-		
 			<li><a href="/tags/web/">web<span>1</span></a></li>
-		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
-			<li><a href="/tags/前端/">前端<span>2</span></a></li>
-		
-			<li><a href="/tags/net/">.net<span>1</span></a></li>
-		
-			<li><a href="/tags/html/">html<span>1</span></a></li>
-		
-			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
 		
 		 
 		</ul>
