@@ -139,7 +139,7 @@ var _hmt = _hmt || [];
 <h2 id="ServiceDescriptor"><a href="#ServiceDescriptor" class="headerlink" title="ServiceDescriptor"></a>ServiceDescriptor</h2><p>IServiceCollection对象是一个存放服务注册信息的集合.在IServiceCollection/IServiceProvider为核心的DI框架中,与之对应的类型为ServiceDescriptor.</p>
 <p>DI框架将服务注册存储在一个通过IServiceCollection接口表示的集合之中.如下面的代码片段所示，一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
 <p>ServiceDescriptor共有5个属性,3个构造函数,如下所示:</p>
-<p><img src="ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment1.jpg" alt="alt"></p>
+<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment1.jpg" alt="alt"></p>
 <p>属性说明:</p>
 <ul>
 <li>ServiceType:注册的服务类型.往往是一个接口</li>
@@ -155,10 +155,10 @@ var _hmt = _hmt || [];
 <li>ServiceDescriptor(Type serviceType, Func&lt;IServiceProvider, object&gt; factory, ServiceLifetime lifetime):IServiceProvider对象将会将自身作为输入参数调用该委托对象来提供服务实例</li>
 </ul>
 <h2 id="IServiceCollection"><a href="#IServiceCollection" class="headerlink" title="IServiceCollection"></a>IServiceCollection</h2><p>DI框架将服务注册(IServiceDescriptor)存储在一个通过IServiceCollection接口表示的集合之中.一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
-<p><img src="ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment2.jpg" alt="alt"></p>
+<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment2.jpg" alt="alt"></p>
 <p>我们在应用启动的时候所做的服务注册就是创建出现相应的ServiceDescriptor对象并将其添加到指定IServiceCollection集合对象中的过程.考虑到服务注册是一个高频调用的操作,所以DI框架为IServiceCollection接口定义了一系列扩展方法完成服务注册的工作.</p>
 <p>DI框架还针对具体生命周期模式为IServiceCollection接口定义了一系列的扩展方法，它们会根据提供的输入创建出对应的ServiceDescriptor对象并将其添加到指定的IServiceCollection对象中.如下所示的是针对Singleton模式的AddSingleton方法重载的定义,针对其他两个生命周期模式的AddScoped和AddTransient方法具有类似的定义.</p>
-<p><img src="ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment3.jpg" alt="alt"></p>
+<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment3.jpg" alt="alt"></p>
 	  
 	</div>
 

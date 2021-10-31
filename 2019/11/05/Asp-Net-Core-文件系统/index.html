@@ -137,7 +137,7 @@ var _hmt = _hmt || [];
 
 	  <h1 id="Asp-Net-Core-文件系统"><a href="#Asp-Net-Core-文件系统" class="headerlink" title="Asp.Net Core 文件系统"></a>Asp.Net Core 文件系统</h1><p>ASP.NET Core 具有很多针对文件读取的应用。比如我们倾向于采用JSON文件来定义配置，所以应用就会涉及针对配置文件读取。如果用户发送一个针对物理文件的HTTP请求，应用会根据指定的路径读取目标文件的内容并对请求予以响应。在一个ASP.NET Core MVC应用中，针对View的动态编译会涉及到根据预定义的路径映射关系来读取目标View文件。这些不同应用场景都会出现一个IFileProvider对象的身影，以此对象为核心的文件系统提供了统一的API来读取文件的内容并监控内容的改变。</p>
 <h2 id="物理文件系统"><a href="#物理文件系统" class="headerlink" title="物理文件系统"></a>物理文件系统</h2><h3 id="IChangeToken"><a href="#IChangeToken" class="headerlink" title="IChangeToken"></a>IChangeToken</h3><p>由于IFileProvider提供了针对文件系统变换的监控功能，在.NET Core的世界里类似的功能大都利用一个IChangeToken对象来实现.从字面上理解的IChangeToken对象就是一个与某组监控数据关联的“令牌（Token）”，它能够在检测到数据改变的时候及时地对外发出一个通知。IChangeToken接口具有如下所示的三个成员。</p>
-<p><img src="ASP-NET-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg" alt="alt"></p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg" alt="alt"></p>
 <ul>
 <li><p><strong>HasChanged</strong>:如果关联的数据发生改变，HasChanged属性将变成True.</p>
 </li>
@@ -147,9 +147,9 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h3 id="IFileProvider"><a href="#IFileProvider" class="headerlink" title="IFileProvider"></a>IFileProvider</h3><p>IFileProvider的接口定义如下图:</p>
-<p><img src="ASP-NET-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider2.jpg" alt="alt"></p>
-<p><img src="ASP-NET-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider3.jpg" alt="alt"></p>
-<p><img src="ASP-NET-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider4.jpg" alt="alt"></p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider2.jpg" alt="alt"></p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider3.jpg" alt="alt"></p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider4.jpg" alt="alt"></p>
 <ul>
 <li><p><strong>GetDirectoryContents</strong>:通过给定的路径遍历目录,返回一个由IFileInfo组成的集合.该接口有一个属性Exists,判断指定路径目录是否存在.</p>
 </li>
@@ -160,11 +160,11 @@ var _hmt = _hmt || [];
 <li><p><strong>Watch</strong>:监控指定文件的变化,如果产生变化,则调用注册的回调函数.如下图所示.</p>
 </li>
 </ul>
-<p><img src="ASP-NET-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider5.jpg" alt="alt"></p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider5.jpg" alt="alt"></p>
 <p>文件系统涉及的接口以及相互关系图.</p>
-<p><img src="ASP-NET-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider6.jpg" alt="alt"></p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider6.jpg" alt="alt"></p>
 <h3 id="物理文件系统-1"><a href="#物理文件系统-1" class="headerlink" title="物理文件系统"></a>物理文件系统</h3><p>物理文件系统涉及的接口以及相互关系图</p>
-<p><img src="ASP-NET-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider7.jpg" alt="alt"></p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider7.jpg" alt="alt"></p>
 	  
 	</div>
 
