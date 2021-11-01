@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Html学习笔记整理 | KenShin</title>
+  <meta name="author" content="KenShin">
+  
+  <meta name="description" content="引用标签引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：
+&amp;lt;q&amp;gt;引用标签&amp;lt;/q&amp;gt; //适用单行文本
+
+&amp;lt;blockquote&amp;gt;引用标签&amp;lt;/blockquote&amp;gt; //长段文本
+
+实体字符在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:&amp;amp;nbsp;
+地址&amp;lt;address&amp;gt;地址&amp;lt;/address&amp;gt; //显示地址
+
+程序代码&amp;lt;code&amp;gt;代码&amp;lt;/code&amp;gt;  //显示程序代码
+&amp;lt;pre&amp;gt;大段代码&amp;lt;/pre&amp;gt; //显示大段代码
+
+表格摘要  摘要的内容是不会在浏览器中显示出来的。它的作用是增加表格的可读性(语义化)，使搜索引擎更好的读懂表格内容，还可以使屏幕阅读器更好的帮助特殊用户读取表格内容。语法表示：
+&amp;lt;table summary=&amp;quot;表格简介文本&amp;quot;&amp;gt;&amp;lt;/table&amp;gt;
+
+使用mailto在网页中连接Email地址&amp;lt;a href=&amp;quot;mailto:yy@imooc.com?subject=&amp;#39;观了不起的盖茨比有感&amp;#39;&amp;amp;body=&amp;#39;你好，对此评论有些想法&amp;#39;&amp;quot;&amp;gt;发送邮件给我&amp;lt;/a&amp;gt;
+
+Label用于绑定input在用户点击label标签的文字后即可聚焦input，有两种绑定方式。方式一:
+123456&amp;lt;form action=&amp;quot; &amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;     &amp;lt;label for=”account”&amp;gt;账号&amp;lt;/label&amp;gt;     &amp;lt;input type=”text”  id=”account”/&amp;gt;     &amp;lt;label for=”pwd”&amp;gt;密码&amp;lt;/label&amp;gt;     &amp;lt;input type=”text” id=”pwd”&amp;gt; &amp;lt;/form&amp;gt;
+
+方式二：
+12345678&amp;lt;form action=&amp;quot; &amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;	&amp;lt;label&amp;gt;	  账号:&amp;lt;input type=”text”/&amp;gt;	&amp;lt;/label&amp;gt;	&amp;lt;label&amp;gt;	  密码:&amp;lt;input type=”password”/&amp;gt;	&amp;lt;/label&amp;gt;&amp;lt;/form&amp;gt;
+HTML5 DTD文档类型声明&amp;lt;!DOCTYPE html&amp;gt; //必须位于html文档的第一行"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Html学习笔记整理"/>
+  <meta property="og:site_name" content="KenShin"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">KenShin</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Html学习笔记整理</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="引用标签"><a href="#引用标签" class="headerlink" title="引用标签"></a>引用标签</h2><p>引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：</p>
+<pre><code>&lt;q&gt;引用标签&lt;/q&gt; //适用单行文本
+
+&lt;blockquote&gt;引用标签&lt;/blockquote&gt; //长段文本
+</code></pre>
+<h2 id="实体字符"><a href="#实体字符" class="headerlink" title="实体字符"></a>实体字符</h2><p>在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:<code>&amp;nbsp;</code></p>
+<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><pre><code>&lt;address&gt;地址&lt;/address&gt; //显示地址
+</code></pre>
+<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><pre><code>&lt;code&gt;代码&lt;/code&gt;  //显示程序代码
+&lt;pre&gt;大段代码&lt;/pre&gt; //显示大段代码
+</code></pre>
+<h2 id="表格摘要"><a href="#表格摘要" class="headerlink" title="表格摘要"></a>表格摘要</h2><p>  摘要的内容是不会在浏览器中显示出来的。它的作用是增加表格的可读性(语义化)，使搜索引擎更好的读懂表格内容，还可以使屏幕阅读器更好的帮助特殊用户读取表格内容。语法表示：</p>
+<pre><code>&lt;table summary=&quot;表格简介文本&quot;&gt;&lt;/table&gt;
+</code></pre>
+<h2 id="使用mailto在网页中连接Email地址"><a href="#使用mailto在网页中连接Email地址" class="headerlink" title="使用mailto在网页中连接Email地址"></a>使用mailto在网页中连接Email地址</h2><pre><code>&lt;a href=&quot;mailto:yy@imooc.com?subject=&#39;观了不起的盖茨比有感&#39;&amp;body=&#39;你好，对此评论有些想法&#39;&quot;&gt;发送邮件给我&lt;/a&gt;
+</code></pre>
+<h2 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h2><p>用于绑定input在用户点击label标签的文字后即可聚焦input，有两种绑定方式。<br><strong>方式一:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot; &quot; method=&quot;post&quot;&gt;</span><br><span class="line">     &lt;label for=”account”&gt;账号&lt;/label&gt;</span><br><span class="line">     &lt;input type=”text”  id=”account”/&gt;</span><br><span class="line">     &lt;label for=”pwd”&gt;密码&lt;/label&gt;</span><br><span class="line">     &lt;input type=”text” id=”pwd”&gt;</span><br><span class="line"> &lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot; &quot; method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;label&gt;</span><br><span class="line">	  账号:&lt;input type=”text”/&gt;</span><br><span class="line">	&lt;/label&gt;</span><br><span class="line">	&lt;label&gt;</span><br><span class="line">	  密码:&lt;input type=”password”/&gt;</span><br><span class="line">	&lt;/label&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="HTML5-DTD文档类型声明"><a href="#HTML5-DTD文档类型声明" class="headerlink" title="HTML5 DTD文档类型声明"></a>HTML5 DTD文档类型声明</h2><pre><code>&lt;!DOCTYPE html&gt; //必须位于html文档的第一行
+</code></pre>
+<span id="more"></span>
+<h2 id="img"><a href="#img" class="headerlink" title="img"></a>img</h2><p>**width:**设置图片的宽度</p>
+<p><strong>height：</strong>设置图片的高度</p>
+<p><em>注： 如果img标签没有指定需要显示的图片的宽高，那么系统会按照图片默认的宽高来显示。想要保持img图片原图的宽高比，只需要设置img宽度和高度其中之一，另外一个属性会根据原图的宽高比自动计算得出。</em></p>
+<p>**title:**当鼠标悬停在图片上时，弹出的描述狂中显示的内容。</p>
+<p>**alt(alternate):**当需要显示的图片找不到时，显示的替代的文字内容。</p>
+<h2 id="br"><a href="#br" class="headerlink" title="br"></a>br</h2><p>&nbsp;&nbsp;&nbsp;br标签用于换行，多个br标签可以连续使用，使用了多少个br标签就会换多少行，由于html的作用就是给文本添加语义，而br标签的语义是不另起一个段落换行，而在企业开发中一般情况下需要换行都是因为需要另起一个段落，所以在企业开发中很少使用br标签，换行另起段落一般用P标签。</p>
+<h2 id="a标签"><a href="#a标签" class="headerlink" title="a标签"></a>a标签</h2><h3 id="base标签"><a href="#base标签" class="headerlink" title="base标签"></a>base标签</h3><p> base标签专门用来统一指定当前网页中所有的a标签的打开方式,base标签必须写在head标签之间,格式为：</p>
+<pre><code>&lt;base target=”_blank”&gt;               //必须位于head之间
+</code></pre>
+<p><em>注：如果即在base中指定了target又在a标签中指定了target，那么浏览器会按照a标签中指定方式的来执行。</em></p>
+<h3 id="假链接"><a href="#假链接" class="headerlink" title="假链接"></a>假链接</h3><p>为a标签的href属性分配一个#或者JavaScript，以实现特定的操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=”#”&gt;返回顶部&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=”javascript:”&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h3><p>锚点是文档中某行的一个记号，类似于书签，用于链接到文档中的某个位置。当定义了锚点后，我们可以创建直接跳至该锚点（比如页面中某个小节）的链接，这样使用者就无需不停地滚动页面来寻找他们需要的信息了。 创建锚点需要以下几个步骤：</p>
+<ol>
+<li>给需要定位的目标标签添加一个ID属性。</li>
+<li>告诉a标签你需要转到的目标标签。</li>
+<li>格式：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=”#target”&gt;跳转到目标&lt;/a&gt;</span><br><span class="line">&lt;h1 id=”target”&gt;我是目标&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+<p><em>注：使用这种方式跳转是没有过渡动画的，一下就跳转到了指定位置  a标签除了可以跳转到当前界面的指定位置，还可以直接跳转到其他界面的指定位置。</em></p>
+<h2 id="定义列表-dl-definition-list"><a href="#定义列表-dl-definition-list" class="headerlink" title="定义列表 dl(definition list)"></a>定义列表 dl(definition list)</h2><p>常用于网站底部的信息、图文混排等。格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  &lt;dl&gt;</span><br><span class="line">	  &lt;dt&gt;&lt;/dt&gt;   //definition title 定义列表中的标题</span><br><span class="line">	  &lt;dd&gt;&lt;/dd&gt;  //definition description 定义列表标题的描述</span><br><span class="line">	  &lt;dt&gt;&lt;/dt&gt;</span><br><span class="line">	  &lt;dd&gt;&lt;/dd&gt;</span><br><span class="line">&lt;/dl&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><h3 id="表格摘要-1"><a href="#表格摘要-1" class="headerlink" title="表格摘要"></a>表格摘要</h3><p>摘要的内容是不会在浏览器中显示出来的。它的作用是增加表格的可读性(语义化)，使搜索引擎更好的读懂表格内容，还可以使屏幕阅读器更好的帮助特殊用户读取表格内容。语法表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;table summary=”表格简介文本”&gt;&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="表格标题"><a href="#表格标题" class="headerlink" title="表格标题"></a>表格标题</h3><p>表格标题永远处于表格的水平中心位置，语法如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">	  &lt;caption&gt;</span><br><span class="line">	     &lt;h2&gt;表格标题&lt;/h2&gt;</span><br><span class="line">	  &lt;/caption&gt;                 //表格标题</span><br><span class="line">	  &lt;thead&gt;&lt;/thead&gt;            //表格头</span><br><span class="line">	  &lt;tbody&gt;&lt;/tbody&gt;            //表格内容体</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="细线表格"><a href="#细线表格" class="headerlink" title="细线表格"></a>细线表格</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  Table&#123;</span><br><span class="line">	Padding:0.1px;</span><br><span class="line">	Background-Color:steelblue;  //定义边框的颜色</span><br><span class="line">	Width:650px;</span><br><span class="line">	Height:40px;</span><br><span class="line">	Font:16px “微软雅黑”;</span><br><span class="line">	Text-align:center;</span><br><span class="line">  &#125;</span><br><span class="line">  Table tr&#123;</span><br><span class="line">    Background-Color:white;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="datalist"><a href="#datalist" class="headerlink" title="datalist"></a>datalist</h2><p>给input输入框绑定待选项列表，格式如下：<br>先定义一个datalist列表项，给它分配一个唯一的ID “cars”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;datalist  id=”cars”&gt;</span><br><span class="line">    &lt;option&gt;奔驰&lt;/option&gt;</span><br><span class="line">    &lt;option&gt;；路虎&lt;/option&gt;</span><br><span class="line">	&lt;option&gt;Jeep&lt;/option&gt;</span><br><span class="line">	&lt;option&gt;劳斯莱斯&lt;/option&gt;</span><br><span class="line">	&lt;option&gt;宝马&lt;/option&gt;</span><br><span class="line">&lt;/datalist&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后给输入框添加一个属性list，值填写刚才定义列表的id值”cars”。<br>请输入你的车型:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=”text” list=”cars”/&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p>可以通过给option标签添加一个selected属性来制定列表的默认选中项;可以给option进行分组，使用optgroup label标签的名字显示了分组的名称。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;select&gt;</span><br><span class="line"> &lt;optgroup label=”北京”&gt;</span><br><span class="line">	 &lt;option&gt;西城区&lt;/option&gt;</span><br><span class="line">	 &lt;option selected=”selected”&gt;朝阳区&lt;/option&gt;</span><br><span class="line">	 &lt;option&gt;通州区&lt;/option&gt;</span><br><span class="line"> &lt;/optgroup&gt;</span><br><span class="line"> &lt;optgroup label=”广州&gt;</span><br><span class="line">	 &lt;option&gt;天河区&lt;/option&gt;</span><br><span class="line">	 &lt;option&gt;越秀区&lt;/option&gt;</span><br><span class="line">	 &lt;option&gt;黄浦区&lt;/option&gt;</span><br><span class="line">&lt;/optgroup&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="textArea"><a href="#textArea" class="headerlink" title="textArea"></a>textArea</h2><p>Textarea通过css的属性resize:none可以禁止用户自由拉伸textarea</p>
+<h2 id="video"><a href="#video" class="headerlink" title="video"></a>video</h2><p>**src:**用于告诉video标签需要播放的视频地址。<br><strong>autoplay：</strong>用于告诉video标签是否需要自动播放视频 autoplay = “autoplay”。<br><strong>controls:</strong> 用于告诉video标签是否显示控制条 controls = “controls”。<br><strong>poster:</strong> 用于设置视频在播放之前，显示的图片。<br><strong>loop:</strong> 一般用于广告视频，用于告诉video标签播放完毕后是否需要循环播放。Loop = “loop”。<br><strong>preload:</strong> 预加载视频，但是需要注意preload和autoplay相冲。<br><strong>muted:</strong> 静音   muted = “muted”。<br><strong>width/height：</strong>二者只设置一个，保持视频的宽高比</p>
+<p>当前通过video标签的第二种格式虽然能够指定所有浏览器都支持的视频格式，但是显然所有浏览器都通过video标签播放视频有一个前提条件，那就是浏览器必须支持H5，可以通过一个JS框架叫做<strong>html5demia</strong>来实现兼容。</p>
+<p>video的第二种格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;video&gt;</span><br><span class="line">	&lt;source src=”video/1.webm” type=”video/webm”&gt;&lt;/source&gt;</span><br><span class="line">	&lt;source src=”video/2.mp4” type=”video/mp4”&gt;&lt;/source&gt;</span><br><span class="line">	&lt;source src=”video/3.ogg” type=”video/ogg”&gt;&lt;/source&gt;</span><br><span class="line">&lt;/video&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="marquee"><a href="#marquee" class="headerlink" title="marquee"></a>marquee</h2><p>Marquee标签虽然不是w3c标准的标签，，但是各大浏览器对其支持很好。Marquee标签是一个内联块级元素，主要用于实现类似于跑马灯的效果。格式为：</p>
+<pre><code>&lt;marquee&gt;内容&lt;/marquee&gt;
+</code></pre>
+<p><strong>direction(left right up down):</strong> 设置内容滚动的方向<br><strong>scrollamount：</strong>设置滚动的速度，值越大越快<br><strong>loop：</strong>设置滚动次数，默认为-1，也就是无限滚动<br><strong>behavior：</strong>设置滚动类型，slide，滚动到边界即停止，alternate，滚动到边界即弹回。</p>
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/2017/02/22/html/" class="leancloud-visitors view" data-flag-title="Html学习笔记整理">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a href="/2017/02/22/css/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2017/02/09/blog/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"xxx","appKey":"xxx","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-02-22 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Html/">Html<span>1</span></a></li> <li><a href="/categories/Html/前端/">前端<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/html/">html<span>1</span></a></li> <li><a href="/tags/前端/">前端<span>2</span></a></li> <li><a href="/tags/基础/">基础<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 KenShin's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
