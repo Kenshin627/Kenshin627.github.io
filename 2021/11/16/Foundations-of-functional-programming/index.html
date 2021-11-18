@@ -160,6 +160,26 @@ Practical lambda functions and lexical scopeIIFE works on exactly the same princ
 <h3 id="take-and-drop"><a href="#take-and-drop" class="headerlink" title="take and drop"></a>take and drop</h3><p>The take function takes a number and a list as arguments and then returns the first n elements of the list. f you ask for more values then a list has, take gives you what it can, with no error.</p>
 <h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>You use zip when you want to combine two lists into tuple pairs. The arguments to zip<br>are two lists. If one list happens to be longer, zip will stop whenever one of the two lists<br>is empty.</p>
 <h3 id="cycle"><a href="#cycle" class="headerlink" title="cycle"></a>cycle</h3><p> cycle uses lazy evaluation to create an infinite list. Given a list, cycle repeats that list endlessly.<br><img src="/2021/11/16/Foundations-of-functional-programming/6.png" alt="alt"></p>
+<h1 id="05-RECURSION-AND-PATTERN-MATCHING"><a href="#05-RECURSION-AND-PATTERN-MATCHING" class="headerlink" title="05 RECURSION AND PATTERN MATCHING"></a>05 RECURSION AND PATTERN MATCHING</h1><p>In general, something is recursive if it’s defined in terms of itself.</p>
+<h2 id="Rules-from-Recursion"><a href="#Rules-from-Recursion" class="headerlink" title="Rules from Recursion"></a>Rules from Recursion</h2><ol>
+<li>Identify the end goal(s).</li>
+<li>Determine what happens when a goal is reached.</li>
+<li>List all alternate possibilities.</li>
+<li>Determine your “rinse and repeat” process.</li>
+<li>Ensure that each alternative moves you toward your goal.</li>
+</ol>
+<h2 id="Pattern-matching"><a href="#Pattern-matching" class="headerlink" title="Pattern matching"></a>Pattern matching</h2><p>Haskell has an amazing feature called pattern matching<br>that allows you to peek at the values passed as arguments and behave accordingly.</p>
+<ol>
+<li><em><strong>Pattern matching, just like case, looks at the options in order</strong></em></li>
+<li><em><strong>pattern matching is that it can look only at arguments, but it can’t do any computation on them when matching</strong></em></li>
+<li>_<strong>it’s standard practice to use _ as a wildcard for values you don’t use</strong>_</li>
+</ol>
+<h2 id="Recursion-on-lists"><a href="#Recursion-on-lists" class="headerlink" title="Recursion on lists"></a>Recursion on lists</h2><h3 id="implements-built-in-length-take-cycle"><a href="#implements-built-in-length-take-cycle" class="headerlink" title="implements built-in length take cycle"></a>implements built-in length take cycle</h3><p><img src="/2021/11/16/Foundations-of-functional-programming/7.png" alt="alt"></p>
+<h1 id="06-HIGHER-ORDER-FUNCTIONS"><a href="#06-HIGHER-ORDER-FUNCTIONS" class="headerlink" title="06 HIGHER-ORDER FUNCTIONS"></a>06 HIGHER-ORDER FUNCTIONS</h1><p>A higher-order function is technically any function that takes another function as an argument.<br>Typically, when higher-order functions are mentioned, a specific group of them comes<br>to mind, and nearly all of these are used to abstract away common patterns of recursion.<br>The main reason that you use first-class functions, and therefore have higher-order<br>functions, is so you can abstract out programming patterns</p>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>The map function takes another function and a list as arguments and applies that<br>function to each element in the list.</p>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><p>The filter function looks and behaves similarly to map, taking a function and a list as arguments and<br>returning a list. The difference is that the function passed to filter must be passed a<br>function that returns True or False. The filter function works by keeping only the elements of the list that pass the test</p>
+<h2 id="foldl-foldr"><a href="#foldl-foldr" class="headerlink" title="foldl(foldr)"></a>foldl(foldr)</h2><p>The function foldl (the l stands for left) takes a list and reduces<br>it to a single value. The function takes three arguments: a binary function, an initial<br>value, and a list. The most common use of foldl is to sum a list.</p>
+<h2 id="implements-map-filter-amp-foldl"><a href="#implements-map-filter-amp-foldl" class="headerlink" title="implements map filter &amp; foldl"></a>implements map filter &amp; foldl</h2><p><img src="/2021/11/16/Foundations-of-functional-programming/8.png" alt="alt"></p>
 
 	  <div class="article-footer-copyright">
 
