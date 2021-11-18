@@ -134,11 +134,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2019/10/19/Ioc模式对应的几种设计模式/" >Ioc模式对应的几种设计模式</a>
+			<a href="/2019/10/20/ASP-NET-Core-DI-服务注册/" >Asp.Net Core DI-服务注册</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2019-10-19  </div>
+		<div class="date">post @ 2019-10-20  </div>
 		</div>
 	</div>
 	
@@ -149,15 +149,24 @@
   <div class="row">
 	
 	
-		<h1 id="Ioc原则对应的几种设计模式"><a href="#Ioc原则对应的几种设计模式" class="headerlink" title="Ioc原则对应的几种设计模式"></a>Ioc原则对应的几种设计模式</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>IoC仅仅是一种设计原则,针对IoC的设计原则有多种设计模式,例如:模板方法,简单工厂,抽象工厂等.以下通过这三种设计模式阐述如何实现IoC设计原则的.</p>
-<h2 id="模板方法"><a href="#模板方法" class="headerlink" title="模板方法"></a>模板方法</h2><p>该模式主张将一个可复用的工作流程或者由多个步骤组成的算法定义成模板方法，组成这个流程或者算法的步骤实现在相应的虚方法之中，模板方法根据按照预先编排的流程去调用这些虚方法。所有这些方法均定义在同一个类中，我们可以通过派生该类并重写相应的虚方法达到对流程定制的目的。</p>
-<h2 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h2><p>对于一个复杂的流程来说，我们倾向于将组成该流程的各个环节实现在相对独立的组件之中，那么针对流程的定制就可以通过提供定制组件的方式来实现。我们知道23种设计模式之中有一种重要的类型，那就是“创建型模式”，比如常用的“工厂方法”和“抽象工厂”，IoC所体现的针对流程的共享与定制可以通过它们来完成。</p>
-<p>所谓的工厂方法，说白了就是在某个类中定义用于提供依赖对象的方法，这个方法可以是一个单纯的虚方法，也可以是具有默认实现的虚方法，至于方法声明的返回类型，可以是一个接口或者抽象类，也可以是未被封闭（Sealed）的具体类型。作为它的派生类型，它可以实现或者重写工厂方法以提供所需的具体对象。</p>
-<h2 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h2><p>然工厂方法和抽象工厂均提供了一个“生产”对象实例的工厂，但是两者在设计上却有本质的不同。工厂方法利用定义在某个类型的抽象方法或者虚方法实现了针对单一对象提供方式的抽象，而抽象工厂则利用一个独立的接口或者抽象类来提供一组相关的对象。</p>
+		<h1 id="Asp-Net-Core-DI-服务注册"><a href="#Asp-Net-Core-DI-服务注册" class="headerlink" title="Asp.Net Core DI-服务注册"></a>Asp.Net Core DI-服务注册</h1><p>包含服务注册信息的IServiceCollection对象最终被用来创建作为DI容器的IServiceProvider对象。服务注册就是创建出现相应的ServiceDescriptor对象并将其添加到指定IServiceCollection集合对象中的过程。IServiceCollection实际上是包含了<strong>ServiceDescriptor</strong>对象的集合.</p>
+<h2 id="ServiceDescriptor"><a href="#ServiceDescriptor" class="headerlink" title="ServiceDescriptor"></a>ServiceDescriptor</h2><p>IServiceCollection对象是一个存放服务注册信息的集合.在IServiceCollection/IServiceProvider为核心的DI框架中,与之对应的类型为ServiceDescriptor.</p>
+<p>DI框架将服务注册存储在一个通过IServiceCollection接口表示的集合之中.如下面的代码片段所示，一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
+<p>ServiceDescriptor共有5个属性,3个构造函数,如下所示:</p>
+<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment1.jpg" alt="alt"></p>
+<p>属性说明:</p>
+<ul>
+<li>ServiceType:注册的服务类型.往往是一个接口</li>
+<li>ImplementationType:实现ServiceType接口的类</li>
+<li>ImplementationInstance:已经实例化的对象</li>
+<li>ImplementationFactory:提供对象的工厂方法.类型为Func&lt;IServiceProvider,object&gt;</li>
+<li>Lifetime:生命周期,枚举类型,对应有三个值,分别为:Singleton,Scoped,Transient</li>
+</ul>
+<p>构造函数说明:<br>ServiceDescriptor的三个属性(ImplementationType,ImplementationInstance,ImplementationFactory)体现了服务实例的三种提供方式，并对应着三个构造函数。</p>
 	
 
 	</div>
-  <a type="button" href="/2019/10/19/Ioc模式对应的几种设计模式/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2019/10/20/ASP-NET-Core-DI-服务注册/#more" class="btn btn-default more">Read More</a>
 </div>
 
 -->
@@ -165,14 +174,23 @@
   <div class="row">
 	
 	
-		<h1 id="Ioc原则对应的几种设计模式"><a href="#Ioc原则对应的几种设计模式" class="headerlink" title="Ioc原则对应的几种设计模式"></a>Ioc原则对应的几种设计模式</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>IoC仅仅是一种设计原则,针对IoC的设计原则有多种设计模式,例如:模板方法,简单工厂,抽象工厂等.以下通过这三种设计模式阐述如何实现IoC设计原则的.</p>
-<h2 id="模板方法"><a href="#模板方法" class="headerlink" title="模板方法"></a>模板方法</h2><p>该模式主张将一个可复用的工作流程或者由多个步骤组成的算法定义成模板方法，组成这个流程或者算法的步骤实现在相应的虚方法之中，模板方法根据按照预先编排的流程去调用这些虚方法。所有这些方法均定义在同一个类中，我们可以通过派生该类并重写相应的虚方法达到对流程定制的目的。</p>
-<h2 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h2><p>对于一个复杂的流程来说，我们倾向于将组成该流程的各个环节实现在相对独立的组件之中，那么针对流程的定制就可以通过提供定制组件的方式来实现。我们知道23种设计模式之中有一种重要的类型，那就是“创建型模式”，比如常用的“工厂方法”和“抽象工厂”，IoC所体现的针对流程的共享与定制可以通过它们来完成。</p>
-<p>所谓的工厂方法，说白了就是在某个类中定义用于提供依赖对象的方法，这个方法可以是一个单纯的虚方法，也可以是具有默认实现的虚方法，至于方法声明的返回类型，可以是一个接口或者抽象类，也可以是未被封闭（Sealed）的具体类型。作为它的派生类型，它可以实现或者重写工厂方法以提供所需的具体对象。</p>
-<h2 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h2><p>然工厂方法和抽象工厂均提供了一个“生产”对象实例的工厂，但是两者在设计上却有本质的不同。工厂方法利用定义在某个类型的抽象方法或者虚方法实现了针对单一对象提供方式的抽象，而抽象工厂则利用一个独立的接口或者抽象类来提供一组相关的对象。</p>
+		<h1 id="Asp-Net-Core-DI-服务注册"><a href="#Asp-Net-Core-DI-服务注册" class="headerlink" title="Asp.Net Core DI-服务注册"></a>Asp.Net Core DI-服务注册</h1><p>包含服务注册信息的IServiceCollection对象最终被用来创建作为DI容器的IServiceProvider对象。服务注册就是创建出现相应的ServiceDescriptor对象并将其添加到指定IServiceCollection集合对象中的过程。IServiceCollection实际上是包含了<strong>ServiceDescriptor</strong>对象的集合.</p>
+<h2 id="ServiceDescriptor"><a href="#ServiceDescriptor" class="headerlink" title="ServiceDescriptor"></a>ServiceDescriptor</h2><p>IServiceCollection对象是一个存放服务注册信息的集合.在IServiceCollection/IServiceProvider为核心的DI框架中,与之对应的类型为ServiceDescriptor.</p>
+<p>DI框架将服务注册存储在一个通过IServiceCollection接口表示的集合之中.如下面的代码片段所示，一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
+<p>ServiceDescriptor共有5个属性,3个构造函数,如下所示:</p>
+<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment1.jpg" alt="alt"></p>
+<p>属性说明:</p>
+<ul>
+<li>ServiceType:注册的服务类型.往往是一个接口</li>
+<li>ImplementationType:实现ServiceType接口的类</li>
+<li>ImplementationInstance:已经实例化的对象</li>
+<li>ImplementationFactory:提供对象的工厂方法.类型为Func&lt;IServiceProvider,object&gt;</li>
+<li>Lifetime:生命周期,枚举类型,对应有三个值,分别为:Singleton,Scoped,Transient</li>
+</ul>
+<p>构造函数说明:<br>ServiceDescriptor的三个属性(ImplementationType,ImplementationInstance,ImplementationFactory)体现了服务实例的三种提供方式，并对应着三个构造函数。</p>
 	
 	</div>
-  <a type="button" href="/2019/10/19/Ioc模式对应的几种设计模式/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2019/10/20/ASP-NET-Core-DI-服务注册/#more" class="btn btn-default more">Read More</a>
 </div>
 
 		
@@ -231,9 +249,11 @@
 		
 			<li><a href="/categories/CSS/">CSS<span>1</span></a></li>
 		
+			<li><a href="/categories/Haskell/">Haskell<span>1</span></a></li>
+		
 			<li><a href="/categories/Html/">Html<span>1</span></a></li>
 		
-			<li><a href="/categories/typeScript/">typeScript<span>3</span></a></li>
+			<li><a href="/categories/typeScript/">typeScript<span>4</span></a></li>
 		
 			<li><a href="/categories/Html/前端/">前端<span>1</span></a></li>
 		
@@ -248,37 +268,41 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+		
+			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+		
+			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
+		
+			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
+		
+			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
+		
+			<li><a href="/tags/前端/">前端<span>2</span></a></li>
+		
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+		
 			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
+		
+			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
 		
 			<li><a href="/tags/net/">.net<span>1</span></a></li>
 		
 			<li><a href="/tags/基础/">基础<span>3</span></a></li>
 		
-			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
-		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
 			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
 		
-			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
-		
-			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
-		
-			<li><a href="/tags/前端/">前端<span>2</span></a></li>
-		
-			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
+			<li><a href="/tags/web/">web<span>1</span></a></li>
 		
 			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+			<li><a href="/tags/haskell/">haskell<span>1</span></a></li>
 		
-			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
+			<li><a href="/tags/functional-programming/">functional programming<span>1</span></a></li>
 		
-			<li><a href="/tags/typeScript/">typeScript<span>3</span></a></li>
+			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
 		
 			<li><a href="/tags/html/">html<span>1</span></a></li>
-		
-			<li><a href="/tags/web/">web<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -292,6 +316,14 @@
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2021/11/16/Foundations-of-functional-programming/" ><i class="fa fa-file-o"></i>Haskell01 - Foundations of ...</a>
+      </li>
+    
+      <li>
+        <a href="/2021/11/02/function/" ><i class="fa fa-file-o"></i>function</a>
+      </li>
+    
+      <li>
         <a href="/2021/11/01/enum/" ><i class="fa fa-file-o"></i>enum</a>
       </li>
     
@@ -301,14 +333,6 @@
     
       <li>
         <a href="/2021/10/31/typeScript类型系统/" ><i class="fa fa-file-o"></i>typeScript类型系统</a>
-      </li>
-    
-      <li>
-        <a href="/2019/11/05/Asp-Net-Core-文件系统/" ><i class="fa fa-file-o"></i>Asp.Net Core 文件系统</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/21/ASP-NET-Core-DI-服务消费/" ><i class="fa fa-file-o"></i>Asp.Net Core DI-服务消费</a>
       </li>
     
   </ul>

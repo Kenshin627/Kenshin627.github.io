@@ -134,11 +134,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2017/02/09/blog/" >Hexo+GitHub搭建个人博客</a>
+			<a href="/2017/02/22/css/" >CSS学习笔记整理</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2017-02-09  </div>
+		<div class="date">post @ 2017-02-22  </div>
 		</div>
 	</div>
 	
@@ -149,21 +149,17 @@
   <div class="row">
 	
 	
-		<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="http://i1.piimg.com/567571/f63d2030ab646842.png"><br><a href="hexo.io">Hexo</a>是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在搭建博客的过程中遇到的问题进行总结，避免以后的小伙伴踩坑。本文从五个方面进行讲解，分别为：</p>
-<ul>
-<li><p>环境部署</p>
-</li>
-<li><p>HEXO安装与常用命令</p>
-</li>
-<li><p>个性化设置</p>
-</li>
-<li><p>HEXO部署Github</p>
-</li>
-<li><p>定制化个性域名</p></li></ul>
+		<h2 id="嵌入方式"><a href="#嵌入方式" class="headerlink" title="嵌入方式"></a>嵌入方式</h2><p>css有三种样式嵌入方式，分别为内联，嵌入，外部引用，一般情况下优先级为内联样式表&gt;嵌入样式表&gt;外部样式表，前提是外部引用css文件在嵌入的前边，如果外部引用在嵌入的后边那么外部引用的优先级将高于嵌入的。简而言之，css优先级是以离标签的距离为依据的。</p>
+<h2 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h2><h3 id="并集选择器"><a href="#并集选择器" class="headerlink" title="并集选择器"></a>并集选择器</h3><p>取所有选择器所选择元素的并集，然后集中设置样式，语法为在每个选择器中间加上逗号，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1,selector2&#123;</span><br><span class="line">  属性:值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="交集选择器"><a href="#交集选择器" class="headerlink" title="交集选择器"></a>交集选择器</h3><p>给所有选择器选中的标签中，相交的那部分标签设置属性。格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1Selecotr2&#123;</span><br><span class="line">   属性：值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>注：Selector1和selector2之间没人任何符号也没有空格。</em></p>
 	
 
 	</div>
-  <a type="button" href="/2017/02/09/blog/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2017/02/22/css/#more" class="btn btn-default more">Read More</a>
 </div>
 
 -->
@@ -171,20 +167,16 @@
   <div class="row">
 	
 	
-		<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="http://i1.piimg.com/567571/f63d2030ab646842.png"><br><a href="hexo.io">Hexo</a>是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在搭建博客的过程中遇到的问题进行总结，避免以后的小伙伴踩坑。本文从五个方面进行讲解，分别为：</p>
-<ul>
-<li><p>环境部署</p>
-</li>
-<li><p>HEXO安装与常用命令</p>
-</li>
-<li><p>个性化设置</p>
-</li>
-<li><p>HEXO部署Github</p>
-</li>
-<li><p>定制化个性域名</p></li></ul>
+		<h2 id="嵌入方式"><a href="#嵌入方式" class="headerlink" title="嵌入方式"></a>嵌入方式</h2><p>css有三种样式嵌入方式，分别为内联，嵌入，外部引用，一般情况下优先级为内联样式表&gt;嵌入样式表&gt;外部样式表，前提是外部引用css文件在嵌入的前边，如果外部引用在嵌入的后边那么外部引用的优先级将高于嵌入的。简而言之，css优先级是以离标签的距离为依据的。</p>
+<h2 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h2><h3 id="并集选择器"><a href="#并集选择器" class="headerlink" title="并集选择器"></a>并集选择器</h3><p>取所有选择器所选择元素的并集，然后集中设置样式，语法为在每个选择器中间加上逗号，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1,selector2&#123;</span><br><span class="line">  属性:值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="交集选择器"><a href="#交集选择器" class="headerlink" title="交集选择器"></a>交集选择器</h3><p>给所有选择器选中的标签中，相交的那部分标签设置属性。格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1Selecotr2&#123;</span><br><span class="line">   属性：值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>注：Selector1和selector2之间没人任何符号也没有空格。</em></p>
 	
 	</div>
-  <a type="button" href="/2017/02/09/blog/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2017/02/22/css/#more" class="btn btn-default more">Read More</a>
 </div>
 
 		
@@ -243,9 +235,11 @@
 		
 			<li><a href="/categories/CSS/">CSS<span>1</span></a></li>
 		
+			<li><a href="/categories/Haskell/">Haskell<span>1</span></a></li>
+		
 			<li><a href="/categories/Html/">Html<span>1</span></a></li>
 		
-			<li><a href="/categories/typeScript/">typeScript<span>3</span></a></li>
+			<li><a href="/categories/typeScript/">typeScript<span>4</span></a></li>
 		
 			<li><a href="/categories/Html/前端/">前端<span>1</span></a></li>
 		
@@ -260,37 +254,41 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/前端/">前端<span>2</span></a></li>
-		
-			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
-		
-			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
-		
-			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
-		
-			<li><a href="/tags/html/">html<span>1</span></a></li>
-		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
-		
-			<li><a href="/tags/typeScript/">typeScript<span>3</span></a></li>
+			<li><a href="/tags/基础/">基础<span>3</span></a></li>
 		
 			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
 		
+			<li><a href="/tags/web/">web<span>1</span></a></li>
+		
+			<li><a href="/tags/haskell/">haskell<span>1</span></a></li>
+		
+			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
+		
 			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+		
+			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
+		
+			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
+		
+			<li><a href="/tags/functional-programming/">functional programming<span>1</span></a></li>
+		
+			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
 		
 			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
 		
-			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
-		
-			<li><a href="/tags/基础/">基础<span>3</span></a></li>
-		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
-			<li><a href="/tags/web/">web<span>1</span></a></li>
+			<li><a href="/tags/前端/">前端<span>2</span></a></li>
 		
 			<li><a href="/tags/net/">.net<span>1</span></a></li>
 		
-			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+		
+			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
+		
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+		
+			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
+		
+			<li><a href="/tags/html/">html<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -304,6 +302,14 @@
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2021/11/16/Foundations-of-functional-programming/" ><i class="fa fa-file-o"></i>Haskell01 - Foundations of ...</a>
+      </li>
+    
+      <li>
+        <a href="/2021/11/02/function/" ><i class="fa fa-file-o"></i>function</a>
+      </li>
+    
+      <li>
         <a href="/2021/11/01/enum/" ><i class="fa fa-file-o"></i>enum</a>
       </li>
     
@@ -313,14 +319,6 @@
     
       <li>
         <a href="/2021/10/31/typeScript类型系统/" ><i class="fa fa-file-o"></i>typeScript类型系统</a>
-      </li>
-    
-      <li>
-        <a href="/2019/11/05/Asp-Net-Core-文件系统/" ><i class="fa fa-file-o"></i>Asp.Net Core 文件系统</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/21/ASP-NET-Core-DI-服务消费/" ><i class="fa fa-file-o"></i>Asp.Net Core DI-服务消费</a>
       </li>
     
   </ul>
