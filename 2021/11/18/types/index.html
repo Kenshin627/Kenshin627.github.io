@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Haskell02-types | KenShin</title>
+  <meta name="author" content="KenShin">
+  
+  <meta name="description" content="01. TYPE BASICSin Haskell, you haven’t had to write down any information about thetype you’re using for any of your values. It turns out this is because Haskell has done itfor you! Haskell uses type inference to automatically determine the types of all values atcompile time based on the way they’re used! You don’t have to rely on Haskell to determine your types for you.
+
+list  tuple  function
+Functions with multiple argumentswhy are type signatures this way? The reason is that behind the scenes in Haskell, all functions take only one argument. By rewriting makeAddress by using a series of nested lambda functions.
+
+Types for first-class functionsfunctions can take functions as arguments and returnfunctions as values. To write these type signatures, you write the individual functionvalues in parentheses."> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Haskell02-types"/>
+  <meta property="og:site_name" content="KenShin"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
+</script>
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">KenShin</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Haskell02-types</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="01-TYPE-BASICS"><a href="#01-TYPE-BASICS" class="headerlink" title="01. TYPE BASICS"></a>01. TYPE BASICS</h1><p>in Haskell, you haven’t had to write down any information about the<br>type you’re using for any of your values. It turns out this is because Haskell has done it<br>for you! Haskell uses type inference to automatically determine the types of all values at<br>compile time based on the way they’re used! You don’t have to rely on Haskell to determine your types for you.</p>
+<p><img src="/2021/11/18/types/1.png" alt="alt"></p>
+<h2 id="list-tuple-function"><a href="#list-tuple-function" class="headerlink" title="list  tuple  function"></a>list  tuple  function</h2><p><img src="/2021/11/18/types/2.png" alt="alt"></p>
+<h3 id="Functions-with-multiple-arguments"><a href="#Functions-with-multiple-arguments" class="headerlink" title="Functions with multiple arguments"></a>Functions with multiple arguments</h3><p>why are type signatures this way? The reason is that behind the scenes in Haskell, all functions take only one argument. By rewriting makeAddress by using a series of nested lambda functions.</p>
+<p><img src="/2021/11/18/types/3.png" alt="alt"></p>
+<h3 id="Types-for-first-class-functions"><a href="#Types-for-first-class-functions" class="headerlink" title="Types for first-class functions"></a>Types for first-class functions</h3><p>functions can take functions as arguments and return<br>functions as values. To write these type signatures, you write the individual function<br>values in parentheses.</p>
+<p><img src="/2021/11/18/types/4.png" alt="alt"></p>
+<h2 id="Type-variables"><a href="#Type-variables" class="headerlink" title="Type variables"></a>Type variables</h2><p> Haskell has type variables. Any lowercase letter in a type signature indicates that any type can be used in that place.<br> Type variables are literally variables for types. Type variables work exactly like regular<br>variables, but instead of representing a value, they represent a type. When you use a<br>function that has a type variable in its signature, you can imagine Haskell substituting<br>the variable that’s needed.</p>
+<h1 id="02-CREATING-YOUR-OWN-TYPES"><a href="#02-CREATING-YOUR-OWN-TYPES" class="headerlink" title="02. CREATING YOUR OWN TYPES"></a>02. CREATING YOUR OWN TYPES</h1><h2 id="type-synonyms"><a href="#type-synonyms" class="headerlink" title="type synonyms"></a>type synonyms</h2><p>When you have two names for the same type, it’s referred to as a type synonym. Type synonyms are extremely useful, because they make reading type signatures much easier.<br><em><strong>In Haskell, you can create new type synonyms by using the type keyword.</strong></em></p>
+<h2 id="Creating-new-types"><a href="#Creating-new-types" class="headerlink" title="Creating new types"></a>Creating new types</h2><h2 id="record-syntax"><a href="#record-syntax" class="headerlink" title="record syntax"></a>record syntax</h2><p>You can define data types such as Patient by using record syntax. Defining a new data type by using record syntax makes it much easier to understand which types represent<br>which properties of the data type.<br><img src="/2021/11/18/types/5.png" alt="alt"></p>
+<h3 id="automatically-getters-and-setters"><a href="#automatically-getters-and-setters" class="headerlink" title="automatically getters and setters"></a>automatically getters and setters</h3><p>you don’t have to write your getters; each field in the record syntax automatically creates a function to access that value from the record.You can also set values in record syntax by passing the new value in curly brackets to<br>your data.<br><img src="/2021/11/18/types/6.png" alt="alt"></p>
+<h1 id="03-TYPE-CLASSES"><a href="#03-TYPE-CLASSES" class="headerlink" title="03. TYPE CLASSES"></a>03. TYPE CLASSES</h1><p>Type classes in Haskell are a way of describing groups of types that all behave in the same way. If you’re familiar with<br>Java or C#, type classes may remind you of interfaces.</p>
+<h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><p>definition of the type class is a list of functions that all members of the class must implement, along with the type signatures of<br>those functions. The family of functions that describe a number is +, -, *, negate, abs, and<br>signum (gives the sign of a number)<br><img src="/2021/11/18/types/7.jpg" alt="alt"></p>
+<h2 id="The-benefits-of-type-classes"><a href="#The-benefits-of-type-classes" class="headerlink" title="The benefits of type classes"></a>The benefits of type classes</h2><p>So far in Haskell, each function you’ve defined works for only one specific set of types. Without type classes, you’d need a different name for each function that adds a different type of value. You do have type variables, but they’re too flexible.<br><em><strong>Type classes also allow you to define functions on a variety of types that you can’t even<br>think of</strong></em></p>
+<h2 id="Defining-a-type-class"><a href="#Defining-a-type-class" class="headerlink" title="Defining a type class"></a>Defining a type class</h2><p><img src="/2021/11/18/types/8.jpg" alt="alt"></p>
+<h2 id="Deriving-type-classes"><a href="#Deriving-type-classes" class="headerlink" title="Deriving type classes"></a>Deriving type classes</h2><p><img src="/2021/11/18/types/9.png" alt="alt"></p>
+<h2 id="implement-type-class"><a href="#implement-type-class" class="headerlink" title="implement type class"></a>implement type class</h2><p><img src="/2021/11/18/types/10.png" alt="alt"></p>
+<h2 id="Creating-types-with-newtype"><a href="#Creating-types-with-newtype" class="headerlink" title="Creating types with newtype"></a>Creating types with newtype</h2><p>When looking at our type definition for Name, you find an interesting case in which you’d like to use a type synonym, but need to define a data type in order to make your type an instance of a type class. Haskell has a preferred method of doing this: <em><strong>using the newtype keyword.</strong></em> Here’s an example of the definition of Name using newtype.<br><img src="/2021/11/18/types/11.png" alt="alt"></p>
+<h1 id="04-AlGEBRAIC-DATA-TYPES"><a href="#04-AlGEBRAIC-DATA-TYPES" class="headerlink" title="04. AlGEBRAIC DATA TYPES"></a>04. AlGEBRAIC DATA TYPES</h1><p>Algebraic data types are any types that can be made by combining other types. The key to understanding algebraic data types is knowing exactly how to combine other types. Thankfully, there are only two ways. You can combine multiple types with an and (for example, a name is a String and another String), or you can combine types with an or (for example, a Bool is a True data constructor or a False data constructor). Types that are made by combining other types with an and are called product types. Types combined using or are called sum types.</p>
+<h2 id="product-type"><a href="#product-type" class="headerlink" title="product type"></a>product type</h2><p>Product types are created by combining two or more existing types with and, bundling two or more types together to define a new type. Nearly every programming language supports product types, even if not by that name.<br><img src="/2021/11/18/types/12.png" alt="alt"></p>
+<h2 id="sum-type"><a href="#sum-type" class="headerlink" title="sum type"></a>sum type</h2><p>Sum types are a surprisingly powerful tool, given that they provide only the capability to combine two types with or. </p>
+<h1 id="05-DESIGN-BY-COMPOSITION—SEMIGROUPS-AND-MONOIDS"><a href="#05-DESIGN-BY-COMPOSITION—SEMIGROUPS-AND-MONOIDS" class="headerlink" title="05. DESIGN BY COMPOSITION—SEMIGROUPS AND MONOIDS"></a>05. DESIGN BY COMPOSITION—SEMIGROUPS AND MONOIDS</h1><h2 id="combining-functions"><a href="#combining-functions" class="headerlink" title="combining functions"></a>combining functions</h2><p>combining functions:A special higher-order function that’s just a period (called compose) takes two functions as arguments.<br><img src="/2021/11/18/types/13.png" alt="alt"></p>
+<h2 id="Combining-like-types-Semigroups"><a href="#Combining-like-types-Semigroups" class="headerlink" title="Combining like types: Semigroups"></a>Combining like types: Semigroups</h2><p>The Semigroup class has only one important method you need, the &lt;&gt; operator. You can think of &lt;&gt; as an operator for combining instances of the same type.<br><img src="/2021/11/18/types/14.png" alt="alt"><br><em><strong>This simple signature is the heart of the idea of composability; you can take two like<br>things and combine them to get a new thing of the same type.</strong></em></p>
+<h2 id="Composing-with-identity-Monoids"><a href="#Composing-with-identity-Monoids" class="headerlink" title="Composing with identity: Monoids"></a>Composing with identity: Monoids</h2><p>Another type class that’s similar to Semigroup is Monoid. The only major difference between Semigroup and Monoid is that Monoid requires an identity element for the type. An identity element means that x &lt;&gt; id = x (and id &lt;&gt; x = x). <em><strong>Having an identity element might seem like a small detail, but it greatly increases the power of a type by allowing you to use a fold function to easily combine lists of the same type.</strong></em><br><img src="/2021/11/18/types/15.png" alt="alt"></p>
+<h3 id="mconcat"><a href="#mconcat" class="headerlink" title="mconcat"></a>mconcat</h3><p><em><strong>The mconcat method takes a list of Monoids and combines them, returning a single Monoid.</strong></em><br>The easiest way to see how powerful identity is, is to explore the final method in the definition of Monoid: mconcat. The only required definitions in Monoid are mempty and mappend. If you implement these two, you get mconcat for free.This is because the definition of mconcat relies only on foldr, mappend, and mempty. Here’s the definition of mconcat:<br><img src="/2021/11/18/types/16.png" alt="alt"></p>
+<h3 id="Monoid-laws"><a href="#Monoid-laws" class="headerlink" title="Monoid laws"></a>Monoid laws</h3><ol>
+<li>mappend mempty x is x</li>
+<li>mappend x mempty is x</li>
+<li>mappend x (mappend y z) = mappend (mappend x y) z</li>
+<li>mconcat = foldr mappend mempty</li>
+</ol>
+<h1 id="06-PARAMETERIZED-TYPES"><a href="#06-PARAMETERIZED-TYPES" class="headerlink" title="06. PARAMETERIZED TYPES"></a>06. PARAMETERIZED TYPES</h1><p>If you’re familiar with type generics in languages such as C# and Java, parameterized types will initially seem similar. Like generics in C# and Java, parameterized types allow you to create “containers” that can hold other types.</p>
+<h2 id="definition-1"><a href="#definition-1" class="headerlink" title="definition"></a>definition</h2><p><img src="/2021/11/18/types/17.png" alt="alt"></p>
+<h2 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h2><p>A list of type a is either Empty or the consing of the value a with another     list of type a.<br><img src="/2021/11/18/types/18.png" alt="alt"></p>
+<h2 id="Types-with-more-than-one-parameter"><a href="#Types-with-more-than-one-parameter" class="headerlink" title="Types with more than one parameter"></a>Types with more than one parameter</h2><p>Just like functions, types can also take more than one argument. The important thing to remember is that more than one type parameter means the type can be a container for more than one type.</p>
+<h3 id="Tuples"><a href="#Tuples" class="headerlink" title="Tuples"></a>Tuples</h3><p>Tuples are the most ubiquitous multiparameter type in Haskell. tuples use a built-in type constructor, ().you have to use () with one comma inside for every n – 1 items in the tuple. For example, if you want the definition of a 2-tuple, you’d type :info<br>(,) into GHCi. Here’s the built-in definition.<br><img src="/2021/11/18/types/19.png" alt="alt"></p>
+<h3 id="Data-Map"><a href="#Data-Map" class="headerlink" title="Data.Map"></a>Data.Map</h3><p>Map allows you to look up values by using keys. In many other languages, this data type is called Dictionary. The type parameters of Map are the types of the keys and values. The most common way to build a Map is with the fromList function.<br><img src="/2021/11/18/types/20.png" alt="alt"><br><img src="/2021/11/18/types/21.png" alt="alt"></p>
+<h2 id="Kinds-types-of-types"><a href="#Kinds-types-of-types" class="headerlink" title="Kinds: types of types"></a>Kinds: types of types</h2><p>The type of a type is called its kind. <em>*<em>The kind of a type indicates the number of parameters the type takes, which are expressed using an asterisk (</em>). Types that take no parameters have a kind of *, types that take one parameter have the kind * -&gt; <em>, types with two parameters have the kind * -&gt; * -&gt; <em>, and so forth.</em></em></em></p>
+<h1 id="07-Maybe"><a href="#07-Maybe" class="headerlink" title="07. Maybe"></a>07. Maybe</h1><h2 id="solving-missing-values-with-types"><a href="#solving-missing-values-with-types" class="headerlink" title="solving missing values with types"></a>solving missing values with types</h2><p>Maybe is a simple but powerful type. So far, all of our parameterized types have been viewed as containers. Maybe is different. <em><strong>Maybe is best understood as a type in a context.The context in this case is that the type contained might be missing. Here’s its definition.</strong></em></p>
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/2021/11/18/types/" class="leancloud-visitors view" data-flag-title="Haskell02-types">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2021/11/16/Foundations-of-functional-programming/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"xxx","appKey":"xxx","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2021-11-18 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Haskell/">Haskell<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/haskell/">haskell<span>2</span></a></li> <li><a href="/tags/functional-programming/">functional programming<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 KenShin's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

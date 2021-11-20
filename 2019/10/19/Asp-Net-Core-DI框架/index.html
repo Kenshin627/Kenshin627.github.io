@@ -9,7 +9,21 @@
   <title>Asp.Net Core DI框架 | KenShin</title>
   <meta name="author" content="KenShin">
   
-  <meta name="description" content="Asp.NET Core DI框架概览毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服">
+  <meta name="description" content="Asp.NET Core DI框架概览毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式.
+服务的注册与消费ASP.NET Core中的依赖注入框架中,我们添加的服务注册被保存到通过 IServiceCollection 接口表示的集合之中,基于这个集合创建的DI容器体现为 IServiceProvider.
+DI框架提供了生产实例的三种生命周期模式,分别为:
+
+Singleton:整个应用程序生命周期内单例
+Scoped:单次服务请求内的单例
+Transient:每次获取均会产生新的对象
+
+DI框架注册服务时通常会使用三种方式,分别为:
+
+指定注册非服务类型和实现类型.
+指定一个现有的服务实例.
+指定一个创建服务实例的委托对象.
+
+当我们在进行服务注册时,可以为同一类型添加一个服务注册,也可以添加多个,实际上添加的所有服务注册都是有效的,在完成服务注册之后，我们调用IServiceCollection接口的扩展方法  BuildServiceProvider创建出代表DI容器的IServiceProvider对象,并利用它调用后者的GetService方法来提供相应的服务实例,总时会返回一个服务实例,这里采用了”后来居上”的原则,即总是采用最近添加的服务注册来创建服务实例.如果我们调用另一个扩展方法GetServices,它将利用返回所有服务注册提供的服务实例.如下所示的代码片段."> 
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -38,26 +52,19 @@
 
   <!-- analytics -->
   
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-70812759-1', 'auto');
-  ga('send', 'pageview');
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-70812759-1');
 </script>
 
 
 
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?cb5448498d7169c668b07c2b255d62c1";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+
 
 
 <meta name="generator" content="Hexo 5.4.0"></head>
@@ -181,11 +188,22 @@ GetServices&lt;IBaz&gt;(provider2);
 输出:Foo Foo Bar Baz
      Foo Foo Bar
 </code></pre>
-	  
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
 	</div>
 
+	
+	<span id="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/" class="leancloud-visitors view" data-flag-title="Asp.Net Core DI框架">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
 	<div>
   	<center>
+
 	<div class="pagination">
 
     
@@ -203,20 +221,48 @@ GetServices&lt;IBaz&gt;(provider2);
     
 </div>
 
+
     </center>
 	</div>
 	
 	<!-- comment -->
-	
+	<!--
 <section id="comment">
     <h2 class="title">Comments</h2>
 
     
 </section>
 
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"xxx","appKey":"xxx","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
 
+		</section>
+	
 	</div> <!-- col-md-9/col-md-12 -->
-		
+
+
 	
 	<div id="side_meta">
 		<div class="col-md-3" id="post_meta"> 
@@ -263,10 +309,16 @@ GetServices&lt;IBaz&gt;(provider2);
 	
 </div><!-- col-md-3 -->
 
+		
+
 	</div>
+	
 		
 
 </div><!-- row -->
+
+<!--
+ -->
 
 
 
@@ -274,10 +326,10 @@ GetServices&lt;IBaz&gt;(provider2);
   </div>
   <div class="container-narrow">
   <footer> <p>
-  &copy; 2021 KenShin
   
-      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
-     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+  &copy; 2021 KenShin's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
 </p>
  </footer>
 </div> <!-- container-narrow -->
@@ -305,6 +357,15 @@ GetServices&lt;IBaz&gt;(provider2);
 </script>
 
 
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 </body>
    </html>
