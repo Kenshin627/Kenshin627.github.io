@@ -134,11 +134,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2021/11/02/function/" >function</a>
+			<a href="/2021/11/18/types/" >Haskell02 - types</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2021-11-02  </div>
+		<div class="date">post @ 2021-11-18  </div>
 		</div>
 	</div>
 	
@@ -149,16 +149,16 @@
   <div class="row">
 	
 	
-		<h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><h2 id="函数声明的两种方式"><a href="#函数声明的两种方式" class="headerlink" title="函数声明的两种方式"></a>函数声明的两种方式</h2><p><img src="/2021/11/02/function/1.png" alt="alt"></p>
-<blockquote>
-<p>如果使用函数重载，则只能使用第一种方式</p>
-</blockquote>
-<p><img src="/2021/11/02/function/2.png" alt="alt"></p>
-<h2 id="参数注解-amp-返回类型注解"><a href="#参数注解-amp-返回类型注解" class="headerlink" title="参数注解 &amp; 返回类型注解"></a>参数注解 &amp; 返回类型注解</h2><h2 id="可选参数-amp-默认值参数"><a href="#可选参数-amp-默认值参数" class="headerlink" title="可选参数 &amp; 默认值参数"></a>可选参数 &amp; 默认值参数</h2>
+		<h1 id="01-TYPE-BASICS"><a href="#01-TYPE-BASICS" class="headerlink" title="01. TYPE BASICS"></a>01. TYPE BASICS</h1><p>in Haskell, you haven’t had to write down any information about the<br>type you’re using for any of your values. It turns out this is because Haskell has done it<br>for you! Haskell uses type inference to automatically determine the types of all values at<br>compile time based on the way they’re used! You don’t have to rely on Haskell to determine your types for you.</p>
+<p><img src="/2021/11/18/types/1.png" alt="alt"></p>
+<h2 id="list-tuple-function"><a href="#list-tuple-function" class="headerlink" title="list  tuple  function"></a>list  tuple  function</h2><p><img src="/2021/11/18/types/2.png" alt="alt"></p>
+<h3 id="Functions-with-multiple-arguments"><a href="#Functions-with-multiple-arguments" class="headerlink" title="Functions with multiple arguments"></a>Functions with multiple arguments</h3><p>why are type signatures this way? The reason is that behind the scenes in Haskell, all functions take only one argument. By rewriting makeAddress by using a series of nested lambda functions.</p>
+<p><img src="/2021/11/18/types/3.png" alt="alt"></p>
+<h3 id="Types-for-first-class-functions"><a href="#Types-for-first-class-functions" class="headerlink" title="Types for first-class functions"></a>Types for first-class functions</h3><p>functions can take functions as arguments and return<br>functions as values. To write these type signatures, you write the individual function<br>values in parentheses.</p>
 	
 
 	</div>
-  <a type="button" href="/2021/11/02/function/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2021/11/18/types/#more" class="btn btn-default more">Read More</a>
 </div>
 
 -->
@@ -166,15 +166,15 @@
   <div class="row">
 	
 	
-		<h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><h2 id="函数声明的两种方式"><a href="#函数声明的两种方式" class="headerlink" title="函数声明的两种方式"></a>函数声明的两种方式</h2><p><img src="/2021/11/02/function/1.png" alt="alt"></p>
-<blockquote>
-<p>如果使用函数重载，则只能使用第一种方式</p>
-</blockquote>
-<p><img src="/2021/11/02/function/2.png" alt="alt"></p>
-<h2 id="参数注解-amp-返回类型注解"><a href="#参数注解-amp-返回类型注解" class="headerlink" title="参数注解 &amp; 返回类型注解"></a>参数注解 &amp; 返回类型注解</h2><h2 id="可选参数-amp-默认值参数"><a href="#可选参数-amp-默认值参数" class="headerlink" title="可选参数 &amp; 默认值参数"></a>可选参数 &amp; 默认值参数</h2>
+		<h1 id="01-TYPE-BASICS"><a href="#01-TYPE-BASICS" class="headerlink" title="01. TYPE BASICS"></a>01. TYPE BASICS</h1><p>in Haskell, you haven’t had to write down any information about the<br>type you’re using for any of your values. It turns out this is because Haskell has done it<br>for you! Haskell uses type inference to automatically determine the types of all values at<br>compile time based on the way they’re used! You don’t have to rely on Haskell to determine your types for you.</p>
+<p><img src="/2021/11/18/types/1.png" alt="alt"></p>
+<h2 id="list-tuple-function"><a href="#list-tuple-function" class="headerlink" title="list  tuple  function"></a>list  tuple  function</h2><p><img src="/2021/11/18/types/2.png" alt="alt"></p>
+<h3 id="Functions-with-multiple-arguments"><a href="#Functions-with-multiple-arguments" class="headerlink" title="Functions with multiple arguments"></a>Functions with multiple arguments</h3><p>why are type signatures this way? The reason is that behind the scenes in Haskell, all functions take only one argument. By rewriting makeAddress by using a series of nested lambda functions.</p>
+<p><img src="/2021/11/18/types/3.png" alt="alt"></p>
+<h3 id="Types-for-first-class-functions"><a href="#Types-for-first-class-functions" class="headerlink" title="Types for first-class functions"></a>Types for first-class functions</h3><p>functions can take functions as arguments and return<br>functions as values. To write these type signatures, you write the individual function<br>values in parentheses.</p>
 	
 	</div>
-  <a type="button" href="/2021/11/02/function/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2021/11/18/types/#more" class="btn btn-default more">Read More</a>
 </div>
 
 		
@@ -233,7 +233,7 @@
 		
 			<li><a href="/categories/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/categories/Haskell/">Haskell<span>1</span></a></li>
+			<li><a href="/categories/Haskell/">Haskell<span>3</span></a></li>
 		
 			<li><a href="/categories/Html/">Html<span>1</span></a></li>
 		
@@ -252,41 +252,41 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/functional-programming/">functional programming<span>1</span></a></li>
+			<li><a href="/tags/web/">web<span>1</span></a></li>
+		
+			<li><a href="/tags/functional-programming/">functional programming<span>3</span></a></li>
+		
+			<li><a href="/tags/html/">html<span>1</span></a></li>
+		
+			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
+		
+			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
+		
+			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
+		
+			<li><a href="/tags/haskell/">haskell<span>3</span></a></li>
+		
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
 		
 			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
+		
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+		
+			<li><a href="/tags/net/">.net<span>1</span></a></li>
+		
+			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
 		
 			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
 		
 			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
 		
-			<li><a href="/tags/net/">.net<span>1</span></a></li>
-		
-			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
-		
-			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
-		
-			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
-		
-			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
-		
 			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
-		
-			<li><a href="/tags/haskell/">haskell<span>1</span></a></li>
 		
 			<li><a href="/tags/基础/">基础<span>3</span></a></li>
 		
 			<li><a href="/tags/前端/">前端<span>2</span></a></li>
 		
 			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
-		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
-		
-			<li><a href="/tags/web/">web<span>1</span></a></li>
-		
-			<li><a href="/tags/html/">html<span>1</span></a></li>
-		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -300,6 +300,14 @@
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2021/11/20/IO/" ><i class="fa fa-file-o"></i>Haskell03 - IO</a>
+      </li>
+    
+      <li>
+        <a href="/2021/11/18/types/" ><i class="fa fa-file-o"></i>Haskell02 - types</a>
+      </li>
+    
+      <li>
         <a href="/2021/11/16/Foundations-of-functional-programming/" ><i class="fa fa-file-o"></i>Haskell01 - Foundations of ...</a>
       </li>
     
@@ -309,14 +317,6 @@
     
       <li>
         <a href="/2021/11/01/enum/" ><i class="fa fa-file-o"></i>enum</a>
-      </li>
-    
-      <li>
-        <a href="/2021/10/31/interface/" ><i class="fa fa-file-o"></i>interface</a>
-      </li>
-    
-      <li>
-        <a href="/2021/10/31/typeScript类型系统/" ><i class="fa fa-file-o"></i>typeScript类型系统</a>
       </li>
     
   </ul>
