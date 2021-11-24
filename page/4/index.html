@@ -134,11 +134,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2021/11/02/function/" >function</a>
+			<a href="/2021/11/16/Foundations-of-functional-programming/" >Haskell01 - Foundations of functional programming</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2021-11-02  </div>
+		<div class="date">post @ 2021-11-16  </div>
 		</div>
 	</div>
 	
@@ -149,16 +149,20 @@
   <div class="row">
 	
 	
-		<h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><h2 id="函数声明的两种方式"><a href="#函数声明的两种方式" class="headerlink" title="函数声明的两种方式"></a>函数声明的两种方式</h2><p><img src="/2021/11/02/function/1.png" alt="alt"></p>
-<blockquote>
-<p>如果使用函数重载，则只能使用第一种方式</p>
-</blockquote>
-<p><img src="/2021/11/02/function/2.png" alt="alt"></p>
-<h2 id="参数注解-amp-返回类型注解"><a href="#参数注解-amp-返回类型注解" class="headerlink" title="参数注解 &amp; 返回类型注解"></a>参数注解 &amp; 返回类型注解</h2><h2 id="可选参数-amp-默认值参数"><a href="#可选参数-amp-默认值参数" class="headerlink" title="可选参数 &amp; 默认值参数"></a>可选参数 &amp; 默认值参数</h2>
+		<h1 id="01-Functions"><a href="#01-Functions" class="headerlink" title="01. Functions"></a>01. Functions</h1><p>All functions in Haskell follow three rules that force them to behave like functions in<br>math:</p>
+<ul>
+<li>All functions must take an argument.</li>
+<li>All functions must return a value.</li>
+<li>Anytime a function is called with the same argument, it must return the same<br>value</li>
+</ul>
+<p>The third rule is part of the basic mathematical definition of a function. When the rule<br>that the same argument must always produce the same result is applied to function in a<br>programming language, it’s called referential transparency.</p>
+<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="/2021/11/16/Foundations-of-functional-programming/1.png" alt="alt"></p>
+<h2 id="Practical-lambda-functions-and-lexical-scope"><a href="#Practical-lambda-functions-and-lexical-scope" class="headerlink" title="Practical lambda functions and lexical scope"></a>Practical lambda functions and lexical scope</h2><p>IIFE works on exactly the same principles as our example of replacing a where statement. Whenever you create a new function, named or not, you<br>create a new scope, which is the context in which a variable is defined. When a variable is<br>used, the program looks at the nearest scope; if the definition of the variable isn’t there,<br>it goes to the next one up. This particular type of variable lookup is called lexical scope.<br>Both Haskell and JavaScript use lexical scoping, which is why IIFE and your lambda function variables behave in a similar fashion.</p>
+<h1 id="03-FIRST-CLASS-FUNCTIONS"><a href="#03-FIRST-CLASS-FUNCTIONS" class="headerlink" title="03. FIRST-CLASS FUNCTIONS"></a>03. FIRST-CLASS FUNCTIONS</h1>
 	
 
 	</div>
-  <a type="button" href="/2021/11/02/function/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2021/11/16/Foundations-of-functional-programming/#more" class="btn btn-default more">Read More</a>
 </div>
 
 -->
@@ -166,15 +170,19 @@
   <div class="row">
 	
 	
-		<h1 id="function"><a href="#function" class="headerlink" title="function"></a>function</h1><h2 id="函数声明的两种方式"><a href="#函数声明的两种方式" class="headerlink" title="函数声明的两种方式"></a>函数声明的两种方式</h2><p><img src="/2021/11/02/function/1.png" alt="alt"></p>
-<blockquote>
-<p>如果使用函数重载，则只能使用第一种方式</p>
-</blockquote>
-<p><img src="/2021/11/02/function/2.png" alt="alt"></p>
-<h2 id="参数注解-amp-返回类型注解"><a href="#参数注解-amp-返回类型注解" class="headerlink" title="参数注解 &amp; 返回类型注解"></a>参数注解 &amp; 返回类型注解</h2><h2 id="可选参数-amp-默认值参数"><a href="#可选参数-amp-默认值参数" class="headerlink" title="可选参数 &amp; 默认值参数"></a>可选参数 &amp; 默认值参数</h2>
+		<h1 id="01-Functions"><a href="#01-Functions" class="headerlink" title="01. Functions"></a>01. Functions</h1><p>All functions in Haskell follow three rules that force them to behave like functions in<br>math:</p>
+<ul>
+<li>All functions must take an argument.</li>
+<li>All functions must return a value.</li>
+<li>Anytime a function is called with the same argument, it must return the same<br>value</li>
+</ul>
+<p>The third rule is part of the basic mathematical definition of a function. When the rule<br>that the same argument must always produce the same result is applied to function in a<br>programming language, it’s called referential transparency.</p>
+<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="/2021/11/16/Foundations-of-functional-programming/1.png" alt="alt"></p>
+<h2 id="Practical-lambda-functions-and-lexical-scope"><a href="#Practical-lambda-functions-and-lexical-scope" class="headerlink" title="Practical lambda functions and lexical scope"></a>Practical lambda functions and lexical scope</h2><p>IIFE works on exactly the same principles as our example of replacing a where statement. Whenever you create a new function, named or not, you<br>create a new scope, which is the context in which a variable is defined. When a variable is<br>used, the program looks at the nearest scope; if the definition of the variable isn’t there,<br>it goes to the next one up. This particular type of variable lookup is called lexical scope.<br>Both Haskell and JavaScript use lexical scoping, which is why IIFE and your lambda function variables behave in a similar fashion.</p>
+<h1 id="03-FIRST-CLASS-FUNCTIONS"><a href="#03-FIRST-CLASS-FUNCTIONS" class="headerlink" title="03. FIRST-CLASS FUNCTIONS"></a>03. FIRST-CLASS FUNCTIONS</h1>
 	
 	</div>
-  <a type="button" href="/2021/11/02/function/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2021/11/16/Foundations-of-functional-programming/#more" class="btn btn-default more">Read More</a>
 </div>
 
 		
@@ -233,7 +241,7 @@
 		
 			<li><a href="/categories/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/categories/Haskell/">Haskell<span>3</span></a></li>
+			<li><a href="/categories/Haskell/">Haskell<span>4</span></a></li>
 		
 			<li><a href="/categories/Html/">Html<span>1</span></a></li>
 		
@@ -252,41 +260,41 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/html/">html<span>1</span></a></li>
-		
-			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
-		
-			<li><a href="/tags/functional-programming/">functional programming<span>3</span></a></li>
-		
-			<li><a href="/tags/net/">.net<span>1</span></a></li>
-		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
-			<li><a href="/tags/前端/">前端<span>2</span></a></li>
-		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
-		
-			<li><a href="/tags/web/">web<span>1</span></a></li>
-		
 			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
-		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
-		
-			<li><a href="/tags/基础/">基础<span>3</span></a></li>
 		
 			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
 		
-			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
+			<li><a href="/tags/web/">web<span>1</span></a></li>
+		
+			<li><a href="/tags/基础/">基础<span>3</span></a></li>
+		
+			<li><a href="/tags/前端/">前端<span>2</span></a></li>
 		
 			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
 		
-			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
+		
+			<li><a href="/tags/html/">html<span>1</span></a></li>
+		
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+		
+			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
 		
 			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
 		
-			<li><a href="/tags/haskell/">haskell<span>3</span></a></li>
+			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
 		
-			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
+			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+		
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+		
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+		
+			<li><a href="/tags/functional-programming/">functional programming<span>4</span></a></li>
+		
+			<li><a href="/tags/net/">.net<span>1</span></a></li>
+		
+			<li><a href="/tags/haskell/">haskell<span>4</span></a></li>
 		
 		 
 		</ul>
@@ -298,6 +306,10 @@
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2021/11/22/Context/" ><i class="fa fa-file-o"></i>Haskell03 - Context</a>
+      </li>
     
       <li>
         <a href="/2021/11/20/IO/" ><i class="fa fa-file-o"></i>Haskell03 - IO</a>
@@ -313,10 +325,6 @@
     
       <li>
         <a href="/2021/11/02/function/" ><i class="fa fa-file-o"></i>function</a>
-      </li>
-    
-      <li>
-        <a href="/2021/11/01/enum/" ><i class="fa fa-file-o"></i>enum</a>
       </li>
     
   </ul>

@@ -134,11 +134,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2017/02/22/css/" >CSS学习笔记整理</a>
+			<a href="/2019/04/10/NET访问webservice接口/" >.net 请求webservice接口</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2017-02-22  </div>
+		<div class="date">post @ 2019-04-10  </div>
 		</div>
 	</div>
 	
@@ -149,17 +149,15 @@
   <div class="row">
 	
 	
-		<h2 id="嵌入方式"><a href="#嵌入方式" class="headerlink" title="嵌入方式"></a>嵌入方式</h2><p>css有三种样式嵌入方式，分别为内联，嵌入，外部引用，一般情况下优先级为内联样式表&gt;嵌入样式表&gt;外部样式表，前提是外部引用css文件在嵌入的前边，如果外部引用在嵌入的后边那么外部引用的优先级将高于嵌入的。简而言之，css优先级是以离标签的距离为依据的。</p>
-<h2 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h2><h3 id="并集选择器"><a href="#并集选择器" class="headerlink" title="并集选择器"></a>并集选择器</h3><p>取所有选择器所选择元素的并集，然后集中设置样式，语法为在每个选择器中间加上逗号，格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1,selector2&#123;</span><br><span class="line">  属性:值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+		<h2 id="C-调用webservice接口"><a href="#C-调用webservice接口" class="headerlink" title="C#调用webservice接口"></a>C#调用webservice接口</h2><p>由于项目需要调用第三方的webservice接口,以前没有接触过webservice相关知识,故在此记录下来备忘.下边通过webservice天气预报接口为例.简单介绍下如何在.NET项目中调用外部webservice.</p>
+<p>1.项目中添加”服务引用”.如下图:<br>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice1.jpg" alt="alt"></p>
+<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice2.jpg" alt="alt"></p>
+<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice3.jpg" alt="alt"></p>
 
-<h3 id="交集选择器"><a href="#交集选择器" class="headerlink" title="交集选择器"></a>交集选择器</h3><p>给所有选择器选中的标签中，相交的那部分标签设置属性。格式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1Selecotr2&#123;</span><br><span class="line">   属性：值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>注：Selector1和selector2之间没人任何符号也没有空格。</em></p>
 	
 
 	</div>
-  <a type="button" href="/2017/02/22/css/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2019/04/10/NET访问webservice接口/#more" class="btn btn-default more">Read More</a>
 </div>
 
 -->
@@ -167,16 +165,14 @@
   <div class="row">
 	
 	
-		<h2 id="嵌入方式"><a href="#嵌入方式" class="headerlink" title="嵌入方式"></a>嵌入方式</h2><p>css有三种样式嵌入方式，分别为内联，嵌入，外部引用，一般情况下优先级为内联样式表&gt;嵌入样式表&gt;外部样式表，前提是外部引用css文件在嵌入的前边，如果外部引用在嵌入的后边那么外部引用的优先级将高于嵌入的。简而言之，css优先级是以离标签的距离为依据的。</p>
-<h2 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h2><h3 id="并集选择器"><a href="#并集选择器" class="headerlink" title="并集选择器"></a>并集选择器</h3><p>取所有选择器所选择元素的并集，然后集中设置样式，语法为在每个选择器中间加上逗号，格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1,selector2&#123;</span><br><span class="line">  属性:值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+		<h2 id="C-调用webservice接口"><a href="#C-调用webservice接口" class="headerlink" title="C#调用webservice接口"></a>C#调用webservice接口</h2><p>由于项目需要调用第三方的webservice接口,以前没有接触过webservice相关知识,故在此记录下来备忘.下边通过webservice天气预报接口为例.简单介绍下如何在.NET项目中调用外部webservice.</p>
+<p>1.项目中添加”服务引用”.如下图:<br>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice1.jpg" alt="alt"></p>
+<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice2.jpg" alt="alt"></p>
+<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice3.jpg" alt="alt"></p>
 
-<h3 id="交集选择器"><a href="#交集选择器" class="headerlink" title="交集选择器"></a>交集选择器</h3><p>给所有选择器选中的标签中，相交的那部分标签设置属性。格式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Selector1Selecotr2&#123;</span><br><span class="line">   属性：值;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>注：Selector1和selector2之间没人任何符号也没有空格。</em></p>
 	
 	</div>
-  <a type="button" href="/2017/02/22/css/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2019/04/10/NET访问webservice接口/#more" class="btn btn-default more">Read More</a>
 </div>
 
 		
@@ -235,7 +231,7 @@
 		
 			<li><a href="/categories/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/categories/Haskell/">Haskell<span>3</span></a></li>
+			<li><a href="/categories/Haskell/">Haskell<span>4</span></a></li>
 		
 			<li><a href="/categories/Html/">Html<span>1</span></a></li>
 		
@@ -254,41 +250,41 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
-		
-			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
-		
-			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
-		
-			<li><a href="/tags/基础/">基础<span>3</span></a></li>
-		
-			<li><a href="/tags/functional-programming/">functional programming<span>3</span></a></li>
+			<li><a href="/tags/web/">web<span>1</span></a></li>
 		
 			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
 		
-			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
-		
-			<li><a href="/tags/web/">web<span>1</span></a></li>
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
 		
 			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
-			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
-		
-			<li><a href="/tags/net/">.net<span>1</span></a></li>
+			<li><a href="/tags/haskell/">haskell<span>4</span></a></li>
 		
 			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
 		
-			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
 		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
 		
 			<li><a href="/tags/前端/">前端<span>2</span></a></li>
 		
+			<li><a href="/tags/functional-programming/">functional programming<span>4</span></a></li>
+		
+			<li><a href="/tags/net/">.net<span>1</span></a></li>
+		
+			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+		
+			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
+		
+			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
+		
+			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
+		
+			<li><a href="/tags/基础/">基础<span>3</span></a></li>
+		
 			<li><a href="/tags/html/">html<span>1</span></a></li>
 		
-			<li><a href="/tags/haskell/">haskell<span>3</span></a></li>
+			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -300,6 +296,10 @@
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2021/11/22/Context/" ><i class="fa fa-file-o"></i>Haskell03 - Context</a>
+      </li>
     
       <li>
         <a href="/2021/11/20/IO/" ><i class="fa fa-file-o"></i>Haskell03 - IO</a>
@@ -315,10 +315,6 @@
     
       <li>
         <a href="/2021/11/02/function/" ><i class="fa fa-file-o"></i>function</a>
-      </li>
-    
-      <li>
-        <a href="/2021/11/01/enum/" ><i class="fa fa-file-o"></i>enum</a>
       </li>
     
   </ul>

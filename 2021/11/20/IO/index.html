@@ -139,7 +139,9 @@ Do-notationThis do-notation allows you to treat IO types as if they were regular
 <h3 id="lt"><a href="#lt" class="headerlink" title="&lt;-"></a>&lt;-</h3><p>Donotation allows you to assign an IO String variable by using &lt;-, to act like it’s an ordinary String, and then to pass it to functions that work with only regular Strings<br><img src="/2021/11/20/IO/2.png" alt="alt"></p>
 <h1 id="LAZY-I-O"><a href="#LAZY-I-O" class="headerlink" title="LAZY I/O"></a>LAZY I/O</h1><h2 id="the-nonlazy-way"><a href="#the-nonlazy-way" class="headerlink" title="the nonlazy way"></a>the nonlazy way</h2><p><img src="/2021/11/20/IO/3.png" alt="alt"></p>
 <p><img src="/2021/11/20/IO/4.png" alt="alt"></p>
+<h2 id="lazy-way"><a href="#lazy-way" class="headerlink" title="lazy way"></a>lazy way</h2><p><img src="/2021/11/20/IO/5.png" alt="alt"></p>
 <h3 id="do-notation-in-Maybe"><a href="#do-notation-in-Maybe" class="headerlink" title="do-notation in Maybe"></a>do-notation in Maybe</h3><p>IO can use do-notation because it’s a member of a powerful type class called Monad. We discuss Monad much more in unit 5. Do-notation has nothing to do with IO in particular and can be used by any member of Monad to perform computation in a context. </p>
+<h1 id="TEXT-AND-UNICODE"><a href="#TEXT-AND-UNICODE" class="headerlink" title="TEXT AND UNICODE"></a>TEXT AND UNICODE</h1><h2 id="The-Text-type"><a href="#The-Text-type" class="headerlink" title="The Text type"></a>The Text type</h2><p>Unlike String, Text is implemented as an array under the hood. This makes many string operations faster and much more memory-efficient. Another major difference between Text and String is that Text doesn’t use lazy evaluation. Lazy evaluation proved to be helpful in the preceding lesson, but in many real-world cases it can lead to performance headaches. If you do need lazy text, you can use Data.Text.Lazy, which has the same interface as Data.Text.</p>
 
 	  <div class="article-footer-copyright">
 
@@ -160,7 +162,8 @@ Do-notationThis do-notation allows you to treat IO types as if they were regular
 
     
     
-    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+    <a href="/2021/11/22/Context/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
     
 
     <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
@@ -233,7 +236,7 @@ new Valine(valineConfig);
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/Haskell/">Haskell<span>3</span></a></li>
+    <li><a href="/categories/Haskell/">Haskell<span>4</span></a></li>
   </li>
 
     </ul>
@@ -246,7 +249,7 @@ new Valine(valineConfig);
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/haskell/">haskell<span>3</span></a></li> <li><a href="/tags/functional-programming/">functional programming<span>3</span></a></li>
+  <li><a href="/tags/haskell/">haskell<span>4</span></a></li> <li><a href="/tags/functional-programming/">functional programming<span>4</span></a></li>
     </ul>
 	</div>
 		

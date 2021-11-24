@@ -134,11 +134,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2021/10/31/interface/" >interface</a>
+			<a href="/2021/11/01/enum/" >enum</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2021-10-31  </div>
+		<div class="date">post @ 2021-11-01  </div>
 		</div>
 	</div>
 	
@@ -149,15 +149,23 @@
   <div class="row">
 	
 	
-		<h1 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>TypeScript的核心原则之一是对值所具有的结构进行类型检查,它有时被称做”鸭式辩型法”或”结构型子类型化”.<br>TypeScript里接口的作用就是为这些类型命名和为你的代码和第三方代码定义契约.<br><img src="/2021/10/31/interface/1.png" alt="alt"></p>
-<h2 id="可选属性-amp-只读属性"><a href="#可选属性-amp-只读属性" class="headerlink" title="可选属性 &amp; 只读属性"></a>可选属性 &amp; 只读属性</h2><p><img src="/2021/10/31/interface/2.png" alt="alt"></p>
-<h2 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h2><p><img src="/2021/10/31/interface/3.png" alt="alt"></p>
-<h2 id="索引签名"><a href="#索引签名" class="headerlink" title="索引签名"></a>索引签名</h2><p>通过定义key和value的类型宽泛的描述接口”形状”.<br><img src="/2021/10/31/interface/4.png" alt="alt"></p>
-<h4 id="所有成员都必须符合字符串的索引签名"><a href="#所有成员都必须符合字符串的索引签名" class="headerlink" title="所有成员都必须符合字符串的索引签名"></a>所有成员都必须符合字符串的索引签名</h4>
+		<h1 id="枚举-enum"><a href="#枚举-enum" class="headerlink" title="枚举(enum)"></a>枚举(enum)</h1><p>当一个变量有几种可能的取值时,可以将它定义为枚举类型，</p>
+<ol>
+<li>当我们声明一个枚举类型是,虽然没有给它们赋值,但是它们的值其实是默认的数字类型,而且默认从0开始依次累加</li>
+<li>因此当我们把第一个值赋值后,后面也会根据第一个值进行累加</li>
+<li>枚举类型的值其实也可以是字符串类型</li>
+<li>字符串枚举可以和数字枚举混合使用</li>
+</ol>
+<h2 id="枚举的本质-amp-双向映射"><a href="#枚举的本质-amp-双向映射" class="headerlink" title="枚举的本质 &amp; 双向映射"></a>枚举的本质 &amp; 双向映射</h2><p>枚举具有双向映射的特性，所谓双向映射指的是通过key可以索引到value,同时通过value也可以索引到key.<br>原因就在编译后的 JavaScript把枚举类型构造成为了一个对象，而由于其特殊的构造，导致其拥有正反向同时映射的特性<br><img src="/2021/11/01/enum/1.png" alt="alt"></p>
+<h2 id="常量枚举"><a href="#常量枚举" class="headerlink" title="常量枚举"></a>常量枚举</h2><p>枚举可以被 const 声明为常量,这样做的好处是，编译后的js代码中实际上是不存在枚举和枚举对象的，使用的是枚举的值，这是性能提升的一个方案。</p>
+<blockquote>
+<p>如果你非要 TypeScript 保留对象 Direction ,那么可以添加编译选项 –preserveConstEnums</p>
+</blockquote>
+<h2 id="联合枚举类型"><a href="#联合枚举类型" class="headerlink" title="联合枚举类型"></a>联合枚举类型</h2><p>将一个变量声明为枚举类型，可以认为声明了一个联合类型，联合类型的值对应枚举的值。<br><img src="/2021/11/01/enum/2.png" alt="alt"></p>
 	
 
 	</div>
-  <a type="button" href="/2021/10/31/interface/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2021/11/01/enum/#more" class="btn btn-default more">Read More</a>
 </div>
 
 -->
@@ -165,14 +173,22 @@
   <div class="row">
 	
 	
-		<h1 id="interface"><a href="#interface" class="headerlink" title="interface"></a>interface</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>TypeScript的核心原则之一是对值所具有的结构进行类型检查,它有时被称做”鸭式辩型法”或”结构型子类型化”.<br>TypeScript里接口的作用就是为这些类型命名和为你的代码和第三方代码定义契约.<br><img src="/2021/10/31/interface/1.png" alt="alt"></p>
-<h2 id="可选属性-amp-只读属性"><a href="#可选属性-amp-只读属性" class="headerlink" title="可选属性 &amp; 只读属性"></a>可选属性 &amp; 只读属性</h2><p><img src="/2021/10/31/interface/2.png" alt="alt"></p>
-<h2 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h2><p><img src="/2021/10/31/interface/3.png" alt="alt"></p>
-<h2 id="索引签名"><a href="#索引签名" class="headerlink" title="索引签名"></a>索引签名</h2><p>通过定义key和value的类型宽泛的描述接口”形状”.<br><img src="/2021/10/31/interface/4.png" alt="alt"></p>
-<h4 id="所有成员都必须符合字符串的索引签名"><a href="#所有成员都必须符合字符串的索引签名" class="headerlink" title="所有成员都必须符合字符串的索引签名"></a>所有成员都必须符合字符串的索引签名</h4>
+		<h1 id="枚举-enum"><a href="#枚举-enum" class="headerlink" title="枚举(enum)"></a>枚举(enum)</h1><p>当一个变量有几种可能的取值时,可以将它定义为枚举类型，</p>
+<ol>
+<li>当我们声明一个枚举类型是,虽然没有给它们赋值,但是它们的值其实是默认的数字类型,而且默认从0开始依次累加</li>
+<li>因此当我们把第一个值赋值后,后面也会根据第一个值进行累加</li>
+<li>枚举类型的值其实也可以是字符串类型</li>
+<li>字符串枚举可以和数字枚举混合使用</li>
+</ol>
+<h2 id="枚举的本质-amp-双向映射"><a href="#枚举的本质-amp-双向映射" class="headerlink" title="枚举的本质 &amp; 双向映射"></a>枚举的本质 &amp; 双向映射</h2><p>枚举具有双向映射的特性，所谓双向映射指的是通过key可以索引到value,同时通过value也可以索引到key.<br>原因就在编译后的 JavaScript把枚举类型构造成为了一个对象，而由于其特殊的构造，导致其拥有正反向同时映射的特性<br><img src="/2021/11/01/enum/1.png" alt="alt"></p>
+<h2 id="常量枚举"><a href="#常量枚举" class="headerlink" title="常量枚举"></a>常量枚举</h2><p>枚举可以被 const 声明为常量,这样做的好处是，编译后的js代码中实际上是不存在枚举和枚举对象的，使用的是枚举的值，这是性能提升的一个方案。</p>
+<blockquote>
+<p>如果你非要 TypeScript 保留对象 Direction ,那么可以添加编译选项 –preserveConstEnums</p>
+</blockquote>
+<h2 id="联合枚举类型"><a href="#联合枚举类型" class="headerlink" title="联合枚举类型"></a>联合枚举类型</h2><p>将一个变量声明为枚举类型，可以认为声明了一个联合类型，联合类型的值对应枚举的值。<br><img src="/2021/11/01/enum/2.png" alt="alt"></p>
 	
 	</div>
-  <a type="button" href="/2021/10/31/interface/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2021/11/01/enum/#more" class="btn btn-default more">Read More</a>
 </div>
 
 		
@@ -231,7 +247,7 @@
 		
 			<li><a href="/categories/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/categories/Haskell/">Haskell<span>3</span></a></li>
+			<li><a href="/categories/Haskell/">Haskell<span>4</span></a></li>
 		
 			<li><a href="/categories/Html/">Html<span>1</span></a></li>
 		
@@ -250,41 +266,41 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
-		
-			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
-		
-			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
-		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+			<li><a href="/tags/前端/">前端<span>2</span></a></li>
 		
 			<li><a href="/tags/web/">web<span>1</span></a></li>
 		
-			<li><a href="/tags/前端/">前端<span>2</span></a></li>
+			<li><a href="/tags/functional-programming/">functional programming<span>4</span></a></li>
 		
-			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
+			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
 		
-			<li><a href="/tags/html/">html<span>1</span></a></li>
-		
-			<li><a href="/tags/functional-programming/">functional programming<span>3</span></a></li>
+			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
 		
 			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
 		
 			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
 		
-			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
-		
-			<li><a href="/tags/haskell/">haskell<span>3</span></a></li>
-		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
-		
-			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
-		
 			<li><a href="/tags/net/">.net<span>1</span></a></li>
+		
+			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
+		
+			<li><a href="/tags/haskell/">haskell<span>4</span></a></li>
+		
+			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
 		
 			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
 		
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+		
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
+		
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+		
 			<li><a href="/tags/基础/">基础<span>3</span></a></li>
+		
+			<li><a href="/tags/html/">html<span>1</span></a></li>
+		
+			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -296,6 +312,10 @@
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2021/11/22/Context/" ><i class="fa fa-file-o"></i>Haskell03 - Context</a>
+      </li>
     
       <li>
         <a href="/2021/11/20/IO/" ><i class="fa fa-file-o"></i>Haskell03 - IO</a>
@@ -311,10 +331,6 @@
     
       <li>
         <a href="/2021/11/02/function/" ><i class="fa fa-file-o"></i>function</a>
-      </li>
-    
-      <li>
-        <a href="/2021/11/01/enum/" ><i class="fa fa-file-o"></i>enum</a>
       </li>
     
   </ul>

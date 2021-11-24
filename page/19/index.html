@@ -134,11 +134,11 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2017/02/09/blog/" >Hexo+GitHub搭建个人博客</a>
+			<a href="/2017/02/22/html/" >Html学习笔记整理</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
-		<div class="date">post @ 2017-02-09  </div>
+		<div class="date">post @ 2017-02-22  </div>
 		</div>
 	</div>
 	
@@ -149,21 +149,33 @@
   <div class="row">
 	
 	
-		<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="http://i1.piimg.com/567571/f63d2030ab646842.png"><br><a href="hexo.io">Hexo</a>是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在搭建博客的过程中遇到的问题进行总结，避免以后的小伙伴踩坑。本文从五个方面进行讲解，分别为：</p>
-<ul>
-<li><p>环境部署</p>
-</li>
-<li><p>HEXO安装与常用命令</p>
-</li>
-<li><p>个性化设置</p>
-</li>
-<li><p>HEXO部署Github</p>
-</li>
-<li><p>定制化个性域名</p></li></ul>
+		<h2 id="引用标签"><a href="#引用标签" class="headerlink" title="引用标签"></a>引用标签</h2><p>引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：</p>
+<pre><code>&lt;q&gt;引用标签&lt;/q&gt; //适用单行文本
+
+&lt;blockquote&gt;引用标签&lt;/blockquote&gt; //长段文本
+</code></pre>
+<h2 id="实体字符"><a href="#实体字符" class="headerlink" title="实体字符"></a>实体字符</h2><p>在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:<code>&amp;nbsp;</code></p>
+<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><pre><code>&lt;address&gt;地址&lt;/address&gt; //显示地址
+</code></pre>
+<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><pre><code>&lt;code&gt;代码&lt;/code&gt;  //显示程序代码
+&lt;pre&gt;大段代码&lt;/pre&gt; //显示大段代码
+</code></pre>
+<h2 id="表格摘要"><a href="#表格摘要" class="headerlink" title="表格摘要"></a>表格摘要</h2><p>  摘要的内容是不会在浏览器中显示出来的。它的作用是增加表格的可读性(语义化)，使搜索引擎更好的读懂表格内容，还可以使屏幕阅读器更好的帮助特殊用户读取表格内容。语法表示：</p>
+<pre><code>&lt;table summary=&quot;表格简介文本&quot;&gt;&lt;/table&gt;
+</code></pre>
+<h2 id="使用mailto在网页中连接Email地址"><a href="#使用mailto在网页中连接Email地址" class="headerlink" title="使用mailto在网页中连接Email地址"></a>使用mailto在网页中连接Email地址</h2><pre><code>&lt;a href=&quot;mailto:yy@imooc.com?subject=&#39;观了不起的盖茨比有感&#39;&amp;body=&#39;你好，对此评论有些想法&#39;&quot;&gt;发送邮件给我&lt;/a&gt;
+</code></pre>
+<h2 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h2><p>用于绑定input在用户点击label标签的文字后即可聚焦input，有两种绑定方式。<br><strong>方式一:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot; &quot; method=&quot;post&quot;&gt;</span><br><span class="line">     &lt;label for=”account”&gt;账号&lt;/label&gt;</span><br><span class="line">     &lt;input type=”text”  id=”account”/&gt;</span><br><span class="line">     &lt;label for=”pwd”&gt;密码&lt;/label&gt;</span><br><span class="line">     &lt;input type=”text” id=”pwd”&gt;</span><br><span class="line"> &lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot; &quot; method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;label&gt;</span><br><span class="line">	  账号:&lt;input type=”text”/&gt;</span><br><span class="line">	&lt;/label&gt;</span><br><span class="line">	&lt;label&gt;</span><br><span class="line">	  密码:&lt;input type=”password”/&gt;</span><br><span class="line">	&lt;/label&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="HTML5-DTD文档类型声明"><a href="#HTML5-DTD文档类型声明" class="headerlink" title="HTML5 DTD文档类型声明"></a>HTML5 DTD文档类型声明</h2><pre><code>&lt;!DOCTYPE html&gt; //必须位于html文档的第一行
+</code></pre>
 	
 
 	</div>
-  <a type="button" href="/2017/02/09/blog/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2017/02/22/html/#more" class="btn btn-default more">Read More</a>
 </div>
 
 -->
@@ -171,20 +183,32 @@
   <div class="row">
 	
 	
-		<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="http://i1.piimg.com/567571/f63d2030ab646842.png"><br><a href="hexo.io">Hexo</a>是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在搭建博客的过程中遇到的问题进行总结，避免以后的小伙伴踩坑。本文从五个方面进行讲解，分别为：</p>
-<ul>
-<li><p>环境部署</p>
-</li>
-<li><p>HEXO安装与常用命令</p>
-</li>
-<li><p>个性化设置</p>
-</li>
-<li><p>HEXO部署Github</p>
-</li>
-<li><p>定制化个性域名</p></li></ul>
+		<h2 id="引用标签"><a href="#引用标签" class="headerlink" title="引用标签"></a>引用标签</h2><p>引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：</p>
+<pre><code>&lt;q&gt;引用标签&lt;/q&gt; //适用单行文本
+
+&lt;blockquote&gt;引用标签&lt;/blockquote&gt; //长段文本
+</code></pre>
+<h2 id="实体字符"><a href="#实体字符" class="headerlink" title="实体字符"></a>实体字符</h2><p>在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:<code>&amp;nbsp;</code></p>
+<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><pre><code>&lt;address&gt;地址&lt;/address&gt; //显示地址
+</code></pre>
+<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><pre><code>&lt;code&gt;代码&lt;/code&gt;  //显示程序代码
+&lt;pre&gt;大段代码&lt;/pre&gt; //显示大段代码
+</code></pre>
+<h2 id="表格摘要"><a href="#表格摘要" class="headerlink" title="表格摘要"></a>表格摘要</h2><p>  摘要的内容是不会在浏览器中显示出来的。它的作用是增加表格的可读性(语义化)，使搜索引擎更好的读懂表格内容，还可以使屏幕阅读器更好的帮助特殊用户读取表格内容。语法表示：</p>
+<pre><code>&lt;table summary=&quot;表格简介文本&quot;&gt;&lt;/table&gt;
+</code></pre>
+<h2 id="使用mailto在网页中连接Email地址"><a href="#使用mailto在网页中连接Email地址" class="headerlink" title="使用mailto在网页中连接Email地址"></a>使用mailto在网页中连接Email地址</h2><pre><code>&lt;a href=&quot;mailto:yy@imooc.com?subject=&#39;观了不起的盖茨比有感&#39;&amp;body=&#39;你好，对此评论有些想法&#39;&quot;&gt;发送邮件给我&lt;/a&gt;
+</code></pre>
+<h2 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h2><p>用于绑定input在用户点击label标签的文字后即可聚焦input，有两种绑定方式。<br><strong>方式一:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot; &quot; method=&quot;post&quot;&gt;</span><br><span class="line">     &lt;label for=”account”&gt;账号&lt;/label&gt;</span><br><span class="line">     &lt;input type=”text”  id=”account”/&gt;</span><br><span class="line">     &lt;label for=”pwd”&gt;密码&lt;/label&gt;</span><br><span class="line">     &lt;input type=”text” id=”pwd”&gt;</span><br><span class="line"> &lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot; &quot; method=&quot;post&quot;&gt;</span><br><span class="line">	&lt;label&gt;</span><br><span class="line">	  账号:&lt;input type=”text”/&gt;</span><br><span class="line">	&lt;/label&gt;</span><br><span class="line">	&lt;label&gt;</span><br><span class="line">	  密码:&lt;input type=”password”/&gt;</span><br><span class="line">	&lt;/label&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="HTML5-DTD文档类型声明"><a href="#HTML5-DTD文档类型声明" class="headerlink" title="HTML5 DTD文档类型声明"></a>HTML5 DTD文档类型声明</h2><pre><code>&lt;!DOCTYPE html&gt; //必须位于html文档的第一行
+</code></pre>
 	
 	</div>
-  <a type="button" href="/2017/02/09/blog/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2017/02/22/html/#more" class="btn btn-default more">Read More</a>
 </div>
 
 		
@@ -243,7 +267,7 @@
 		
 			<li><a href="/categories/CSS/">CSS<span>1</span></a></li>
 		
-			<li><a href="/categories/Haskell/">Haskell<span>3</span></a></li>
+			<li><a href="/categories/Haskell/">Haskell<span>4</span></a></li>
 		
 			<li><a href="/categories/Html/">Html<span>1</span></a></li>
 		
@@ -262,41 +286,41 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
-		
-			<li><a href="/tags/functional-programming/">functional programming<span>3</span></a></li>
-		
-			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
-		
-			<li><a href="/tags/html/">html<span>1</span></a></li>
-		
-			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
-		
-			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
-		
 			<li><a href="/tags/web/">web<span>1</span></a></li>
 		
-			<li><a href="/tags/net/">.net<span>1</span></a></li>
+			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+		
+			<li><a href="/tags/CSS/">CSS<span>1</span></a></li>
 		
 			<li><a href="/tags/javaScript/">javaScript<span>1</span></a></li>
 		
 			<li><a href="/tags/typeScript/">typeScript<span>4</span></a></li>
 		
+			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+		
 			<li><a href="/tags/IOC-DI/">IOC DI<span>5</span></a></li>
+		
+			<li><a href="/tags/文件系统/">文件系统<span>1</span></a></li>
 		
 			<li><a href="/tags/基础/">基础<span>3</span></a></li>
 		
-			<li><a href="/tags/设计模式/">设计模式<span>1</span></a></li>
+			<li><a href="/tags/functional-programming/">functional programming<span>4</span></a></li>
 		
 			<li><a href="/tags/前端/">前端<span>2</span></a></li>
 		
-			<li><a href="/tags/Hexo/">Hexo<span>1</span></a></li>
+			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
 		
 			<li><a href="/tags/Asp-Net-Core/">Asp.Net Core<span>6</span></a></li>
 		
-			<li><a href="/tags/Blog/">Blog<span>1</span></a></li>
+			<li><a href="/tags/net/">.net<span>1</span></a></li>
 		
-			<li><a href="/tags/haskell/">haskell<span>3</span></a></li>
+			<li><a href="/tags/haskell/">haskell<span>4</span></a></li>
+		
+			<li><a href="/tags/html/">html<span>1</span></a></li>
+		
+			<li><a href="/tags/GitHub/">GitHub<span>1</span></a></li>
+		
+			<li><a href="/tags/Webservice/">Webservice<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -308,6 +332,10 @@
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2021/11/22/Context/" ><i class="fa fa-file-o"></i>Haskell03 - Context</a>
+      </li>
     
       <li>
         <a href="/2021/11/20/IO/" ><i class="fa fa-file-o"></i>Haskell03 - IO</a>
@@ -323,10 +351,6 @@
     
       <li>
         <a href="/2021/11/02/function/" ><i class="fa fa-file-o"></i>function</a>
-      </li>
-    
-      <li>
-        <a href="/2021/11/01/enum/" ><i class="fa fa-file-o"></i>enum</a>
       </li>
     
   </ul>
