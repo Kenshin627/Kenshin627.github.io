@@ -148,7 +148,12 @@ The pure methodThe pure method is a useful helper function for taking an ordinar
 <li>A list as a container is a sequence of values that can hold any type. Each item in the list points to the next one or to the empty list.</li>
 <li>A list as a context represents a set of possibilities. Think of a list as a context as being a single variable that can contain many possible values.</li>
 </ol>
-<h1 id="MONAD"><a href="#MONAD" class="headerlink" title="MONAD"></a>MONAD</h1>
+<h1 id="MONAD"><a href="#MONAD" class="headerlink" title="MONAD"></a>MONAD</h1><h2 id="The-Monad-type-class"><a href="#The-Monad-type-class" class="headerlink" title="The Monad type class"></a>The Monad type class</h2><p><img src="/2021/11/22/Context/10.jpg" alt="alt"></p>
+<p><img src="/2021/11/22/Context/11.png" alt="alt"></p>
+<h3 id="The-bind-operator-gt-gt"><a href="#The-bind-operator-gt-gt" class="headerlink" title="The bind operator: &gt;&gt;="></a>The bind operator: &gt;&gt;=</h3><p><img src="/2021/11/22/Context/9.png" alt="alt"><br><em><strong>As you can see, &gt;&gt;= allows you to chain together a function of a type (a -&gt; m b)</strong></em></p>
+<h2 id="the-list-Monad"><a href="#the-list-Monad" class="headerlink" title="the list Monad"></a>the list Monad</h2><p>when you assign your list to a variable using &lt;-, you get to treat it as though it were a single value. The rest of this code looks like it’s operating on one candidate, and yet the final result is the same as applying your logic to every candidate in a list.<br><img src="/2021/11/22/Context/12.png" alt="alt"></p>
+<h3 id="Building-lists-with-the-list-monad"><a href="#Building-lists-with-the-list-monad" class="headerlink" title="Building lists with the list monad"></a>Building lists with the list monad</h3><p><img src="/2021/11/22/Context/13.png" alt="alt"></p>
+
 	  <div class="article-footer-copyright">
 
     本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
