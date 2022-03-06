@@ -1,155 +1,232 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="cache-control" content="no-cache">
-  <meta http-equiv="expires" content="0">
-  
-  <title>Html学习笔记整理 | KenShin</title>
-  <meta name="author" content="KenShin">
-  
-  <meta name="description" content="引用标签引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：
-&amp;lt;q&amp;gt;引用标签&amp;lt;/q&amp;gt; //适用单行文本
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-&amp;lt;blockquote&amp;gt;引用标签&amp;lt;/blockquote&amp;gt; //长段文本
+<link rel="stylesheet" href="/css/main.css">
 
-实体字符在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:&amp;amp;nbsp;
-地址&amp;lt;address&amp;gt;地址&amp;lt;/address&amp;gt; //显示地址
 
-程序代码&amp;lt;code&amp;gt;代码&amp;lt;/code&amp;gt;  //显示程序代码
-&amp;lt;pre&amp;gt;大段代码&amp;lt;/pre&amp;gt; //显示大段代码
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-表格摘要  摘要的内容是不会在浏览器中显示出来的。它的作用是增加表格的可读性(语义化)，使搜索引擎更好的读懂表格内容，还可以使屏幕阅读器更好的帮助特殊用户读取表格内容。语法表示：
-&amp;lt;table summary=&amp;quot;表格简介文本&amp;quot;&amp;gt;&amp;lt;/table&amp;gt;
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
-使用mailto在网页中连接Email地址&amp;lt;a href=&amp;quot;mailto:yy@imooc.com?subject=&amp;#39;观了不起的盖茨比有感&amp;#39;&amp;amp;body=&amp;#39;你好，对此评论有些想法&amp;#39;&amp;quot;&amp;gt;发送邮件给我&amp;lt;/a&amp;gt;
+  <meta name="description" content="引用标签引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式： &lt;q&gt;引用标签&lt;&#x2F;q&gt; &#x2F;&#x2F;适用单行文本  &lt;blockquote&gt;引用标签&lt;&#x2F;blockquote&gt; &#x2F;&#x2F;长段文本  实体字符在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:&amp;nbsp; 地址&lt;ad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Html学习笔记整理">
+<meta property="og:url" content="http://example.com/2017/02/22/html/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="引用标签引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式： &lt;q&gt;引用标签&lt;&#x2F;q&gt; &#x2F;&#x2F;适用单行文本  &lt;blockquote&gt;引用标签&lt;&#x2F;blockquote&gt; &#x2F;&#x2F;长段文本  实体字符在html中输入多个空格是不起作用的，并且换行也会被当做一个空格来看待，如果需要多个空格请使用实体字符，如:&amp;nbsp; 地址&lt;ad">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-02-22T06:23:37.000Z">
+<meta property="article:modified_time" content="2021-10-29T14:03:17.484Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="html">
+<meta name="twitter:card" content="summary">
 
-Label用于绑定input在用户点击label标签的文字后即可聚焦input，有两种绑定方式。方式一:
-123456&amp;lt;form action=&amp;quot; &amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;     &amp;lt;label for=”account”&amp;gt;账号&amp;lt;/label&amp;gt;     &amp;lt;input type=”text”  id=”account”/&amp;gt;     &amp;lt;label for=”pwd”&amp;gt;密码&amp;lt;/label&amp;gt;     &amp;lt;input type=”text” id=”pwd”&amp;gt; &amp;lt;/form&amp;gt;
+<link rel="canonical" href="http://example.com/2017/02/22/html/">
 
-方式二：
-12345678&amp;lt;form action=&amp;quot; &amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;	&amp;lt;label&amp;gt;	  账号:&amp;lt;input type=”text”/&amp;gt;	&amp;lt;/label&amp;gt;	&amp;lt;label&amp;gt;	  密码:&amp;lt;input type=”password”/&amp;gt;	&amp;lt;/label&amp;gt;&amp;lt;/form&amp;gt;
-HTML5 DTD文档类型声明&amp;lt;!DOCTYPE html&amp;gt; //必须位于html文档的第一行"> 
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Html学习笔记整理"/>
-  <meta property="og:site_name" content="KenShin"/>
-
-  
-    <meta property="og:image" content=""/>
-  
-
-  
-  
-    <link href="/favicon.png" rel="icon">
-  
-  
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
-  <script src="/js/jquery-2.0.3.min.js"></script>
-
-  <!-- analytics -->
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-70812759-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-70812759-1');
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
 </script>
 
+  <title>Html学习笔记整理 | KenShin</title>
+  
 
 
 
 
 
-<meta name="generator" content="Hexo 5.4.0"></head>
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-	  <a class="navbar-brand" href="/">KenShin</a>
-      <div class="collapse navbar-collapse nav-menu">
-		<ul class="nav navbar-nav">
-		  
-		  <li>
-			<a href="/archives" title="All the articles.">
-			  <i class=""></i>Archives
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/categories" title="All the categories.">
-			  <i class=""></i>Categories
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/tags" title="All the tags.">
-			  <i class=""></i>Tags
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/about" title="About me.">
-			  <i class=""></i>About
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/atom.xml" title="Subscribe me.">
-			  <i class=""></i>RSS
-			</a>
-		  </li>
-		  
-		</ul>
-      </div>
-    </div> <!-- container -->
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KenShin</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
 </nav>
-<div class="clearfix"></div>
-
-  <div class="container">
-  	<div class="content">
-    	 
-
-
-	
-		<div class="page-header">
-			<h1> Html学习笔记整理</h1>
-		</div>
-	
 
 
 
-<div class="row post">
-	<!-- cols -->
-	
-	<div id="top_meta"></div>
-	<div class="col-md-9">
-	
 
-	<!-- content -->
-	<div class="mypage">		
-	  		
+</div>
+    </header>
 
-	  <h2 id="引用标签"><a href="#引用标签" class="headerlink" title="引用标签"></a>引用标签</h2><p>引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：</p>
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/02/22/html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Html学习笔记整理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-02-22 14:23:37" itemprop="dateCreated datePublished" datetime="2017-02-22T14:23:37+08:00">2017-02-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-29 22:03:17" itemprop="dateModified" datetime="2021-10-29T22:03:17+08:00">2021-10-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Html/" itemprop="url" rel="index"><span itemprop="name">Html</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Html/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="引用标签"><a href="#引用标签" class="headerlink" title="引用标签"></a>引用标签</h2><p>引用标签会自动对其中的内容加入双引号，有单行文本和长段文本两种方式：</p>
 <pre><code>&lt;q&gt;引用标签&lt;/q&gt; //适用单行文本
 
 &lt;blockquote&gt;引用标签&lt;/blockquote&gt; //长段文本
@@ -224,183 +301,205 @@ HTML5 DTD文档类型声明&amp;lt;!DOCTYPE html&amp;gt; //必须位于html文�
 </code></pre>
 <p><strong>direction(left right up down):</strong> 设置内容滚动的方向<br><strong>scrollamount：</strong>设置滚动的速度，值越大越快<br><strong>loop：</strong>设置滚动次数，默认为-1，也就是无限滚动<br><strong>behavior：</strong>设置滚动类型，slide，滚动到边界即停止，alternate，滚动到边界即弹回。</p>
 
-	  <div class="article-footer-copyright">
-
-    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
-</div>
-
-	</div>
-
-	
-	<span id="/2017/02/22/html/" class="leancloud-visitors view" data-flag-title="Html学习笔记整理">
-		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
-	</span>
-	
-	<div>
-  	<center>
-
-	<div class="pagination">
+    </div>
 
     
     
-    <a href="/2017/02/22/css/" type="button" class="btn btn-default"><i
-                class="fa fa-arrow-circle-o-left"></i> Prev</a>
     
 
-    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag"># 基础</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/html/" rel="tag"># html</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/02/09/blog/" rel="prev" title="Hexo+GitHub搭建个人博客">
+      <i class="fa fa-chevron-left"></i> Hexo+GitHub搭建个人博客
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/02/22/css/" rel="next" title="CSS学习笔记整理">
+      CSS学习笔记整理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
     
-    <a href="/2017/02/09/blog/" type="button" class="btn btn-default ">Next<i
-                class="fa fa-arrow-circle-o-right"></i></a>
-    
-
-    
-</div>
+  </article>
+  
+  
+  
 
 
-    </center>
-	</div>
-	
-	<!-- comment -->
-	<!--
-<section id="comment">
-    <h2 class="title">Comments</h2>
 
-    
-</section>
-
--->
-	
-		<section id="comments" class="comments">
-			<style>
-			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
-			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
-			</style>
-			<div id="vcomment" class="comment"></div>
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-var valineConfig = {"enable":true,"appId":"xxx","appKey":"xxx","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
-valineConfig.el='#vcomment';
-new Valine(valineConfig);
-    // new Valine({
-    //     el: '#vcomment',
-    //     appId: "",
-    //     appKey: "",
-    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
-    //     avatar:"monsterid",
-    //     visitor: "true",
-    //     requiredFields: "nick,mail".split(','),
-    // });
-</script>
-
-		</section>
-	
-	</div> <!-- col-md-9/col-md-12 -->
-
-
-	
-	<div id="side_meta">
-		<div class="col-md-3" id="post_meta"> 
-
-	<!-- date -->
-	
-	<div class="meta-widget">
-	<i class="fa fa-clock-o"></i>
-	2017-02-22 
-	</div>
-	
-
-	<!-- categories -->
-    
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
-    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          </div>
           
-  <li>
-    <li><a href="/categories/Html/">Html<span>1</span></a></li> <li><a href="/categories/Html/前端/">前端<span>1</span></a></li>
-  </li>
 
-    </ul>
-	</div>
-	
-
-	<!-- tags -->
-	
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
-    <ul id="tags" class="tag_box list-unstyled collapse in">	  
-	    
-  <li><a href="/tags/html/">html<span>1</span></a></li> <li><a href="/tags/前端/">前端<span>2</span></a></li> <li><a href="/tags/基础/">基础<span>3</span></a></li>
-    </ul>
-	</div>
-		
-
-	<!-- toc -->
-	<div class="meta-widget">
-	
-	</div>
-	
-    <hr>
-	
-</div><!-- col-md-3 -->
-
-		
-
-	</div>
-	
-		
-
-</div><!-- row -->
-
-<!--
- -->
-
-
-
-	</div>
-  </div>
-  <div class="container-narrow">
-  <footer> <p>
-  
-  &copy; 2021 KenShin's Blog
-  
-      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
-</p>
- </footer>
-</div> <!-- container-narrow -->
-  
-
-
-  
-<a id="gotop" href="#">   
-  <span>⬆︎TOP</span>
-</a>
-
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/search.js"></script> 
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E6%A0%87%E7%AD%BE"><span class="nav-number">1.</span> <span class="nav-text">引用标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">实体字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">程序代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC%E6%91%98%E8%A6%81"><span class="nav-number">5.</span> <span class="nav-text">表格摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8mailto%E5%9C%A8%E7%BD%91%E9%A1%B5%E4%B8%AD%E8%BF%9E%E6%8E%A5Email%E5%9C%B0%E5%9D%80"><span class="nav-number">6.</span> <span class="nav-text">使用mailto在网页中连接Email地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Label"><span class="nav-number">7.</span> <span class="nav-text">Label</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5-DTD%E6%96%87%E6%A1%A3%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E"><span class="nav-number">8.</span> <span class="nav-text">HTML5 DTD文档类型声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#img"><span class="nav-number">9.</span> <span class="nav-text">img</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#br"><span class="nav-number">10.</span> <span class="nav-text">br</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#a%E6%A0%87%E7%AD%BE"><span class="nav-number">11.</span> <span class="nav-text">a标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#base%E6%A0%87%E7%AD%BE"><span class="nav-number">11.1.</span> <span class="nav-text">base标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%87%E9%93%BE%E6%8E%A5"><span class="nav-number">11.2.</span> <span class="nav-text">假链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%9A%E7%82%B9"><span class="nav-number">11.3.</span> <span class="nav-text">锚点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%88%97%E8%A1%A8-dl-definition-list"><span class="nav-number">12.</span> <span class="nav-text">定义列表 dl(definition list)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC"><span class="nav-number">13.</span> <span class="nav-text">表格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC%E6%91%98%E8%A6%81-1"><span class="nav-number">13.1.</span> <span class="nav-text">表格摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC%E6%A0%87%E9%A2%98"><span class="nav-number">13.2.</span> <span class="nav-text">表格标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%86%E7%BA%BF%E8%A1%A8%E6%A0%BC"><span class="nav-number">13.3.</span> <span class="nav-text">细线表格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#datalist"><span class="nav-number">14.</span> <span class="nav-text">datalist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select"><span class="nav-number">15.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#textArea"><span class="nav-number">16.</span> <span class="nav-text">textArea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#video"><span class="nav-number">17.</span> <span class="nav-text">video</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#marquee"><span class="nav-number">18.</span> <span class="nav-text">marquee</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
 
 
-   <script type="text/javascript">      
-     var search_path = "search.xml";
-	 if (search_path.length == 0) {
-	 	search_path = "search.xml";
-	 }
-	 var path = "/" + search_path;
-     searchFunc(path, 'local-search-input', 'local-search-result');
-   </script>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenShin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
 
 </body>
-   </html>
+</html>
