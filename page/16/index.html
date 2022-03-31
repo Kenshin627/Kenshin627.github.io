@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/19/Asp.NetCoreIoC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/19/Asp.NetCoreIoC/" class="post-title-link" itemprop="url">Asp.Net Core IoC</a>
+            <a href="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">typeScript类型系统</a>
         </h2>
 
         <div class="post-meta">
@@ -184,23 +184,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-10-19 10:23:00" itemprop="dateCreated datePublished" datetime="2019-10-19T10:23:00+08:00">2019-10-19</time>
+              <time title="创建时间：2021-10-31 19:37:48 / 修改时间：20:52:15" itemprop="dateCreated datePublished" datetime="2021-10-31T19:37:48+08:00">2021-10-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-29 22:03:17" itemprop="dateModified" datetime="2021-10-29T22:03:17+08:00">2021-10-29</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
+                  <a href="/categories/typeScript/" itemprop="url" rel="index"><span itemprop="name">typeScript</span></a>
                 </span>
             </span>
 
@@ -215,16 +209,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Asp-Net-Core-IOC模式"><a href="#Asp-Net-Core-IOC模式" class="headerlink" title="Asp.Net Core IOC模式"></a>Asp.Net Core IOC模式</h1><p>本系列文章来源于大内老A的博客,对博客内容进行了略微整理,方便自己以后查阅.</p>
-<h2 id="IoC名词解释"><a href="#IoC名词解释" class="headerlink" title="IoC名词解释"></a>IoC名词解释</h2><p>IoC全名为Inverse of Control,含义为”控制倒置”,针对软件设计行业来说,IoC所谓的控制其实是”针对流程的控制”.控制权原来在应用程序,应用程序可以根据自己的场景定义流程,而IoC原则主张流程的控制权转移到框架中,由框架来定义流程的步骤,我们可以通过下图来说明控制权的转移过程.</p>
-<p><img src="/2019/10/19/Asp.NetCoreIoC/IOC1.jpg" alt="alt"></p>
-<h2 id="流程定制"><a href="#流程定制" class="headerlink" title="流程定制"></a>流程定制</h2><p>我们采用IoC实现了流程控制从应用程序向框架自身的反转，但是这个被反转的仅仅是一个泛化的流程，任何一个具体的应用都可能需要对组成该流程的某些环节进行定制.作为一个Web框架，用户认证功能是必备的，但是框架自身不能限制于某一种或者几种固定的认证方式，应该通过扩展的方式让用户可以自由地定制任意的认证模式。</p>
-<p>我们可以说得更加宽泛点。如下图所示我们将一个泛化的工作流程（A=&gt;B=&gt;C）被定义在框架之中，建立在该框架的两个应用需要对组成这个流程的某些环节进行定制。比如步骤A和C可以被App1重用，但是步骤B却需要被定制（B1），App2则重用步骤A和B，但是需要按照自己的方式处理步骤C。 </p>
-<p><img src="/2019/10/19/Asp.NetCoreIoC/IOC2.jpg" alt="alt"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>
+          <h1 id="typeScript类型系统"><a href="#typeScript类型系统" class="headerlink" title="typeScript类型系统"></a>typeScript类型系统</h1><h2 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h2><p>基本注解采用 <strong>:TypeAnnotation</strong>语法,在类型声明空间中可用的任何内容都可以用作类型注解</p>
+<h3 id="原始类型"><a href="#原始类型" class="headerlink" title="原始类型"></a>原始类型</h3><p>JavaScript 原始类型也同样适应于 TypeScript 的类型系统，因此 string、number、boolean 也可以被用作类型注解.</p>
+<p><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/1.png" alt="alt"></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>针对数组的类型注解有两种方式 <strong>:TypeAnnotation[]</strong> 或者 <strong>Array\<typeannotation></typeannotation></strong>,这两种方式是等价的<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/2.png" alt="alt"></p>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>typeScript核心特性,合并众多类型声明至一个类型声明<br><img src="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/3.png" alt="alt"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/19/Asp.NetCoreIoC/#more" rel="contents">
+              <a class="btn" href="/2021/10/31/typeScript%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -247,7 +239,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -315,20 +307,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -410,6 +402,8 @@
 
 
 
+
+  
 
   
 

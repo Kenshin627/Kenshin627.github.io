@@ -234,7 +234,7 @@
 <ul>
 <li>GetService<T>(this IServiceProvider provider):通过提供泛型类型T,返回对应实例,如果没有T对应的注册信息,返回null</T></li>
 <li>GetServices<T>(this IServiceProvider provider):通过提供泛型类型T,返回对应的多个实例</T></li>
-<li> GetServices(this IServiceProvider provider, Type serviceType):传参的方式</li>
+<li>GetServices(this IServiceProvider provider, Type serviceType):传参的方式</li>
 <li>GetRequiredService(this IServiceProvider provider, Type serviceType):如果指定服务类型的服务注册不存在,则会抛出一个InvalidOperationException类型的异常。如果所需的服务实例是必需的，我们一般会调用者两个扩展方法</li>
 </ul>
 <h2 id="构造函数的选择"><a href="#构造函数的选择" class="headerlink" title="构造函数的选择"></a>构造函数的选择</h2><p>如果IServiceProvider对象试图通过调用构造函数的方式来创建服务实例，传入构造函数的所有参数必须先被初始化，最终被选择出来的构造函数必须具备一个基本的条件：</p>
@@ -356,20 +356,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -451,6 +451,8 @@
 
 
 
+
+  
 
   
 

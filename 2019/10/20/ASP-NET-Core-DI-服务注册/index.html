@@ -235,14 +235,14 @@
 <li>ServiceType:注册的服务类型.往往是一个接口</li>
 <li>ImplementationType:实现ServiceType接口的类</li>
 <li>ImplementationInstance:已经实例化的对象</li>
-<li>ImplementationFactory:提供对象的工厂方法.类型为Func&lt;IServiceProvider,object&gt;</li>
+<li>ImplementationFactory:提供对象的工厂方法.类型为Func<IServiceProvider,object></IServiceProvider,object></li>
 <li>Lifetime:生命周期,枚举类型,对应有三个值,分别为:Singleton,Scoped,Transient</li>
 </ul>
 <p>构造函数说明:<br>ServiceDescriptor的三个属性(ImplementationType,ImplementationInstance,ImplementationFactory)体现了服务实例的三种提供方式，并对应着三个构造函数。</p>
 <ul>
 <li>ServiceDescriptor(Type serviceType,object instace):提供现有对象,该对象就是最终提供的服务实例.</li>
 <li>ServiceDescriptor(Type serviceType,Type implementationType,ServiceLifetime lifetime):最终的服务实例将通过调用定义在实现类型中某一个构造函数来创建.</li>
-<li>ServiceDescriptor(Type serviceType, Func&lt;IServiceProvider, object&gt; factory, ServiceLifetime lifetime):IServiceProvider对象将会将自身作为输入参数调用该委托对象来提供服务实例</li>
+<li>ServiceDescriptor(Type serviceType, Func<IServiceProvider, object> factory, ServiceLifetime lifetime):IServiceProvider对象将会将自身作为输入参数调用该委托对象来提供服务实例</IServiceProvider,></li>
 </ul>
 <h2 id="IServiceCollection"><a href="#IServiceCollection" class="headerlink" title="IServiceCollection"></a>IServiceCollection</h2><p>DI框架将服务注册(IServiceDescriptor)存储在一个通过IServiceCollection接口表示的集合之中.一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
 <p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment2.jpg" alt="alt"></p>
@@ -349,20 +349,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -444,6 +444,8 @@
 
 
 
+
+  
 
   
 

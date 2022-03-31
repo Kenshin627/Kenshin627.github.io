@@ -260,8 +260,7 @@ public class Foo : IFoo
         await Cat.GetService&lt;IBaz&gt;().InvokeAsync();
     &#125;
 &#125;
-</code></pre>
-<p>以上两种方式虽然都解决了针对服务的解耦问题,但是第二种使用方式不能称之为”依赖注入”,而是一种被称为”Service Locator”的设计模式.Service Locator模式同样具有一个通过服务注册创建的全局容器来提供所需的服务实例,该容器被称为”Service Locator”.DI容器和Service Locator实际上是同一事物在不同设计模型的不同称谓罢了.DI容器和Service Locator之间的差异体现在 <strong>“被谁使用”</strong>.DI容器的使用者是框架自身,Service Locator的使用者是应用程序.一般情况下我们尽可能通过构造器注入的方式使用,尽量不要使用Service Locator模式.</p>
+</code></pre><p>以上两种方式虽然都解决了针对服务的解耦问题,但是第二种使用方式不能称之为”依赖注入”,而是一种被称为”Service Locator”的设计模式.Service Locator模式同样具有一个通过服务注册创建的全局容器来提供所需的服务实例,该容器被称为”Service Locator”.DI容器和Service Locator实际上是同一事物在不同设计模型的不同称谓罢了.DI容器和Service Locator之间的差异体现在 <strong>“被谁使用”</strong>.DI容器的使用者是框架自身,Service Locator的使用者是应用程序.一般情况下我们尽可能通过构造器注入的方式使用,尽量不要使用Service Locator模式.</p>
 
     </div>
 
@@ -363,20 +362,20 @@ public class Foo : IFoo
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -458,6 +457,8 @@ public class Foo : IFoo
 
 
 
+
+  
 
   
 

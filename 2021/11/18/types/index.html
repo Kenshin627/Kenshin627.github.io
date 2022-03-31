@@ -281,7 +281,7 @@
 <h2 id="Types-with-more-than-one-parameter"><a href="#Types-with-more-than-one-parameter" class="headerlink" title="Types with more than one parameter"></a>Types with more than one parameter</h2><p>Just like functions, types can also take more than one argument. The important thing to remember is that more than one type parameter means the type can be a container for more than one type.</p>
 <h3 id="Tuples"><a href="#Tuples" class="headerlink" title="Tuples"></a>Tuples</h3><p>Tuples are the most ubiquitous multiparameter type in Haskell. tuples use a built-in type constructor, ().you have to use () with one comma inside for every n – 1 items in the tuple. For example, if you want the definition of a 2-tuple, you’d type :info<br>(,) into GHCi. Here’s the built-in definition.<br><img src="/2021/11/18/types/19.png" alt="alt"></p>
 <h3 id="Data-Map"><a href="#Data-Map" class="headerlink" title="Data.Map"></a>Data.Map</h3><p>Map allows you to look up values by using keys. In many other languages, this data type is called Dictionary. The type parameters of Map are the types of the keys and values. The most common way to build a Map is with the fromList function.<br><img src="/2021/11/18/types/20.png" alt="alt"><br><img src="/2021/11/18/types/21.png" alt="alt"></p>
-<h2 id="Kinds-types-of-types"><a href="#Kinds-types-of-types" class="headerlink" title="Kinds: types of types"></a>Kinds: types of types</h2><p>The type of a type is called its kind. <em>*<em>The kind of a type indicates the number of parameters the type takes, which are expressed using an asterisk (</em>). Types that take no parameters have a kind of *, types that take one parameter have the kind * -&gt; <em>, types with two parameters have the kind * -&gt; * -&gt; <em>, and so forth.</em></em></em></p>
+<h2 id="Kinds-types-of-types"><a href="#Kinds-types-of-types" class="headerlink" title="Kinds: types of types"></a>Kinds: types of types</h2><p>The type of a type is called its kind. <em><strong>The kind of a type indicates the number of parameters the type takes, which are expressed using an asterisk (<em>). Types that take no parameters have a kind of </em>, types that take one parameter have the kind <em> -&gt; </em>, types with two parameters have the kind <em> -&gt; </em> -&gt; *, and so forth.</strong></em></p>
 <h1 id="07-Maybe"><a href="#07-Maybe" class="headerlink" title="07. Maybe"></a>07. Maybe</h1><h2 id="solving-missing-values-with-types"><a href="#solving-missing-values-with-types" class="headerlink" title="solving missing values with types"></a>solving missing values with types</h2><p>Maybe is a simple but powerful type. So far, all of our parameterized types have been viewed as containers. Maybe is different. <em><strong>Maybe is best understood as a type in a context.The context in this case is that the type contained might be missing. Here’s its definition.</strong></em><br><img src="/2021/11/18/types/22.png" alt="alt"><br>When a function returns a value of the Maybe type, the program can’t use that value without dealing with the fact that the value<br>is wrapped in a Maybe. Missing values can never cause an error in Haskell because Maybe makes it impossible to forget that a value might be null. At the same time, the programmer never has to worry about this until absolutely necessary. </p>
 <p><em><strong>The interesting thing here is that you didn’t even have to remove the organ from the Maybe context. Maybe implements Eq, so you can just compare two Maybe Organs.</strong></em></p>
 <h2 id="isJust-and-isNothing"><a href="#isJust-and-isNothing" class="headerlink" title="isJust and isNothing"></a>isJust and isNothing</h2><p>The Data.Maybe module contains two functions, isJust and isNothing, that solve the general case of handling Just values. </p>
@@ -385,20 +385,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -480,6 +480,8 @@
 
 
 
+
+  
 
   
 

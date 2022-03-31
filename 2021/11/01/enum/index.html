@@ -229,7 +229,7 @@
 <h2 id="枚举的本质-amp-双向映射"><a href="#枚举的本质-amp-双向映射" class="headerlink" title="枚举的本质 &amp; 双向映射"></a>枚举的本质 &amp; 双向映射</h2><p>枚举具有双向映射的特性，所谓双向映射指的是通过key可以索引到value,同时通过value也可以索引到key.<br>原因就在编译后的 JavaScript把枚举类型构造成为了一个对象，而由于其特殊的构造，导致其拥有正反向同时映射的特性<br><img src="/2021/11/01/enum/1.png" alt="alt"></p>
 <h2 id="常量枚举"><a href="#常量枚举" class="headerlink" title="常量枚举"></a>常量枚举</h2><p>枚举可以被 const 声明为常量,这样做的好处是，编译后的js代码中实际上是不存在枚举和枚举对象的，使用的是枚举的值，这是性能提升的一个方案。</p>
 <blockquote>
-<p>如果你非要 TypeScript 保留对象 Direction ,那么可以添加编译选项 –preserveConstEnums</p>
+<p>如果你非要 TypeScript 保留对象 Direction ,那么可以添加编译选项 —preserveConstEnums</p>
 </blockquote>
 <h2 id="联合枚举类型"><a href="#联合枚举类型" class="headerlink" title="联合枚举类型"></a>联合枚举类型</h2><p>将一个变量声明为枚举类型，可以认为声明了一个联合类型，联合类型的值对应枚举的值。<br><img src="/2021/11/01/enum/2.png" alt="alt"></p>
 <h2 id="使用数字类型作为标志"><a href="#使用数字类型作为标志" class="headerlink" title="使用数字类型作为标志"></a>使用数字类型作为标志</h2><p><img src="/2021/11/01/enum/3.png" alt="alt"></p>
@@ -333,20 +333,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -428,6 +428,8 @@
 
 
 
+
+  
 
   
 
