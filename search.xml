@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>指数函数和对数函数</title>
+      <link href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/"/>
+      <url>/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="指数法则"><a href="#指数法则" class="headerlink" title="指数法则"></a>指数法则</h2><blockquote><ol><li><p>$b^0=1$</p></li><li><p>$b^1=b$</p></li><li><p>$b^xb^y=b^{x+y}$</p></li><li><p>$\frac{b^x}{b^y}=b^{x-y}$</p></li><li><p>$(b^x)^y=b^{xy}$</p></li></ol></blockquote><h2 id="对数法则"><a href="#对数法则" class="headerlink" title="对数法则"></a>对数法则</h2><blockquote><ol><li><p>$b^{\log_by}=y$</p></li><li><p>$\log_b1=0$</p></li><li><p>$\log_bb=1$</p></li><li><p>$\log_b{(xy)}=\log_bx+\log_by$</p></li><li><p>$\log_b(\frac{x}{y})=\log_bx-\log_by$</p></li><li><p>$\log_b(x^y)=y\log_bx$</p></li><li><p>$\log_bx=\frac{\log_cx}{\log_cb}$</p></li><li><p>$\log_xy=\frac{1}{\log_yx}$</p></li></ol></blockquote><h2 id="e"><a href="#e" class="headerlink" title="e"></a>e</h2><p>关于e的四个定义:</p><blockquote><p>$\lim_{h \to \infty}(1+\frac{r}{h})^h=e^r$</p><p>$\lim_{h \to 0}(1+rh)^{\frac{1}{h}}=e^r$</p><p>$\lim_{h \to \infty}(1+\frac{1}{h})^h=e$</p><p>$\lim_{h \to 0}(1+h)^{\frac{1}{h}}=e$</p><h1 id="对数函数和指数函数求导"><a href="#对数函数和指数函数求导" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h1></blockquote><h2 id="对数函数和指数函数求导-1"><a href="#对数函数和指数函数求导-1" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h2><p>$令f(x)=\log_bx$</p><p>根据导数定义可知</p><p>$f’(x)=\lim_{h \to 0}\frac{\log_b(x+h)-\log_bx}{h}$</p><p>$f’(x)=\lim_{h \to 0}\frac{1}{h}(\log_b(\frac{x+h}{x}))$</p><p>$f’(x)=\lim_{h \to 0}\log_b((\frac{x+h}{x})^{\frac{1}{h}})$</p><p>$f’(x)=\lim_{h \to 0}\log_b((1+\frac{h}{x})^{\frac{1}{h}})$</p><p>$f’(x)=\log_b(e^{\frac{1}{x}})=\frac{1}{x}\log_be=\frac{1}{x\ln_b}$</p><p>以上可以推导出</p><blockquote><p>$\frac{\mathrm{d}}{\mathrm{d}x}\log_bx=\frac{1}{x\ln_b}$</p><p>$\frac{\mathrm{d}}{\mathrm{d}x}\ln_x=\frac{1}{x}$</p><p>$\frac{\mathrm{d}}{\mathrm{d}x}b^x=b^x\ln_b$</p><p>$\frac{\mathrm{d}}{\mathrm{d}x}e^x=e^x$</p></blockquote><h1 id="对数函数和指数函数的极限"><a href="#对数函数和指数函数的极限" class="headerlink" title="对数函数和指数函数的极限"></a>对数函数和指数函数的极限</h1><h1 id="取对数求导法"><a href="#取对数求导法" class="headerlink" title="取对数求导法"></a>取对数求导法</h1><p>$处理像f(x)^{g(x)}这种底数和指数均有x的函数的导数问题时,取对数求导法是个很有用的技巧.$</p><p>$令f(x)=x^x,根据对数法则$</p><p>$\ln_(x^x)=x\ln_x=\ln_y$</p><p>$\frac{\mathrm{d}}{\mathrm{d}x}\ln_y=\ln_x+x\frac{1}{x}$</p><p>$\frac{1}{y}\frac{\mathrm{d}y}{\mathrm{d}x}=\ln_x+1$</p><p>$\frac{\mathrm{d}y}{\mathrm{d}x}=(\ln_x+1)x^x$</p><h1 id="指数增长和指数衰变"><a href="#指数增长和指数衰变" class="headerlink" title="指数增长和指数衰变"></a>指数增长和指数衰变</h1><h2 id="指数增长"><a href="#指数增长" class="headerlink" title="指数增长"></a>指数增长</h2><p>假设$y=e^{kx}$,那么$\frac{\mathrm{d}y}{\mathrm{d}x}=ke^{kx}=ky$</p><blockquote><p>如果$\frac{\mathrm{d}y}{\mathrm{d}x}=ky,那么y=Ae^{kx},其中A为某个常数$</p></blockquote><p>这意味着,y的变化率等于ky.一个量变化的速率取决于这个量的大小.如果这个量越大, 那么它就会增长得越快(假设 k &gt; 0).</p><blockquote><p>指数增长方程: $P(t)=P_0e^{kt},其中P_0是初始的总数,k是增长常数$</p></blockquote><h2 id="指数衰变"><a href="#指数衰变" class="headerlink" title="指数衰变"></a>指数衰变</h2><blockquote><p>指数衰变方程: $P(t)=P_0e^{-kt}$</p></blockquote><h1 id="双曲函数"><a href="#双曲函数" class="headerlink" title="双曲函数"></a>双曲函数</h1><h2 id="双曲余弦函数-双曲正弦函数"><a href="#双曲余弦函数-双曲正弦函数" class="headerlink" title="双曲余弦函数 双曲正弦函数"></a>双曲余弦函数 双曲正弦函数</h2><p><img src="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/1.jpg" alt="alt"></p><blockquote><p>$coshx=\frac{e^x+e^{-x}}{2}$</p><p>$sinhx=\frac{e^x-e^{-x}}{2}$</p><p>$cosh^2(x)-sinh^2(x)=1$</p><p>$\frac{\mathrm{d}}{\mathrm{d}x}sinhx=coshx$</p><p>$\frac{\mathrm{d}}{\mathrm{d}x}coshx=sinhx$</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> calculus </category>
+          
+          <category> Math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> calculus </tag>
+            
+            <tag> Math </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>隐函数求导</title>
       <link href="/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/"/>
       <url>/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/</url>
