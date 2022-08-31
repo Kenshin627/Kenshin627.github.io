@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/18/types/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/18/types/" class="post-title-link" itemprop="url">Haskell02 - types</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">图形学的数学基础（一）：向量基础</a>
         </h2>
 
         <div class="post-meta">
@@ -184,23 +184,25 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-18 16:30:41" itemprop="dateCreated datePublished" datetime="2021-11-18T16:30:41+08:00">2021-11-18</time>
+              <time title="创建时间：2022-08-31 08:46:17 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T08:46:17+08:00">2022-08-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-20 12:49:21" itemprop="dateModified" datetime="2021-11-20T12:49:21+08:00">2021-11-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
                 </span>
             </span>
 
@@ -215,15 +217,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="01-TYPE-BASICS"><a href="#01-TYPE-BASICS" class="headerlink" title="01. TYPE BASICS"></a>01. TYPE BASICS</h1><p>in Haskell, you haven’t had to write down any information about the<br>type you’re using for any of your values. It turns out this is because Haskell has done it<br>for you! Haskell uses type inference to automatically determine the types of all values at<br>compile time based on the way they’re used! You don’t have to rely on Haskell to determine your types for you.</p>
-<p><img src="/2021/11/18/types/1.png" alt="alt"></p>
-<h2 id="list-tuple-function"><a href="#list-tuple-function" class="headerlink" title="list  tuple  function"></a>list  tuple  function</h2><p><img src="/2021/11/18/types/2.png" alt="alt"></p>
-<h3 id="Functions-with-multiple-arguments"><a href="#Functions-with-multiple-arguments" class="headerlink" title="Functions with multiple arguments"></a>Functions with multiple arguments</h3><p>why are type signatures this way? The reason is that behind the scenes in Haskell, all functions take only one argument. By rewriting makeAddress by using a series of nested lambda functions.</p>
-<p><img src="/2021/11/18/types/3.png" alt="alt"></p>
-<h3 id="Types-for-first-class-functions"><a href="#Types-for-first-class-functions" class="headerlink" title="Types for first-class functions"></a>Types for first-class functions</h3><p>functions can take functions as arguments and return<br>functions as values. To write these type signatures, you write the individual function<br>values in parentheses.</p>
+          <h1 id="图形学的数学基础（一）：向量"><a href="#图形学的数学基础（一）：向量" class="headerlink" title="图形学的数学基础（一）：向量"></a>图形学的数学基础（一）：向量</h1><h2 id="前边的话"><a href="#前边的话" class="headerlink" title="前边的话"></a>前边的话</h2><p>本系列是阅读《3D数学基础： 图形和游戏开发（第二版）》整理汇总的学习笔记，整个系列的结构排布基于原书的章节安排，针对其中的每个知识点做了适当的补充和拓展，其中不免有遗漏和错误之处，望各位读者批评指正。本篇文章做为该系列的第一章，主要介绍向量相关内容，涉及空间中向量的几何意义，各种运算，重点介绍点乘和叉乘的几何解释及在图形学中的应用场景。</p>
+<h2 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h2><p>对于数学家来说向量是一个数组，数组的长度代表向量所在的空间维度。程序中表示向量通常有两种方式，行向量（$Row Vector$）和列向量（$Column Vector$）,至于为什么要区分两种书写方式,我们放到矩阵章节再详细说明.</p>
+<p>$V_{column} = \begin{bmatrix}1\\ 2\\ 3\end{bmatrix}$</p>
+<p>$V_{row} = \begin{bmatrix}1&amp;2&amp;-1\end{bmatrix}$</p>
+<h2 id="几何定义"><a href="#几何定义" class="headerlink" title="几何定义"></a>几何定义</h2><p>从几何学上讲,向量是具有大小和方向的<strong>有向线段</strong>.讨论向量在空间中的哪个位置,是没有意义的,<strong>向量不具备位置属性</strong>.向量是一种相对偏移量的表示方法.如下图二维笛卡尔坐标系中,向量U和V是相等的.</p>
+<ul>
+<li>大小: 矢量的长度,矢量可以具有任何非负长度.</li>
+<li>方向:空间中指定的方向.</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/18/types/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%9F%BA%E7%A1%80/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -246,7 +251,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -314,14 +319,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -413,6 +418,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

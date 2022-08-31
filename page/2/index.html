@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88%E4%B8%8A%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/" class="post-title-link" itemprop="url">连续性和可导性</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88%E4%B8%8A%EF%BC%89/" class="post-title-link" itemprop="url">图形学的数学基础（十）：矩阵进阶（上）</a>
         </h2>
 
         <div class="post-meta">
@@ -184,27 +184,25 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-03-30 10:39:34" itemprop="dateCreated datePublished" datetime="2022-03-30T10:39:34+08:00">2022-03-30</time>
+              <time title="创建时间：2022-08-31 16:05:25 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T16:05:25+08:00">2022-08-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-31 11:17:45" itemprop="dateModified" datetime="2022-03-31T11:17:45+08:00">2022-03-31</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
                 </span>
             </span>
 
@@ -219,26 +217,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="连续性"><a href="#连续性" class="headerlink" title="连续性"></a>连续性</h1><p>我们先从一个函数是连续的, 这到底意味着什么开始. 正如我上面所说, 直觉上, 可以一笔画出连续函数的图像.</p>
-<h2 id="在一点处的连续"><a href="#在一点处的连续" class="headerlink" title="在一点处的连续"></a>在一点处的连续</h2><p>如果f(x)在a点连续,则必须满足以下三个条件:</p>
-<ul>
-<li>双侧极限${\lim_{x \to a} f(x)}$存在并且是有限的</li>
-<li>函数在点a处有定义,$f(a)$存在并且是有限的</li>
-<li>以上两个量相等,即: ${\lim_{x \to a} f(x) = f(x)}$</li>
-</ul>
-<h2 id="在一个区间上连续"><a href="#在一个区间上连续" class="headerlink" title="在一个区间上连续"></a>在一个区间上连续</h2><p>函数f在[a, b] 上连续,需满足以下三个条件:</p>
-<ul>
-<li>f在(a,b)的每一点都连续</li>
-<li>函数f在x = a处右连续,即 ${\lim_{x \to a^+} f(x)} = f(a)$</li>
-<li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
-</ul>
-<p><strong><em>★介值定理</em></strong></p>
-<blockquote>
-<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
-</blockquote>
+          <h1 id="图形学的数学基础（十）：矩阵进阶（上）"><a href="#图形学的数学基础（十）：矩阵进阶（上）" class="headerlink" title="图形学的数学基础（十）：矩阵进阶（上）"></a>图形学的数学基础（十）：矩阵进阶（上）</h1><h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><p>对于方形矩阵，有一个特殊的标量称为矩阵的行列式（$Determinant$。方形矩阵$\textbf{M}$的行列式表示为$|\textbf{M}|$,也表示为“det M”。非方形矩阵的行列式是未定义的。</p>
+<h3 id="2-times-2-和-3-times-3-矩阵的行列式"><a href="#2-times-2-和-3-times-3-矩阵的行列式" class="headerlink" title="$2\times 2$和$3\times 3$矩阵的行列式"></a>$2\times 2$和$3\times 3$矩阵的行列式</h3><p>$2\times 2$矩阵行列式：</p>
+<p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}\\ m_{21}&amp;m_{22}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21}$</p>
+<p>$3\times 3$矩阵行列式：</p>
+<p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}&amp;m_{13}\\ m_{21}&amp;m_{22}&amp;m_{23}\\ m_{31}&amp;m_{32}&amp;m_{33}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21} = m_{11}m_{22}m_{33} + m_{12}m_{23}m_{31} + m_{13}m_{21}m_{32} - m_{13}m_{22}m_{31} - m_{12}m_{21}m_{33} - m_{11}m_{23}m_{32} = m_{11}(m_{22}m_{33} - m_{23}m_{32}) + m_{12}(m_{23}m_{31} - m_{21}m_{33}) + m_{13}(m_{21}m_{32} - m_{22}m_{31})$</p>
+<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88%E4%B8%8A%EF%BC%89/1.png" alt="3x3矩阵行列式"></p>
+<p>如果将$X\times 3$矩阵的行解释为3个矢量，那么该矩阵的行列式等价于3个矢量的三重积。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88%E4%B8%8A%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -261,7 +249,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -329,14 +317,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

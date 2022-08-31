@@ -238,16 +238,16 @@
 
       
         <h1 id="Functor"><a href="#Functor" class="headerlink" title="Functor"></a>Functor</h1><h2 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h2><p>This solution means that you’d have to rewrite a special version of every existing function you want to use in a Maybe! This greatly limits the usefulness of tools such as Maybe. It turns out Haskell has a type class that solves this problem, called Functor.</p>
-<h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><p>Maybe is a member of the Functor type class. The Functor type class requires only one definition: fmap.<br><img src="/2021/11/22/Context/1.jpg" alt="alt"><br><em><strong>fmap provides an adapter</strong></em>, Notice that we’re using &lt;$&gt;, which is a synonym for fmap (except it’s a binary operator rather than a function.<em><strong>This ability to transform the types of values inside a Maybe is the true power of the Functor type class.</strong></em><br><img src="/2021/11/22/Context/2.jpg" alt="alt"></p>
+<h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><p>Maybe is a member of the Functor type class. The Functor type class requires only one definition: fmap.<br><img src="/2021/11/22/Context/1.jpg" alt="alt"><br>_<strong>fmap provides an adapter</strong>_, Notice that we’re using &lt;$&gt;, which is a synonym for fmap (except it’s a binary operator rather than a function._<strong>This ability to transform the types of values inside a Maybe is the true power of the Functor type class.</strong>_<br><img src="/2021/11/22/Context/2.jpg" alt="alt"></p>
 <p>Though fmap is the official function name, in practice the binary operator &lt;$&gt; is used much more frequently<br><img src="/2021/11/22/Context/3.png" alt="alt"></p>
-<h1 id="Applicative"><a href="#Applicative" class="headerlink" title="Applicative"></a>Applicative</h1><p><em><strong>the Applicative type class allows you to use functions that are inside a context, such as Maybe or IO, Functor is a superclass of Applicative.</strong></em><br><img src="/2021/11/22/Context/4.jpg" alt="alt"><br><img src="/2021/11/22/Context/5.jpg" alt="alt"></p>
+<h1 id="Applicative"><a href="#Applicative" class="headerlink" title="Applicative"></a>Applicative</h1><p>_<strong>the Applicative type class allows you to use functions that are inside a context, such as Maybe or IO, Functor is a superclass of Applicative.</strong>_<br><img src="/2021/11/22/Context/4.jpg" alt="alt"><br><img src="/2021/11/22/Context/5.jpg" alt="alt"></p>
 <h2 id="The-pure-method"><a href="#The-pure-method" class="headerlink" title="The pure method"></a>The pure method</h2><p>The pure method is a useful helper function for taking an ordinary value(also function) or function and putting it into a context.<br><img src="/2021/11/22/Context/7.png" alt="alt"></p>
 <h2 id="lt-gt"><a href="#lt-gt" class="headerlink" title="&lt;*&gt;"></a>&lt;*&gt;</h2><p><img src="/2021/11/22/Context/6.png" alt="alt"></p>
 <h2 id="Containers-vs-contexts"><a href="#Containers-vs-contexts" class="headerlink" title="Containers vs. contexts"></a>Containers vs. contexts</h2><ol>
 <li>Parameterized types that represent a container are types that represent a data structure.</li>
 <li>When a type is a context, extra information is implied about the type, beyond its structure.</li>
 </ol>
-<h2 id="List-as-a-context"><a href="#List-as-a-context" class="headerlink" title="List as a context"></a>List as a context</h2><p>The List type is both a container and a context.List as a container is easy to understand. List is basically a chain of buckets of whatever type of data you want to hold. But List is a member of Applicative,so there must be a way to view List as a context.<br><em><strong>List as a context is that it describes nondeterministic computation.</strong></em></p>
+<h2 id="List-as-a-context"><a href="#List-as-a-context" class="headerlink" title="List as a context"></a>List as a context</h2><p>The List type is both a container and a context.List as a container is easy to understand. List is basically a chain of buckets of whatever type of data you want to hold. But List is a member of Applicative,so there must be a way to view List as a context.<br>_<strong>List as a context is that it describes nondeterministic computation.</strong>_</p>
 <p><img src="/2021/11/22/Context/8.png" alt="alt"><br>when you add values in the context of a list,you’re adding together all possible values from the two contexts.</p>
 <ol>
 <li>A list as a container is a sequence of values that can hold any type. Each item in the list points to the next one or to the empty list.</li>
@@ -255,7 +255,7 @@
 </ol>
 <h1 id="MONAD"><a href="#MONAD" class="headerlink" title="MONAD"></a>MONAD</h1><h2 id="The-Monad-type-class"><a href="#The-Monad-type-class" class="headerlink" title="The Monad type class"></a>The Monad type class</h2><p><img src="/2021/11/22/Context/10.jpg" alt="alt"></p>
 <p><img src="/2021/11/22/Context/11.png" alt="alt"></p>
-<h3 id="The-bind-operator-gt-gt"><a href="#The-bind-operator-gt-gt" class="headerlink" title="The bind operator: &gt;&gt;="></a>The bind operator: &gt;&gt;=</h3><p><img src="/2021/11/22/Context/9.png" alt="alt"><br><em><strong>As you can see, &gt;&gt;= allows you to chain together a function of a type (a -&gt; m b)</strong></em></p>
+<h3 id="The-bind-operator-gt-gt"><a href="#The-bind-operator-gt-gt" class="headerlink" title="The bind operator: &gt;&gt;="></a>The bind operator: &gt;&gt;=</h3><p><img src="/2021/11/22/Context/9.png" alt="alt"><br>_<strong>As you can see, &gt;&gt;= allows you to chain together a function of a type (a -&gt; m b)</strong>_</p>
 <h2 id="the-list-Monad"><a href="#the-list-Monad" class="headerlink" title="the list Monad"></a>the list Monad</h2><p>when you assign your list to a variable using &lt;-, you get to treat it as though it were a single value. The rest of this code looks like it’s operating on one candidate, and yet the final result is the same as applying your logic to every candidate in a list.<br><img src="/2021/11/22/Context/12.png" alt="alt"></p>
 <h3 id="Building-lists-with-the-list-monad"><a href="#Building-lists-with-the-list-monad" class="headerlink" title="Building lists with the list monad"></a>Building lists with the list monad</h3><p><img src="/2021/11/22/Context/13.png" alt="alt"></p>
 <h3 id="The-guard-function"><a href="#The-guard-function" class="headerlink" title="The guard function"></a>The guard function</h3><p>Again you could use filter, but when working with monads, you’d like to be able to reason about a value outside its context. In Control.Monad, a function called guard allows you to filter your values in a list. You have to import Control.Monad to use guard.<br><img src="/2021/11/22/Context/14.png" alt="alt"></p>
@@ -360,14 +360,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

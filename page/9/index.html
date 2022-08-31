@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/22/Context/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/22/Context/" class="post-title-link" itemprop="url">Haskell03 - Context</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/" class="post-title-link" itemprop="url">图形学的数学基础（三）：向量点积</a>
         </h2>
 
         <div class="post-meta">
@@ -184,23 +184,25 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-22 11:46:20" itemprop="dateCreated datePublished" datetime="2021-11-22T11:46:20+08:00">2021-11-22</time>
+              <time title="创建时间：2022-08-31 10:10:54 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T10:10:54+08:00">2022-08-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
                 </span>
             </span>
 
@@ -215,14 +217,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Functor"><a href="#Functor" class="headerlink" title="Functor"></a>Functor</h1><h2 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h2><p>This solution means that you’d have to rewrite a special version of every existing function you want to use in a Maybe! This greatly limits the usefulness of tools such as Maybe. It turns out Haskell has a type class that solves this problem, called Functor.</p>
-<h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><p>Maybe is a member of the Functor type class. The Functor type class requires only one definition: fmap.<br><img src="/2021/11/22/Context/1.jpg" alt="alt"><br><em><strong>fmap provides an adapter</strong></em>, Notice that we’re using &lt;$&gt;, which is a synonym for fmap (except it’s a binary operator rather than a function.<em><strong>This ability to transform the types of values inside a Maybe is the true power of the Functor type class.</strong></em><br><img src="/2021/11/22/Context/2.jpg" alt="alt"></p>
-<p>Though fmap is the official function name, in practice the binary operator &lt;$&gt; is used much more frequently<br><img src="/2021/11/22/Context/3.png" alt="alt"></p>
-<h1 id="Applicative"><a href="#Applicative" class="headerlink" title="Applicative"></a>Applicative</h1><p><em><strong>the Applicative type class allows you to use functions that are inside a context, such as Maybe or IO, Functor is a superclass of Applicative.</strong></em><br><img src="/2021/11/22/Context/4.jpg" alt="alt"><br><img src="/2021/11/22/Context/5.jpg" alt="alt"></p>
-<h2 id="The-pure-method"><a href="#The-pure-method" class="headerlink" title="The pure method"></a>The pure method</h2><p>The pure method is a useful helper function for taking an ordinary value(also function) or function and putting it into a context.<br><img src="/2021/11/22/Context/7.png" alt="alt"></p>
+          <h1 id="图形学的数学基础（三）：向量点积"><a href="#图形学的数学基础（三）：向量点积" class="headerlink" title="图形学的数学基础（三）：向量点积"></a>图形学的数学基础（三）：向量点积</h1><h2 id="点积"><a href="#点积" class="headerlink" title="点积"></a>点积</h2><p>点积($Dot Product$)是向量乘法中比较简单的一种(另外一种叫做叉乘),但是点积在图形学中应用非常广泛,与许多其它运算有重要的关系,例如矩阵乘法、信号卷积、统计相关、和傅里叶变换等。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><strong>向量点积等于两个向量的长度相乘再乘以两向量夹角的余弦.</strong></p>
+<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/1.jpg" alt="alt"></p>
+<p>$\mathbf{a}\cdot\mathbf{b} = ||\mathbf{a}|| ||\mathbf{b}||\cos{\theta}$</p>
+<p>推导:</p>
+<p>$\cos\theta = \dfrac{\mathbf{a}\cdot\mathbf{b}}{||\mathbf{a}|| ||\mathbf{b}||}$</p>
+<p>对于单位向量来说<br>$\cos\theta = \mathbf{a}\cdot\mathbf{b}$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/22/Context/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -245,7 +249,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,14 +317,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -412,6 +416,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Asp.Net Core DI框架</a>
+            <a href="/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/" class="post-title-link" itemprop="url">纹理映射</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-10-19 17:51:45" itemprop="dateCreated datePublished" datetime="2019-10-19T17:51:45+08:00">2019-10-19</time>
+              <time title="创建时间：2022-03-09 21:49:09" itemprop="dateCreated datePublished" datetime="2022-03-09T21:49:09+08:00">2022-03-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-29 22:03:17" itemprop="dateModified" datetime="2021-10-29T22:03:17+08:00">2021-10-29</time>
+                <time title="修改时间：2022-03-13 22:22:06" itemprop="dateModified" datetime="2022-03-13T22:22:06+08:00">2022-03-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
                 </span>
             </span>
 
@@ -215,25 +215,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Asp-NET-Core-DI框架概览"><a href="#Asp-NET-Core-DI框架概览" class="headerlink" title="Asp.NET Core DI框架概览"></a>Asp.NET Core DI框架概览</h1><p>毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式.</p>
-<h2 id="服务的注册与消费"><a href="#服务的注册与消费" class="headerlink" title="服务的注册与消费"></a>服务的注册与消费</h2><p>ASP.NET Core中的依赖注入框架中,我们添加的服务注册被保存到通过 <strong>IServiceCollection</strong> 接口表示的集合之中,基于这个集合创建的DI容器体现为 <strong>IServiceProvider</strong>.</p>
-<p>DI框架提供了生产实例的三种生命周期模式,分别为:</p>
-<ul>
-<li><strong>Singleton</strong>:整个应用程序生命周期内单例</li>
-<li><strong>Scoped</strong>:单次服务请求内的单例</li>
-<li><strong>Transient</strong>:每次获取均会产生新的对象</li>
-</ul>
-<p>DI框架注册服务时通常会使用三种方式,分别为:</p>
-<ul>
-<li>指定注册非服务类型和实现类型.</li>
-<li>指定一个现有的服务实例.</li>
-<li>指定一个创建服务实例的委托对象.</li>
-</ul>
-<p>当我们在进行服务注册时,可以为同一类型添加一个服务注册,也可以添加多个,实际上添加的所有服务注册都是有效的,在完成服务注册之后，我们调用IServiceCollection接口的扩展方法  <strong>BuildServiceProvider</strong>创建出代表DI容器的IServiceProvider对象,并利用它调用后者的<strong>GetService<t></t></strong>方法来提供相应的服务实例,总时会返回一个服务实例,这里采用了”后来居上”的原则,即总是采用最近添加的服务注册来创建服务实例.如果我们调用另一个扩展方法<strong>GetServices<t></t></strong>,它将利用返回所有服务注册提供的服务实例.如下所示的代码片段.</p>
-<p><img src="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/DI1.jpg" alt="alt"></p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;当试图重现真实世界的样貌时，人们很快就会意识到任何物体都有自己的特征。木材随纹理生长;皮肤长出皱纹;布显示其编织结构;油漆显示了刷子或辊子留下的痕迹。即使是光滑的塑料也是用模压成型的凸起物制成的，而光滑的金属则显示出制造它的加工过程的痕迹。曾经毫无特色的材料很快就会被标记、凹痕、污渍、划痕、指纹和污垢所覆盖.<br>&nbsp;&nbsp;&nbsp;&nbsp;在图形学中,我们把所有这些现象归结为”空间性的改变物体属性”- 物体表面属性因位置而异，但并不真正改变物体形状几何构造.为了实现这些效果，所有类型的建模和渲染系统都提供了一些纹理映射的方法:使用称为纹理映射的图像、纹理图像或者纹理来存储数据, 然后通过数学的方法将图片映射到物体表面.<br>&nbsp;&nbsp;&nbsp;&nbsp;事实证明,除了表现物体表面细节的基本目的外，还有许多其他应用纹理映射的方式.例如:生成阴影(shadow mapping), 反射, 提供光照(Environment mapping),甚至定义形状(bump mapping).<br>本章讨论通过纹理来表示表面细节、阴影和反射。虽然基本思想简单，但仍然面临几个问题需要处理.</p>
+<ol>
+<li>实现从纹理到物体表面的映射函数.</li>
+<li>纹理映射是一个重采样的过程,就像重新调整一张图片的大小, 重采样会产生走样问题.</li>
+</ol>
+<h1 id="纹理查询"><a href="#纹理查询" class="headerlink" title="纹理查询"></a>纹理查询</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;首先，让我们考虑一个简单的纹理映射应用。我们有一个木地板的场景，我们希望地板的漫反射颜色是由一个木地板木纹图像控制。无论我们使用光线追踪或光栅化,着色代码需要知道当前作色点对应的纹理图片的颜色值,用作布林冯光照模型中的漫反射颜色系数.<br>为了拿到着色点对应纹理图片的颜色值, 着色器会执行一次纹理查询(<strong><em>texture lookup</em></strong>)-它计算在纹理图像的坐标系统中，对应于着色点的位置，然后读取图像中的颜色，从而得到纹理样本.这种颜色随后被用于着色.伪代码如下:<br></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Color texture_lookup(Texture t, float u, float v) &#123;</span><br><span class="line">    int i = round(u * t.width() - 0.5)</span><br><span class="line">    int j = round(v * t.height() - 0.5)</span><br><span class="line">    return t.get_pixel(i,j)</span><br><span class="line">&#125;</span><br><span class="line">Color shade_surface_point(Surface s, Point p, Texture t) &#123;</span><br><span class="line">    Vector normal = s.get_normal(p)</span><br><span class="line">    (u,v) = s.get_texcoord(p)</span><br><span class="line">    Color diffuse_color = texture_lookup(u,v)</span><br><span class="line">    // compute shading using diffuse_color and normal</span><br><span class="line">    // return shading result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+<h1 id="纹理坐标方程"><a href="#纹理坐标方程" class="headerlink" title="纹理坐标方程"></a>纹理坐标方程</h1><h2 id="平铺-环绕方式-纹理坐标变换"><a href="#平铺-环绕方式-纹理坐标变换" class="headerlink" title="平铺, 环绕方式, 纹理坐标变换"></a>平铺, 环绕方式, 纹理坐标变换</h2><p>模型的纹理坐标不总是在[0,1]的区间内,纹理映射机制有不同的处理方式.<br>如果一张纹理被设计只覆盖部分表面，但纹理坐标已经设置好将整个表面映射到单元正方形，其中一种方式是准备一个几乎是空白的纹理图像，其中的内容位于一个小区域。<br>但这可能需要非常高分辨率的纹理图像来获得相关区域的足够细节。另一种做法是缩放所有纹理坐标，使它们覆盖更大的范围，例如，到位置在表面中心面积为十分之一的正方形单位。<br>在这种情况下，纹理覆盖的单元正方形区域之外的纹理查找应该返回一个固定的背景色。一种方法是设置一个背景色，由单元正方形外的纹理查找返回。如果已经有一个恒定的背景颜色纹理图像(例如,一个标志在白色背景),另一种方法是返回纹理图像的颜色最接近边缘的颜色.<br>有时我们想要一个重复的图案，比如棋盘，瓷砖地板，或砖墙。如果可以使图案在矩形网格上重复，那么使用相同数据的许多副本创建图像将是一种浪费。相反，我们可以使用环绕索引处理纹理图像外部的纹理查找—当查找点离开纹理图像的右边缘时，它会绕到左边缘。使用像素坐标上的整数余数操作可以非常简单地处理这个问题。<br></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//repeat</span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(i % t.width(), j % t.height())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//clamp </span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(max(0, min(i, t.width()-1)),</span><br><span class="line">(max(0, min(j, t.height()-1))))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/#more" rel="contents">
+              <a class="btn" href="/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -256,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -324,14 +315,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

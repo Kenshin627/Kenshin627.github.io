@@ -242,13 +242,13 @@
 <h1 id="04-LISTS"><a href="#04-LISTS" class="headerlink" title="04 LISTS"></a>04 LISTS</h1><p>Lists are the single most important data structure in functional programming. One of<br>the key reasons is that lists are inherently recursive. A list is either an empty list or an<br>element followed by another list</p>
 <h2 id="head-tail"><a href="#head-tail" class="headerlink" title="head tail"></a>head tail</h2><p>When taking apart a list, the main pieces are the head, the tail.The head is just the first element in a list.The tail is the rest of the list left over, after the head<br><img src="/2021/11/16/Foundations-of-functional-programming/3.png" alt="alt"></p>
 <p><img src="/2021/11/16/Foundations-of-functional-programming/4.png" alt="alt"></p>
-<h2 id="cons"><a href="#cons" class="headerlink" title="cons(:)"></a>cons(:)</h2><p>To build a list, you need just one function and the infix operator (:),<br>which is called cons. you need to take a value and cons it with another list. The simplest way<br>to make a list is to cons a value with the empty list. <em><strong>By definition, a list is always a<br>value consed with another list (which can also be an empty list)</strong></em><br>If you do want to combine two lists, you need to concatenate them by using ++</p>
+<h2 id="cons"><a href="#cons" class="headerlink" title="cons(:)"></a>cons(:)</h2><p>To build a list, you need just one function and the infix operator (:),<br>which is called cons. you need to take a value and cons it with another list. The simplest way<br>to make a list is to cons a value with the empty list. _<strong>By definition, a list is always a<br>value consed with another list (which can also be an empty list)</strong>_<br>If you do want to combine two lists, you need to concatenate them by using ++</p>
 <h2 id="lazy-evaluation"><a href="#lazy-evaluation" class="headerlink" title="lazy evaluation"></a>lazy evaluation</h2><p>Haskell uses a special form of evaluation called lazy evaluation. In lazy evaluation,<br>no code is evaluated until it’s needed.</p>
-<h2 id="Common-functions-on-lists"><a href="#Common-functions-on-lists" class="headerlink" title="Common functions on lists"></a>Common functions on lists</h2><h3 id="The-operator"><a href="#The-operator" class="headerlink" title="The !! operator"></a>The !! operator</h3><p>If you want to access a particular element of a list by its index, you can use the !! operator. The !! operator takes a list and a number, returning the element at that location in<br>the list. <em><strong>any infix operator (an operator that’s placed between two values, such as +) can also be used like a prefix function by wrapping it in parentheses</strong></em><br><img src="/2021/11/16/Foundations-of-functional-programming/5.png" alt="alt"></p>
-<h4 id="partial-application"><a href="#partial-application" class="headerlink" title="partial application"></a>partial application</h4><p><em><strong>Using prefix notation can often make things such as partial application easier. Prefix<br>notation is also useful for using operators as arguments to other functions. You can still<br>use partial application with an infix operator; you just need to wrap the expression in<br>parentheses</strong></em></p>
+<h2 id="Common-functions-on-lists"><a href="#Common-functions-on-lists" class="headerlink" title="Common functions on lists"></a>Common functions on lists</h2><h3 id="The-operator"><a href="#The-operator" class="headerlink" title="The !! operator"></a>The !! operator</h3><p>If you want to access a particular element of a list by its index, you can use the !! operator. The !! operator takes a list and a number, returning the element at that location in<br>the list. _<strong>any infix operator (an operator that’s placed between two values, such as +) can also be used like a prefix function by wrapping it in parentheses</strong>_<br><img src="/2021/11/16/Foundations-of-functional-programming/5.png" alt="alt"></p>
+<h4 id="partial-application"><a href="#partial-application" class="headerlink" title="partial application"></a>partial application</h4><p>_<strong>Using prefix notation can often make things such as partial application easier. Prefix<br>notation is also useful for using operators as arguments to other functions. You can still<br>use partial application with an infix operator; you just need to wrap the expression in<br>parentheses</strong>_</p>
 <h3 id="length"><a href="#length" class="headerlink" title="length"></a>length</h3><p>give the length of the list</p>
 <h3 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h3><p>reverse the list</p>
-<h3 id="elem"><a href="#elem" class="headerlink" title="elem"></a>elem</h3><p>The elem function takes a value and a list and checks whether the value is in the list.elem is a function that you may want to treat as an infix operator for readability. <em><strong>Any<br>binary function can be treated as an infix operator by wrapping it in back-quotes (`)</strong></em></p>
+<h3 id="elem"><a href="#elem" class="headerlink" title="elem"></a>elem</h3><p>The elem function takes a value and a list and checks whether the value is in the list.elem is a function that you may want to treat as an infix operator for readability. _<strong>Any<br>binary function can be treated as an infix operator by wrapping it in back-quotes (`)</strong>_</p>
 <h3 id="take-and-drop"><a href="#take-and-drop" class="headerlink" title="take and drop"></a>take and drop</h3><p>The take function takes a number and a list as arguments and then returns the first n elements of the list. f you ask for more values then a list has, take gives you what it can, with no error.</p>
 <h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>You use zip when you want to combine two lists into tuple pairs. The arguments to zip<br>are two lists. If one list happens to be longer, zip will stop whenever one of the two lists<br>is empty.</p>
 <h3 id="cycle"><a href="#cycle" class="headerlink" title="cycle"></a>cycle</h3><p> cycle uses lazy evaluation to create an infinite list. Given a list, cycle repeats that list endlessly.<br><img src="/2021/11/16/Foundations-of-functional-programming/6.png" alt="alt"></p>
@@ -262,9 +262,9 @@
 </ol>
 <h2 id="Pattern-matching"><a href="#Pattern-matching" class="headerlink" title="Pattern matching"></a>Pattern matching</h2><p>Haskell has an amazing feature called pattern matching<br>that allows you to peek at the values passed as arguments and behave accordingly.</p>
 <ol>
-<li><em><strong>Pattern matching, just like case, looks at the options in order</strong></em></li>
-<li><em><strong>pattern matching is that it can look only at arguments, but it can’t do any computation on them when matching</strong></em></li>
-<li><em>**it’s standard practice to use </em> as a wildcard for values you don’t use**_</li>
+<li>_<strong>Pattern matching, just like case, looks at the options in order</strong>_</li>
+<li>_<strong>pattern matching is that it can look only at arguments, but it can’t do any computation on them when matching</strong>_</li>
+<li>_<strong>it’s standard practice to use _ as a wildcard for values you don’t use</strong>_</li>
 </ol>
 <h2 id="Recursion-on-lists"><a href="#Recursion-on-lists" class="headerlink" title="Recursion on lists"></a>Recursion on lists</h2><h3 id="implements-built-in-length-take-cycle"><a href="#implements-built-in-length-take-cycle" class="headerlink" title="implements built-in length take cycle"></a>implements built-in length take cycle</h3><p><img src="/2021/11/16/Foundations-of-functional-programming/7.png" alt="alt"></p>
 <h1 id="06-HIGHER-ORDER-FUNCTIONS"><a href="#06-HIGHER-ORDER-FUNCTIONS" class="headerlink" title="06 HIGHER-ORDER FUNCTIONS"></a>06 HIGHER-ORDER FUNCTIONS</h1><p>A higher-order function is technically any function that takes another function as an argument.<br>Typically, when higher-order functions are mentioned, a specific group of them comes<br>to mind, and nearly all of these are used to abstract away common patterns of recursion.<br>The main reason that you use first-class functions, and therefore have higher-order<br>functions, is so you can abstract out programming patterns</p>
@@ -372,14 +372,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
