@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>图形学的数学基础（十）：矩阵进阶（上）</title>
+      <link href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5/"/>
+      <url>/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5/</url>
+      
+        <content type="html"><![CDATA[<h1 id="图形学的数学基础（十）：矩阵进阶（上）"><a href="#图形学的数学基础（十）：矩阵进阶（上）" class="headerlink" title="图形学的数学基础（十）：矩阵进阶（上）"></a>图形学的数学基础（十）：矩阵进阶（上）</h1><h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><p>对于方形矩阵，有一个特殊的标量称为矩阵的行列式（$Determinant$。方形矩阵$\textbf{M}$的行列式表示为$|\textbf{M}|$,也表示为“det M”。非方形矩阵的行列式是未定义的。</p><h3 id="2-times-2-和-3-times-3-矩阵的行列式"><a href="#2-times-2-和-3-times-3-矩阵的行列式" class="headerlink" title="$2\times 2$和$3\times 3$矩阵的行列式"></a>$2\times 2$和$3\times 3$矩阵的行列式</h3><p>$2\times 2$矩阵行列式：</p><p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}\\ m_{21}&amp;m_{22}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21}$</p><p>$3\times 3$矩阵行列式：</p><p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}&amp;m_{13}\\ m_{21}&amp;m_{22}&amp;m_{23}\\ m_{31}&amp;m_{32}&amp;m_{33}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21} = m_{11}m_{22}m_{33} + m_{12}m_{23}m_{31} + m_{13}m_{21}m_{32} - m_{13}m_{22}m_{31} - m_{12}m_{21}m_{33} - m_{11}m_{23}m_{32} = m_{11}(m_{22}m_{33} - m_{23}m_{32}) + m_{12}(m_{23}m_{31} - m_{21}m_{33}) + m_{13}(m_{21}m_{32} - m_{22}m_{31})$</p><p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5/1.png" alt="3x3矩阵行列式"></p><p>如果将$X\times 3$矩阵的行解释为3个矢量，那么该矩阵的行列式等价于3个矢量的三重积。</p><p>$\begin{vmatrix}<br>    a_x&amp;a_y&amp;a_z\\ b_x&amp;b_y&amp;b_z\\ c_x&amp;c_y&amp;c_z<br>\end{vmatrix}$ = $(a_yb_z -a_zb_y)c_x + (a_zb_x - a_xb_z)c_y + (a_xb_y - a_yb_x)c_z = (\mathbf{a}\times \mathbf{b})\cdot \mathbf{c}$</p><h3 id="子矩阵行列式-Minor-和余子式-Cofactor"><a href="#子矩阵行列式-Minor-和余子式-Cofactor" class="headerlink" title="子矩阵行列式($Minor$)和余子式($Cofactor$)"></a>子矩阵行列式($Minor$)和余子式($Cofactor$)</h3><h3 id="子矩阵行列式"><a href="#子矩阵行列式" class="headerlink" title="子矩阵行列式"></a>子矩阵行列式</h3><p>假设$\textbf{M}$具有r行和c列的矩阵，考虑通过$\textbf{M}$中删除行i和列j而获得的矩阵。该矩阵具有r-1行和c-1列。这个矩阵的行列式表示为$\textbf{M}^{ij}$,被称为$\textbf{M}$的子矩阵行列式。</p><h4 id="余子式"><a href="#余子式" class="headerlink" title="余子式"></a>余子式</h4><p>给定行和列的方形矩阵$\textbf{M}$的余子式与相应的子矩阵行列式相同，但余子式会交替变负，正负取决于因子$(-1)^{i + j}$.矩阵的余子式用来计算$n\times n$任意维度矩阵的行列式。</p><p>$C^{ij} = (-1)^{i+j}M^{ij}$</p><p>我们使用$C^{ij}$表示行i列j中的$\textbf{M}$的余子式。<br>+&amp;-&amp;+&amp;-&amp;…\\<br>$\begin{bmatrix}<br>    +&amp;-&amp;+&amp;-&amp;…\\ -&amp;+&amp;-&amp;+&amp;…\\ +&amp;-&amp;+&amp;-&amp;…\\  -&amp;+&amp;-&amp;+&amp;…\\ …&amp;…&amp;…&amp;…&amp;…<br>\end{bmatrix}$</p><h3 id="行列式的数学定义"><a href="#行列式的数学定义" class="headerlink" title="行列式的数学定义"></a>行列式的数学定义</h3><p>对于任意维度$n\times n$矩阵的行列式，可以通过它的余子式计算。这个定义是递归的，因为<strong>余子式本质上是有符号的行列式</strong>。首先从矩阵中任意选择一行或一列。对于行或列中的每个元素，将此元素诚意相应的余子式，对这些乘积求和可得出颠的行列式：</p><p>$\begin{vmatrix}<br>    \textbf{M}<br>\end{vmatrix} = \sum\limits_{j=1}^n{m_{ij}C^{ij}} = \sum\limits_{j=1}^n{m_{ij}(-1)^{i + j}M^{ij}}$</p><h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><p>．任何维度单位矩阵的行列式等于1：$\begin{vmatrix}I\end{vmatrix} = 1$</p><p>．矩阵乘积的行列式等于行列式的乘积：　$\begin{vmatrix}AB\end{vmatrix} = \begin{vmatrix}A\end{vmatrix}\begin{vmatrix}B\end{vmatrix}$</p><p>. 矩阵转置的行列式等于原始行列式：$\begin{vmatrix}M^T\end{vmatrix} = \begin{vmatrix}M\end{vmatrix}$<br>. 如果矩阵中的任何行或者列包含全0元素，则该矩阵的行列式为0<br>. 交换任意行对都会让行列式变负</p><h3 id="几何解释"><a href="#几何解释" class="headerlink" title="几何解释"></a>几何解释</h3><p><strong>在几何上行列式表示了当前变换矩阵对空间的压缩或者拉伸程度。</strong>。即经过一次变换后，空间被压缩或者拉伸了多少。二维中，行列式等于具有基矢量作为两条边的平行四边形的有符号面积。三维中，行列式是平行六面体的体积。</p><p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%9F%A9%E9%98%B5/2.webp" alt="行列式的几何意义"></p><h2 id="逆矩阵（Inverse）"><a href="#逆矩阵（Inverse）" class="headerlink" title="逆矩阵（Inverse）"></a>逆矩阵（Inverse）</h2><p>对于方形矩阵来说，另一个重要运算是矩阵的逆矩阵。方形矩阵$\textbf{M}$的逆矩阵表示为$\textbf{M}^-1$.</p><p>并非所有矩阵都有逆矩阵。如果某个矩阵具有逆矩阵，则称其为可逆或者非奇异（$Nonsingular$）矩阵。不具有逆的矩阵被认为是不可逆或奇异矩阵。<strong>可逆矩阵的列是先行独立的，列也如此。奇异矩阵的行和列是线性相关的。</strong></p><p>奇异矩阵的行列式为零。非奇异矩阵的行列式为非零。一般情况下检查行列式的大小是最常用的可逆性测试。但是也有极端情况，本章对于此暂不讨论。</p><h3 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h3><h4 id="经典伴随矩阵（-Classical-Adjoint-）"><a href="#经典伴随矩阵（-Classical-Adjoint-）" class="headerlink" title="经典伴随矩阵（$Classical\;Adjoint$）"></a>经典伴随矩阵（$Classical\;Adjoint$）</h4><p>本小节我们会使用基于经典伴随矩阵的方法，计算矩阵的逆。<br><strong>矩阵$\textbf{M}$的经典伴随矩阵，表示为“adj M”,被定义为$\textbf{M}$的余子式的矩阵的转置</strong></p><p>$adj M(3\times 3) = \begin{bmatrix}<br>    C^{11}&amp;C^{12}&amp;C^{13}\\<br>    C^{21}&amp;C^{22}&amp;C^{23}\\<br>    C^{31}&amp;C^{32}&amp;C^{33}<br>\end{bmatrix}^T$</p><p><strong>矩阵的逆等于经典伴随矩阵除以行列式</strong></p><p>$\textbf{M}^{-1} = \dfrac{adj\;M}{\begin{vmatrix}<br>    \textbf{M}<br>\end{vmatrix}}$</p><p>注：上式同时也证明了，矩阵行列式为0，则不可逆，其实这点从几何角度也可以做成解释，行列式为0，表示空间至少为压缩了一个维度。我们无法从低维度恢复到高纬度，因为不是1对1的关系。</p><h3 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h3><ol><li>矩阵的逆矩阵的逆是原始矩阵：$(\textbf{M}^{-1})^{-1} = \textbf{M}$</li><li>矩阵转置的逆矩阵是矩阵逆的转置：$(\textbf{M}^T)^{-1} = (\textbf{M}^{-1})^T$</li><li>矩阵乘积的逆等于矩阵的逆的乘积：$(\textbf{AB})^{-1} = \textbf{B}^{-1}\textbf{A}^{-1}$</li><li>逆矩阵的行列式是原始矩阵行列式的倒数：$\begin{vmatrix}M^{-1}\end{vmatrix} = \dfrac{1}{\begin{bmatrix}M\end{bmatrix}}$</li></ol><h3 id="几何解释-1"><a href="#几何解释-1" class="headerlink" title="几何解释"></a>几何解释</h3><p>从几何的视角来看，逆矩阵通常代表了“反向”或“撤销”操作。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+          <category> 计算机图形学的数学基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>图形学的数学基础（九）：仿射变换和齐次坐标</title>
       <link href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2%E5%92%8C%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87/"/>
       <url>/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2%E5%92%8C%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87/</url>
