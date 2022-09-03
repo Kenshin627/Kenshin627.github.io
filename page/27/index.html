@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/Foundations-of-functional-programming/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/20/IO/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/16/Foundations-of-functional-programming/" class="post-title-link" itemprop="url">Haskell01 - Foundations of functional programming</a>
+            <a href="/2021/11/20/IO/" class="post-title-link" itemprop="url">Haskell03 - IO</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-11-16 00:06:02" itemprop="dateCreated datePublished" datetime="2021-11-16T00:06:02+08:00">2021-11-16</time>
+              <time title="创建时间：2021-11-20 12:44:13" itemprop="dateCreated datePublished" datetime="2021-11-20T12:44:13+08:00">2021-11-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-18 21:19:35" itemprop="dateModified" datetime="2021-11-18T21:19:35+08:00">2021-11-18</time>
+                <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -215,19 +215,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="01-Functions"><a href="#01-Functions" class="headerlink" title="01. Functions"></a>01. Functions</h1><p>All functions in Haskell follow three rules that force them to behave like functions in<br>math:</p>
-<ul>
-<li>All functions must take an argument.</li>
-<li>All functions must return a value.</li>
-<li>Anytime a function is called with the same argument, it must return the same<br>value</li>
-</ul>
-<p>The third rule is part of the basic mathematical definition of a function. When the rule<br>that the same argument must always produce the same result is applied to function in a<br>programming language, it’s called referential transparency.</p>
-<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="/2021/11/16/Foundations-of-functional-programming/1.png" alt="alt"></p>
-<h2 id="Practical-lambda-functions-and-lexical-scope"><a href="#Practical-lambda-functions-and-lexical-scope" class="headerlink" title="Practical lambda functions and lexical scope"></a>Practical lambda functions and lexical scope</h2><p>IIFE works on exactly the same principles as our example of replacing a where statement. Whenever you create a new function, named or not, you<br>create a new scope, which is the context in which a variable is defined. When a variable is<br>used, the program looks at the nearest scope; if the definition of the variable isn’t there,<br>it goes to the next one up. This particular type of variable lookup is called lexical scope.<br>Both Haskell and JavaScript use lexical scoping, which is why IIFE and your lambda function variables behave in a similar fashion.</p>
-<h1 id="03-FIRST-CLASS-FUNCTIONS"><a href="#03-FIRST-CLASS-FUNCTIONS" class="headerlink" title="03. FIRST-CLASS FUNCTIONS"></a>03. FIRST-CLASS FUNCTIONS</h1>
+          <h1 id="IO-TYPES"><a href="#IO-TYPES" class="headerlink" title="IO TYPES"></a>IO TYPES</h1><p>Haskell has a special parameterized type called IO. Any value in an IO context must stay in this context. This prevents code that’s pure (meaning it upholds referential transparency and doesn’t change state) and code that’s necessarily impure from mixing.</p>
+<h2 id="IO-types—dealing-with-an-impure-world"><a href="#IO-types—dealing-with-an-impure-world" class="headerlink" title="IO types—dealing with an impure world"></a>IO types—dealing with an impure world</h2><p>IO in Haskell is a parameterized type that’s similar to Maybe.The first thing they share in common is that they’re parameterized types of the same kind.The other thing that Maybe and IO have in common is that (unlike List or Map) they describe a context for their parameters rather than a container. The context for the IO type is that the value has come from an input/output operation.To keep Haskell code pure and predictable, you use the IO type to provide a context for data that may not behave the way all of the rest of your Haskell code does. IO actions aren’t functions.</p>
+<h2 id="Examples-of-IO-actions"><a href="#Examples-of-IO-actions" class="headerlink" title="Examples of IO actions"></a>Examples of IO actions</h2><p>main doesn’t return any meaningful value; it simply performs an action. It turns out that main isn’t a function, because it breaks one of the fundamental rules of functions: it doesn’t return a value. Because of this, we refer to main as an IO action. IO actions work much like functions except they violate at least one of the three rules we established for functions early in the book. Some IO actions return no value, some take no input, and others don’t always return the same value given the same input.<br><img src="/2021/11/20/IO/1.png" alt="alt"></p>
+<h2 id="Do-notation"><a href="#Do-notation" class="headerlink" title="Do-notation"></a>Do-notation</h2><p>This do-notation allows you to treat IO types as if they were regular types. This also explains why some variables use let and others use &lt;-. Variables assigned with &lt;- allow you to act as though a type IO a is just of type a. You use let statements whenever you create variables that aren’t IO types.</p>
+<h3 id="lt"><a href="#lt" class="headerlink" title="&lt;-"></a>&lt;-</h3><p>Donotation allows you to assign an IO String variable by using &lt;-, to act like it’s an ordinary String, and then to pass it to functions that work with only regular Strings<br><img src="/2021/11/20/IO/2.png" alt="alt"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/16/Foundations-of-functional-programming/#more" rel="contents">
+              <a class="btn" href="/2021/11/20/IO/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -250,7 +245,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -318,7 +313,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

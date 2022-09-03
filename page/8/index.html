@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/" class="post-title-link" itemprop="url">图形学的数学基础（四）：向量叉积</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/" class="post-title-link" itemprop="url">图形学的数学基础（六）：施密特正交化与叉乘正交化</a>
         </h2>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-31 10:34:44 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T10:34:44+08:00">2022-08-31</time>
+              <time title="创建时间：2022-08-31 10:55:33 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T10:55:33+08:00">2022-08-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,22 +217,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（四）：向量叉积（Cross-Product）"><a href="#图形学的数学基础（四）：向量叉积（Cross-Product）" class="headerlink" title="图形学的数学基础（四）：向量叉积（Cross Product）"></a>图形学的数学基础（四）：向量叉积（Cross Product）</h1><h2 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h2><p>叉积是另一种向量乘积，与上节讲到的点积不同，叉积的结果是一个向量，该向量垂直于原始的两个向量，即垂直于原始两个向量所构成的平面。</p>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/1.jpg" alt="alt"></p>
-<ul>
-<li><p>$\mathbf{a} \times \mathbf{b}$将产生一个垂直于$\mathbf{a}$和$\mathbf{b}$所构成平面的向量，这样的向量可能有两个，彼此方向相反，朝向由右手螺旋定则判定，具体在后文会详细介绍。</p>
-</li>
-<li><p><strong>$\mathbf{a} \times \mathbf{b}$的长度等于$\mathbf{a}$和$\mathbf{b}$长度的乘积再乘以$\mathbf{a}$和$\mathbf{b}$之间角度的正弦值。</strong></p>
-<p>  $||\mathbf{a} \times \mathbf{b}|| = ||\mathbf{a}|||| \mathbf{b} || \sin\theta$</p>
-</li>
-</ul>
-<p>实际上根据定义不难理解， $\mathbf{a} \times \mathbf{b}$的长度等于由两个边$\mathbf{a}$ $\mathbf{b}$所形成的平行四边形的面积。</p>
-<p>$\textbf{A} =  bh = b(a\sin\theta) = ||\mathbf{a}||||\mathbf{b}||\sin\theta = ||\mathbf{a} \times \mathbf{b}||$</p>
-<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/2.jpg" alt="alt"></p>
-<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2>
+          <h1 id="图形学的数学基础（六）：施密特正交化-Schmidt-orthogonalization-与叉乘正交化"><a href="#图形学的数学基础（六）：施密特正交化-Schmidt-orthogonalization-与叉乘正交化" class="headerlink" title="图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化"></a>图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化</h1><h2 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h2><p>在很多情况下，例如在计算相机的lookAt矩阵中，由于传入的$\mathbf{direction}$ $\mathbf{up}$ $\mathbf{right}$三个基矢量不一定是规范化的，需要对三个矢量进行正交化处理，这样才能组成标准正交基。<br>本文将介绍两种常见的矢量正交化方法。施密特正交化和矢量叉积。</p>
+<h2 id="施密特正交化"><a href="#施密特正交化" class="headerlink" title="施密特正交化"></a>施密特正交化</h2><p>施密特正交化是求欧式空间正交基的一种方法。从欧式空间任意线性无关的向量组$\mathbf{\alpha_1},\mathbf{\alpha_2},…,\mathbf{\alpha_m}$出发，求得正交向量组 $\mathbf{\beta_1},\mathbf{\beta_2},…,\mathbf{\beta_m}$,再将正交向量组中每个向量归一化，得到一个标准正交向量组，这种方法称为施密特正交化。</p>
+<h3 id="计算方法"><a href="#计算方法" class="headerlink" title="计算方法"></a>计算方法</h3><p>如果$\vec{x_1},\vec{x_2},…\vec{x_n}$是某向量空间的基，那么可以通过以下公式找到该向量空间中的n个两两正交的向量$\vec{v_1},\vec{v_2},…\vec{v_n}$</p>
+<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/1.jpg" alt="alt"><br>配图来源：《马同学图解数学-如何理解施密特正交化？》</p>
+<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>施密特正交化主要利用了矢量点积的投影性质，可以将矢量分解为平行和垂直两个矢量。以下我们分别以二维向量空间和三维向量空间为例详细介绍施密特正交化的推导过程。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -255,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -323,7 +315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
