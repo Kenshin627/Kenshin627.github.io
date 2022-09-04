@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">数学相关</a>
+            <a href="/2022/03/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">信号处理</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-03-01 15:31:47" itemprop="dateCreated datePublished" datetime="2022-03-01T15:31:47+08:00">2022-03-01</time>
+              <time title="创建时间：2022-03-06 10:34:23" itemprop="dateCreated datePublished" datetime="2022-03-06T10:34:23+08:00">2022-03-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-06 10:06:15" itemprop="dateModified" datetime="2022-03-06T10:06:15+08:00">2022-03-06</time>
+                <time title="修改时间：2022-03-09 21:44:09" itemprop="dateModified" datetime="2022-03-09T21:44:09+08:00">2022-03-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -201,10 +201,6 @@
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
                 </span>
             </span>
 
@@ -219,12 +215,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="计算机图形学数学基础知识"><a href="#计算机图形学数学基础知识" class="headerlink" title="计算机图形学数学基础知识"></a>计算机图形学数学基础知识</h1><h2 id="集合与映射-Sets-and-Mappings"><a href="#集合与映射-Sets-and-Mappings" class="headerlink" title="集合与映射(Sets and Mappings)"></a>集合与映射(Sets and Mappings)</h2><h3 id="区间"><a href="#区间" class="headerlink" title="区间"></a>区间</h3><p><img src="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/1.jpg" alt="alt"></p>
-<h3 id="对数-Logarithms"><a href="#对数-Logarithms" class="headerlink" title="对数(Logarithms)"></a>对数(Logarithms)</h3><p>时至今日，但对数在出现指数项方程的问题中经常有用。根据定义，每一个对数都有一个以a为底的对数</p>
-
+          <h1 id="信号处理"><a href="#信号处理" class="headerlink" title="信号处理"></a>信号处理</h1><p>在图形学中,通常要处理些连续变量的函数:图片是你见过的第一个例子，但是当你继续探索图形学的时候，你会遇到很多类似的情况.就其本质而言,计算机无法直接表达连续的函数,必须使用有限的位数表达他们- <strong>采样(将函数的值离散的存储起来,在需要时进行重建).</strong><br>本章首先用数字音频的具体一维例子来总结采样和重构。然后，我们继续介绍在一维和二维的采样和重构基础上的基本数学和算法。最后，我们深入频域观点的细节，它为这些算法的行为提供了许多见解。</p>
+<h2 id="数字音频-一维采样"><a href="#数字音频-一维采样" class="headerlink" title="数字音频: 一维采样"></a>数字音频: 一维采样</h2><p>尽管采样在电信领域已经应用了很多年,但随着数字音频的使用增加，1982年cd的推出是采样在消费者中的第一次大规模应用.<br><img src="/2022/03/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/1.jpg" alt="alt"><br>在录音过程中，麦克风将空气中以压力波形式存在的声音转换成时变的电压，这相当于在麦克风所在的位置测量空气压力的变化。这种电信号需要以某种方式储存起来，以便在以后的某个时间播放，并发送到扬声器中，通过与电压同步移动膜片，将电压转换回压力波.<br>录制音频的过程中使用了采样技术, 模数转换器 analog-to-digital converter (A/D converter, or ADC)每秒钟数千次测量电压,生成容易被存储下来的数据流(例如记录在计算机硬盘中).<br>在回放时,数据流以适当的速率被读取,并被发送到数模转换器 digital-to-analog converter (D/A converter, or DAC),DAC根据它接收到的数字产生一个电压，并且如果我们取足够多的样本来表示电压的变化，所得到的电信号，都是相同的输入信号.<br>事实证明，每秒钟需要多少样本来完成一次良好的录制，取决于我们试图记录的声音有多高。一个可以很好录制弦乐低音或者鼓的采样率，应用于录制短笛或铙钹，就会产生奇怪的结果;但这些声音在较高的采样率下被录制得很好。为了避免这些采样不足的影响，数字音频记录器对ADC的输入进行滤波，去除可能导致问题的高频。<br>另一种问题出现在输出端。DAC产生的电压在新采样进入时发生变化，但在下一个采样进入前保持不变，产生阶梯型的波形。这些楼梯就像噪音一样，增加了一种高频的、依赖于信号的嗡嗡声。为了消除这种重建带来的问题，数字音频播放器过滤DAC的输出以平滑波形.</p>
+<h2 id="采样偏差与失真"><a href="#采样偏差与失真" class="headerlink" title="采样偏差与失真"></a>采样偏差与失真</h2><p>数字音频记录链可以作为采样和重建过程的具体模型，发生在图形中。同样的欠采样和重构伪影也会发生在图像或图形中的其他采样信号上，解决方法是一样的:采样前进行滤波，重构时再进行滤波.<br><img src="/2022/03/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/2.png" alt="alt"><br>上图显示了一个由过低的采样频率导致的走样具体例子。在这里，我们用两种不同的采样频率对一个简单的正弦波进行采样:顶部的高频采样和底部的低频采样。高频采样显然能够更好的还原信号,但是由低采样率产生的样本与低频正弦波的样本是无法区分的.<br>一旦采样完成，就无法区分两个信号——快正弦波和慢正弦波——哪个是原始信号，因此没有单一的方法可以在这两种情况下正确地重建信号。因为高频信号可以“假装”成低频信号，这种现象被称为失真。<br>在图形领域,失真经常表现为: </p>
+<ul>
+<li>摩尔纹(moire patterns)  </li>
+<li>边缘锯齿</li>
+</ul>
+<p>采样和重构的基本问题可以简单地根据特征太小或太大来理解，但一些更定量的问题很难回答:</p>
+<ul>
+<li>多高的采样率能够还原重建结果?</li>
+<li>什么样的滤波器适合于采样和重建?</li>
+<li>为了避免失真,需要多大程度的平滑过渡?</li>
+</ul>
+<h2 id="卷积-Convolution"><a href="#卷积-Convolution" class="headerlink" title="卷积(Convolution)"></a>卷积(Convolution)</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/#more" rel="contents">
+              <a class="btn" href="/2022/03/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -247,7 +254,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -315,7 +322,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
