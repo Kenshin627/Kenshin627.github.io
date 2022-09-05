@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>图形学的数学基础（十六）：几何图元-球体圆形和平面</title>
+      <link href="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/"/>
+      <url>/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="图形学的数学基础（十六）：几何图元-球体圆形和平面"><a href="#图形学的数学基础（十六）：几何图元-球体圆形和平面" class="headerlink" title="图形学的数学基础（十六）：几何图元-球体圆形和平面"></a>图形学的数学基础（十六）：几何图元-球体圆形和平面</h1><pre><code>转载请注明出处</code></pre><h2 id="球体和圆形"><a href="#球体和圆形" class="headerlink" title="球体和圆形"></a>球体和圆形</h2><p>球体是一个三维对象，定义与给定点具有固定距离的所有点的集合。从球体中心到点的距离称为球体半径（$Radius$），球体的直接表示方式是描述其中心$\textbf{c}$和半径$r$。</p><h3 id="球体的隐式表述"><a href="#球体的隐式表述" class="headerlink" title="球体的隐式表述"></a>球体的隐式表述</h3><p>$||\textbf{p} - \textbf{c}|| = r$</p><p>$(x-x_c)^2 + (y-y_c)^2 + (z-z_c)^2 = r^2$</p><h3 id="重要属性"><a href="#重要属性" class="headerlink" title="重要属性"></a>重要属性</h3><ul><li>直径 $D = 2r$</li><li>圆周长 $C = 2\pi{r}$</li><li>圆面积 $A = \pi{r^2}$</li><li>球体表面积 $S = 4\pi{r^2}$</li><li>球体体积 $S = \dfrac{4}{3}\pi{r^3}$</li></ul><p><strong>圆面积对r的导数是圆周长，球体的体积对r的导数是其表面积。</strong></p><h2 id="平面-Plane"><a href="#平面-Plane" class="headerlink" title="平面($Plane$)"></a>平面($Plane$)</h2><p>平面是三维的扁平的二维子空间。平面的定义类似于二维中直线的定义。定义中的种种相似性暗示了三维中的平面与二维中的无限直线有许多共同属性的事实。</p><h3 id="平面方程"><a href="#平面方程" class="headerlink" title="平面方程"></a>平面方程</h3><p>3D空间的平面方程是由一个法线$\vec{n}$($normal\;vector$)和平面上的一个点$p_1$来定义的。</p><p><img src="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/1.jpg" alt="平面定义"></p><p>由于$\hat{n}$与平面垂直，所以从平面上任意一点$\textbf{P}$到$\textbf{P}_1$所形成的矢量$\vec{P} - \vec{P_1}$必然与$\hat{n}$垂直。</p><p>$\vec{P} - \vec{P_1} = (x-x_1,y-y_1,z-z_1)$</p><p>$\hat{n}\cdot(\vec{P} - \vec{P_1}) = 0$</p><p>$\begin{bmatrix}<br>    a\\ b\\ c\\<br>\end{bmatrix}\cdot\begin{bmatrix}x-x_1\\ y-y_1\\ z-z_1\\ \end{bmatrix} = 0$</p><p>$a(x-x_1) + b(y-y_1) + c(z-z_1) = 0$</p><p>$ax + by + cz -(ax_1 + by_1 + cz_1) = 0$</p><p>假设常量项$-(ax_1 + by_1 + cz_1) = d$,则：</p><p>$ax+by+cz+d = 0$</p><h4 id="平面方程的几何解释"><a href="#平面方程的几何解释" class="headerlink" title="平面方程的几何解释"></a>平面方程的几何解释</h4><p>$\textbf{p}\cdot\hat{n} = d$</p><p>由矢量点积的几何意义可知，上式说明了矢量$\vec{p}$到$\hat{n}$的投影长度都为固定长度d。</p><p>矢量$\vec{n}$称为平面法线（$Normal$），因为它与平面垂直，法线决定了平面的方向性，d则定义了从原点到平面的有符号垂直距离（跟直线的定义很相似，只不过拓展到了三维空间），增加d将使平面朝法线方向滑动，如果 d &gt; 0，则原点位于平面的背面，如果d &lt; 0则原点位于正面。</p><p>我们通常认为平面具有正面和背面，平面的正面就是$\hat{n}$所指的方向。</p><p><img src="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/2.jpg" alt="平面定义"></p><h3 id="三个点定义平面"><a href="#三个点定义平面" class="headerlink" title="三个点定义平面"></a>三个点定义平面</h3><p>定义平面的另一种方式是给出位于平面的三个非共线点。三个共线的点无法定义平面，因为会有无数个包含该直线的平面，并且无法确定我们指的是其中哪一个。</p><p>假设三个非共线点$\textbf{p}_1,\textbf{p}_2,\textbf{p}_3$,要确定一个平面，必须求出$\hat{n}和d$，首先必须计算$\hat{n}$，$\hat{n}$会朝哪个方向呢？在左手系中执行此操作的标准方法是假设从平面的正面观察时，$\textbf{p}_1,\textbf{p}_2,\textbf{p}_3$按顺时针方向列出（右手系为逆时针方向）：</p><p><img src="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/3.jpg" alt="三点定义平面"></p><p>注：<strong>按照右手系方式定义</strong></p><p>按照逆时针方向构造两个矢量$\vec{e_1}和\vec{e_2}$,$\hat{n}$与$\textbf{p}_1,\textbf{p}_2,\textbf{p}_3$构造的平面垂直，那么必然也与$\vec{e_1}和\vec{e_2}$垂直。因此自然可以想到矢量叉积.</p><p>$\vec{e_3} = \textbf{p}_2 - \textbf{p}_1$</p><p>$\vec{e_1} = \textbf{p}_3 - \textbf{p}_2$</p><p>$\hat{n} = \dfrac{\vec{e_3}\times\vec{e_1}}{||\vec{e_3}\times\vec{e_1}||}$</p><p> 计算出了$\hat{n}$，剩下的就是计算$d$，取$\textbf{p}_1,\textbf{p}_2,\textbf{p}_3$中任意一点，和$\hat{n}$做点积即可。</p><p> 完整计算过程如下：</p><p>$\vec{e_3} = \textbf{p}_2 - \textbf{p}_1$</p><p>$\vec{e_1} = \textbf{p}_3 - \textbf{p}_2$</p><p>$\hat{n} = \dfrac{\vec{e_3}\times\vec{e_1}}{||\vec{e_3}\times\vec{e_1}||}$</p><p>$d = \vec{p_1}\cdot\hat{n} = \vec{p_1}\dfrac{(\textbf{p}_2 - \textbf{p}_1)\times(\textbf{p}_3 - \textbf{p}_1)}{||(\textbf{p}_2 - \textbf{p}_1)\times(\textbf{p}_3 - \textbf{p}_1)||}$</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://item.jd.com/12659881.html">《3D数学基础》图形和游戏开发(第二版)</a></p><p><a href="https://www.bilibili.com/video/BV1X7411F744?p=5&amp;spm_id_from=pageDriver&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p><p><a href="http://www.songho.ca/math/plane/plane.html">songho-openGL</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+          <category> 计算机图形学的数学基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>图形学的数学基础（十五）：几何图元-直线和光线</title>
       <link href="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%85%89%E7%BA%BF/"/>
       <url>/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%85%89%E7%BA%BF/</url>

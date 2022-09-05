@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/" class="post-title-link" itemprop="url">Asp.Net Core DI-服务注册</a>
+            <a href="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/" class="post-title-link" itemprop="url">Asp.Net Core DI-服务消费</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-10-20 15:18:00" itemprop="dateCreated datePublished" datetime="2019-10-20T15:18:00+08:00">2019-10-20</time>
+              <time title="创建时间：2019-10-21 21:51:00" itemprop="dateCreated datePublished" datetime="2019-10-21T21:51:00+08:00">2019-10-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -215,23 +215,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Asp-Net-Core-DI-服务注册"><a href="#Asp-Net-Core-DI-服务注册" class="headerlink" title="Asp.Net Core DI-服务注册"></a>Asp.Net Core DI-服务注册</h1><p>包含服务注册信息的IServiceCollection对象最终被用来创建作为DI容器的IServiceProvider对象。服务注册就是创建出现相应的ServiceDescriptor对象并将其添加到指定IServiceCollection集合对象中的过程。IServiceCollection实际上是包含了<strong>ServiceDescriptor</strong>对象的集合.</p>
-<h2 id="ServiceDescriptor"><a href="#ServiceDescriptor" class="headerlink" title="ServiceDescriptor"></a>ServiceDescriptor</h2><p>IServiceCollection对象是一个存放服务注册信息的集合.在IServiceCollection/IServiceProvider为核心的DI框架中,与之对应的类型为ServiceDescriptor.</p>
-<p>DI框架将服务注册存储在一个通过IServiceCollection接口表示的集合之中.如下面的代码片段所示，一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
-<p>ServiceDescriptor共有5个属性,3个构造函数,如下所示:</p>
-<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment1.jpg" alt="alt"></p>
-<p>属性说明:</p>
+          <h1 id="Asp-Net-Core-DI-服务消费"><a href="#Asp-Net-Core-DI-服务消费" class="headerlink" title="Asp.Net Core DI-服务消费"></a>Asp.Net Core DI-服务消费</h1><p>本系列博客均来源于大内老A关于Asp.NET Core的解读,在此进基础上进行了提炼,方便日后查看学习.<br>包含服务注册信息的IServiceCollection对象最终被用来创建作为DI容器的IServiceProvider对象。当需要消费某个服务实例的时候，我们只需要指定服务类型调用IServiceProvider的GetService方法，IServiceProvider就会根据对应的服务注册提供所需的服务实例。</p>
+<h2 id="IServiceProvider"><a href="#IServiceProvider" class="headerlink" title="IServiceProvider"></a>IServiceProvider</h2><p>IServiceProvider由ServiceCollection的BuildServiceProvider方法来生成,ServiceProvider只包含一个方法GetService(Type serviceType).如下图:</p>
+<p><img src="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/Use1.jpg" alt="alt"><br>IserviceProvider包含其他一些扩展方法,可以方便通过不同方式不用应用场景返回实例.如下图:</p>
+<p><img src="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/Use2.jpg" alt="alt"></p>
 <ul>
-<li>ServiceType:注册的服务类型.往往是一个接口</li>
-<li>ImplementationType:实现ServiceType接口的类</li>
-<li>ImplementationInstance:已经实例化的对象</li>
-<li>ImplementationFactory:提供对象的工厂方法.类型为Func<iserviceprovider,object></iserviceprovider,object></li>
-<li>Lifetime:生命周期,枚举类型,对应有三个值,分别为:Singleton,Scoped,Transient</li>
+<li>GetService<t>(this IServiceProvider provider):通过提供泛型类型T,返回对应实例,如果没有T对应的注册信息,返回null</t></li>
+<li>GetServices<t>(this IServiceProvider provider):通过提供泛型类型T,返回对应的多个实例</t></li>
+<li>GetServices(this IServiceProvider provider, Type serviceType):传参的方式</li>
+<li>GetRequiredService(this IServiceProvider provider, Type serviceType):如果指定服务类型的服务注册不存在,则会抛出一个InvalidOperationException类型的异常。如果所需的服务实例是必需的，我们一般会调用者两个扩展方法</li>
 </ul>
-<p>构造函数说明:<br>ServiceDescriptor的三个属性(ImplementationType,ImplementationInstance,ImplementationFactory)体现了服务实例的三种提供方式，并对应着三个构造函数。</p>
+<h2 id="构造函数的选择"><a href="#构造函数的选择" class="headerlink" title="构造函数的选择"></a>构造函数的选择</h2><p>如果IServiceProvider对象试图通过调用构造函数的方式来创建服务实例，传入构造函数的所有参数必须先被初始化，最终被选择出来的构造函数必须具备一个基本的条件：</p>
+<ul>
+<li>第一个原则:<strong>IServiceProvider能够提供构造函数的所有参数</strong>.</li>
+<li>第二个原则: <strong>每一个候选构造函数的参数类型集合都是这个构造函数参数类型集合的子集</strong>.</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/#more" rel="contents">
+              <a class="btn" href="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -254,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -322,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
