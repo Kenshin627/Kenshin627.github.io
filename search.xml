@@ -4,6 +4,68 @@
   
     
     <entry>
+      <title>图形学的数学基础（十八）：几何图元-三角形</title>
+      <link href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/"/>
+      <url>/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="图形学的数学基础（十八）：几何图元-三角形"><a href="#图形学的数学基础（十八）：几何图元-三角形" class="headerlink" title="图形学的数学基础（十八）：几何图元-三角形"></a>图形学的数学基础（十八）：几何图元-三角形</h1><p>三角形在图形学中具有重要性的意义。复杂三维对象的表面与许多三角形近似。这样一组链接的三角形可形成一个三角形网格（$Triangle\;Mesh$），本章将介绍三角形基本属性，重点是重心坐标。</p><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>定义一个三角形，只需要三个顶点即可，这些点的顺序至关重要，因为它们的顺序决定了三角面的正反，在右手系中，当从三角形正面看时，通常按逆时针方向枚举点（右手螺旋定则）。</p><p><img src="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/1.jpg" alt="三角形定义"></p><p>边矢量，边长 顶点定义如下：</p><p>$\vec{e_1} = \textbf{v}_3 - \textbf{v}_2$</p><p>$\vec{e_2} = \textbf{v}_1 - \textbf{v}_3$</p><p>$\vec{e_3} = \textbf{v}_2 - \textbf{v}_1$</p><p>$l_1 = ||\vec{e_1}||$</p><p>$l_2 = ||\vec{e_2}||$</p><p>$l_3 = ||\vec{e_3}||$</p><h2 id="三角形常用公式"><a href="#三角形常用公式" class="headerlink" title="三角形常用公式"></a>三角形常用公式</h2><ul><li>正弦定理：$\dfrac{\sin\theta_1}{l_1} = \dfrac{\sin\theta_2}{l_2} = \dfrac{\sin\theta_3}{l_3}$</li></ul><ul><li><p>余弦定理：$\begin{cases}<br>  {l_1}^2 = {l_2}^2 + {l_3}^2-2l_2l_3\cos\theta_1\\<br>  {l_2}^2 = {l_1}^2 + {l_3}^2-2l_1l_3\cos\theta_2\\<br>  {l_3}^2 = {l_1}^2 + {l_2}^2-2l_1l_2\cos\theta_3\\<br>\end{cases}$</p></li><li><p>三角形周长：$p = l_1+l_2+l_3$</p></li></ul><h2 id="三角形面积"><a href="#三角形面积" class="headerlink" title="三角形面积"></a>三角形面积</h2><h3 id="平行四边形"><a href="#平行四边形" class="headerlink" title="平行四边形"></a>平行四边形</h3><p><img src="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/2.png" alt="三角形定义"></p><p>由上图可知，平行四边形的面积等于底乘高，而三角形占据了平行四边形面积的一半，因此三角形面积为：</p><p>$\textbf{A} = \dfrac{base.h}{2}$</p><h3 id="海伦公式"><a href="#海伦公式" class="headerlink" title="海伦公式"></a>海伦公式</h3><p>求解三角形面积的第二种方式是海伦公式。</p><p>$s = \dfrac{l_1+l_2+l_3}{2} = \dfrac{p}{2}$</p><p>$\textbf{A} = \sqrt{s(s-l_1)(s-l_2)(s-l_3)}$</p><h3 id="顶点坐标"><a href="#顶点坐标" class="headerlink" title="顶点坐标"></a>顶点坐标</h3><p>一般来说,边的高度或长度不太好计算,因为所有的已知条件都是顶点的笛卡尔坐标(当然骂我们总是可以通过坐标计算边长,但在有些情况下我们尽量避免这种相对昂贵的计算).接下来将介绍通过顶点坐标计算三角形面积的方法。</p><p>基本思想就是为三角形的每条边计算提醒的有符号面积，该面积由边和下方的x轴所界定。</p><p><img src="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AB%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/3.jpg" alt="边矢量面积"></p><p>根据梯形面积公式：</p><p>$\textbf{A} = \dfrac{(上底 + 下底).高}{2}$，则三角形三条边的面积公式分别为：</p><p>$\textbf{A}(e_1) = \dfrac{(y_2+y_3)(x_2-x_3)}{2}$</p><p>$\textbf{A}(e_2) = \dfrac{(y_3+y_1)(x_3-x_1)}{2}$</p><p>$\textbf{A}(e_3) = \dfrac{(y_2+y_1)(x_2-x_1)}{2}$</p><p><strong>可以通过对三个提醒的有符号面积求和，获得三角形本身的面积。实际上可以用这个思路求解任意多边形面积。</strong></p><p>$\textbf{A} = \textbf{A}(e_1) + \textbf{A}(e_2) + \textbf{A}(e_3)\\<br>    =\dfrac{(y_2+y_3)(x_2-x_3) + (y_3+y_1)(x_3-x_1) + (y_2+y_1)(x_2-x_1)}{2}\\<br>    =\dfrac{y_1(x_3-x_2) + y_2(x_1-x_3) + y_3(x_1-x_2)}{2}<br>$</p><p>平移三角形不会改变三角形面积，因此我们可以将每个$y$坐标减去$y_3$,进一步做简化：</p><p>$\textbf{A} = \dfrac{(y_1-y_3)(x_3-x_2) + (y_2-y_3)(x_1-x_3) + (y_3-y_3)(x_1-x_2)}{2}\\<br>        =\dfrac{(y_1-y_3)(x_3-x_2) + (y_2-y_3)(x_1-x_3)}{2}\\<br>$</p><h3 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h3><p>三维中可以使用叉积计算三角形的面积，根据叉积的定义，两个矢量的叉积的大小等于通过矢量两条边形成的平行四边形的面积。由于三角形的面积是平行四边形面积的一半，因此：</p><p>$\textbf{A} = \dfrac{||\vec{e_1}\times\vec{e_2}||}{2}$</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://item.jd.com/12659881.html">《3D数学基础》图形和游戏开发(第二版)</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+          <category> 计算机图形学的数学基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>图形学的数学基础（十七）：几何图元-平面(下)</title>
+      <link href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%B9%B3%E9%9D%A2-%E4%B8%8B/"/>
+      <url>/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%B9%B3%E9%9D%A2-%E4%B8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="图形学的数学基础（十七）：几何图元-平面-下"><a href="#图形学的数学基础（十七）：几何图元-平面-下" class="headerlink" title="图形学的数学基础（十七）：几何图元-平面(下)"></a>图形学的数学基础（十七）：几何图元-平面(下)</h1><p>转载请注明出处</p><p>上章推导了平面方程的定义。这章介绍几种和平面有关的常见求交和计算点到平面距离的方法。</p><h2 id="平面距原点的最短（垂直）距离"><a href="#平面距原点的最短（垂直）距离" class="headerlink" title="平面距原点的最短（垂直）距离"></a>平面距原点的最短（垂直）距离</h2><p>如果平面的法线是单位矢量,则平面方程的常数项$d$是原点到平面的有符号距离。</p><p><img src="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%B9%B3%E9%9D%A2-%E4%B8%8B/1.jpg" alt="原点距平面距离"></p><p>假设单位矢量$\hat{n}$ $\begin{bmatrix}a\\ b\\ c\\ \end{bmatrix}$,则平面上的一点$\textbf{P}_1$可以写成$\begin{bmatrix}Da\\ Db\\ Dc\end{bmatrix}$的形式，D是从原点到平面的垂直有符号距离。因此我们可以将平面方程重写如下：</p><p>$\begin{bmatrix}a\\ b\\ c\\\end{bmatrix}\cdot\begin{bmatrix}x-Da\\ y-Db\\ z-Dc\\\end{bmatrix} = 0$</p><p>$a(x-Da) + b(y-Db) + c(z-Dc) = 0$</p><p>$ax + by + cz -D(a^2 + b^2 + c^2) = 0$</p><p>$ax + by + cz -D||\vec{n}|| = 0$</p><p>因此原点到平面的垂直有符号距离 $D = \dfrac{d}{||\vec{n}||}$,其中$\textbf{d}$为平面方程的常数项。</p><h2 id="任意点到平面的最短（垂直）距离"><a href="#任意点到平面的最短（垂直）距离" class="headerlink" title="任意点到平面的最短（垂直）距离"></a>任意点到平面的最短（垂直）距离</h2><p>很多时候我们可能会有一个平面和一个不在平面内的点$\textbf{q}$，然后想要计算从该平面到$\textbf{q}$的距离。如果该距离为负数，则$\textbf{q}$在平面的背面，反之在正面。为此我们假设平面中的一个点$\textbf{p}$，它是该平面中与$\textbf{q}$最近的点，显然从$\textbf{p}到\textbf{q}$的矢量垂直于平面，因此它是$a\vec{n}$的另外一种形式。</p><p>对于平面$ax + by + cz+d = 0$，任意一点$\textbf{q}$到平面的最短距离推导如下：</p><p>$\textbf{p} + a\vec{n} = \textbf{q}$</p><p>$(\textbf{p} + a\vec{n})\cdot\vec{n} = \textbf{q}\cdot\vec{n}$</p><p>$\textbf{p}\cdot\vec{n} + a\vec{n}\cdot\vec{n} = \textbf{q}\cdot\vec{n}$</p><p>$d||\vec{n}|| + a||\vec{n}||^2 = \textbf{q}\cdot\vec{n}$</p><p>$d||\vec{n}|| + a||\vec{n}||^2 = \textbf{q}\cdot\hat{n}||\vec{n}||$</p><p>$d + a||\vec{n}|| = \textbf{q}\cdot\hat{n}$</p><p>$a = \dfrac{\textbf{q}\cdot\hat{n} - d}{||\vec{n}||}$</p><p>对于单位矢量则有：</p><p>$a = \textbf{q}\cdot\hat{n} - d$</p><h2 id="求解三平面的交点"><a href="#求解三平面的交点" class="headerlink" title="求解三平面的交点"></a>求解三平面的交点</h2><p>求解三平面相交交点，我们只需要解三个平面方程组成的线性方程组即可：</p><p>$\begin{cases}<br>    a_1x+b_1y+c_1z + d_1 = 0\\<br>    a_2x+b_2y+c_2z + d_2 = 0\\<br>    a_3x+b_3y+c_3z + d_3 = 0\\<br>\end{cases}$<br>可以写成矩阵的形式：</p><p>$\begin{bmatrix}<br>    a_1&amp;b_1&amp;c_1\\<br>    a_2&amp;b_2&amp;c_2\\<br>    a_3&amp;b_3&amp;c_3\\<br>\end{bmatrix}\begin{bmatrix}<br>    x\\ y\\ z\\<br>\end{bmatrix} = \begin{bmatrix}<br>    -d_1\\<br>    -d_2\\<br>    -d_3\\<br>\end{bmatrix}$</p><p>$\begin{bmatrix}<br>    x\\ y\\ z\\<br>\end{bmatrix} = \begin{bmatrix}</p><p>\end{bmatrix}$</p><h2 id="平面直线相交"><a href="#平面直线相交" class="headerlink" title="平面直线相交"></a>平面直线相交</h2><p>空间中的平面和直线可能会相较于某一点，交点可以通过平面和直线的线性方程组求解：</p><p>$\begin{cases}<br>    \textbf{Plane}, &amp; ax+by+cz+d = 0\\<br>    \textbf{Line}, &amp; \textbf{p}_1 + t\vec{v} = (x_1+tv_x,y_1+tv_y,z_1+tv_z)<br>\end{cases}$</p><p>$t = \dfrac{-(ax_1+by_1+cz_1+d)}{av_x+bv_y+cv_z}=\dfrac{-(\vec{n}\cdot\textbf{p}_1+d)}{\vec{n}\cdot\vec{v}}$</p><h3 id="克莱默法则（-Cramer’s-Rule-）"><a href="#克莱默法则（-Cramer’s-Rule-）" class="headerlink" title="克莱默法则（$Cramer’s\;Rule$）"></a>克莱默法则（$Cramer’s\;Rule$）</h3><p>克莱默法则，用于求解具有n个线性方程的方程组。</p><p>$\begin{cases}<br>   a_{11}x_1+a_{12}x_2 +…+ a_{1n}x_n = b_1\\<br>   a_{21}x_1+a_{22}x_2 +…+ a_{2n}x_n = b_2\\<br>   …………………………………..\\<br>   a_{n1}x_1+a_{n2}x_2 +…+ a_{nn}x_n = b_n<br>\end{cases}$</p><p>若线性方程组的系数行列式不等于0，即$\det{A} =\begin{vmatrix}<br>    a_{11}…a_{1n}\\<br>    …………\\<br>    a_{n1}…a_{nn}\\<br>\end{vmatrix} != 0$</p><p>则线性方程组的解可以用行列式来表示：</p><p>$x_1 = \dfrac{\det{A_1}}{\det{A}}, x_2 = \dfrac{\det{A_2}}{\det{A}}, x_n = \dfrac{\det{A_n}}{\det{A}}$</p><p>其中$\det{A_n}$是把行列式$\det{A}$中第n列的所有元素，依次用方程组右端的常数项替换。</p><h3 id="求解线性方程组"><a href="#求解线性方程组" class="headerlink" title="求解线性方程组"></a>求解线性方程组</h3><p>根据克莱默法则，可知：</p><p>$x = \dfrac{\det{A_x}}{\det{A}},y = \dfrac{\det{A_y}}{\det{A}},z = \dfrac{\det{A_z}}{\det{A}}$</p><p>$\det{A} = \begin{vmatrix}<br>    a_1&amp;b_1&amp;c_1\\<br>    a_2&amp;b_2&amp;c_2\\<br>    a_3&amp;b_3&amp;c_3\\<br>\end{vmatrix}$</p><p>$\det{A_x} = \begin{vmatrix}<br>    -d_1&amp;b_1&amp;c_1\\<br>    -d_2&amp;b_2&amp;c_2\\<br>    -d_3&amp;b_3&amp;c_3\\<br>\end{vmatrix},\det{A_y} = \begin{vmatrix}<br>    a_1&amp;-d_1&amp;c_1\\<br>    a_2&amp;-d_2&amp;c_2\\<br>    a_3&amp;-d_3&amp;c_3\\<br>\end{vmatrix},\det{A_z} = \begin{vmatrix}<br>    a_1&amp;b_1&amp;-d_1\\<br>    a_2&amp;b_2&amp;-d_2\\<br>    a_3&amp;b_3&amp;-d_3\\<br>\end{vmatrix}$</p><p>$p = \dfrac{-d_1(\vec{n_2}\times\vec{n_3}) -d_2(\vec{n_3}\times\vec{n_1})-d_3(\vec{n_1}\times\vec{n_2})}{\vec{n_1}\cdot(\vec{n_2}\times\vec{n_3})}$</p><h2 id="求两平面相交的直线方程"><a href="#求两平面相交的直线方程" class="headerlink" title="求两平面相交的直线方程"></a>求两平面相交的直线方程</h2><p>两个非平行平面会相交与一条线，直线方程可以用一个方向矢量$\vec{v}$和一个点$\textbf{p}_o$来表示：$\textbf{p}_o + t\vec{v}$,<br>$\vec{v}$垂直于两个平面的法线$\vec{n_1}和\vec{n_2}$，因此$\vec{v} = \vec{n_1}\times\vec{n_2}$</p><p>现在需要找到直线上的任意一点$\textbf{p}_o$,根据上节内容，三个平面相交于一点，因此我们只需要构造出第三个平面（法线为$\vec{v}$并且d = 0），因此第三个平面方程为：</p><p>$v_xx+v_yy+v_zz = 0$</p><p>根据上节三平面求交点公式：</p><p>$\textbf{p}_o = \dfrac{-d_1(\vec{n_2}\times\vec{n_3}) -d_2(\vec{n_3}\times\vec{n_1})-d_3(\vec{n_1}\times\vec{n_2})}{\vec{n_1}\cdot(\vec{n_2}\times\vec{n_3})}$</p><p>$\textbf{p}_o = \dfrac{-d_1(\vec{n_2}\times\vec{v})-d_2(\vec{v}\times\vec{n_1})}{\vec{n_1}\cdot(\vec{n_2}\times\vec{v})$</p><p>$\textbf{p}_o =\dfrac{(-d_1\vec{n_2} + d_2\vec{n_1})\times\vec{v}}{\vec{v}\cdot\vec{v}}$</p><p>$\textbf{Line} = \textbf{p}_o + t\vec{v}\\<br>= \dfrac{(-d_1\vec{n_2} + d_2\vec{n_1})\times\vec{v}}{\vec{v}\cdot\vec{v}} + t\vec{v}$</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://item.jd.com/12659881.html">《3D数学基础》图形和游戏开发(第二版)</a></p><p><a href="http://www.songho.ca/math/plane/plane.html">songho-openGL</a></p><p><a href="https://zhuanlan.zhihu.com/p/161429987">克莱默法则</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+          <category> 计算机图形学的数学基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>图形学的数学基础（十六）：几何图元-球体圆形和平面</title>
       <link href="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/"/>
       <url>/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/</url>

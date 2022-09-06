@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">求解微分问题</a>
+            <a href="/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/" class="post-title-link" itemprop="url">隐函数求导</a>
         </h2>
 
         <div class="post-meta">
@@ -184,10 +184,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-31 17:28:28 / 修改时间：22:45:54" itemprop="dateCreated datePublished" datetime="2022-03-31T17:28:28+08:00">2022-03-31</time>
+              <time title="创建时间：2022-04-02 20:44:07" itemprop="dateCreated datePublished" datetime="2022-04-02T20:44:07+08:00">2022-04-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-31 20:33:15" itemprop="dateModified" datetime="2022-08-31T20:33:15+08:00">2022-08-31</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -213,22 +219,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="求解微分常用技巧"><a href="#求解微分常用技巧" class="headerlink" title="求解微分常用技巧"></a>求解微分常用技巧</h1><h2 id="使用定义求导"><a href="#使用定义求导" class="headerlink" title="使用定义求导"></a>使用定义求导</h2><p>根据导数的定义:<br>$f’(x) = \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}$</p>
-<p>$例如:对于 f(x) = \frac{1}{x}$</p>
-<p>$f’(x) = \lim_{h \to 0}\frac{\frac{1}{x+h} - \frac{1}{x}}{h}$</p>
-<p>$f’(x)=\lim_{h \to 0}\frac{\frac{x-(x+h)}{x(x+h)}}{h}=\lim_{h \to 0}\frac{-h}{hx(x+h)}=-\frac{1}{x^2}$</p>
-<blockquote>
-<p>$\frac{d}{dx}(\frac{1}{x})=-\frac{1}{x^2}$</p>
-<p>$\frac{d}{dx}\sqrt{x}=\frac{1}{2\sqrt{x}}$</p>
-<p>$\frac{d}{dx}x^a=ax^{a-1}$</p>
-</blockquote>
-<h2 id="函数的常数倍"><a href="#函数的常数倍" class="headerlink" title="函数的常数倍"></a>函数的常数倍</h2><p>处理一个函数的常数倍时,只需要用常数乘以该函数的导数就可以了.</p>
-<blockquote>
-<p>$\frac{d}{dx}Cf(x)=Cf’(x)$</p>
-</blockquote>
+          <h1 id="隐函数求导"><a href="#隐函数求导" class="headerlink" title="隐函数求导"></a>隐函数求导</h1><p>考虑方程$x^2 + y^2 = 4$,求$\frac{\mathrm{d}y}{\mathrm{d}x}$,对等号两边同时添加一个$\frac{\mathrm{d}}{\mathrm{d}x}$,<br>$\frac{\mathrm{d}}{\mathrm{d}x}{(x^2 + y^2)} = \frac{\mathrm{d}}{\mathrm{d}x}{4}$</p>
+<p>$\frac{\mathrm{d}}{\mathrm{d}x}{x^2} + \frac{\mathrm{d}}{\mathrm{d}x}{y^2} = 0$</p>
+<p>$2x +2y\frac{\mathrm{d}y}{\mathrm{d}x}=0$</p>
+<p><strong><em>注:这一步应用链式求导法则</em></strong></p>
+<p>$\frac{\mathrm{d}y}{\mathrm{d}x}=-\frac{x}{y}$</p>
+<p>隐函数求导法则:</p>
+<ul>
+<li>在原始方程中, 对一切求导并使用链式求导法则、乘积法则以及商法则进行化简</li>
+<li>如果想要求 dy/dx, 可重新整理并作除法来求解 dy/dx; 不过如果想要求的是斜率或求曲线一个特定点上的切线方程, 可先代入 x 和 y的已知值, 接着重新整理并求 dy/dx, 然后如果需要的话, 使用点斜式来求切线方程</li>
+</ul>
+<h1 id="隐函数求二阶导"><a href="#隐函数求二阶导" class="headerlink" title="隐函数求二阶导"></a>隐函数求二阶导</h1><p>求导两次可以得到二阶导.例如,如果$2y+siny = \frac{x^2}{\pi}+1$,那么该曲线上点(π, π/2)处的$\frac{\mathrm{d}y^2}{\mathrm{d}x^2}$的值是什么呢？再一次地, 你应该先通过代入 x 和 y 的值, 看看方程是否成立来检验该点是否位于曲线上. 现在, 如果你想要求导两次, 必须先从求导一次开始! 使用链式求导法则来处理$sin(y)$这一项, 你应该会得到</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/#more" rel="contents">
+              <a class="btn" href="/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -251,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/20/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/22/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -319,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
