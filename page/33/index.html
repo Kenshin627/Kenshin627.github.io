@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/Foundations-of-functional-programming/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Asp.Net Core 文件系统</a>
+            <a href="/2021/11/16/Foundations-of-functional-programming/" class="post-title-link" itemprop="url">Haskell01 - Foundations of functional programming</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-05 16:43:00" itemprop="dateCreated datePublished" datetime="2019-11-05T16:43:00+08:00">2019-11-05</time>
+              <time title="创建时间：2021-11-16 00:06:02" itemprop="dateCreated datePublished" datetime="2021-11-16T00:06:02+08:00">2021-11-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-01 09:30:33" itemprop="dateModified" datetime="2021-11-01T09:30:33+08:00">2021-11-01</time>
+                <time title="修改时间：2021-11-18 16:19:16" itemprop="dateModified" datetime="2021-11-18T16:19:16+08:00">2021-11-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
+                  <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
                 </span>
             </span>
 
@@ -215,22 +215,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Asp-Net-Core-文件系统"><a href="#Asp-Net-Core-文件系统" class="headerlink" title="Asp.Net Core 文件系统"></a>Asp.Net Core 文件系统</h1><p>ASP.NET Core 具有很多针对文件读取的应用。比如我们倾向于采用JSON文件来定义配置，所以应用就会涉及针对配置文件读取。如果用户发送一个针对物理文件的HTTP请求，应用会根据指定的路径读取目标文件的内容并对请求予以响应。在一个ASP.NET Core MVC应用中，针对View的动态编译会涉及到根据预定义的路径映射关系来读取目标View文件。这些不同应用场景都会出现一个IFileProvider对象的身影，以此对象为核心的文件系统提供了统一的API来读取文件的内容并监控内容的改变。</p>
-<h2 id="物理文件系统"><a href="#物理文件系统" class="headerlink" title="物理文件系统"></a>物理文件系统</h2><h3 id="IChangeToken"><a href="#IChangeToken" class="headerlink" title="IChangeToken"></a>IChangeToken</h3><p>由于IFileProvider提供了针对文件系统变换的监控功能，在.NET Core的世界里类似的功能大都利用一个IChangeToken对象来实现.从字面上理解的IChangeToken对象就是一个与某组监控数据关联的“令牌（Token）”，它能够在检测到数据改变的时候及时地对外发出一个通知。IChangeToken接口具有如下所示的三个成员。</p>
-<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg" alt="alt"></p>
+          <h1 id="01-Functions"><a href="#01-Functions" class="headerlink" title="01. Functions"></a>01. Functions</h1><p>All functions in Haskell follow three rules that force them to behave like functions in<br>math:</p>
 <ul>
-<li><p><strong>HasChanged</strong>:如果关联的数据发生改变，HasChanged属性将变成True.</p>
-</li>
-<li><p><strong>ActiveChangeCallbacks</strong>:它表示当数据发生变化时是否需要主动执行注册的回调操作.</p>
-</li>
-<li><p><strong>RegisterChangeCallback</strong>:注册一个在数据发生改变时可以自动执行的回调，该方法会以一个IDisposable对象的形式返回注册对象，所以我们应该在适当的时机调用其Dispose方法解除注册的回调.</p>
-</li>
+<li>All functions must take an argument.</li>
+<li>All functions must return a value.</li>
+<li>Anytime a function is called with the same argument, it must return the same<br>value</li>
 </ul>
-<h3 id="IFileProvider"><a href="#IFileProvider" class="headerlink" title="IFileProvider"></a>IFileProvider</h3><p>IFileProvider的接口定义如下图:</p>
-<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider2.jpg" alt="alt"></p>
+<p>The third rule is part of the basic mathematical definition of a function. When the rule<br>that the same argument must always produce the same result is applied to function in a<br>programming language, it’s called referential transparency.</p>
+<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="/2021/11/16/Foundations-of-functional-programming/1.png" alt="alt"></p>
+<h2 id="Practical-lambda-functions-and-lexical-scope"><a href="#Practical-lambda-functions-and-lexical-scope" class="headerlink" title="Practical lambda functions and lexical scope"></a>Practical lambda functions and lexical scope</h2><p>IIFE works on exactly the same principles as our example of replacing a where statement. Whenever you create a new function, named or not, you<br>create a new scope, which is the context in which a variable is defined. When a variable is<br>used, the program looks at the nearest scope; if the definition of the variable isn’t there,<br>it goes to the next one up. This particular type of variable lookup is called lexical scope.<br>Both Haskell and JavaScript use lexical scoping, which is why IIFE and your lambda function variables behave in a similar fashion.</p>
+<h1 id="03-FIRST-CLASS-FUNCTIONS"><a href="#03-FIRST-CLASS-FUNCTIONS" class="headerlink" title="03. FIRST-CLASS FUNCTIONS"></a>03. FIRST-CLASS FUNCTIONS</h1>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/#more" rel="contents">
+              <a class="btn" href="/2021/11/16/Foundations-of-functional-programming/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -253,7 +250,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/32/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/34/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/32/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/34/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -321,7 +318,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

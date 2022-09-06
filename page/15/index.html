@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/" class="post-title-link" itemprop="url">隐函数求导</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/" class="post-title-link" itemprop="url">图形学的数学基础（三）：向量点积</a>
         </h2>
 
         <div class="post-meta">
@@ -184,27 +184,25 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-04-02 20:44:07" itemprop="dateCreated datePublished" datetime="2022-04-02T20:44:07+08:00">2022-04-02</time>
+              <time title="创建时间：2022-08-31 10:10:54 / 修改时间：11:17:27" itemprop="dateCreated datePublished" datetime="2022-08-31T10:10:54+08:00">2022-08-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-03 14:14:28" itemprop="dateModified" datetime="2022-04-03T14:14:28+08:00">2022-04-03</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
                 </span>
             </span>
 
@@ -219,20 +217,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="隐函数求导"><a href="#隐函数求导" class="headerlink" title="隐函数求导"></a>隐函数求导</h1><p>考虑方程$x^2 + y^2 = 4$,求$\frac{\mathrm{d}y}{\mathrm{d}x}$,对等号两边同时添加一个$\frac{\mathrm{d}}{\mathrm{d}x}$,<br>$\frac{\mathrm{d}}{\mathrm{d}x}{(x^2 + y^2)} = \frac{\mathrm{d}}{\mathrm{d}x}{4}$</p>
-<p>$\frac{\mathrm{d}}{\mathrm{d}x}{x^2} + \frac{\mathrm{d}}{\mathrm{d}x}{y^2} = 0$</p>
-<p>$2x +2y\frac{\mathrm{d}y}{\mathrm{d}x}=0$</p>
-<p><strong><em>注:这一步应用链式求导法则</em></strong></p>
-<p>$\frac{\mathrm{d}y}{\mathrm{d}x}=-\frac{x}{y}$</p>
-<p>隐函数求导法则:</p>
-<ul>
-<li>在原始方程中, 对一切求导并使用链式求导法则、乘积法则以及商法则进行化简</li>
-<li>如果想要求 dy/dx, 可重新整理并作除法来求解 dy/dx; 不过如果想要求的是斜率或求曲线一个特定点上的切线方程, 可先代入 x 和 y的已知值, 接着重新整理并求 dy/dx, 然后如果需要的话, 使用点斜式来求切线方程</li>
-</ul>
-<h1 id="隐函数求二阶导"><a href="#隐函数求二阶导" class="headerlink" title="隐函数求二阶导"></a>隐函数求二阶导</h1><p>求导两次可以得到二阶导.例如,如果$2y+siny = \frac{x^2}{\pi}+1$,那么该曲线上点(π, π/2)处的$\frac{\mathrm{d}y^2}{\mathrm{d}x^2}$的值是什么呢？再一次地, 你应该先通过代入 x 和 y 的值, 看看方程是否成立来检验该点是否位于曲线上. 现在, 如果你想要求导两次, 必须先从求导一次开始! 使用链式求导法则来处理$sin(y)$这一项, 你应该会得到</p>
+          <h1 id="图形学的数学基础（三）：向量点积"><a href="#图形学的数学基础（三）：向量点积" class="headerlink" title="图形学的数学基础（三）：向量点积"></a>图形学的数学基础（三）：向量点积</h1><h2 id="点积"><a href="#点积" class="headerlink" title="点积"></a>点积</h2><p>点积($Dot Product$)是向量乘法中比较简单的一种(另外一种叫做叉乘),但是点积在图形学中应用非常广泛,与许多其它运算有重要的关系,例如矩阵乘法、信号卷积、统计相关、和傅里叶变换等。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><strong>向量点积等于两个向量的长度相乘再乘以两向量夹角的余弦.</strong></p>
+<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/1.jpg" alt="alt"></p>
+<p>$\mathbf{a}\cdot\mathbf{b} = ||\mathbf{a}|| ||\mathbf{b}||\cos{\theta}$</p>
+<p>推导:</p>
+<p>$\cos\theta = \dfrac{\mathbf{a}\cdot\mathbf{b}}{||\mathbf{a}|| ||\mathbf{b}||}$</p>
+<p>对于单位向量来说<br>$\cos\theta = \mathbf{a}\cdot\mathbf{b}$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/02/%E9%9A%90%E5%87%BD%E6%95%B0%E6%B1%82%E5%AF%BC%E5%92%8C%E7%9B%B8%E5%85%B3%E5%8F%98%E5%8C%96%E7%8E%87/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -255,7 +249,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -323,7 +317,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

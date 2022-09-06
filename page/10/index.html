@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/" class="post-title-link" itemprop="url">图形学的数学基础（三）：向量点积</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">图形学的数学基础（八）：矩阵线性变换</a>
         </h2>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-31 10:10:54 / 修改时间：11:17:27" itemprop="dateCreated datePublished" datetime="2022-08-31T10:10:54+08:00">2022-08-31</time>
+              <time title="创建时间：2022-08-31 11:20:01 / 修改时间：11:31:31" itemprop="dateCreated datePublished" datetime="2022-08-31T11:20:01+08:00">2022-08-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,16 +217,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（三）：向量点积"><a href="#图形学的数学基础（三）：向量点积" class="headerlink" title="图形学的数学基础（三）：向量点积"></a>图形学的数学基础（三）：向量点积</h1><h2 id="点积"><a href="#点积" class="headerlink" title="点积"></a>点积</h2><p>点积($Dot Product$)是向量乘法中比较简单的一种(另外一种叫做叉乘),但是点积在图形学中应用非常广泛,与许多其它运算有重要的关系,例如矩阵乘法、信号卷积、统计相关、和傅里叶变换等。</p>
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><strong>向量点积等于两个向量的长度相乘再乘以两向量夹角的余弦.</strong></p>
-<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/1.jpg" alt="alt"></p>
-<p>$\mathbf{a}\cdot\mathbf{b} = ||\mathbf{a}|| ||\mathbf{b}||\cos{\theta}$</p>
-<p>推导:</p>
-<p>$\cos\theta = \dfrac{\mathbf{a}\cdot\mathbf{b}}{||\mathbf{a}|| ||\mathbf{b}||}$</p>
-<p>对于单位向量来说<br>$\cos\theta = \mathbf{a}\cdot\mathbf{b}$</p>
+          <h1 id="图形学的数学基础（八）：矩阵线性变换"><a href="#图形学的数学基础（八）：矩阵线性变换" class="headerlink" title="图形学的数学基础（八）：矩阵线性变换"></a>图形学的数学基础（八）：矩阵线性变换</h1><p>我们可以通过添加一些值到它的坐标来平移一个点。 我们还可以利用三角函数来旋转矢量。 简而言之，<strong>矩阵只是将所有这些变换(缩放、旋转、反射、错切、平移)组合成一个单一结构的一种方式。</strong> 通过矩阵的方式我们可以方便的对空间中的点或矢量进行变换，而不用写一大堆的公式。这就是矩阵为何在图形渲染管线中存在重要意义的原因。<strong>图形中的任意变换都可以通过一个矩阵完成。</strong> 对同一个对象的多次变换可以通过矩阵乘积转换为单个矩阵。如下图：</p>
+<p><em>注：本文所有推导和公式均使用列矢量形式。</em></p>
+<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/1.jpg" alt="alt"></p>
+<h2 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h2><h3 id="缩放（Scale）"><a href="#缩放（Scale）" class="headerlink" title="缩放（Scale）"></a>缩放（Scale）</h3><h3 id="沿主轴缩放"><a href="#沿主轴缩放" class="headerlink" title="沿主轴缩放"></a>沿主轴缩放</h3><p>最简单的缩放是沿每个轴线应用单独的或者统一的缩放。</p>
+<h4 id="均匀缩放"><a href="#均匀缩放" class="headerlink" title="均匀缩放"></a>均匀缩放</h4><p>保留原始对象的角度和比例， 使被缩放对象统一增大或者减少s因子。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -249,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -317,7 +315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

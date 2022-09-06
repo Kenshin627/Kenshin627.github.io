@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/10/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/10/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">javaScript学习笔记</a>
+            <a href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/" class="post-title-link" itemprop="url">Asp.Net Core DI-服务注册</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-04-10 22:27:28" itemprop="dateCreated datePublished" datetime="2019-04-10T22:27:28+08:00">2019-04-10</time>
+              <time title="创建时间：2019-10-20 15:18:00" itemprop="dateCreated datePublished" datetime="2019-10-20T15:18:00+08:00">2019-10-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -194,6 +194,15 @@
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2021-11-01 09:30:33" itemprop="dateModified" datetime="2021-11-01T09:30:33+08:00">2021-11-01</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
+                </span>
+            </span>
 
           
 
@@ -206,26 +215,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="JavaScript的组成部分"><a href="#JavaScript的组成部分" class="headerlink" title="JavaScript的组成部分"></a>JavaScript的组成部分</h2><ul>
-<li>ECMAScript:由ECMA-262定义,提供核心语言功能</li>
-<li>文档对象模型(DOM):提供访问和操作网页内容的方法和接口</li>
-<li>浏览器对象模型(BOM):提供与浏览器交互的方法和接口</li>
+          <h1 id="Asp-Net-Core-DI-服务注册"><a href="#Asp-Net-Core-DI-服务注册" class="headerlink" title="Asp.Net Core DI-服务注册"></a>Asp.Net Core DI-服务注册</h1><p>包含服务注册信息的IServiceCollection对象最终被用来创建作为DI容器的IServiceProvider对象。服务注册就是创建出现相应的ServiceDescriptor对象并将其添加到指定IServiceCollection集合对象中的过程。IServiceCollection实际上是包含了<strong>ServiceDescriptor</strong>对象的集合.</p>
+<h2 id="ServiceDescriptor"><a href="#ServiceDescriptor" class="headerlink" title="ServiceDescriptor"></a>ServiceDescriptor</h2><p>IServiceCollection对象是一个存放服务注册信息的集合.在IServiceCollection/IServiceProvider为核心的DI框架中,与之对应的类型为ServiceDescriptor.</p>
+<p>DI框架将服务注册存储在一个通过IServiceCollection接口表示的集合之中.如下面的代码片段所示，一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
+<p>ServiceDescriptor共有5个属性,3个构造函数,如下所示:</p>
+<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment1.jpg" alt="alt"></p>
+<p>属性说明:</p>
+<ul>
+<li>ServiceType:注册的服务类型.往往是一个接口</li>
+<li>ImplementationType:实现ServiceType接口的类</li>
+<li>ImplementationInstance:已经实例化的对象</li>
+<li>ImplementationFactory:提供对象的工厂方法.类型为Func<iserviceprovider,object></iserviceprovider,object></li>
+<li>Lifetime:生命周期,枚举类型,对应有三个值,分别为:Singleton,Scoped,Transient</li>
 </ul>
-<h2 id="变量-作用域和内存问题"><a href="#变量-作用域和内存问题" class="headerlink" title="变量 作用域和内存问题"></a>变量 作用域和内存问题</h2><p>JavaScript的变量与其他语言有很大区别.不存在定义某个变量必须要保存何种数据类型值的规则,变量的值以及数据类型可以在脚本的生命周期内改变.</p>
-<h3 id="复制变量值"><a href="#复制变量值" class="headerlink" title="复制变量值"></a>复制变量值</h3><ul>
-<li><p>从一个变量向另一个变量赋值基本类型的值,会在变量对象上创建一个新值,然后把该值赋值带为新变量分配的位置上.</p>
-</li>
-<li><p>当从一个变量向另一个变量复制引用类型的值时,同样也会将存储在变量对象中的值复制一份跟放到为新变量分配的空间中,不同的是,这个值的副本实际上是一个指针.而这个指针指向存储在堆内存中的一个对象.</p>
-</li>
-</ul>
-<h3 id="传递参数"><a href="#传递参数" class="headerlink" title="传递参数"></a>传递参数</h3><p>Js中所有函数的参数都是按值传递的.不同的是,对于基本类型的值来说,被传递的值会复制给一个局部变量.对于引用类型的值,会把这个值在内存中的地址复制给一个局部变量.<strong>因此这个局部变量的变化会反映在函数的外部</strong>.</p>
-<h3 id="检测类型"><a href="#检测类型" class="headerlink" title="检测类型"></a>检测类型</h3><ul>
-<li>检测基本数据类型,通常使用typeof操作符,换句话说,typeof操作符是确定一个变量是字符串,数字,布尔值还是undefined的最佳工具.</li>
-<li>检测引用类型,通常使用instanceof操作符.语法如下:<br><code>result = variable instanceof constructor</code></li>
-</ul>
+<p>构造函数说明:<br>ServiceDescriptor的三个属性(ImplementationType,ImplementationInstance,ImplementationFactory)体现了服务实例的三种提供方式，并对应着三个构造函数。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/04/10/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
+              <a class="btn" href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -248,7 +254,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -316,7 +322,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
