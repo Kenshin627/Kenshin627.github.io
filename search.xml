@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>图形学的数学基础（二十一）：立体角</title>
+      <link href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/"/>
+      <url>/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/</url>
+      
+        <content type="html"><![CDATA[<h1 id="图形学的数学基础（二十一）：立体角"><a href="#图形学的数学基础（二十一）：立体角" class="headerlink" title="图形学的数学基础（二十一）：立体角"></a>图形学的数学基础（二十一）：立体角</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>立体角，常用字母$\Omega$表示，是一个物体对特定点的三维空间的角度，是平面角在三维空间中的类比。因此，立体角是单位球面上的一块面积，这和“平面角是单位圆上的一段弧长”类似。</p><h2 id="平面角"><a href="#平面角" class="headerlink" title="平面角"></a>平面角</h2><p>平面角等于张角对应圆上的弧长除以圆的半径，即：</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/1.png" alt="平面角"></p><p>$\theta = \dfrac{l}{r}$</p><p>而圆的周长等于$2\pi{r}$,因此完整圆<br>对应的角度为：</p><p>$\dfrac{2\pi{r}}{r} = 2\pi\;\;radians$</p><h2 id="立体角（-Solid-angle-）"><a href="#立体角（-Solid-angle-）" class="headerlink" title="立体角（$Solid\;angle$）"></a>立体角（$Solid\;angle$）</h2><p>平面角在三维空间的延申。在三维空间中某一个球体，从球心出发，形成具有一定大小的锥体，锥体会打到球面上，形成一定的面积。而立体角就是锥体形成的面积$A$除以球体半径的平方。</p><p>$\omega = \dfrac{A}{r^2}$</p><p>球体的表面积等于$4\pi{r^2}$</p><p>因此完整球体的立体角为$4\pi\;\;steradians$</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/2.jpg" alt="平面角"></p><h3 id="微分立体角（-Differential-Solid-angles-）"><a href="#微分立体角（-Differential-Solid-angles-）" class="headerlink" title="微分立体角（$Differential\;Solid\;angles$）"></a>微分立体角（$Differential\;Solid\;angles$）</h3><p>由立体角的定义可知，三维空间中的某一立体角等于锥体在球面形成的面积处于半径的平方。因此微分立体角等于球体上极小面积处于半径平方，而极小面积是由球体上某一点在$\theta和\phi$两个方向上的微小移动形成的。</p><p>$d\phi$是立体角$d\omega$在底面上展开的微小平面夹角范围，$d\theta$是$d\omega$与垂直方向的微小平面夹角范围。极小面积如下图所示：</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/3.png" alt="平面角"></p><p>极小面积可以近似看作矩形，因此极小面积近似等于$AB\times{BC}$如下图：</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/4.jpg" alt="平面角"></p><p>$d\omega = \dfrac{dA}{r^2}$</p><p>$OBC$可以看作二维扇面，根据平面角的定义：</p><p>$d\theta = \dfrac{BC}{r}$</p><p>$BC = d\theta{r}$</p><p>BD垂直于n轴，OBD形成直角三角形，根据正弦定理：</p><p>$BD = r\sin\theta$</p><p>DAB形成二维扇面：</p><p>$d\phi = \dfrac{AB}{DB} = \dfrac{AB}{r\sin\theta}$</p><p>$AB = r\sin\theta{d}\phi$</p><p>$dA = AB\times{BC} = r\sin\theta{d}\phi\times {d\theta{r}} = \sin\theta{d}\theta{d}\phi{r^2}$</p><p>$d\omega = \dfrac{dA}{r^2} = \dfrac{\sin\theta{d}\theta{d}\phi{r^2}}{r^2} = \sin\theta{d}\theta{d}\phi$</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.bilibili.com/video/BV1X7411F744?p=2&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p><p><a href="https://www.youtube.com/watch?v=VmnkkWLwVsc">Understanding the concept of Solid Angle</a></p><p><a href="https://zhuanlan.zhihu.com/p/450731138">立体角 （Solid Angle）</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+          <category> 计算机图形学的数学基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>图形学的数学基础（二十）：包围盒</title>
       <link href="/2022/09/08/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%8C%85%E5%9B%B4%E7%9B%92/"/>
       <url>/2022/09/08/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%8C%85%E5%9B%B4%E7%9B%92/</url>
