@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>图形学的数学基础（二十二）：辐射度量学</title>
+      <link href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/"/>
+      <url>/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="图形学的数学基础（二十二）：辐射度量学"><a href="#图形学的数学基础（二十二）：辐射度量学" class="headerlink" title="图形学的数学基础（二十二）：辐射度量学"></a>图形学的数学基础（二十二）：辐射度量学</h1><h2 id="辐射度量学（-Radiometry-）"><a href="#辐射度量学（-Radiometry-）" class="headerlink" title="辐射度量学（$Radiometry$）"></a>辐射度量学（$Radiometry$）</h2><p> 辐射度量学是基于物理光照的基础，是基于几何光学来定义的，提供了精准的关于光的各种物理量，光与物体表面的作用，光线传播方法的定义等。辐射度量学是反射方程 渲染方程的基础。</p><h2 id="1-辐射能量（-Radiant-energy-）"><a href="#1-辐射能量（-Radiant-energy-）" class="headerlink" title="1.辐射能量（$Radiant\;energy$）"></a>1.辐射能量（$Radiant\;energy$）</h2><p>在辐射度量学中最基本的单位是辐射能量，表示为$Q$,单位是$J(焦耳)$，辐射能量$Q$以辐射的形式发射，传播或接收的能量。每个光子都携带一定的能量，这个能量正比于它的频率：</p><p>$Q = hv$</p><p>其中$h = 6.62620\times (10^{-34})J$.光子的频率（或者说能量）影响着光子与物体表面的交互，更重要的是，它影响着光与感应器之间的作用，使不同频率的光被察觉为不同的颜色。</p><h2 id="2-辐射通量（-Radiant-flux-）"><a href="#2-辐射通量（-Radiant-flux-）" class="headerlink" title="2.辐射通量（$Radiant\;flux$）"></a>2.辐射通量（$Radiant\;flux$）</h2><p>辐射通量，记为为$Φ$，表示单位时间 发射/反射/传播/接受的能量(功率-power)。单位为（$watt$）W或者($lumen$)lm，在辐射测量中，都是基于这个辐射通量来测量能量的，而不是使用能量$Q$。</p><p>$Φ = \dfrac{dQ}{dt}$</p><h2 id="3-辐射强度（-Radiant-intensity-）"><a href="#3-辐射强度（-Radiant-intensity-）" class="headerlink" title="3.辐射强度（$Radiant\;intensity$）"></a>3.辐射强度（$Radiant\;intensity$）</h2><p>辐射强度，记为$I$,<strong>表示一个点光源在单位立体角上发射能量的功率</strong>。表示光源在某一方向上的辐射功率。单位为$(candela)$cd.</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/1.png" alt="radiant intensity"></p><p>在辐射度两学里，通常用$\omega$表示三维空间中的一个方向。$\omega$可以用$\theta和\phi$两个参数定义它的位置。并且可以通过$\sin\theta{d}\theta{d}\phi$表示它的单位立体角。</p><p>$I(w) = \dfrac{dΦ}{dw}$</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/2.png" alt="radiant intensity"></p><p>对于空间中的一个点光源，$Radiant\;intensity$表示光源在任意方向上的发射功率。</p><h3 id="各向同性点光源"><a href="#各向同性点光源" class="headerlink" title="各向同性点光源"></a>各向同性点光源</h3><p>对于空间中各向同性（各方向发射功率相同）的点光源。任意方向辐射功率都是相同的。因此：</p><p>光源所有方向单位立体角的$Radiant\;intensity$的积分等于光源的总功率。<br>$Φ = \int_{s^2}Idw$</p><p>任意方向上单位立体角的$Radiant\;intensity$等于</p><p>$I = \dfrac{Φ}{4\pi}$</p><h2 id="4-辐射照度（-Irradiance-）"><a href="#4-辐射照度（-Irradiance-）" class="headerlink" title="4. 辐射照度（$Irradiance$）"></a>4. 辐射照度（$Irradiance$）</h2><p>辐射照度，记为$E$，表示单位投影面积的能量功率，用于描述物体表面单位面积接收到的辐射功率。单位为$lux$。</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/4.png" alt="Irradiance"></p><p>$E(x) = \dfrac{dΦ(x)}{dA}$</p><h2 id="5-辐射亮度（-Radiance-）"><a href="#5-辐射亮度（-Radiance-）" class="headerlink" title="5. 辐射亮度（$Radiance$）"></a>5. 辐射亮度（$Radiance$）</h2><p>用于描述光线在传播过程中的属性。记为$L$，<strong>表示为单位投影面积 单位立体角被发射/反射/转换/接收的辐射功率（一条光线所携带的功率）。</strong>.单位为$nit$</p><p>$L(p,w) = \dfrac{d^2Φ(p,w)}{dwdA\cos\theta}$</p><p>$Radiance$做两次微分，一次是单位立体角，一次是投影面积，两次微分后，将功率收束为一条光线。</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/5.png" alt="Radiance"></p><h3 id="两种理解方式"><a href="#两种理解方式" class="headerlink" title="两种理解方式"></a>两种理解方式</h3><ol><li>$Radiant\;intensity$</li></ol><p>$Radiant\;intensity$是点光源在某一方向单位立体角的辐射功率，是一个由点及面的过程。</p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/6.jpg" alt="Radiance"></p><p>$Radiance$可以理解为$Radiant\;intensity$在单位投影面积上的微分，将光源从$w$方向单位立体角辐射的功率收束为一条光线。描述了光线发射过程中，光线传播的性质。</p><p>一句话描述$Radiance$等于单位投影面积上的$Radiant\;intensity$</p><p>$L(p,w) = \dfrac{dI(p,w)}{dA\cos\theta}$</p><ol><li>$Irradiance$</li></ol><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/7.png" alt="Radiance"></p><p>$Radiance$可以理解为$Irradiance$在某一方向$W$单位立体角上接收的光照辐射功率，是物体表面单位面积$dA$接收的各个方向的辐射功率（$Irradiance$）在某一单位立体角上的微分。描述了物体接收光照辐射过程中，光线的“形状”。</p><p>一句话描述$Radiance$等于单位立体角上的 $Irradiance$。</p><p>$L(p,w) = \dfrac{dE(p)}{dw\cos\theta}$</p><p>总结：</p><p>$L(p,w) = \dfrac{dI(p,w)}{dA\cos\theta} = \dfrac{dE(p)}{dw\cos\theta} = \dfrac{d^2Φ(p,w)}{dwdA\cos\theta}$</p><h2 id="Irradiance-vs-Radiance"><a href="#Irradiance-vs-Radiance" class="headerlink" title="$Irradiance\;vs\;Radiance$"></a>$Irradiance\;vs\;Radiance$</h2><p>$Irradiance$: 单位面积$dA$接收到的所有能量</p><p>$Radiance$：单位面积$dA$从方向$dw$上接收到的能量。</p><p>$E(p) =  \int_{H^2}L_i(p,w)\cos\theta{dw}$</p><p>$dE(p,w) = L_i(p,w)\cos\theta{dw}$</p><p><strong>单位面积$dA$上的$Irradiance$等于各个角度$Radiance$的半球积分。</strong></p><p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/8.png" alt="Radiance"></p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.bilibili.com/video/BV1X7411F744?p=15&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p><p><a href="https://www.thegibook.com/">全局光照技术：从离线到实时渲染</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+          <category> 计算机图形学的数学基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>图形学的数学基础（二十一）：立体角</title>
       <link href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/"/>
       <url>/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/</url>
