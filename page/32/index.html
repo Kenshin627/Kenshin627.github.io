@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/20/IO/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/20/IO/" class="post-title-link" itemprop="url">Haskell03 - IO</a>
+            <a href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/" class="post-title-link" itemprop="url">函数 图形和直线</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-11-20 12:44:13" itemprop="dateCreated datePublished" datetime="2021-11-20T12:44:13+08:00">2021-11-20</time>
+              <time title="创建时间：2022-03-29 08:43:19" itemprop="dateCreated datePublished" datetime="2022-03-29T08:43:19+08:00">2022-03-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
+                <time title="修改时间：2022-03-31 11:17:45" itemprop="dateModified" datetime="2022-03-31T11:17:45+08:00">2022-03-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+                  <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
                 </span>
             </span>
 
@@ -215,14 +219,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="IO-TYPES"><a href="#IO-TYPES" class="headerlink" title="IO TYPES"></a>IO TYPES</h1><p>Haskell has a special parameterized type called IO. Any value in an IO context must stay in this context. This prevents code that’s pure (meaning it upholds referential transparency and doesn’t change state) and code that’s necessarily impure from mixing.</p>
-<h2 id="IO-types—dealing-with-an-impure-world"><a href="#IO-types—dealing-with-an-impure-world" class="headerlink" title="IO types—dealing with an impure world"></a>IO types—dealing with an impure world</h2><p>IO in Haskell is a parameterized type that’s similar to Maybe.The first thing they share in common is that they’re parameterized types of the same kind.The other thing that Maybe and IO have in common is that (unlike List or Map) they describe a context for their parameters rather than a container. The context for the IO type is that the value has come from an input/output operation.To keep Haskell code pure and predictable, you use the IO type to provide a context for data that may not behave the way all of the rest of your Haskell code does. IO actions aren’t functions.</p>
-<h2 id="Examples-of-IO-actions"><a href="#Examples-of-IO-actions" class="headerlink" title="Examples of IO actions"></a>Examples of IO actions</h2><p>main doesn’t return any meaningful value; it simply performs an action. It turns out that main isn’t a function, because it breaks one of the fundamental rules of functions: it doesn’t return a value. Because of this, we refer to main as an IO action. IO actions work much like functions except they violate at least one of the three rules we established for functions early in the book. Some IO actions return no value, some take no input, and others don’t always return the same value given the same input.<br><img src="/2021/11/20/IO/1.png" alt="alt"></p>
-<h2 id="Do-notation"><a href="#Do-notation" class="headerlink" title="Do-notation"></a>Do-notation</h2><p>This do-notation allows you to treat IO types as if they were regular types. This also explains why some variables use let and others use &lt;-. Variables assigned with &lt;- allow you to act as though a type IO a is just of type a. You use let statements whenever you create variables that aren’t IO types.</p>
-<h3 id="lt"><a href="#lt" class="headerlink" title="&lt;-"></a>&lt;-</h3><p>Donotation allows you to assign an IO String variable by using &lt;-, to act like it’s an ordinary String, and then to pass it to functions that work with only regular Strings<br><img src="/2021/11/20/IO/2.png" alt="alt"></p>
+          <h1 id="奇函数与偶函数"><a href="#奇函数与偶函数" class="headerlink" title="奇函数与偶函数"></a>奇函数与偶函数</h1><ul>
+<li>当对f定义域内所有的x都有f(-x) = -f(x)时,f是奇函数.奇函数的图像关于原点有180°的对称性.</li>
+<li>当对f定义域内所有的x都有f(-x) = f(x)时,f是偶函数,偶函数的图像关于y轴具有镜面对称性.</li>
+</ul>
+<h1 id="线性函数的图像"><a href="#线性函数的图像" class="headerlink" title="线性函数的图像"></a>线性函数的图像</h1><p>形如f(x) = mx + b的函数叫做线性函数,函数的图像为直线,斜率为m.</p>
+<p> <strong><em>点斜式</em></strong></p>
+<blockquote>
+<p>如果已知直线通过点(x0, y0),斜率为m,则它的方程为 y - y0 = m(x - x0)</p>
+<p>如果一条直线通过点 (x1, y1) 和 (x2, y2), 则它的斜率等于 (y2 − y1) / (x2 − x1)</p>
+</blockquote>
+<h1 id="常见函数及其图像"><a href="#常见函数及其图像" class="headerlink" title="常见函数及其图像"></a>常见函数及其图像</h1><h2 id="多项式"><a href="#多项式" class="headerlink" title="多项式"></a>多项式</h2><p>有许多函数是基于 x 的非负次幂建立起来的.你可以以 1、x、$x^2$、$x^3$等为基本项, 然后用实数同这些基本项做乘法, 最后把有限个这样的项加到一起.基本项 $x^n$ 的倍数叫作 $x^n$ 的系数.最大的幂指数n(该项系数不能为零) 叫作多项式的次数.</p>
+<h3 id="二次函数"><a href="#二次函数" class="headerlink" title="二次函数"></a>二次函数</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/20/IO/#more" rel="contents">
+              <a class="btn" href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -245,7 +256,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,7 +324,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -412,6 +423,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/09/%E7%9D%80%E8%89%B2/" class="post-title-link" itemprop="url">着色</a>
+            <a href="/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/" class="post-title-link" itemprop="url">三角函数的极限和导数</a>
         </h2>
 
         <div class="post-meta">
@@ -184,17 +184,27 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-03-09 08:46:00 / 修改时间：21:44:09" itemprop="dateCreated datePublished" datetime="2022-03-09T08:46:00+08:00">2022-03-09</time>
+              <time title="创建时间：2022-04-02 20:41:02" itemprop="dateCreated datePublished" datetime="2022-04-02T20:41:02+08:00">2022-04-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-31 20:33:15" itemprop="dateModified" datetime="2022-08-31T20:33:15+08:00">2022-08-31</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                  <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
                 </span>
             </span>
 
@@ -209,12 +219,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>为了使物体看起来更有立体感,可以对其使用作色,也就是说使物体表面”涂上”光线,有明暗变化.本章展示了最通用的具有启发式的作色方法.前两个将介绍Lambertian Shading Model和Phong Shading Model, 发明于1970年代,在大多数图形API中都可以使用.最后一个介绍 artistic shading Model,模拟了人类绘制图像的风格.</p>
-<h1 id="Diffuse-Shading"><a href="#Diffuse-Shading" class="headerlink" title="Diffuse Shading"></a>Diffuse Shading</h1><p>许多物体的表面外观被粗略地描述为“哑光”，这表明该物体根本没有光泽。例如纸张、未打磨的木材和干燥、未打磨的石头。在很大程度上，这些物体表面的颜色不会随着视角的变化而变化。例如，如果你盯着一张纸上的一个特定的点，并且在移动的同时保持你的目光在这个点上，这个点上的颜色将保持相对不变。这样的哑光物体可以被认为是表现为朗伯反射体。本节讨论如何实现这样的着色.关键的一点是，本章中的所有公式都应该在世界坐标中求值，而不是在应用了透视变换的坐标中求值。否则，法线之间的角度将改变，着色将是不准确的.</p>
-<h2 id="Lambertian-Shading-Model"><a href="#Lambertian-Shading-Model" class="headerlink" title="Lambertian Shading Model"></a>Lambertian Shading Model</h2><p>Lambertian object遵循<strong><em>Lambert’s cosine law</em></strong>，即表面的颜色c与表面法线与光源方向夹角的余弦成正比(Gouraud, 1971):<br><img src="/2022/03/09/%E7%9D%80%E8%89%B2/1.jpg" alt="alt"><br></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cosθ  </span><br><span class="line">c ∝ n·l</span><br></pre></td></tr></table></figure><br>其中n和l如上图所示。因此，表面颜色将根据表面法线与光方向之间夹角余弦而变化。注意，通常假设向量l不依赖于对象的位置。这个假设是说相对于物体大小光是“遥远的”。这样的光通常被称为方向光，因为它的位置仅由一个方向来指定。<br>通过改变光源的强度或物体表面的反射率，可以使表面变亮或变暗。漫反射系数cr是光被表面反射的因子。这个系数对于rgb三个颜色分量是不同的。因此不同材质物体的漫反射颜色是不同的.例如，如果一个表面反射的红色入射光比蓝色入射光多，那么它就是红色的。如果我们假设表面颜色与从表面反射的光成比例，改进以上公式,加入漫反射系数cr和光照强度cl<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cr cl n·l</span><br></pre></td></tr></table></figure>
+          <h1 id="三角函数的极限"><a href="#三角函数的极限" class="headerlink" title="三角函数的极限"></a>三角函数的极限</h1><h2 id="小数的情况"><a href="#小数的情况" class="headerlink" title="小数的情况"></a>小数的情况</h2><blockquote>
+<p>${\lim_{x \to 0} \frac{sinx}{x}} = 1$</p>
+<p>$\lim_{x \to 0} cosx = 1$</p>
+<p>$\lim_{x \to 0} \frac{tanx}{x} = 1$</p>
+<p>$\lim_{x \to 0} \frac{1-cosx}{x} = 0$</p>
+</blockquote>
+<h2 id="大数的情况"><a href="#大数的情况" class="headerlink" title="大数的情况"></a>大数的情况</h2><p>考虑极限$\lim_{x \to \infty}$</p>
+<p>对于任意的x $-1 &lt;= sinx &lt;=1$  $-1 &lt;=cosx &lt;= 1$</p>
+<p>应用三明治定理 $\lim_{x \to \infty} \frac{sinx}{x} = 0$</p>
+<h2 id="其他情况"><a href="#其他情况" class="headerlink" title="其他情况"></a>其他情况</h2><p>考虑极限$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$<br>这次的三角函数是余弦, 且要在 π/2 的附近求值. 这既不是小数的情况也不是大数的情况, 因此很明显, 之前的情况都不适用.<strong><em>面对 x → a 的极限, 而a != 0 时, 有一个很好的一般原则, 那就是用 t = x − a作替换, 将问题转化为 t→0</em></strong></p>
+<p>$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/09/%E7%9D%80%E8%89%B2/#more" rel="contents">
+              <a class="btn" href="/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -237,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -305,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -404,6 +422,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

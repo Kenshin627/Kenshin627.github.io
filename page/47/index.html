@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">.net 请求webservice接口</a>
+            <a href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/" class="post-title-link" itemprop="url">Asp.Net Core DI-服务注册</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-04-10 21:29:15" itemprop="dateCreated datePublished" datetime="2019-04-10T21:29:15+08:00">2019-04-10</time>
+              <time title="创建时间：2019-10-20 15:18:00" itemprop="dateCreated datePublished" datetime="2019-10-20T15:18:00+08:00">2019-10-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/net/" itemprop="url" rel="index"><span itemprop="name">.net</span></a>
+                  <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
                 </span>
             </span>
 
@@ -215,14 +215,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="C-调用webservice接口"><a href="#C-调用webservice接口" class="headerlink" title="C#调用webservice接口"></a>C#调用webservice接口</h2><p>由于项目需要调用第三方的webservice接口,以前没有接触过webservice相关知识,故在此记录下来备忘.下边通过webservice天气预报接口为例.简单介绍下如何在.NET项目中调用外部webservice.</p>
-<p>1.项目中添加”服务引用”.如下图:<br>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice1.jpg" alt="alt"></p>
-<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice2.jpg" alt="alt"></p>
-<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice3.jpg" alt="alt"></p>
-
+          <h1 id="Asp-Net-Core-DI-服务注册"><a href="#Asp-Net-Core-DI-服务注册" class="headerlink" title="Asp.Net Core DI-服务注册"></a>Asp.Net Core DI-服务注册</h1><p>包含服务注册信息的IServiceCollection对象最终被用来创建作为DI容器的IServiceProvider对象。服务注册就是创建出现相应的ServiceDescriptor对象并将其添加到指定IServiceCollection集合对象中的过程。IServiceCollection实际上是包含了<strong>ServiceDescriptor</strong>对象的集合.</p>
+<h2 id="ServiceDescriptor"><a href="#ServiceDescriptor" class="headerlink" title="ServiceDescriptor"></a>ServiceDescriptor</h2><p>IServiceCollection对象是一个存放服务注册信息的集合.在IServiceCollection/IServiceProvider为核心的DI框架中,与之对应的类型为ServiceDescriptor.</p>
+<p>DI框架将服务注册存储在一个通过IServiceCollection接口表示的集合之中.如下面的代码片段所示，一个IServiceCollection对象本质上就是一个元素类型为ServiceDescriptor的列表.在默认情况下我们使用的是实现该接口的ServiceCollection类型.</p>
+<p>ServiceDescriptor共有5个属性,3个构造函数,如下所示:</p>
+<p><img src="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/Enrollment1.jpg" alt="alt"></p>
+<p>属性说明:</p>
+<ul>
+<li>ServiceType:注册的服务类型.往往是一个接口</li>
+<li>ImplementationType:实现ServiceType接口的类</li>
+<li>ImplementationInstance:已经实例化的对象</li>
+<li>ImplementationFactory:提供对象的工厂方法.类型为Func<iserviceprovider,object></iserviceprovider,object></li>
+<li>Lifetime:生命周期,枚举类型,对应有三个值,分别为:Singleton,Scoped,Transient</li>
+</ul>
+<p>构造函数说明:<br>ServiceDescriptor的三个属性(ImplementationType,ImplementationInstance,ImplementationFactory)体现了服务实例的三种提供方式，并对应着三个构造函数。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/#more" rel="contents">
+              <a class="btn" href="/2019/10/20/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -245,7 +254,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/46/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><span class="page-number current">47</span><a class="page-number" href="/page/48/">48</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/48/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/46/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><span class="page-number current">47</span><a class="page-number" href="/page/48/">48</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/48/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,7 +322,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
