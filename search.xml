@@ -8,7 +8,7 @@
       <link href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/"/>
       <url>/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/</url>
       
-        <content type="html"><![CDATA[<h1 id="图形学的数学基础（二十四）：插值"><a href="#图形学的数学基础（二十四）：插值" class="headerlink" title="图形学的数学基础（二十四）：插值"></a>图形学的数学基础（二十四）：插值</h1><h2 id="线性插值（-Linear-Interpolation-）"><a href="#线性插值（-Linear-Interpolation-）" class="headerlink" title="线性插值（$Linear\;Interpolation$）"></a>线性插值（$Linear\;Interpolation$）</h2><p>在图形学领域插值是一项广泛应用的技术，很多时候，数据是在规则网格上指定的（值写在 2D 或 3D 网格的顶点位置）或在一条线上（在 1D 情况下），但是程序需要计算任意一点的值。如果采样点刚好落在网格顶点处，那么可以读取数值直接使用，但是如果采样点落在其他地方，考虑到那里并没有存储数值，我们需要基于周围顶点计算数值。这种技术称为插值，因为其关键思想是“插值”，通过固定网格顶点的现有值计算网格上其他任意位置的值。</p><p>在二维中这种技术叫双线性插值，与之对应的三维插值称为三线性插值。“线性插值”是一种类似于以下形式的方程：</p><p>$a(1-t) +bt\;\;\;with\; 0 &lt;=t\;&lt;=\;1$</p><p>其他种种形式的线性插值都是以此为基础的。</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/1.jpg" alt="线性插值"></p><p>插值技术通常用于图像处理（例如调整图像大小）。但是 3D 技术也可以使用 3D 或 2D 网格（纹理可以看作 2D 网格），例如流体模拟、体积渲染、纹理映射和辐照度缓存等等，无论何时涉及网格，通常也需要插值技术。</p><h2 id="双线性插值（-Bilinear-Interpolation-）"><a href="#双线性插值（-Bilinear-Interpolation-）" class="headerlink" title="双线性插值（$Bilinear\;Interpolation$）"></a>双线性插值（$Bilinear\;Interpolation$）</h2><p>双线性插值是一种用于在二维规则网格中计算任意值的方法。此网格也可以是图像或纹理贴图。思路是取二维平面上周围最近的四个网格顶点作为参照，首先水平方向做两次线性插值，得到两个查之后的结果，根据这两个值，再垂直方向再做一次线性插值。即可拿到p点的值。</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/2.png" alt="线性插值"></p><p>线性插值基本公式：</p><p>$lerp(t, v_0, v_1) = v_0 + t(v_1-v_0)$</p><p>计算x方向两次线性插值，得到a和b：</p><p>$a = C_{00} + s(C_{10} - C_{00})$</p><p>$b = C_{01} + s(C_{01} - C_{11})$</p><p>根据ab的值，再进行一次线性插值，计算p的值：</p><p>$p = a + t(b - a)$</p><p>这也是名称双线性插值的由来，总共做了两轮线性插值，水平方向上一轮，垂直方向上一轮。</p><h2 id="双三次线性插值（-Bicubic-Interpolation-）"><a href="#双三次线性插值（-Bicubic-Interpolation-）" class="headerlink" title="双三次线性插值（$Bicubic\;Interpolation$）"></a>双三次线性插值（$Bicubic\;Interpolation$）</h2><p>双线性插值是采用周围临近4个点作为参照，而双三次线性插值是采用周围16个点。也被称为双三次插值算法。</p><p>$W(x) = \begin{cases}<br>    (a+2)|x|^3 - (a+3)|x|^2 +1 \;for\;|x| &lt;= 1\\<br>    a|x|^3 - 5a|x|^2 + 8a|x|-4a\;for 1&lt; |x| &lt; 2\\<br>    0\;otherwise<br>\end{cases}$</p><p>其中$a = -0.5$</p><h2 id="三线性插值（-Trilinear-Interpolation-）"><a href="#三线性插值（-Trilinear-Interpolation-）" class="headerlink" title="三线性插值（$Trilinear\; Interpolation$）"></a>三线性插值（$Trilinear\; Interpolation$）</h2><p>三线性插值是双线性插值在三维空间的扩展。可以看作是两个双线性插值的“线性插值”。三线性插值双线性插值具有相同的有点和缺点，首先它非常简单，实现容易，速度也很快。但是它产生的结果不是非常平滑。然后对于体积渲染或流体模拟，需要在三维网格中处理大量插值时，它仍然是一个非常好的选择。</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/3.png" alt="线性插值"></p><p>step1:</p><p>$a = C_{010}+t(C_{110} - C_{010})$</p><p>$b = C_{000}+t(C_{100} - C_{000})$</p><p>$c = C_{011}+t(C_{111} - C_{011})$</p><p>$d = C_{001}+t(C_{101} - C_{001})$</p><p>step2:</p><p>$e = b + s(a - b)$</p><p>$f = d + s(c - d)$</p><p>step3:</p><p>$p = e + w(f-e)$</p><h2 id="平滑阶梯函数-SmoothStep"><a href="#平滑阶梯函数-SmoothStep" class="headerlink" title="平滑阶梯函数($SmoothStep$)"></a>平滑阶梯函数($SmoothStep$)</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>$smoothStep$函数用来生成0到1的平滑过渡值.先看smoothStep函数实现:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/4.png" alt="线性插值"></p><h3 id="数学推导"><a href="#数学推导" class="headerlink" title="数学推导"></a>数学推导</h3><p>通过$smoothStep$函数定义,我们知道:</p><ul><li>$res = 3t^2 - 2t^3$</li><li>$t = \dfrac{(x-a)}{(b-a)}$</li></ul><p>接下来我们一步步通过函数图像来解释$smoothStep$背后的数学原理.</p><p><1> 对于函数$y = x$这个函数,其实就是一条直线:</1></p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/5.jpg" alt="线性插值"></p><p><2>对于函数$y = x^2$,可以看到它比$y = x$有一个更平滑的过渡:</2></p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/6.jpg" alt="线性插值"></p><p>但是我们发现$y = x^2$的函数图像仍然是不够“平滑的”，为什么呢？我们知道曲线的切线表示了这条曲线的变化率。通过观察我们明显发现，在0附近的变化率要低于1附近的变化率。</p><p><3> $y = 1 - (x-1)^2$我们在$y = x^2$的基础上构造另外一条曲线.首先先将$下^2$反转.得到:</3></p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/7.jpg" alt="线性插值"></p><p>将$y = -x^2$向右移动一个单位得到:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/8.jpg" alt="线性插值"></p><p>然后再向上移动一个单位得到以下函数图像:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/9.jpg" alt="线性插值"></p><p>此时$y = 1- (x-1)^2$</p><p>可以看到我们构造的第二条曲线在接近1的部分开始变缓,和$y = x^2$从0开始变缓一样.因此我们将这两条曲线混合到一起即可以得到理想情况下的“平滑过渡”：</p><p>利用线性插值混合两条曲线：</p><p>$y = xf(x) + (1-x)g(x) = x(1-(x-1)^2) + (1-x)x^2 = 3x^2 - 2x^3$</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/10.jpg" alt="线性插值"></p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/interpolation">Scratchapixel</a></p><p><a href="https://www.bilibili.com/video/BV1X7411F744?p=15&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p><p><a href="https://zhuanlan.zhihu.com/p/424589478">SmoothStep函数/节点到底做了什么？</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="图形学的数学基础（二十四）：插值"><a href="#图形学的数学基础（二十四）：插值" class="headerlink" title="图形学的数学基础（二十四）：插值"></a>图形学的数学基础（二十四）：插值</h1><h2 id="线性插值（-Linear-Interpolation-）"><a href="#线性插值（-Linear-Interpolation-）" class="headerlink" title="线性插值（$Linear\;Interpolation$）"></a>线性插值（$Linear\;Interpolation$）</h2><p>在图形学领域插值是一项广泛应用的技术，很多时候，数据是在规则网格上指定的（值写在 2D 或 3D 网格的顶点位置）或在一条线上（在 1D 情况下），但是程序需要计算任意一点的值。如果采样点刚好落在网格顶点处，那么可以读取数值直接使用，但是如果采样点落在其他地方，考虑到那里并没有存储数值，我们需要基于周围顶点计算数值。这种技术称为插值，因为其关键思想是“插值”，通过固定网格顶点的现有值计算网格上其他任意位置的值。</p><p>在二维中这种技术叫双线性插值，与之对应的三维插值称为三线性插值。“线性插值”是一种类似于以下形式的方程：</p><p>$a(1-t) +bt\;\;\;with\; 0 &lt;=t\;&lt;=\;1$</p><p>其他种种形式的线性插值都是以此为基础的。</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/1.jpg" alt="线性插值"></p><p>插值技术通常用于图像处理（例如调整图像大小）。但是 3D 技术也可以使用 3D 或 2D 网格（纹理可以看作 2D 网格），例如流体模拟、体积渲染、纹理映射和辐照度缓存等等，无论何时涉及网格，通常也需要插值技术。</p><h2 id="双线性插值（-Bilinear-Interpolation-）"><a href="#双线性插值（-Bilinear-Interpolation-）" class="headerlink" title="双线性插值（$Bilinear\;Interpolation$）"></a>双线性插值（$Bilinear\;Interpolation$）</h2><p>双线性插值是一种用于在二维规则网格中计算任意值的方法。此网格也可以是图像或纹理贴图。思路是取二维平面上周围最近的四个网格顶点作为参照，首先水平方向做两次线性插值，得到两个查之后的结果，根据这两个值，再垂直方向再做一次线性插值。即可拿到p点的值。</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/2.png" alt="线性插值"></p><p>线性插值基本公式：</p><p>$lerp(t, v_0, v_1) = v_0 + t(v_1-v_0)$</p><p>计算x方向两次线性插值，得到a和b：</p><p>$a = C_{00} + s(C_{10} - C_{00})$</p><p>$b = C_{01} + s(C_{01} - C_{11})$</p><p>根据ab的值，再进行一次线性插值，计算p的值：</p><p>$p = a + t(b - a)$</p><p>这也是名称双线性插值的由来，总共做了两轮线性插值，水平方向上一轮，垂直方向上一轮。</p><h2 id="双三次线性插值（-Bicubic-Interpolation-）"><a href="#双三次线性插值（-Bicubic-Interpolation-）" class="headerlink" title="双三次线性插值（$Bicubic\;Interpolation$）"></a>双三次线性插值（$Bicubic\;Interpolation$）</h2><p>双线性插值是采用周围临近4个点作为参照，而双三次线性插值是采用周围16个点。也被称为双三次插值算法。</p><p>$W(x) = \begin{cases}<br>    (a+2)|x|^3 - (a+3)|x|^2 +1 \;for\;|x| &lt;= 1\\<br>    a|x|^3 - 5a|x|^2 + 8a|x|-4a\;for 1&lt; |x| &lt; 2\\<br>    0\;otherwise<br>\end{cases}$</p><p>其中$a = -0.5$</p><h2 id="三线性插值（-Trilinear-Interpolation-）"><a href="#三线性插值（-Trilinear-Interpolation-）" class="headerlink" title="三线性插值（$Trilinear\; Interpolation$）"></a>三线性插值（$Trilinear\; Interpolation$）</h2><p>三线性插值是双线性插值在三维空间的扩展。可以看作是两个双线性插值的“线性插值”。三线性插值双线性插值具有相同的有点和缺点，首先它非常简单，实现容易，速度也很快。但是它产生的结果不是非常平滑。然后对于体积渲染或流体模拟，需要在三维网格中处理大量插值时，它仍然是一个非常好的选择。</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/3.png" alt="线性插值"></p><p>step1:</p><p>$a = C_{010}+t(C_{110} - C_{010})$</p><p>$b = C_{000}+t(C_{100} - C_{000})$</p><p>$c = C_{011}+t(C_{111} - C_{011})$</p><p>$d = C_{001}+t(C_{101} - C_{001})$</p><p>step2:</p><p>$e = b + s(a - b)$</p><p>$f = d + s(c - d)$</p><p>step3:</p><p>$p = e + w(f-e)$</p><h2 id="阶梯函数-Step"><a href="#阶梯函数-Step" class="headerlink" title="阶梯函数($Step$)"></a>阶梯函数($Step$)</h2><p>$step$函数接受两个参数,一个边界值$edge$,一个输入变量$x$,当$x &gt;= edge$时,返回1, 否则返回0。</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/12.png" alt="线性插值"></p><p>函数图像如下:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/11.jpg" alt="线性插值"></p><h2 id="平滑阶梯函数-SmoothStep"><a href="#平滑阶梯函数-SmoothStep" class="headerlink" title="平滑阶梯函数($SmoothStep$)"></a>平滑阶梯函数($SmoothStep$)</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>$smoothStep$函数用来生成0到1的平滑过渡值.先看smoothStep函数实现:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/4.png" alt="线性插值"></p><h3 id="数学推导"><a href="#数学推导" class="headerlink" title="数学推导"></a>数学推导</h3><p>通过$smoothStep$函数定义,我们知道:</p><ul><li>$res = 3t^2 - 2t^3$</li><li>$t = \dfrac{(x-a)}{(b-a)}$</li></ul><p>接下来我们一步步通过函数图像来解释$smoothStep$背后的数学原理.</p><p><1> 对于函数$y = x$这个函数,其实就是一条直线:</1></p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/5.jpg" alt="线性插值"></p><p><2>对于函数$y = x^2$,可以看到它比$y = x$有一个更平滑的过渡:</2></p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/6.jpg" alt="线性插值"></p><p>但是我们发现$y = x^2$的函数图像仍然是不够“平滑的”，为什么呢？我们知道曲线的切线表示了这条曲线的变化率。通过观察我们明显发现，在0附近的变化率要低于1附近的变化率。</p><p><3> $y = 1 - (x-1)^2$我们在$y = x^2$的基础上构造另外一条曲线.首先先将$下^2$反转.得到:</3></p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/7.jpg" alt="线性插值"></p><p>将$y = -x^2$向右移动一个单位得到:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/8.jpg" alt="线性插值"></p><p>然后再向上移动一个单位得到以下函数图像:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/9.jpg" alt="线性插值"></p><p>此时$y = 1- (x-1)^2$</p><p>可以看到我们构造的第二条曲线在接近1的部分开始变缓,和$y = x^2$从0开始变缓一样.因此我们将这两条曲线混合到一起即可以得到理想情况下的“平滑过渡”：</p><p>利用线性插值混合两条曲线：</p><p>$y = xf(x) + (1-x)g(x) = x(1-(x-1)^2) + (1-x)x^2 = 3x^2 - 2x^3$</p><p>最终形成的函数图像如下:</p><p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/10.jpg" alt="线性插值"></p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/interpolation">Scratchapixel</a></p><p><a href="https://www.bilibili.com/video/BV1X7411F744?p=15&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p><p><a href="https://zhuanlan.zhihu.com/p/424589478">SmoothStep函数/节点到底做了什么？</a></p>]]></content>
       
       
       <categories>
@@ -24,9 +24,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -55,9 +55,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -86,9 +86,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -117,9 +117,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -148,9 +148,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -179,9 +179,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -210,9 +210,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -241,9 +241,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -272,9 +272,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -303,9 +303,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -334,9 +334,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -365,9 +365,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -396,9 +396,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -427,9 +427,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -458,9 +458,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -489,9 +489,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -520,9 +520,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -551,9 +551,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -582,9 +582,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -613,9 +613,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -644,9 +644,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -675,9 +675,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -706,9 +706,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -737,9 +737,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
@@ -1079,9 +1079,9 @@
       
         <tags>
             
-            <tag> Computer Graphic </tag>
-            
             <tag> Math </tag>
+            
+            <tag> Computer Graphic </tag>
             
         </tags>
       
