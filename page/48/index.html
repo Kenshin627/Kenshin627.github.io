@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Asp.Net Core DI框架</a>
+            <a href="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/" class="post-title-link" itemprop="url">Asp.Net Core DI-服务消费</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-10-19 17:51:45" itemprop="dateCreated datePublished" datetime="2019-10-19T17:51:45+08:00">2019-10-19</time>
+              <time title="创建时间：2019-10-21 21:51:00" itemprop="dateCreated datePublished" datetime="2019-10-21T21:51:00+08:00">2019-10-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -215,25 +215,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Asp-NET-Core-DI框架概览"><a href="#Asp-NET-Core-DI框架概览" class="headerlink" title="Asp.NET Core DI框架概览"></a>Asp.NET Core DI框架概览</h1><p>毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式.</p>
-<h2 id="服务的注册与消费"><a href="#服务的注册与消费" class="headerlink" title="服务的注册与消费"></a>服务的注册与消费</h2><p>ASP.NET Core中的依赖注入框架中,我们添加的服务注册被保存到通过 <strong>IServiceCollection</strong> 接口表示的集合之中,基于这个集合创建的DI容器体现为 <strong>IServiceProvider</strong>.</p>
-<p>DI框架提供了生产实例的三种生命周期模式,分别为:</p>
+          <h1 id="Asp-Net-Core-DI-服务消费"><a href="#Asp-Net-Core-DI-服务消费" class="headerlink" title="Asp.Net Core DI-服务消费"></a>Asp.Net Core DI-服务消费</h1><p>本系列博客均来源于大内老A关于Asp.NET Core的解读,在此进基础上进行了提炼,方便日后查看学习.<br>包含服务注册信息的IServiceCollection对象最终被用来创建作为DI容器的IServiceProvider对象。当需要消费某个服务实例的时候，我们只需要指定服务类型调用IServiceProvider的GetService方法，IServiceProvider就会根据对应的服务注册提供所需的服务实例。</p>
+<h2 id="IServiceProvider"><a href="#IServiceProvider" class="headerlink" title="IServiceProvider"></a>IServiceProvider</h2><p>IServiceProvider由ServiceCollection的BuildServiceProvider方法来生成,ServiceProvider只包含一个方法GetService(Type serviceType).如下图:</p>
+<p><img src="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/Use1.jpg" alt="alt"><br>IserviceProvider包含其他一些扩展方法,可以方便通过不同方式不用应用场景返回实例.如下图:</p>
+<p><img src="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/Use2.jpg" alt="alt"></p>
 <ul>
-<li><strong>Singleton</strong>:整个应用程序生命周期内单例</li>
-<li><strong>Scoped</strong>:单次服务请求内的单例</li>
-<li><strong>Transient</strong>:每次获取均会产生新的对象</li>
+<li>GetService<t>(this IServiceProvider provider):通过提供泛型类型T,返回对应实例,如果没有T对应的注册信息,返回null</t></li>
+<li>GetServices<t>(this IServiceProvider provider):通过提供泛型类型T,返回对应的多个实例</t></li>
+<li>GetServices(this IServiceProvider provider, Type serviceType):传参的方式</li>
+<li>GetRequiredService(this IServiceProvider provider, Type serviceType):如果指定服务类型的服务注册不存在,则会抛出一个InvalidOperationException类型的异常。如果所需的服务实例是必需的，我们一般会调用者两个扩展方法</li>
 </ul>
-<p>DI框架注册服务时通常会使用三种方式,分别为:</p>
+<h2 id="构造函数的选择"><a href="#构造函数的选择" class="headerlink" title="构造函数的选择"></a>构造函数的选择</h2><p>如果IServiceProvider对象试图通过调用构造函数的方式来创建服务实例，传入构造函数的所有参数必须先被初始化，最终被选择出来的构造函数必须具备一个基本的条件：</p>
 <ul>
-<li>指定注册非服务类型和实现类型.</li>
-<li>指定一个现有的服务实例.</li>
-<li>指定一个创建服务实例的委托对象.</li>
+<li>第一个原则:<strong>IServiceProvider能够提供构造函数的所有参数</strong>.</li>
+<li>第二个原则: <strong>每一个候选构造函数的参数类型集合都是这个构造函数参数类型集合的子集</strong>.</li>
 </ul>
-<p>当我们在进行服务注册时,可以为同一类型添加一个服务注册,也可以添加多个,实际上添加的所有服务注册都是有效的,在完成服务注册之后，我们调用IServiceCollection接口的扩展方法  <strong>BuildServiceProvider</strong>创建出代表DI容器的IServiceProvider对象,并利用它调用后者的<strong>GetService<t></t></strong>方法来提供相应的服务实例,总时会返回一个服务实例,这里采用了”后来居上”的原则,即总是采用最近添加的服务注册来创建服务实例.如果我们调用另一个扩展方法<strong>GetServices<t></t></strong>,它将利用返回所有服务注册提供的服务实例.如下所示的代码片段.</p>
-<p><img src="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/DI1.jpg" alt="alt"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/#more" rel="contents">
+              <a class="btn" href="/2019/10/21/ASP-NET-Core-DI-%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -256,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/47/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><span class="page-number current">48</span><a class="page-number" href="/page/49/">49</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/49/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/47/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><span class="page-number current">48</span><a class="page-number" href="/page/49/">49</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/49/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -324,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
