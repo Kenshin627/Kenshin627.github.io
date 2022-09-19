@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/22/Context/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/22/Context/" class="post-title-link" itemprop="url">Haskell03 - Context</a>
+            <a href="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">数学相关</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-11-22 11:46:20" itemprop="dateCreated datePublished" datetime="2021-11-22T11:46:20+08:00">2021-11-22</time>
+              <time title="创建时间：2022-03-01 15:31:47" itemprop="dateCreated datePublished" datetime="2022-03-01T15:31:47+08:00">2022-03-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
+                <time title="修改时间：2022-03-06 10:06:15" itemprop="dateModified" datetime="2022-03-06T10:06:15+08:00">2022-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
                 </span>
             </span>
 
@@ -215,14 +219,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Functor"><a href="#Functor" class="headerlink" title="Functor"></a>Functor</h1><h2 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h2><p>This solution means that you’d have to rewrite a special version of every existing function you want to use in a Maybe! This greatly limits the usefulness of tools such as Maybe. It turns out Haskell has a type class that solves this problem, called Functor.</p>
-<h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><p>Maybe is a member of the Functor type class. The Functor type class requires only one definition: fmap.<br><img src="/2021/11/22/Context/1.jpg" alt="alt"><br>_<strong>fmap provides an adapter</strong>_, Notice that we’re using &lt;$&gt;, which is a synonym for fmap (except it’s a binary operator rather than a function._<strong>This ability to transform the types of values inside a Maybe is the true power of the Functor type class.</strong>_<br><img src="/2021/11/22/Context/2.jpg" alt="alt"></p>
-<p>Though fmap is the official function name, in practice the binary operator &lt;$&gt; is used much more frequently<br><img src="/2021/11/22/Context/3.png" alt="alt"></p>
-<h1 id="Applicative"><a href="#Applicative" class="headerlink" title="Applicative"></a>Applicative</h1><p>_<strong>the Applicative type class allows you to use functions that are inside a context, such as Maybe or IO, Functor is a superclass of Applicative.</strong>_<br><img src="/2021/11/22/Context/4.jpg" alt="alt"><br><img src="/2021/11/22/Context/5.jpg" alt="alt"></p>
-<h2 id="The-pure-method"><a href="#The-pure-method" class="headerlink" title="The pure method"></a>The pure method</h2><p>The pure method is a useful helper function for taking an ordinary value(also function) or function and putting it into a context.<br><img src="/2021/11/22/Context/7.png" alt="alt"></p>
+          <h1 id="计算机图形学数学基础知识"><a href="#计算机图形学数学基础知识" class="headerlink" title="计算机图形学数学基础知识"></a>计算机图形学数学基础知识</h1><h2 id="集合与映射-Sets-and-Mappings"><a href="#集合与映射-Sets-and-Mappings" class="headerlink" title="集合与映射(Sets and Mappings)"></a>集合与映射(Sets and Mappings)</h2><h3 id="区间"><a href="#区间" class="headerlink" title="区间"></a>区间</h3><p><img src="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/1.jpg" alt="alt"></p>
+<h3 id="对数-Logarithms"><a href="#对数-Logarithms" class="headerlink" title="对数(Logarithms)"></a>对数(Logarithms)</h3><p>时至今日，但对数在出现指数项方程的问题中经常有用。根据定义，每一个对数都有一个以a为底的对数</p>
+
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/22/Context/#more" rel="contents">
+              <a class="btn" href="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -245,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,7 +315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

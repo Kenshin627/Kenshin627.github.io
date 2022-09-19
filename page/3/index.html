@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/" class="post-title-link" itemprop="url">图形学的数学基础（二十四）：插值</a>
+            <a href="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/" class="post-title-link" itemprop="url">图形学的数学基础（二十五）：着色</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-11 12:50:32" itemprop="dateCreated datePublished" datetime="2022-09-11T12:50:32+08:00">2022-09-11</time>
+              <time title="创建时间：2022-09-14 21:05:33" itemprop="dateCreated datePublished" datetime="2022-09-14T21:05:33+08:00">2022-09-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-12 09:06:11" itemprop="dateModified" datetime="2022-09-12T09:06:11+08:00">2022-09-12</time>
+                <time title="修改时间：2022-09-15 21:50:19" itemprop="dateModified" datetime="2022-09-15T21:50:19+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,16 +223,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十四）：插值"><a href="#图形学的数学基础（二十四）：插值" class="headerlink" title="图形学的数学基础（二十四）：插值"></a>图形学的数学基础（二十四）：插值</h1><h2 id="线性插值（-Linear-Interpolation-）"><a href="#线性插值（-Linear-Interpolation-）" class="headerlink" title="线性插值（$Linear\;Interpolation$）"></a>线性插值（$Linear\;Interpolation$）</h2><p>在图形学领域插值是一项广泛应用的技术，很多时候，数据是在规则网格上指定的（值写在 2D 或 3D 网格的顶点位置）或在一条线上（在 1D 情况下），但是程序需要计算任意一点的值。如果采样点刚好落在网格顶点处，那么可以读取数值直接使用，但是如果采样点落在其他地方，考虑到那里并没有存储数值，我们需要基于周围顶点计算数值。这种技术称为插值，因为其关键思想是“插值”，通过固定网格顶点的现有值计算网格上其他任意位置的值。</p>
-<p>在二维中这种技术叫双线性插值，与之对应的三维插值称为三线性插值。“线性插值”是一种类似于以下形式的方程：</p>
-<p>$a(1-t) +bt\;\;\;with\; 0 &lt;=t\;&lt;=\;1$</p>
-<p>其他种种形式的线性插值都是以此为基础的。</p>
-<p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/1.jpg" alt="线性插值"></p>
-<p>插值技术通常用于图像处理（例如调整图像大小）。但是 3D 技术也可以使用 3D 或 2D 网格（纹理可以看作 2D 网格），例如流体模拟、体积渲染、纹理映射和辐照度缓存等等，无论何时涉及网格，通常也需要插值技术。</p>
-<h2 id="双线性插值（-Bilinear-Interpolation-）"><a href="#双线性插值（-Bilinear-Interpolation-）" class="headerlink" title="双线性插值（$Bilinear\;Interpolation$）"></a>双线性插值（$Bilinear\;Interpolation$）</h2><p>双线性插值是一种用于在二维规则网格中计算任意值的方法。此网格也可以是图像或纹理贴图。思路是取二维平面上周围最近的四个网格顶点作为参照，首先水平方向做两次线性插值，得到两个查之后的结果，根据这两个值，再垂直方向再做一次线性插值。即可拿到p点的值。</p>
+          <h1 id="图形学的数学基础（二十五）：着色"><a href="#图形学的数学基础（二十五）：着色" class="headerlink" title="图形学的数学基础（二十五）：着色"></a>图形学的数学基础（二十五）：着色</h1><p>渲染过程本质可以上分解为两个步骤:可见性测试和着色。光栅化和射线追踪都是用于解决可见性问题。本章我们将介绍渲染过程的第二部分:着色。着色是一个庞大的主题。一些用于着色的技术在数学上也很复杂。本章我们将学习最基本的着色模型: $Blinn-Phong\;Reflectance\;Model$</p>
+<h2 id="blinn-Phong-Reflectance-Model"><a href="#blinn-Phong-Reflectance-Model" class="headerlink" title="$blinn-Phong\;Reflectance\;Model$"></a>$blinn-Phong\;Reflectance\;Model$</h2><p>当我们观察一个物体时，可以明显的将物体的视觉表现分为三类：</p>
+<ul>
+<li>高光：表现很亮的部分，并且会随着视角的变化而变化</li>
+<li>漫反射部分：颜色变化不明显，表示物体本身的颜色或者diffuseTexture颜色。（物体表面吸收了部分光线，反射出的未被吸收的部分）</li>
+<li>环境光：未被光照直接照亮的部分，<strong>模拟间接光照</strong>。在布林冯模型中简化为常量。这也是为什么布林冯模型被称为经验模型的原因。计算精确的间接光照需要$RayTracing$。</li>
+</ul>
+<p><img src="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/1.png" alt="blinn-phong"></p>
+<p>布林冯光照模型是一个经验模型。整体思想就是按照这三部分来建模的。布林冯光照模型是一个直接光照模型（或者叫局部光照/局部性），不考虑间接光照，即不考虑周围物体反射的光线对其产生的影响。着色权重仅考虑光源。（阴影及SSAO需要多个pass处理）</p>
+<h3 id="定义光照参数"><a href="#定义光照参数" class="headerlink" title="定义光照参数"></a>定义光照参数</h3><p>要计算物体表面着色点光照结果，需要定义一些基本的参数。</p>
+<p><img src="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/2.jpg" alt="blinn-phong"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/#more" rel="contents">
+              <a class="btn" href="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -255,7 +259,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -323,7 +327,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
