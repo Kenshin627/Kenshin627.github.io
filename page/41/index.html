@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/20/IO/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/20/IO/" class="post-title-link" itemprop="url">Haskell03 - IO</a>
+            <a href="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">数学相关</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-11-20 12:44:13" itemprop="dateCreated datePublished" datetime="2021-11-20T12:44:13+08:00">2021-11-20</time>
+              <time title="创建时间：2022-03-01 15:31:47" itemprop="dateCreated datePublished" datetime="2022-03-01T15:31:47+08:00">2022-03-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
+                <time title="修改时间：2022-03-06 10:06:15" itemprop="dateModified" datetime="2022-03-06T10:06:15+08:00">2022-03-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -200,7 +200,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
                 </span>
             </span>
 
@@ -215,14 +219,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="IO-TYPES"><a href="#IO-TYPES" class="headerlink" title="IO TYPES"></a>IO TYPES</h1><p>Haskell has a special parameterized type called IO. Any value in an IO context must stay in this context. This prevents code that’s pure (meaning it upholds referential transparency and doesn’t change state) and code that’s necessarily impure from mixing.</p>
-<h2 id="IO-types—dealing-with-an-impure-world"><a href="#IO-types—dealing-with-an-impure-world" class="headerlink" title="IO types—dealing with an impure world"></a>IO types—dealing with an impure world</h2><p>IO in Haskell is a parameterized type that’s similar to Maybe.The first thing they share in common is that they’re parameterized types of the same kind.The other thing that Maybe and IO have in common is that (unlike List or Map) they describe a context for their parameters rather than a container. The context for the IO type is that the value has come from an input/output operation.To keep Haskell code pure and predictable, you use the IO type to provide a context for data that may not behave the way all of the rest of your Haskell code does. IO actions aren’t functions.</p>
-<h2 id="Examples-of-IO-actions"><a href="#Examples-of-IO-actions" class="headerlink" title="Examples of IO actions"></a>Examples of IO actions</h2><p>main doesn’t return any meaningful value; it simply performs an action. It turns out that main isn’t a function, because it breaks one of the fundamental rules of functions: it doesn’t return a value. Because of this, we refer to main as an IO action. IO actions work much like functions except they violate at least one of the three rules we established for functions early in the book. Some IO actions return no value, some take no input, and others don’t always return the same value given the same input.<br><img src="/2021/11/20/IO/1.png" alt="alt"></p>
-<h2 id="Do-notation"><a href="#Do-notation" class="headerlink" title="Do-notation"></a>Do-notation</h2><p>This do-notation allows you to treat IO types as if they were regular types. This also explains why some variables use let and others use &lt;-. Variables assigned with &lt;- allow you to act as though a type IO a is just of type a. You use let statements whenever you create variables that aren’t IO types.</p>
-<h3 id="lt"><a href="#lt" class="headerlink" title="&lt;-"></a>&lt;-</h3><p>Donotation allows you to assign an IO String variable by using &lt;-, to act like it’s an ordinary String, and then to pass it to functions that work with only regular Strings<br><img src="/2021/11/20/IO/2.png" alt="alt"></p>
+          <h1 id="计算机图形学数学基础知识"><a href="#计算机图形学数学基础知识" class="headerlink" title="计算机图形学数学基础知识"></a>计算机图形学数学基础知识</h1><h2 id="集合与映射-Sets-and-Mappings"><a href="#集合与映射-Sets-and-Mappings" class="headerlink" title="集合与映射(Sets and Mappings)"></a>集合与映射(Sets and Mappings)</h2><h3 id="区间"><a href="#区间" class="headerlink" title="区间"></a>区间</h3><p><img src="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/1.jpg" alt="alt"></p>
+<h3 id="对数-Logarithms"><a href="#对数-Logarithms" class="headerlink" title="对数(Logarithms)"></a>对数(Logarithms)</h3><p>时至今日，但对数在出现指数项方程的问题中经常有用。根据定义，每一个对数都有一个以a为底的对数</p>
+
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/20/IO/#more" rel="contents">
+              <a class="btn" href="/2022/03/01/%E6%95%B0%E5%AD%A6%E7%9B%B8%E5%85%B3/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -245,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/40/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/42/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/40/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/42/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,7 +315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

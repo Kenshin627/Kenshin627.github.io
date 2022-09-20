@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/" class="post-title-link" itemprop="url">图形学的数学基础（十九）：几何图元-重心坐标</a>
+            <a href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/" class="post-title-link" itemprop="url">图形学的数学基础（二十一）：立体角</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-06 21:45:54" itemprop="dateCreated datePublished" datetime="2022-09-06T21:45:54+08:00">2022-09-06</time>
+              <time title="创建时间：2022-09-10 22:34:56" itemprop="dateCreated datePublished" datetime="2022-09-10T22:34:56+08:00">2022-09-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-08 20:44:58" itemprop="dateModified" datetime="2022-09-08T20:44:58+08:00">2022-09-08</time>
+                <time title="修改时间：2022-09-11 21:41:06" itemprop="dateModified" datetime="2022-09-11T21:41:06+08:00">2022-09-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,17 +223,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（十九）：几何图元-重心坐标"><a href="#图形学的数学基础（十九）：几何图元-重心坐标" class="headerlink" title="图形学的数学基础（十九）：几何图元-重心坐标"></a>图形学的数学基础（十九）：几何图元-重心坐标</h1><p><img src="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/1.jpg" alt="重心坐标"></p>
-<h2 id="定义重心坐标-Barycentric-Coordinates"><a href="#定义重心坐标-Barycentric-Coordinates" class="headerlink" title="定义重心坐标($Barycentric\;Coordinates$)"></a>定义重心坐标($Barycentric\;Coordinates$)</h2><p>对于空间内的三角形$\triangle{v_1v_2v_3}$和任意一点$\textbf{p}$，必定唯一存在三个数$b_1,b_2,b_3$,满足：</p>
-<p>$b_1+b_2+b_3 = 1$</p>
-<p>$\textbf{p} = b_1\textbf{v}_1 + b_2\textbf{v}_2+ b_3\textbf{v}_3$</p>
-<p>则$b_1,b_2,b_3$就称为$\textbf{p}$点在此三角形$\triangle{v_1v_2v_3}$上的重心坐标.</p>
-<p>重心坐标表示了三角形每个顶点对该点的权重（贡献），重心坐标可以用来三角形光栅化顶点的属性插值，比如说uv 颜色 法线的线性插值。</p>
-<p>重心坐标也是一种坐标系统，类似于普通笛卡尔坐标系，但有一个区别就是，重心坐标的三个分量之和为1：</p>
-<p>$b_1 + b_2 + b_3 = 1$</p>
+          <h1 id="图形学的数学基础（二十一）：立体角"><a href="#图形学的数学基础（二十一）：立体角" class="headerlink" title="图形学的数学基础（二十一）：立体角"></a>图形学的数学基础（二十一）：立体角</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>立体角，常用字母$\Omega$表示，是一个物体对特定点的三维空间的角度，是平面角在三维空间中的类比。因此，立体角是单位球面上的一块面积，这和“平面角是单位圆上的一段弧长”类似。</p>
+<h2 id="平面角"><a href="#平面角" class="headerlink" title="平面角"></a>平面角</h2><p>平面角等于张角对应圆上的弧长除以圆的半径，即：</p>
+<p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/1.png" alt="平面角"></p>
+<p>$\theta = \dfrac{l}{r}$</p>
+<p>而圆的周长等于$2\pi{r}$,因此完整圆<br>对应的角度为：</p>
+<p>$\dfrac{2\pi{r}}{r} = 2\pi\;\;radians$</p>
+<h2 id="立体角（-Solid-angle-）"><a href="#立体角（-Solid-angle-）" class="headerlink" title="立体角（$Solid\;angle$）"></a>立体角（$Solid\;angle$）</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/#more" rel="contents">
+              <a class="btn" href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -256,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -324,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

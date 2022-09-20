@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/" class="post-title-link" itemprop="url">三角函数的极限和导数</a>
+            <a href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">指数函数和对数函数</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-04-02 20:41:02" itemprop="dateCreated datePublished" datetime="2022-04-02T20:41:02+08:00">2022-04-02</time>
+              <time title="创建时间：2022-04-03 14:17:37" itemprop="dateCreated datePublished" datetime="2022-04-03T14:17:37+08:00">2022-04-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -219,20 +219,51 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="三角函数的极限"><a href="#三角函数的极限" class="headerlink" title="三角函数的极限"></a>三角函数的极限</h1><h2 id="小数的情况"><a href="#小数的情况" class="headerlink" title="小数的情况"></a>小数的情况</h2><blockquote>
-<p>${\lim_{x \to 0} \frac{sinx}{x}} = 1$</p>
-<p>$\lim_{x \to 0} cosx = 1$</p>
-<p>$\lim_{x \to 0} \frac{tanx}{x} = 1$</p>
-<p>$\lim_{x \to 0} \frac{1-cosx}{x} = 0$</p>
+          <h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="指数法则"><a href="#指数法则" class="headerlink" title="指数法则"></a>指数法则</h2><blockquote>
+<ol>
+<li><p>$b^0=1$</p>
+</li>
+<li><p>$b^1=b$</p>
+</li>
+<li><p>$b^xb^y=b^{x+y}$</p>
+</li>
+<li><p>$\frac{b^x}{b^y}=b^{x-y}$</p>
+</li>
+<li><p>$(b^x)^y=b^{xy}$</p>
+</li>
+</ol>
 </blockquote>
-<h2 id="大数的情况"><a href="#大数的情况" class="headerlink" title="大数的情况"></a>大数的情况</h2><p>考虑极限$\lim_{x \to \infty}$</p>
-<p>对于任意的x $-1 &lt;= sinx &lt;=1$  $-1 &lt;=cosx &lt;= 1$</p>
-<p>应用三明治定理 $\lim_{x \to \infty} \frac{sinx}{x} = 0$</p>
-<h2 id="其他情况"><a href="#其他情况" class="headerlink" title="其他情况"></a>其他情况</h2><p>考虑极限$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$<br>这次的三角函数是余弦, 且要在 π/2 的附近求值. 这既不是小数的情况也不是大数的情况, 因此很明显, 之前的情况都不适用.<strong><em>面对 x → a 的极限, 而a != 0 时, 有一个很好的一般原则, 那就是用 t = x − a作替换, 将问题转化为 t→0</em></strong></p>
-<p>$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$</p>
+<h2 id="对数法则"><a href="#对数法则" class="headerlink" title="对数法则"></a>对数法则</h2><blockquote>
+<ol>
+<li><p>$b^{\log_by}=y$</p>
+</li>
+<li><p>$\log_b1=0$</p>
+</li>
+<li><p>$\log_bb=1$</p>
+</li>
+<li><p>$\log_b{(xy)}=\log_bx+\log_by$</p>
+</li>
+<li><p>$\log_b(\frac{x}{y})=\log_bx-\log_by$</p>
+</li>
+<li><p>$\log_b(x^y)=y\log_bx$</p>
+</li>
+<li><p>$\log_bx=\frac{\log_cx}{\log_cb}$</p>
+</li>
+<li><p>$\log_xy=\frac{1}{\log_yx}$</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="e"><a href="#e" class="headerlink" title="e"></a>e</h2><p>关于e的四个定义:</p>
+<blockquote>
+<p>$\lim_{h \to \infty}(1+\frac{r}{h})^h=e^r$</p>
+<p>$\lim_{h \to 0}(1+rh)^{\frac{1}{h}}=e^r$</p>
+<p>$\lim_{h \to \infty}(1+\frac{1}{h})^h=e$</p>
+<p>$\lim_{h \to 0}(1+h)^{\frac{1}{h}}=e$</p>
+<h1 id="对数函数和指数函数求导"><a href="#对数函数和指数函数求导" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h1></blockquote>
+<h2 id="对数函数和指数函数求导-1"><a href="#对数函数和指数函数求导-1" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h2><p>$令f(x)=\log_bx$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -255,7 +286,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -323,7 +354,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

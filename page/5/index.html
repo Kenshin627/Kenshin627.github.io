@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/" class="post-title-link" itemprop="url">图形学的数学基础（二十三）：反射方程与渲染方程</a>
+            <a href="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/" class="post-title-link" itemprop="url">图形学的数学基础（二十五）：着色</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-11 11:00:03" itemprop="dateCreated datePublished" datetime="2022-09-11T11:00:03+08:00">2022-09-11</time>
+              <time title="创建时间：2022-09-14 21:05:33" itemprop="dateCreated datePublished" datetime="2022-09-14T21:05:33+08:00">2022-09-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-12 13:50:20" itemprop="dateModified" datetime="2022-09-12T13:50:20+08:00">2022-09-12</time>
+                <time title="修改时间：2022-09-15 21:50:19" itemprop="dateModified" datetime="2022-09-15T21:50:19+08:00">2022-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,18 +223,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十三）：反射方程与渲染方程"><a href="#图形学的数学基础（二十三）：反射方程与渲染方程" class="headerlink" title="图形学的数学基础（二十三）：反射方程与渲染方程"></a>图形学的数学基础（二十三）：反射方程与渲染方程</h1><h2 id="双向反射分布函数-BRDF"><a href="#双向反射分布函数-BRDF" class="headerlink" title="双向反射分布函数($BRDF$)"></a>双向反射分布函数($BRDF$)</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>$BRDF$全称$Bidirectional\;Reflectance\;Distribution\;Function$。$BRDF$是描述了物体表面对能量反射分布特性的函数。假设物体表面单位面积$dA$接收到来自$W_i$方向光线的能量，用$E$来表示，这些能量$E$到达物体表面后，会向各个不同的方向反射（每个方向反射的能量不同），$BRDF$函数就是描述这束能量向特定方向$W_r$的反射占比。</p>
-<p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/1.jpg" alt="BRDF"></p>
+          <h1 id="图形学的数学基础（二十五）：着色"><a href="#图形学的数学基础（二十五）：着色" class="headerlink" title="图形学的数学基础（二十五）：着色"></a>图形学的数学基础（二十五）：着色</h1><p>渲染过程本质可以上分解为两个步骤:可见性测试和着色。光栅化和射线追踪都是用于解决可见性问题。本章我们将介绍渲染过程的第二部分:着色。着色是一个庞大的主题。一些用于着色的技术在数学上也很复杂。本章我们将学习最基本的着色模型: $Blinn-Phong\;Reflectance\;Model$</p>
+<h2 id="blinn-Phong-Reflectance-Model"><a href="#blinn-Phong-Reflectance-Model" class="headerlink" title="$blinn-Phong\;Reflectance\;Model$"></a>$blinn-Phong\;Reflectance\;Model$</h2><p>当我们观察一个物体时，可以明显的将物体的视觉表现分为三类：</p>
 <ul>
-<li>Differential irradiance incoming：$dE(w_i) = L(w_i)\cos\theta_i{d}w_i$</li>
-<li>Differential intensity exiting: $dL_r(w_r)$ </li>
+<li>高光：表现很亮的部分，并且会随着视角的变化而变化</li>
+<li>漫反射部分：颜色变化不明显，表示物体本身的颜色或者diffuseTexture颜色。（物体表面吸收了部分光线，反射出的未被吸收的部分）</li>
+<li>环境光：未被光照直接照亮的部分，<strong>模拟间接光照</strong>。在布林冯模型中简化为常量。这也是为什么布林冯模型被称为经验模型的原因。计算精确的间接光照需要$RayTracing$。</li>
 </ul>
-<h3 id="正式定义"><a href="#正式定义" class="headerlink" title="正式定义"></a>正式定义</h3><p>单位面积$dA$从单位立体角$w_i$接收到的$irradiance$，会被如何反射到各个不同的方向上去。更通俗点来说就是BRDF描述的是单位面积接收单位立体角$w_i$的能量的反射分布（比例）。反射比例依赖于出射方向（$w_r$）。$BRDF$描述了光与物体表面是如何相互作用的。即物体的材质属性由$BRDF$定义。</p>
-<p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/2.jpg" alt="BRDF"></p>
-<p>$f_r(w_i -&gt; w_r) = \dfrac{dL_r(w_r)}{dE_i(w_i)} = \dfrac{dl_r(w_r)}{L_i(w_i)\cos\theta_i{d}w_i}$</p>
+<p><img src="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/1.png" alt="blinn-phong"></p>
+<p>布林冯光照模型是一个经验模型。整体思想就是按照这三部分来建模的。布林冯光照模型是一个直接光照模型（或者叫局部光照/局部性），不考虑间接光照，即不考虑周围物体反射的光线对其产生的影响。着色权重仅考虑光源。（阴影及SSAO需要多个pass处理）</p>
+<h3 id="定义光照参数"><a href="#定义光照参数" class="headerlink" title="定义光照参数"></a>定义光照参数</h3><p>要计算物体表面着色点光照结果，需要定义一些基本的参数。</p>
+<p><img src="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/2.jpg" alt="blinn-phong"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/#more" rel="contents">
+              <a class="btn" href="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -257,7 +259,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -325,7 +327,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

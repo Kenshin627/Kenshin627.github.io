@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%B9%B3%E9%9D%A2-%E4%B8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%B9%B3%E9%9D%A2-%E4%B8%8B/" class="post-title-link" itemprop="url">图形学的数学基础（十七）：几何图元-平面(下)</a>
+            <a href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/" class="post-title-link" itemprop="url">图形学的数学基础（十九）：几何图元-重心坐标</a>
         </h2>
 
         <div class="post-meta">
@@ -184,10 +184,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-09-06 00:28:28 / 修改时间：21:25:01" itemprop="dateCreated datePublished" datetime="2022-09-06T00:28:28+08:00">2022-09-06</time>
+              <time title="创建时间：2022-09-06 21:45:54" itemprop="dateCreated datePublished" datetime="2022-09-06T21:45:54+08:00">2022-09-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-08 20:44:58" itemprop="dateModified" datetime="2022-09-08T20:44:58+08:00">2022-09-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -217,17 +223,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（十七）：几何图元-平面-下"><a href="#图形学的数学基础（十七）：几何图元-平面-下" class="headerlink" title="图形学的数学基础（十七）：几何图元-平面(下)"></a>图形学的数学基础（十七）：几何图元-平面(下)</h1><p>转载请注明出处</p>
-<p>上章推导了平面方程的定义。这章介绍几种和平面有关的常见求交和计算点到平面距离的方法。</p>
-<h2 id="平面距原点的最短（垂直）距离"><a href="#平面距原点的最短（垂直）距离" class="headerlink" title="平面距原点的最短（垂直）距离"></a>平面距原点的最短（垂直）距离</h2><p>如果平面的法线是单位矢量,则平面方程的常数项$d$是原点到平面的有符号距离。</p>
-<p><img src="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%B9%B3%E9%9D%A2-%E4%B8%8B/1.jpg" alt="原点距平面距离"></p>
-<p>假设单位矢量$\hat{n}$ $\begin{bmatrix}a\\ b\\ c\\ \end{bmatrix}$,则平面上的一点$\textbf{P}_1$可以写成$\begin{bmatrix}Da\\ Db\\ Dc\end{bmatrix}$的形式，D是从原点到平面的垂直有符号距离。因此我们可以将平面方程重写如下：</p>
-<p>$\begin{bmatrix}a\\ b\\ c\\\end{bmatrix}\cdot\begin{bmatrix}x-Da\\ y-Db\\ z-Dc\\\end{bmatrix} = 0$</p>
-<p>$a(x-Da) + b(y-Db) + c(z-Dc) = 0$</p>
-<p>$ax + by + cz -D(a^2 + b^2 + c^2) = 0$</p>
+          <h1 id="图形学的数学基础（十九）：几何图元-重心坐标"><a href="#图形学的数学基础（十九）：几何图元-重心坐标" class="headerlink" title="图形学的数学基础（十九）：几何图元-重心坐标"></a>图形学的数学基础（十九）：几何图元-重心坐标</h1><p><img src="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/1.jpg" alt="重心坐标"></p>
+<h2 id="定义重心坐标-Barycentric-Coordinates"><a href="#定义重心坐标-Barycentric-Coordinates" class="headerlink" title="定义重心坐标($Barycentric\;Coordinates$)"></a>定义重心坐标($Barycentric\;Coordinates$)</h2><p>对于空间内的三角形$\triangle{v_1v_2v_3}$和任意一点$\textbf{p}$，必定唯一存在三个数$b_1,b_2,b_3$,满足：</p>
+<p>$b_1+b_2+b_3 = 1$</p>
+<p>$\textbf{p} = b_1\textbf{v}_1 + b_2\textbf{v}_2+ b_3\textbf{v}_3$</p>
+<p>则$b_1,b_2,b_3$就称为$\textbf{p}$点在此三角形$\triangle{v_1v_2v_3}$上的重心坐标.</p>
+<p>重心坐标表示了三角形每个顶点对该点的权重（贡献），重心坐标可以用来三角形光栅化顶点的属性插值，比如说uv 颜色 法线的线性插值。</p>
+<p>重心坐标也是一种坐标系统，类似于普通笛卡尔坐标系，但有一个区别就是，重心坐标的三个分量之和为1：</p>
+<p>$b_1 + b_2 + b_3 = 1$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%B9%B3%E9%9D%A2-%E4%B8%8B/#more" rel="contents">
+              <a class="btn" href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -250,7 +256,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -318,7 +324,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

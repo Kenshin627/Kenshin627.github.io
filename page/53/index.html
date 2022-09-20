@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/19/Asp.NetCoreIoC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/10/19/Asp.NetCoreIoC/" class="post-title-link" itemprop="url">Asp.Net Core IoC</a>
+            <a href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Asp.Net Core DI框架</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-10-19 10:23:00" itemprop="dateCreated datePublished" datetime="2019-10-19T10:23:00+08:00">2019-10-19</time>
+              <time title="创建时间：2019-10-19 17:51:45" itemprop="dateCreated datePublished" datetime="2019-10-19T17:51:45+08:00">2019-10-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -215,16 +215,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Asp-Net-Core-IOC模式"><a href="#Asp-Net-Core-IOC模式" class="headerlink" title="Asp.Net Core IOC模式"></a>Asp.Net Core IOC模式</h1><p>本系列文章来源于大内老A的博客,对博客内容进行了略微整理,方便自己以后查阅.</p>
-<h2 id="IoC名词解释"><a href="#IoC名词解释" class="headerlink" title="IoC名词解释"></a>IoC名词解释</h2><p>IoC全名为Inverse of Control,含义为”控制倒置”,针对软件设计行业来说,IoC所谓的控制其实是”针对流程的控制”.控制权原来在应用程序,应用程序可以根据自己的场景定义流程,而IoC原则主张流程的控制权转移到框架中,由框架来定义流程的步骤,我们可以通过下图来说明控制权的转移过程.</p>
-<p><img src="/2019/10/19/Asp.NetCoreIoC/IOC1.jpg" alt="alt"></p>
-<h2 id="流程定制"><a href="#流程定制" class="headerlink" title="流程定制"></a>流程定制</h2><p>我们采用IoC实现了流程控制从应用程序向框架自身的反转，但是这个被反转的仅仅是一个泛化的流程，任何一个具体的应用都可能需要对组成该流程的某些环节进行定制.作为一个Web框架，用户认证功能是必备的，但是框架自身不能限制于某一种或者几种固定的认证方式，应该通过扩展的方式让用户可以自由地定制任意的认证模式。</p>
-<p>我们可以说得更加宽泛点。如下图所示我们将一个泛化的工作流程（A=&gt;B=&gt;C）被定义在框架之中，建立在该框架的两个应用需要对组成这个流程的某些环节进行定制。比如步骤A和C可以被App1重用，但是步骤B却需要被定制（B1），App2则重用步骤A和B，但是需要按照自己的方式处理步骤C。 </p>
-<p><img src="/2019/10/19/Asp.NetCoreIoC/IOC2.jpg" alt="alt"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>
+          <h1 id="Asp-NET-Core-DI框架概览"><a href="#Asp-NET-Core-DI框架概览" class="headerlink" title="Asp.NET Core DI框架概览"></a>Asp.NET Core DI框架概览</h1><p>毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式.</p>
+<h2 id="服务的注册与消费"><a href="#服务的注册与消费" class="headerlink" title="服务的注册与消费"></a>服务的注册与消费</h2><p>ASP.NET Core中的依赖注入框架中,我们添加的服务注册被保存到通过 <strong>IServiceCollection</strong> 接口表示的集合之中,基于这个集合创建的DI容器体现为 <strong>IServiceProvider</strong>.</p>
+<p>DI框架提供了生产实例的三种生命周期模式,分别为:</p>
+<ul>
+<li><strong>Singleton</strong>:整个应用程序生命周期内单例</li>
+<li><strong>Scoped</strong>:单次服务请求内的单例</li>
+<li><strong>Transient</strong>:每次获取均会产生新的对象</li>
+</ul>
+<p>DI框架注册服务时通常会使用三种方式,分别为:</p>
+<ul>
+<li>指定注册非服务类型和实现类型.</li>
+<li>指定一个现有的服务实例.</li>
+<li>指定一个创建服务实例的委托对象.</li>
+</ul>
+<p>当我们在进行服务注册时,可以为同一类型添加一个服务注册,也可以添加多个,实际上添加的所有服务注册都是有效的,在完成服务注册之后，我们调用IServiceCollection接口的扩展方法  <strong>BuildServiceProvider</strong>创建出代表DI容器的IServiceProvider对象,并利用它调用后者的<strong>GetService<t></t></strong>方法来提供相应的服务实例,总时会返回一个服务实例,这里采用了”后来居上”的原则,即总是采用最近添加的服务注册来创建服务实例.如果我们调用另一个扩展方法<strong>GetServices<t></t></strong>,它将利用返回所有服务注册提供的服务实例.如下所示的代码片段.</p>
+<p><img src="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/DI1.jpg" alt="alt"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/19/Asp.NetCoreIoC/#more" rel="contents">
+              <a class="btn" href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -247,7 +256,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -315,7 +324,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/" class="post-title-link" itemprop="url">连续性和可导性</a>
+            <a href="/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/" class="post-title-link" itemprop="url">三角函数的极限和导数</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-03-30 10:39:34" itemprop="dateCreated datePublished" datetime="2022-03-30T10:39:34+08:00">2022-03-30</time>
+              <time title="创建时间：2022-04-02 20:41:02" itemprop="dateCreated datePublished" datetime="2022-04-02T20:41:02+08:00">2022-04-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-31 11:17:45" itemprop="dateModified" datetime="2022-03-31T11:17:45+08:00">2022-03-31</time>
+                <time title="修改时间：2022-08-31 20:33:15" itemprop="dateModified" datetime="2022-08-31T20:33:15+08:00">2022-08-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,26 +219,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="连续性"><a href="#连续性" class="headerlink" title="连续性"></a>连续性</h1><p>我们先从一个函数是连续的, 这到底意味着什么开始. 正如我上面所说, 直觉上, 可以一笔画出连续函数的图像.</p>
-<h2 id="在一点处的连续"><a href="#在一点处的连续" class="headerlink" title="在一点处的连续"></a>在一点处的连续</h2><p>如果f(x)在a点连续,则必须满足以下三个条件:</p>
-<ul>
-<li>双侧极限${\lim_{x \to a} f(x)}$存在并且是有限的</li>
-<li>函数在点a处有定义,$f(a)$存在并且是有限的</li>
-<li>以上两个量相等,即: ${\lim_{x \to a} f(x) = f(x)}$</li>
-</ul>
-<h2 id="在一个区间上连续"><a href="#在一个区间上连续" class="headerlink" title="在一个区间上连续"></a>在一个区间上连续</h2><p>函数f在[a, b] 上连续,需满足以下三个条件:</p>
-<ul>
-<li>f在(a,b)的每一点都连续</li>
-<li>函数f在x = a处右连续,即 ${\lim_{x \to a^+} f(x)} = f(a)$</li>
-<li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
-</ul>
-<p><strong><em>★介值定理</em></strong></p>
-<blockquote>
-<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
+          <h1 id="三角函数的极限"><a href="#三角函数的极限" class="headerlink" title="三角函数的极限"></a>三角函数的极限</h1><h2 id="小数的情况"><a href="#小数的情况" class="headerlink" title="小数的情况"></a>小数的情况</h2><blockquote>
+<p>${\lim_{x \to 0} \frac{sinx}{x}} = 1$</p>
+<p>$\lim_{x \to 0} cosx = 1$</p>
+<p>$\lim_{x \to 0} \frac{tanx}{x} = 1$</p>
+<p>$\lim_{x \to 0} \frac{1-cosx}{x} = 0$</p>
 </blockquote>
+<h2 id="大数的情况"><a href="#大数的情况" class="headerlink" title="大数的情况"></a>大数的情况</h2><p>考虑极限$\lim_{x \to \infty}$</p>
+<p>对于任意的x $-1 &lt;= sinx &lt;=1$  $-1 &lt;=cosx &lt;= 1$</p>
+<p>应用三明治定理 $\lim_{x \to \infty} \frac{sinx}{x} = 0$</p>
+<h2 id="其他情况"><a href="#其他情况" class="headerlink" title="其他情况"></a>其他情况</h2><p>考虑极限$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$<br>这次的三角函数是余弦, 且要在 π/2 的附近求值. 这既不是小数的情况也不是大数的情况, 因此很明显, 之前的情况都不适用.<strong><em>面对 x → a 的极限, 而a != 0 时, 有一个很好的一般原则, 那就是用 t = x − a作替换, 将问题转化为 t→0</em></strong></p>
+<p>$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
+              <a class="btn" href="/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -261,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/32/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" href="/page/34/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/32/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/34/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -329,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
