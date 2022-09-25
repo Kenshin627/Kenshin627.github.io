@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/" class="post-title-link" itemprop="url">图形学的数学基础（六）：施密特正交化与叉乘正交化</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">图形学的数学基础（八）：矩阵线性变换</a>
         </h2>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-08-31 10:55:33 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T10:55:33+08:00">2022-08-31</time>
+              <time title="创建时间：2022-08-31 11:20:01 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T11:20:01+08:00">2022-08-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,14 +217,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（六）：施密特正交化-Schmidt-orthogonalization-与叉乘正交化"><a href="#图形学的数学基础（六）：施密特正交化-Schmidt-orthogonalization-与叉乘正交化" class="headerlink" title="图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化"></a>图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化</h1><h2 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h2><p>在很多情况下，例如在计算相机的lookAt矩阵中，由于传入的$\mathbf{direction}$ $\mathbf{up}$ $\mathbf{right}$三个基矢量不一定是规范化的，需要对三个矢量进行正交化处理，这样才能组成标准正交基。<br>本文将介绍两种常见的矢量正交化方法。施密特正交化和矢量叉积。</p>
-<h2 id="施密特正交化"><a href="#施密特正交化" class="headerlink" title="施密特正交化"></a>施密特正交化</h2><p>施密特正交化是求欧式空间正交基的一种方法。从欧式空间任意线性无关的向量组$\mathbf{\alpha_1},\mathbf{\alpha_2},…,\mathbf{\alpha_m}$出发，求得正交向量组 $\mathbf{\beta_1},\mathbf{\beta_2},…,\mathbf{\beta_m}$,再将正交向量组中每个向量归一化，得到一个标准正交向量组，这种方法称为施密特正交化。</p>
-<h3 id="计算方法"><a href="#计算方法" class="headerlink" title="计算方法"></a>计算方法</h3><p>如果$\vec{x_1},\vec{x_2},…\vec{x_n}$是某向量空间的基，那么可以通过以下公式找到该向量空间中的n个两两正交的向量$\vec{v_1},\vec{v_2},…\vec{v_n}$</p>
-<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/1.jpg" alt="alt"><br>配图来源：《马同学图解数学-如何理解施密特正交化？》</p>
-<h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>施密特正交化主要利用了矢量点积的投影性质，可以将矢量分解为平行和垂直两个矢量。以下我们分别以二维向量空间和三维向量空间为例详细介绍施密特正交化的推导过程。</p>
+          <h1 id="图形学的数学基础（八）：矩阵线性变换"><a href="#图形学的数学基础（八）：矩阵线性变换" class="headerlink" title="图形学的数学基础（八）：矩阵线性变换"></a>图形学的数学基础（八）：矩阵线性变换</h1><p>我们可以通过添加一些值到它的坐标来平移一个点。 我们还可以利用三角函数来旋转矢量。 简而言之，<strong>矩阵只是将所有这些变换(缩放、旋转、反射、错切、平移)组合成一个单一结构的一种方式。</strong> 通过矩阵的方式我们可以方便的对空间中的点或矢量进行变换，而不用写一大堆的公式。这就是矩阵为何在图形渲染管线中存在重要意义的原因。<strong>图形中的任意变换都可以通过一个矩阵完成。</strong> 对同一个对象的多次变换可以通过矩阵乘积转换为单个矩阵。如下图：</p>
+<p><em>注：本文所有推导和公式均使用列矢量形式。</em></p>
+<p><img src="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/1.jpg" alt="alt"></p>
+<h2 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h2><h3 id="缩放（Scale）"><a href="#缩放（Scale）" class="headerlink" title="缩放（Scale）"></a>缩放（Scale）</h3><h3 id="沿主轴缩放"><a href="#沿主轴缩放" class="headerlink" title="沿主轴缩放"></a>沿主轴缩放</h3><p>最简单的缩放是沿每个轴线应用单独的或者统一的缩放。</p>
+<h4 id="均匀缩放"><a href="#均匀缩放" class="headerlink" title="均匀缩放"></a>均匀缩放</h4><p>保留原始对象的角度和比例， 使被缩放对象统一增大或者减少s因子。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -247,7 +247,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -315,7 +315,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

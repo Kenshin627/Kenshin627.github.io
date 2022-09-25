@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">指数函数和对数函数</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">图形学的数学基础（一）：向量基础</a>
         </h2>
 
         <div class="post-meta">
@@ -184,27 +184,25 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-04-03 14:17:37" itemprop="dateCreated datePublished" datetime="2022-04-03T14:17:37+08:00">2022-04-03</time>
+              <time title="创建时间：2022-08-31 08:46:17 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T08:46:17+08:00">2022-08-31</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-31 20:33:15" itemprop="dateModified" datetime="2022-08-31T20:33:15+08:00">2022-08-31</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
                 </span>
             </span>
 
@@ -219,51 +217,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="指数法则"><a href="#指数法则" class="headerlink" title="指数法则"></a>指数法则</h2><blockquote>
-<ol>
-<li><p>$b^0=1$</p>
-</li>
-<li><p>$b^1=b$</p>
-</li>
-<li><p>$b^xb^y=b^{x+y}$</p>
-</li>
-<li><p>$\frac{b^x}{b^y}=b^{x-y}$</p>
-</li>
-<li><p>$(b^x)^y=b^{xy}$</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="对数法则"><a href="#对数法则" class="headerlink" title="对数法则"></a>对数法则</h2><blockquote>
-<ol>
-<li><p>$b^{\log_by}=y$</p>
-</li>
-<li><p>$\log_b1=0$</p>
-</li>
-<li><p>$\log_bb=1$</p>
-</li>
-<li><p>$\log_b{(xy)}=\log_bx+\log_by$</p>
-</li>
-<li><p>$\log_b(\frac{x}{y})=\log_bx-\log_by$</p>
-</li>
-<li><p>$\log_b(x^y)=y\log_bx$</p>
-</li>
-<li><p>$\log_bx=\frac{\log_cx}{\log_cb}$</p>
-</li>
-<li><p>$\log_xy=\frac{1}{\log_yx}$</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="e"><a href="#e" class="headerlink" title="e"></a>e</h2><p>关于e的四个定义:</p>
-<blockquote>
-<p>$\lim_{h \to \infty}(1+\frac{r}{h})^h=e^r$</p>
-<p>$\lim_{h \to 0}(1+rh)^{\frac{1}{h}}=e^r$</p>
-<p>$\lim_{h \to \infty}(1+\frac{1}{h})^h=e$</p>
-<p>$\lim_{h \to 0}(1+h)^{\frac{1}{h}}=e$</p>
-<h1 id="对数函数和指数函数求导"><a href="#对数函数和指数函数求导" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h1></blockquote>
-<h2 id="对数函数和指数函数求导-1"><a href="#对数函数和指数函数求导-1" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h2><p>$令f(x)=\log_bx$</p>
+          <h1 id="图形学的数学基础（一）：向量"><a href="#图形学的数学基础（一）：向量" class="headerlink" title="图形学的数学基础（一）：向量"></a>图形学的数学基础（一）：向量</h1><h2 id="前边的话"><a href="#前边的话" class="headerlink" title="前边的话"></a>前边的话</h2><p>本系列是阅读《3D数学基础： 图形和游戏开发（第二版）》整理汇总的学习笔记，整个系列的结构排布基于原书的章节安排，针对其中的每个知识点做了适当的补充和拓展，其中不免有遗漏和错误之处，望各位读者批评指正。本篇文章做为该系列的第一章，主要介绍向量相关内容，涉及空间中向量的几何意义，各种运算，重点介绍点乘和叉乘的几何解释及在图形学中的应用场景。</p>
+<h2 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h2><p>对于数学家来说向量是一个数组，数组的长度代表向量所在的空间维度。程序中表示向量通常有两种方式，行向量（$Row Vector$）和列向量（$Column Vector$）,至于为什么要区分两种书写方式,我们放到矩阵章节再详细说明.</p>
+<p>$V_{column} = \begin{bmatrix}1\\ 2\\ 3\end{bmatrix}$</p>
+<p>$V_{row} = \begin{bmatrix}1&amp;2&amp;-1\end{bmatrix}$</p>
+<h2 id="几何定义"><a href="#几何定义" class="headerlink" title="几何定义"></a>几何定义</h2><p>从几何学上讲,向量是具有大小和方向的<strong>有向线段</strong>.讨论向量在空间中的哪个位置,是没有意义的,<strong>向量不具备位置属性</strong>.向量是一种相对偏移量的表示方法.如下图二维笛卡尔坐标系中,向量U和V是相等的.</p>
+<ul>
+<li>大小: 矢量的长度,矢量可以具有任何非负长度.</li>
+<li>方向:空间中指定的方向.</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%9F%BA%E7%A1%80/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -286,7 +251,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -354,7 +319,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

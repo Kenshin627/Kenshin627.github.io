@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/" class="post-title-link" itemprop="url">图形学的数学基础（二十二）：辐射度量学</a>
+            <a href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/" class="post-title-link" itemprop="url">图形学的数学基础（二十四）：插值</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-10 23:58:42" itemprop="dateCreated datePublished" datetime="2022-09-10T23:58:42+08:00">2022-09-10</time>
+              <time title="创建时间：2022-09-11 12:50:32" itemprop="dateCreated datePublished" datetime="2022-09-11T12:50:32+08:00">2022-09-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-12 12:29:47" itemprop="dateModified" datetime="2022-09-12T12:29:47+08:00">2022-09-12</time>
+                <time title="修改时间：2022-09-12 09:06:11" itemprop="dateModified" datetime="2022-09-12T09:06:11+08:00">2022-09-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,15 +223,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十二）：辐射度量学"><a href="#图形学的数学基础（二十二）：辐射度量学" class="headerlink" title="图形学的数学基础（二十二）：辐射度量学"></a>图形学的数学基础（二十二）：辐射度量学</h1><h2 id="辐射度量学（-Radiometry-）"><a href="#辐射度量学（-Radiometry-）" class="headerlink" title="辐射度量学（$Radiometry$）"></a>辐射度量学（$Radiometry$）</h2><p> 辐射度量学是基于物理光照的基础，是基于几何光学来定义的，提供了精准的关于光的各种物理量，光与物体表面的作用，光线传播方法的定义等。辐射度量学是反射方程 渲染方程的基础。</p>
-<h2 id="1-辐射能量（-Radiant-energy-）"><a href="#1-辐射能量（-Radiant-energy-）" class="headerlink" title="1.辐射能量（$Radiant\;energy$）"></a>1.辐射能量（$Radiant\;energy$）</h2><p>在辐射度量学中最基本的单位是辐射能量，表示为$Q$,单位是$J(焦耳)$，辐射能量$Q$以辐射的形式发射，传播或接收的能量。每个光子都携带一定的能量，这个能量正比于它的频率：</p>
-<p>$Q = hv$</p>
-<p>其中$h = 6.62620\times (10^{-34})J$.光子的频率（或者说能量）影响着光子与物体表面的交互，更重要的是，它影响着光与感应器之间的作用，使不同频率的光被察觉为不同的颜色。</p>
-<h2 id="2-辐射通量（-Radiant-flux-）"><a href="#2-辐射通量（-Radiant-flux-）" class="headerlink" title="2.辐射通量（$Radiant\;flux$）"></a>2.辐射通量（$Radiant\;flux$）</h2><p>辐射通量，记为为$Φ$，表示单位时间 发射/反射/传播/接受的能量(功率-power)。单位为（$watt$）W或者($lumen$)lm，在辐射测量中，都是基于这个辐射通量来测量能量的，而不是使用能量$Q$。</p>
-<p>$Φ = \dfrac{dQ}{dt}$</p>
+          <h1 id="图形学的数学基础（二十四）：插值"><a href="#图形学的数学基础（二十四）：插值" class="headerlink" title="图形学的数学基础（二十四）：插值"></a>图形学的数学基础（二十四）：插值</h1><h2 id="线性插值（-Linear-Interpolation-）"><a href="#线性插值（-Linear-Interpolation-）" class="headerlink" title="线性插值（$Linear\;Interpolation$）"></a>线性插值（$Linear\;Interpolation$）</h2><p>在图形学领域插值是一项广泛应用的技术，很多时候，数据是在规则网格上指定的（值写在 2D 或 3D 网格的顶点位置）或在一条线上（在 1D 情况下），但是程序需要计算任意一点的值。如果采样点刚好落在网格顶点处，那么可以读取数值直接使用，但是如果采样点落在其他地方，考虑到那里并没有存储数值，我们需要基于周围顶点计算数值。这种技术称为插值，因为其关键思想是“插值”，通过固定网格顶点的现有值计算网格上其他任意位置的值。</p>
+<p>在二维中这种技术叫双线性插值，与之对应的三维插值称为三线性插值。“线性插值”是一种类似于以下形式的方程：</p>
+<p>$a(1-t) +bt\;\;\;with\; 0 &lt;=t\;&lt;=\;1$</p>
+<p>其他种种形式的线性插值都是以此为基础的。</p>
+<p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/1.jpg" alt="线性插值"></p>
+<p>插值技术通常用于图像处理（例如调整图像大小）。但是 3D 技术也可以使用 3D 或 2D 网格（纹理可以看作 2D 网格），例如流体模拟、体积渲染、纹理映射和辐照度缓存等等，无论何时涉及网格，通常也需要插值技术。</p>
+<h2 id="双线性插值（-Bilinear-Interpolation-）"><a href="#双线性插值（-Bilinear-Interpolation-）" class="headerlink" title="双线性插值（$Bilinear\;Interpolation$）"></a>双线性插值（$Bilinear\;Interpolation$）</h2><p>双线性插值是一种用于在二维规则网格中计算任意值的方法。此网格也可以是图像或纹理贴图。思路是取二维平面上周围最近的四个网格顶点作为参照，首先水平方向做两次线性插值，得到两个查之后的结果，根据这两个值，再垂直方向再做一次线性插值。即可拿到p点的值。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/#more" rel="contents">
+              <a class="btn" href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -254,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -322,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
