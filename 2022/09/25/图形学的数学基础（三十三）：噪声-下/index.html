@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="图形学的数学基础（三十三）：噪声-下$2D\;Noise$在上一章中，我们介绍并解释了实现一维噪声函数的大部分技术和方法。创建更高维度的噪声和一维噪声并没有本质上的区别，因为它们都是基于同样的方法和技术。之前提到过，所有的噪声函数都会返回一个浮点数，无论输入参数是浮点数，二维点还是三维点，至于一维噪声 二维或三维噪声仅与其输入值有关。二维噪声是将二维点作为输入参数的噪声函数。对于二维噪声，我们会在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学的数学基础（三十三）：噪声-下">
+<meta property="og:url" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="图形学的数学基础（三十三）：噪声-下$2D\;Noise$在上一章中，我们介绍并解释了实现一维噪声函数的大部分技术和方法。创建更高维度的噪声和一维噪声并没有本质上的区别，因为它们都是基于同样的方法和技术。之前提到过，所有的噪声函数都会返回一个浮点数，无论输入参数是浮点数，二维点还是三维点，至于一维噪声 二维或三维噪声仅与其输入值有关。二维噪声是将二维点作为输入参数的噪声函数。对于二维噪声，我们会在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/1.jpg">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/2.jpg">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/3.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/4.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/5.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/6.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/7.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/8.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/9.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/10.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/11.png">
+<meta property="og:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/12.png">
+<meta property="article:published_time" content="2022-09-25T05:36:35.000Z">
+<meta property="article:modified_time" content="2022-09-26T12:57:57.577Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Computer Graphic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/1.jpg">
+
+<link rel="canonical" href="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>图形学的数学基础（三十三）：噪声-下 | KenShin</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KenShin</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图形学的数学基础（三十三）：噪声-下
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-25 13:36:35" itemprop="dateCreated datePublished" datetime="2022-09-25T13:36:35+08:00">2022-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-26 20:57:57" itemprop="dateModified" datetime="2022-09-26T20:57:57+08:00">2022-09-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="图形学的数学基础（三十三）：噪声-下"><a href="#图形学的数学基础（三十三）：噪声-下" class="headerlink" title="图形学的数学基础（三十三）：噪声-下"></a>图形学的数学基础（三十三）：噪声-下</h1><h2 id="2D-Noise"><a href="#2D-Noise" class="headerlink" title="$2D\;Noise$"></a>$2D\;Noise$</h2><p>在上一章中，我们介绍并解释了实现一维噪声函数的大部分技术和方法。创建更高维度的噪声和一维噪声并没有本质上的区别，因为它们都是基于同样的方法和技术。之前提到过，所有的噪声函数都会返回一个浮点数，无论输入参数是浮点数，二维点还是三维点，至于一维噪声 二维或三维噪声仅与其输入值有关。二维噪声是将二维点作为输入参数的噪声函数。<br>对于二维噪声，我们会在网格顶点处分布随机值。噪声函数的2D版本以2D点作为输入，假设当前要求的点为$p$。与一维版本类似，我们先得找到点$p$在网格中的位置，如果点在网格之外，可以通过相同的取模技巧重新映射$p$点的位置，得到网格上点$p$的新坐标，记作$Pnoise$。<br>之前的章节中讲过插值相关的很多内容。</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/1.jpg" alt="2dNoise"></p>
+<p>如下图所示：点$Pnoise$被一个单元上的四个顶点所包围。使用之前学到过的双线性插值技术可以轻松得到点$Pnoise$的值（周围四个点的加权平均）：</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/2.jpg" alt="2dNoise"></p>
+<p>为此我们首先计算$s和t$，它们是一维噪声中t的对应物：</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/3.png" alt="2dNoise"></p>
+<p>代码实现如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lerp</span>(<span class="params">min:<span class="built_in">number</span>, max: nmber, t: <span class="built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> min * (<span class="number">1</span>-t) + max * t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">smoothStep</span>(<span class="params">t: <span class="built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> t * t * (<span class="number">3</span>- <span class="number">2</span> * t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">vec2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> x: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> y: <span class="built_in">number</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">x: <span class="built_in">number</span>,y: <span class="built_in">number</span></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ValueNoise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> K_MAX_TABLE_SIZE: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> K_MAX_TABLE_SIZE_MASK: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> vertices: <span class="built_in">number</span>[];</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.K_MAX_TABLE_SIZE = <span class="number">256</span>;</span><br><span class="line">        <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK = <span class="built_in">this</span>.K_MAX_TABLE_SIZE - <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">this</span>.vertices = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.K_MAX_TABLE_SIZE * <span class="built_in">this</span>.K_MAX_TABLE_SIZE; i++) &#123;</span><br><span class="line">           <span class="built_in">this</span>.vertices[i] = <span class="built_in">Math</span>.random();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">computeX</span>(<span class="params">p: vec2</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> xi = <span class="built_in">Math</span>.floor(p.x);</span><br><span class="line">        <span class="keyword">const</span> yi = <span class="built_in">Math</span>.floor(p.y);</span><br><span class="line">        <span class="keyword">const</span> s = p.x - xi;</span><br><span class="line">        <span class="keyword">const</span> t = p.y - yi;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> rx0 = xi &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line">        <span class="keyword">const</span> rx1 = (rx0 + <span class="number">1</span>) &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line">        <span class="keyword">const</span> ry0 = yi &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line">        <span class="keyword">const</span> ry1 = (ry0 + <span class="number">1</span>) &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//通过置换表查找四个顶点处的随机值</span></span><br><span class="line">        <span class="keyword">const</span> c00 = <span class="built_in">this</span>.vertices[ry0 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx0];</span><br><span class="line">        <span class="keyword">const</span> c10 = <span class="built_in">this</span>.vertices[ry0 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx1];</span><br><span class="line">        <span class="keyword">const</span> c01 = <span class="built_in">this</span>.vertices[ry1 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx0];</span><br><span class="line">        <span class="keyword">const</span> c11 = <span class="built_in">this</span>.vertices[ry1 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx1];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//对得到的s和t做平滑处理</span></span><br><span class="line">        <span class="keyword">const</span> ss = smoothStep(s);</span><br><span class="line">        <span class="keyword">const</span> st = smoothStep(t);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> a = lerp(c00, c10, ss);</span><br><span class="line">        <span class="keyword">const</span> b = lerp(c01, c11, ss);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> lerp(a, b, st);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="简单的模式示例"><a href="#简单的模式示例" class="headerlink" title="简单的模式示例"></a>简单的模式示例</h2><p>本小节将介绍使用噪声函数创建的模式示例。当$Ken\;Perlin$最初发明他的噪声函数时，他还提出了一些简单的算法来使用这个函数作为构建模块来生成有趣的纹理。其中一些例如流噪声（$turbulence $），现在仍然被广泛使用。他在1985年的Siggraph上描述了这些模式中的大部分。</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/4.png" alt="2dNoise"></p>
+<p>之前我们实现的基础版噪声看起来有很多的“块状”,如上图所示，左侧是基于当前版本噪声函数生成的纹理，右侧是$Perlin\;Noise$生成的。本章不会讲解$Perlin\;Noise$，而是了解该技术的工作原理和函数特性。基于目前说了解到的噪声函数特性，实现一些略微复杂的纹理效果。</p>
+<h3 id="1D-Noise-示例"><a href="#1D-Noise-示例" class="headerlink" title="$1D\;Noise$示例"></a>$1D\;Noise$示例</h3><p>首先介绍的一种技术叫做分形叠加（$Fractal\;Sum$），其背后思想是叠加几种频率和振幅不同的噪声，每一个噪声称为一个$Layer$，层与层之间的频率和振幅不一样，却是有关联的。<br>如下图所示，第一条噪声曲线是原始噪声函数生成的（频率和振幅均为1），其他各层的频率为上一层的两倍，振幅为1/2，通过这种方式创造一系列的噪声并将它们叠加起来会得到下图底部的函数图像：</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/5.png" alt="2dNoise"></p>
+<p>可以看到，这条曲线比单条噪声函数有更丰富的局部细节，这也正是分形叠加所要达到的目的，通过高频低振幅的噪声填充原始曲线的局部细节。将分形叠加推广到二维，生成的二维纹理应用于平面的纹理贴图（displaceMapping），可以生成类似于地形的东西。<br>代码实现：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> amplitude = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> frequency = <span class="number">1</span>;</span><br><span class="line"><span class="comment">//通常被设置为 3，5 或者 7</span></span><br><span class="line"><span class="keyword">const</span> layers = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> noiseSum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; layers; i++) &#123;</span><br><span class="line">   noiseSum += noise(p * frequency) * amplitude;</span><br><span class="line">   amplitude *= <span class="number">0.5</span>;</span><br><span class="line">   frequency *= <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h3><ul>
+<li>分形叠加（$fractal\;Sum$）:将频率和幅度相互关联的噪声层相叠加的技术可以称为分形叠加。</li>
+<li>粉红噪声（$Pink\;Noise$）:分型噪声的连续层具有与其频率成反比的振幅。</li>
+<li>布朗噪声（$Brownian\;noise$）:当我们将层之间的频率加倍并且这些层的幅度与其频率成反比时，我们会获得一种特殊类型的粉红噪声，我们称之为布朗噪声（以数学家罗伯特布朗命名）。</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pinkNoise = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> layers = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> rateOfChange = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; layers; i++) &#123;</span><br><span class="line">    pinkNoise += noise(p * <span class="built_in">Math</span>.pow(rateOfChange, i)) / <span class="built_in">Math</span>.pow(rateOfChange, i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>频谱密度（$spectral densities$）:连续层之间的频率和振幅的变化几乎形成了噪声曲线的特征。 它定义了它的光谱特性。 我们使用术语频谱密度来定义产生噪声的各种频率（层）。</li>
+<li><p>功率谱（$power spectra$）:这些层中的每一层都有一个特定的振幅，我们称之为功率谱</p>
+</li>
+<li><p>间隙度（$lacunarity$）:控制层与层之间频率的变化率</p>
+</li>
+<li>$gain$: 控制层与层之间振幅的变化率</li>
+</ul>
+<h3 id="2D-Noise-示例"><a href="#2D-Noise-示例" class="headerlink" title="$2D\;Noise$示例"></a>$2D\;Noise$示例</h3><h4 id="分形叠加（-Fractal-Sum-）"><a href="#分形叠加（-Fractal-Sum-）" class="headerlink" title="分形叠加（$Fractal\;Sum$）"></a>分形叠加（$Fractal\;Sum$）</h4><p>在1D示例中已经介绍额分形叠加的技术原理，在此我们将实现其二维版本：</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/6.png" alt="2dNoise"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> layers = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> imageWidth = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">const</span> imageHeight = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">let</span> maxNoiseVal = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> frequency = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> amplitude = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> noiseMap = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imageHeight; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; imageWidth; j++) &#123;</span><br><span class="line">        vec2 pNoise = vec2(i, j);</span><br><span class="line">        frequency = <span class="number">1</span>;</span><br><span class="line">        amplitude = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">0</span>; k &lt; layers; k++) &#123;</span><br><span class="line">            noiseMap[i * imageWidth + j] += noise.commputeX(pNoise * frequency) * amplitude;</span><br><span class="line">            frequency *= <span class="number">2</span>;</span><br><span class="line">            amplitude *= <span class="number">0.5</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (noiseMap[i * imageWidth + j] &gt; maxNoiseVal) &#123;</span><br><span class="line">            maxNoiseVal = noiseMap[i * imageWidth + j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>基于以上程序生成的纹理如下图所示:</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/7.png" alt="2dNoise"></p>
+<p>注：因为我们将几层噪声相加，结果可能大于1，因此当我们将值转换为颜色时，将出现问题。解决此问题的其中一个思路是使用clamp函数，将值限制到$[0,1]$之间。但更好的方案是将遍历NoiseMap，每次循环将噪声值除以最大值（存储于maxNoiseVal中）来标准化噪声值数组。</p>
+<p>之前提到过，分形叠加可以生成许多自然中的纹理，例如起伏的地形：</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/8.png" alt="2dNoise"></p>
+<p>各种各样的纹理图案都是通过改变分形噪声函数的间隙度（$lacunarity $）和$gain$来控制的：<br><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/9.png" alt="2dNoise"></p>
+<h4 id="流噪声（-Turbulence-）"><a href="#流噪声（-Turbulence-）" class="headerlink" title="流噪声（$Turbulence$）"></a>流噪声（$Turbulence$）</h4><p><strong>与分形噪声的原理相同，但是流噪声使用的是噪声结果的绝对值</strong>。而不是直接使用每一层噪声函数。我们会先将噪声结果转换为有符号噪声，然后取其绝对值。如下图所示，以这种方式处理噪声函数会生成一个由凹凸组成的轮廓。这种技术可以产生模拟火，烟或云的图案。<br><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/10.png" alt="2dNoise"></p>
+<p>代码示例如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> frequency = <span class="number">0.02</span>;</span><br><span class="line"><span class="keyword">const</span> lacunarity = <span class="number">1.8</span>;</span><br><span class="line"><span class="keyword">const</span> gain = <span class="number">0.35</span>;</span><br><span class="line"><span class="keyword">const</span> layers = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> maxNoiseVal = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> imageHeight = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">const</span> imageWidth = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">const</span> noiseMap = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imageHeight; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; imageWidth; j++) &#123;</span><br><span class="line">       vec2 pNoise = vec2(j, i);</span><br><span class="line">       amplitude = <span class="number">1</span>;</span><br><span class="line">       frequency = <span class="number">0.02</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">0</span>; k &lt; layers; k++) &#123;</span><br><span class="line">            noiseMap[i * imageWidth + j] = noise.computeX(pNoise * frequency) * amplitude;</span><br><span class="line">            frequency *= lacunarity;</span><br><span class="line">            amplitude *= gain;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span>(noiseMap[i * imageWidth + j] &gt; maxNoiseVal)&#123;</span><br><span class="line">            maxNoiseVal = noiseMap[j * imageWidth + j];</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imageWidth * imageHeight; i++) &#123;</span><br><span class="line">   noiseMap[i] /= maxNoiseVal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="大理石纹理（-Marble-Texture-）"><a href="#大理石纹理（-Marble-Texture-）" class="headerlink" title="大理石纹理（$Marble\;Texture$）"></a>大理石纹理（$Marble\;Texture$）</h4><p>大理石纹理可以通过噪声函数或分形和调制正弦的相位来创建，关键点在于不直接使用噪声函数创建纹理，而是扰乱创建纹理的函数。这个想法可以用任何周期性函数中引入随机性。<br><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/11.png" alt="2dNoise"></p>
+<p>示例代码如下：<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> frequency = <span class="number">0.02</span>;</span><br><span class="line"><span class="keyword">const</span> lacunarity = <span class="number">1.8</span>;</span><br><span class="line"><span class="keyword">const</span> gain = <span class="number">0.35</span>;</span><br><span class="line"><span class="keyword">const</span> layers = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> maxNoiseVal = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> imageHeight = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">const</span> imageWidth = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">const</span> noiseMap = [];</span><br><span class="line"><span class="keyword">let</span> noiseVal = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imageHeight; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; imageWidth; j++) &#123;</span><br><span class="line">       vec2 pNoise = vec2(j, i);</span><br><span class="line">       amplitude = <span class="number">1</span>;</span><br><span class="line">       frequency = <span class="number">0.02</span>;</span><br><span class="line">       noiseVal = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> k = <span class="number">0</span>; k &lt; layers; k++) &#123;</span><br><span class="line">            noiseVal = noise.computeX(pNoise * frequency) * amplitude;</span><br><span class="line">            frequency *= lacunarity;</span><br><span class="line">            amplitude *= gain;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span>(noiseVal &gt; maxNoiseVal)&#123;</span><br><span class="line">            maxNoiseVal = noiseVal;</span><br><span class="line">       &#125;</span><br><span class="line">       noiseMap[j * imageWidth + i] = (sin((i + noiseValue * <span class="number">100</span>) * <span class="number">2</span> * <span class="built_in">Math</span>.PI / <span class="number">200</span>) + <span class="number">1</span>) / <span class="number">2</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imageWidth * imageHeight; i++) &#123;</span><br><span class="line">   noiseMap[i] /= maxNoiseVal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="木纹（-Wood-Texture-）"><a href="#木纹（-Wood-Texture-）" class="headerlink" title="木纹（$Wood\;Texture$）"></a>木纹（$Wood\;Texture$）</h4><p>与大理石纹理一样，木质纹理依赖于一个很简单的技巧。基本思想是将噪声函数乘以大于1的某个值。让我们将这个乘法结果称为$g$,纹理是通过从其整数部分减去$g$获得的。因此减法结果必然在$[0,1)$之间。</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/12.png" alt="2dNoise"></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> g = noise.computeX(vec2(i, j) * frequency) * <span class="number">10</span>;</span><br><span class="line">noiseMap[i * imageWidth + j] = g - <span class="built_in">Math</span>.floor(g);</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.scratchapixel.com/">Scratchapixel</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/" rel="prev" title="图形学的数学基础（三十二）：噪声-中">
+      <i class="fa fa-chevron-left"></i> 图形学的数学基础（三十二）：噪声-中
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B"><span class="nav-number">1.</span> <span class="nav-text">图形学的数学基础（三十三）：噪声-下</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2D-Noise"><span class="nav-number">1.1.</span> <span class="nav-text">$2D\;Noise$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E6%A8%A1%E5%BC%8F%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">简单的模式示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1D-Noise-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">$1D\;Noise$示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD"><span class="nav-number">1.2.2.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2D-Noise-%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">$2D\;Noise$示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%BD%A2%E5%8F%A0%E5%8A%A0%EF%BC%88-Fractal-Sum-%EF%BC%89"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">分形叠加（$Fractal\;Sum$）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E5%99%AA%E5%A3%B0%EF%BC%88-Turbulence-%EF%BC%89"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">流噪声（$Turbulence$）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E7%90%86%E7%9F%B3%E7%BA%B9%E7%90%86%EF%BC%88-Marble-Texture-%EF%BC%89"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">大理石纹理（$Marble\;Texture$）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%A8%E7%BA%B9%EF%BC%88-Wood-Texture-%EF%BC%89"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">木纹（$Wood\;Texture$）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.3.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenShin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

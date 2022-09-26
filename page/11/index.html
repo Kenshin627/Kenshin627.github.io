@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/" class="post-title-link" itemprop="url">图形学的数学基础（二十一）：立体角</a>
+            <a href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/" class="post-title-link" itemprop="url">图形学的数学基础（二十三）：反射方程与渲染方程</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-10 22:34:56" itemprop="dateCreated datePublished" datetime="2022-09-10T22:34:56+08:00">2022-09-10</time>
+              <time title="创建时间：2022-09-11 11:00:03" itemprop="dateCreated datePublished" datetime="2022-09-11T11:00:03+08:00">2022-09-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-11 21:41:06" itemprop="dateModified" datetime="2022-09-11T21:41:06+08:00">2022-09-11</time>
+                <time title="修改时间：2022-09-12 13:50:20" itemprop="dateModified" datetime="2022-09-12T13:50:20+08:00">2022-09-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,16 +223,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十一）：立体角"><a href="#图形学的数学基础（二十一）：立体角" class="headerlink" title="图形学的数学基础（二十一）：立体角"></a>图形学的数学基础（二十一）：立体角</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>立体角，常用字母$\Omega$表示，是一个物体对特定点的三维空间的角度，是平面角在三维空间中的类比。因此，立体角是单位球面上的一块面积，这和“平面角是单位圆上的一段弧长”类似。</p>
-<h2 id="平面角"><a href="#平面角" class="headerlink" title="平面角"></a>平面角</h2><p>平面角等于张角对应圆上的弧长除以圆的半径，即：</p>
-<p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/1.png" alt="平面角"></p>
-<p>$\theta = \dfrac{l}{r}$</p>
-<p>而圆的周长等于$2\pi{r}$,因此完整圆<br>对应的角度为：</p>
-<p>$\dfrac{2\pi{r}}{r} = 2\pi\;\;radians$</p>
-<h2 id="立体角（-Solid-angle-）"><a href="#立体角（-Solid-angle-）" class="headerlink" title="立体角（$Solid\;angle$）"></a>立体角（$Solid\;angle$）</h2>
+          <h1 id="图形学的数学基础（二十三）：反射方程与渲染方程"><a href="#图形学的数学基础（二十三）：反射方程与渲染方程" class="headerlink" title="图形学的数学基础（二十三）：反射方程与渲染方程"></a>图形学的数学基础（二十三）：反射方程与渲染方程</h1><h2 id="双向反射分布函数-BRDF"><a href="#双向反射分布函数-BRDF" class="headerlink" title="双向反射分布函数($BRDF$)"></a>双向反射分布函数($BRDF$)</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>$BRDF$全称$Bidirectional\;Reflectance\;Distribution\;Function$。$BRDF$是描述了物体表面对能量反射分布特性的函数。假设物体表面单位面积$dA$接收到来自$W_i$方向光线的能量，用$E$来表示，这些能量$E$到达物体表面后，会向各个不同的方向反射（每个方向反射的能量不同），$BRDF$函数就是描述这束能量向特定方向$W_r$的反射占比。</p>
+<p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/1.jpg" alt="BRDF"></p>
+<ul>
+<li>Differential irradiance incoming：$dE(w_i) = L(w_i)\cos\theta_i{d}w_i$</li>
+<li>Differential intensity exiting: $dL_r(w_r)$ </li>
+</ul>
+<h3 id="正式定义"><a href="#正式定义" class="headerlink" title="正式定义"></a>正式定义</h3><p>单位面积$dA$从单位立体角$w_i$接收到的$irradiance$，会被如何反射到各个不同的方向上去。更通俗点来说就是BRDF描述的是单位面积接收单位立体角$w_i$的能量的反射分布（比例）。反射比例依赖于出射方向（$w_r$）。$BRDF$描述了光与物体表面是如何相互作用的。即物体的材质属性由$BRDF$定义。</p>
+<p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/2.jpg" alt="BRDF"></p>
+<p>$f_r(w_i -&gt; w_r) = \dfrac{dL_r(w_r)}{dE_i(w_i)} = \dfrac{dl_r(w_r)}{L_i(w_i)\cos\theta_i{d}w_i}$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/#more" rel="contents">
+              <a class="btn" href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -255,7 +257,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -323,7 +325,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">66</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

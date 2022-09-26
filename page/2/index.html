@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" class="post-title-link" itemprop="url">图形学的数学基础（三十）：贝塞尔曲线</a>
+            <a href="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/" class="post-title-link" itemprop="url">图形学的数学基础（三十二）：噪声-中</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-21 22:55:12" itemprop="dateCreated datePublished" datetime="2022-09-21T22:55:12+08:00">2022-09-21</time>
+              <time title="创建时间：2022-09-24 21:51:49" itemprop="dateCreated datePublished" datetime="2022-09-24T21:51:49+08:00">2022-09-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-22 00:12:58" itemprop="dateModified" datetime="2022-09-22T00:12:58+08:00">2022-09-22</time>
+                <time title="修改时间：2022-09-25 13:59:24" itemprop="dateModified" datetime="2022-09-25T13:59:24+08:00">2022-09-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,16 +223,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（三十）：贝塞尔曲线"><a href="#图形学的数学基础（三十）：贝塞尔曲线" class="headerlink" title="图形学的数学基础（三十）：贝塞尔曲线"></a>图形学的数学基础（三十）：贝塞尔曲线</h1><h2 id="贝塞尔曲线-Bezier-curve"><a href="#贝塞尔曲线-Bezier-curve" class="headerlink" title="贝塞尔曲线($Bézier\;curve$)"></a>贝塞尔曲线($Bézier\;curve$)</h2><p>用一些列的控制点定义曲线,如下图所示:曲线由四个控制点定义(三阶贝塞尔曲线),从$P_0$开始,沿着$P_0-P_1$切线方向行进,结束时沿着<br>$P_2-P_3$方向,结束于$P_3$点。</p>
-<p><img src="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/1.jpg" alt="贝塞尔曲线"></p>
-<h2 id="参数方程-de-Casteljau-Algorithm"><a href="#参数方程-de-Casteljau-Algorithm" class="headerlink" title="参数方程-$de\;Casteljau\;Algorithm$"></a>参数方程-$de\;Casteljau\;Algorithm$</h2><p>首先考虑由三个控制点组成的二维的贝塞尔曲线（ $quadratic\;Bézier$）：</p>
-<p><img src="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/2.jpg" alt="贝塞尔曲线"></p>
-<p>假设有一颗沿着曲线运动的小球，当$t = 0$,球体在$b_0$点，当$t = 1$，球体在$b_1$点 定义曲线是关于时间$t$的参数方程，实质上就是求在任意时间$t$（$0&lt;=t&lt;=1$）,球体的位置。这就是$de\;Casteljau$算法的核心思想，将曲线方程转换为了求一个点位置。</p>
-<p><img src="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/3.jpg" alt="贝塞尔曲线"></p>
-<p>求解步骤：</p>
+          <h1 id="图形学的数学基础（三十二）：噪声-中"><a href="#图形学的数学基础（三十二）：噪声-中" class="headerlink" title="图形学的数学基础（三十二）：噪声-中"></a>图形学的数学基础（三十二）：噪声-中</h1><p>噪声是一个函数，返回一个范围在0-1之间的浮点数。输入参数可能是一维的二维的或者三维四维。本章将主要介绍一维入参的情况。可以使用一个随机数生成器来生成这些浮点数，但是上一章解释过，每次调用噪声函数会生成完全不可预测的数值，这不是我们想要的，生成的这种随机数值通常被称为白噪音（$White\;Noise$）。这种方法生成的数据不适合作为程序化纹理，因为自然界中的噪声纹理通常都是很自然的。</p>
+<p><img src="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/1.png" alt="WHITEnoise"></p>
+<p>首先我们要做的是以固定间隔创建一系列的随机点.在二维空间中,将在网格中的顶点处生成这些随机值,在1维中,这个网格可以被视为一个标尺,为了简单起见,假设网格的顶点或标尺的刻度沿着x和y轴创建。</p>
+<p><img src="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/2.png" alt="WHITEnoise"></p>
+<p>创建$2D\;Noise$需要将随机数分配给网格的每个顶点处。对于$1D\;Noise$，随机数将会被分配到x轴固定的间隔处。无论2D还是1D，顶点坐标均为整数，在本示例中，我们仅对前10个数执行此操作，从0到9。</p>
+<p>先拿$1D\;Noise$举例说明，可以看到在标尺上的整数位置处定义了一系列的点。例如：当x = 0结果为0.36， x=1结果为0.68，但是当x不是整数时，函数的结果是什么呢？<br>要计算x轴上任何点的值，需要做的就是找出x轴上该输入值临近的连个整数值（最小值和最大值）。为了计算这个数字，可以使用一种称为线性插值的简单插值技术（$Linear\;interpolation$）：</p>
+<p>$a(1-t) +bt\;\;\;with\; 0 &lt;=t\;&lt;=\;1$</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求出当前位置临近的最小值和最大值</span></span><br><span class="line"><span class="keyword">const</span> currentX = <span class="number">1.27</span>;</span><br><span class="line"><span class="keyword">const</span> min = <span class="built_in">Math</span>.floor(currentX);</span><br><span class="line"><span class="keyword">const</span> max = <span class="built_in">Math</span>.ceil(currentX);</span><br><span class="line"><span class="comment">//拿到最小值和最大值位置的值</span></span><br><span class="line"><span class="keyword">const</span> a = getValueByX(min);</span><br><span class="line"><span class="keyword">const</span> b = getValueByX(max);</span><br><span class="line"><span class="comment">//求出当前时间t</span></span><br><span class="line"><span class="keyword">const</span> t = currentX - min;</span><br><span class="line"><span class="comment">//线性插值计算当前位置的值。</span></span><br><span class="line"><span class="keyword">return</span> a*(<span class="number">1</span>-t) + b*t;</span><br></pre></td></tr></table></figure>
+<p>使用线性插值计算$[0,1]$范围内任意x值类似于画了一条直线（<strong>线性</strong>）,如果对其它区间的任意x值执行相同的操作，我们会得到如下图所示的曲线。通过这种线性插值技术产生的噪声我们称之为$Value\;Noise$;</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/#more" rel="contents">
+              <a class="btn" href="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -255,7 +257,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -323,7 +325,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">66</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
