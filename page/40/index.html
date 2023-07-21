@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/20/IO/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/11/20/IO/" class="post-title-link" itemprop="url">Haskell03 - IO</a>
+            <a href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/" class="post-title-link" itemprop="url">连续性和可导性</a>
         </h2>
 
         <div class="post-meta">
@@ -184,23 +184,21 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-11-20 12:44:13" itemprop="dateCreated datePublished" datetime="2021-11-20T12:44:13+08:00">2021-11-20</time>
+              <time title="创建时间：2022-03-30 10:39:34 / 修改时间：11:27:09" itemprop="dateCreated datePublished" datetime="2022-03-30T10:39:34+08:00">2022-03-30</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-22 11:37:10" itemprop="dateModified" datetime="2021-11-22T11:37:10+08:00">2021-11-22</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+                  <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
                 </span>
             </span>
 
@@ -215,14 +213,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="IO-TYPES"><a href="#IO-TYPES" class="headerlink" title="IO TYPES"></a>IO TYPES</h1><p>Haskell has a special parameterized type called IO. Any value in an IO context must stay in this context. This prevents code that’s pure (meaning it upholds referential transparency and doesn’t change state) and code that’s necessarily impure from mixing.</p>
-<h2 id="IO-types—dealing-with-an-impure-world"><a href="#IO-types—dealing-with-an-impure-world" class="headerlink" title="IO types—dealing with an impure world"></a>IO types—dealing with an impure world</h2><p>IO in Haskell is a parameterized type that’s similar to Maybe.The first thing they share in common is that they’re parameterized types of the same kind.The other thing that Maybe and IO have in common is that (unlike List or Map) they describe a context for their parameters rather than a container. The context for the IO type is that the value has come from an input/output operation.To keep Haskell code pure and predictable, you use the IO type to provide a context for data that may not behave the way all of the rest of your Haskell code does. IO actions aren’t functions.</p>
-<h2 id="Examples-of-IO-actions"><a href="#Examples-of-IO-actions" class="headerlink" title="Examples of IO actions"></a>Examples of IO actions</h2><p>main doesn’t return any meaningful value; it simply performs an action. It turns out that main isn’t a function, because it breaks one of the fundamental rules of functions: it doesn’t return a value. Because of this, we refer to main as an IO action. IO actions work much like functions except they violate at least one of the three rules we established for functions early in the book. Some IO actions return no value, some take no input, and others don’t always return the same value given the same input.<br><img src="/2021/11/20/IO/1.png" alt="alt"></p>
-<h2 id="Do-notation"><a href="#Do-notation" class="headerlink" title="Do-notation"></a>Do-notation</h2><p>This do-notation allows you to treat IO types as if they were regular types. This also explains why some variables use let and others use &lt;-. Variables assigned with &lt;- allow you to act as though a type IO a is just of type a. You use let statements whenever you create variables that aren’t IO types.</p>
-<h3 id="lt"><a href="#lt" class="headerlink" title="&lt;-"></a>&lt;-</h3><p>Donotation allows you to assign an IO String variable by using &lt;-, to act like it’s an ordinary String, and then to pass it to functions that work with only regular Strings<br><img src="/2021/11/20/IO/2.png" alt="alt"></p>
+          <h1 id="连续性"><a href="#连续性" class="headerlink" title="连续性"></a>连续性</h1><p>我们先从一个函数是连续的, 这到底意味着什么开始. 正如我上面所说, 直觉上, 可以一笔画出连续函数的图像.</p>
+<h2 id="在一点处的连续"><a href="#在一点处的连续" class="headerlink" title="在一点处的连续"></a>在一点处的连续</h2><p>如果f(x)在a点连续,则必须满足以下三个条件:</p>
+<ul>
+<li>双侧极限${\lim_{x \to a} f(x)}$存在并且是有限的</li>
+<li>函数在点a处有定义,$f(a)$存在并且是有限的</li>
+<li>以上两个量相等,即: ${\lim_{x \to a} f(x) = f(x)}$</li>
+</ul>
+<h2 id="在一个区间上连续"><a href="#在一个区间上连续" class="headerlink" title="在一个区间上连续"></a>在一个区间上连续</h2><p>函数f在[a, b] 上连续,需满足以下三个条件:</p>
+<ul>
+<li>f在(a,b)的每一点都连续</li>
+<li>函数f在x = a处右连续,即 ${\lim_{x \to a^+} f(x)} = f(a)$</li>
+<li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
+</ul>
+<p><strong><em>★介值定理</em></strong></p>
+<blockquote>
+<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/11/20/IO/#more" rel="contents">
+              <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -245,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -358,7 +368,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -417,6 +427,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

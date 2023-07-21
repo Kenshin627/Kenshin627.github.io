@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/" class="post-title-link" itemprop="url">图形学的数学基础（二十五）：着色</a>
+            <a href="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/" class="post-title-link" itemprop="url">图形学的数学基础（三十三）：噪声-下</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-14 21:05:33" itemprop="dateCreated datePublished" datetime="2022-09-14T21:05:33+08:00">2022-09-14</time>
+              <time title="创建时间：2022-09-25 13:36:35" itemprop="dateCreated datePublished" datetime="2022-09-25T13:36:35+08:00">2022-09-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-15 17:24:47" itemprop="dateModified" datetime="2022-09-15T17:24:47+08:00">2022-09-15</time>
+                <time title="修改时间：2022-09-27 09:24:45" itemprop="dateModified" datetime="2022-09-27T09:24:45+08:00">2022-09-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,20 +223,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十五）：着色"><a href="#图形学的数学基础（二十五）：着色" class="headerlink" title="图形学的数学基础（二十五）：着色"></a>图形学的数学基础（二十五）：着色</h1><p>渲染过程本质可以上分解为两个步骤:可见性测试和着色。光栅化和射线追踪都是用于解决可见性问题。本章我们将介绍渲染过程的第二部分:着色。着色是一个庞大的主题。一些用于着色的技术在数学上也很复杂。本章我们将学习最基本的着色模型: $Blinn-Phong\;Reflectance\;Model$</p>
-<h2 id="blinn-Phong-Reflectance-Model"><a href="#blinn-Phong-Reflectance-Model" class="headerlink" title="$blinn-Phong\;Reflectance\;Model$"></a>$blinn-Phong\;Reflectance\;Model$</h2><p>当我们观察一个物体时，可以明显的将物体的视觉表现分为三类：</p>
-<ul>
-<li>高光：表现很亮的部分，并且会随着视角的变化而变化</li>
-<li>漫反射部分：颜色变化不明显，表示物体本身的颜色或者diffuseTexture颜色。（物体表面吸收了部分光线，反射出的未被吸收的部分）</li>
-<li>环境光：未被光照直接照亮的部分，<strong>模拟间接光照</strong>。在布林冯模型中简化为常量。这也是为什么布林冯模型被称为经验模型的原因。计算精确的间接光照需要$RayTracing$。</li>
-</ul>
-<p><img src="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/1.png" alt="blinn-phong"></p>
-<p>布林冯光照模型是一个经验模型。整体思想就是按照这三部分来建模的。布林冯光照模型是一个直接光照模型（或者叫局部光照/局部性），不考虑间接光照，即不考虑周围物体反射的光线对其产生的影响。着色权重仅考虑光源。（阴影及SSAO需要多个pass处理）</p>
-<h3 id="定义光照参数"><a href="#定义光照参数" class="headerlink" title="定义光照参数"></a>定义光照参数</h3><p>要计算物体表面着色点光照结果，需要定义一些基本的参数。</p>
-<p><img src="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/2.jpg" alt="blinn-phong"></p>
+          <h1 id="图形学的数学基础（三十三）：噪声-下"><a href="#图形学的数学基础（三十三）：噪声-下" class="headerlink" title="图形学的数学基础（三十三）：噪声-下"></a>图形学的数学基础（三十三）：噪声-下</h1><h2 id="2D-Noise"><a href="#2D-Noise" class="headerlink" title="$2D\;Noise$"></a>$2D\;Noise$</h2><p>在上一章中，我们介绍并解释了实现一维噪声函数的大部分技术和方法。创建更高维度的噪声和一维噪声并没有本质上的区别，因为它们都是基于同样的方法和技术。之前提到过，所有的噪声函数都会返回一个浮点数，无论输入参数是浮点数，二维点还是三维点，至于一维噪声 二维或三维噪声仅与其输入值有关。二维噪声是将二维点作为输入参数的噪声函数。<br>对于二维噪声，我们会在网格顶点处分布随机值。噪声函数的2D版本以2D点作为输入，假设当前要求的点为$p$。与一维版本类似，我们先得找到点$p$在网格中的位置，如果点在网格之外，可以通过相同的取模技巧重新映射$p$点的位置，得到网格上点$p$的新坐标，记作$Pnoise$。<br>之前的章节中讲过插值相关的很多内容。</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/1.jpg" alt="2dNoise"></p>
+<p>如下图所示：点$Pnoise$被一个单元上的四个顶点所包围。使用之前学到过的双线性插值技术可以轻松得到点$Pnoise$的值（周围四个点的加权平均）：</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/2.jpg" alt="2dNoise"></p>
+<p>为此我们首先计算$s和t$，它们是一维噪声中t的对应物：</p>
+<p><img src="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/3.png" alt="2dNoise"></p>
+<p>代码实现如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">lerp</span>(<span class="params">min:<span class="built_in">number</span>, max: nmber, t: <span class="built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> min * (<span class="number">1</span>-t) + max * t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">smoothStep</span>(<span class="params">t: <span class="built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> t * t * (<span class="number">3</span>- <span class="number">2</span> * t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">vec2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> x: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> y: <span class="built_in">number</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">x: <span class="built_in">number</span>,y: <span class="built_in">number</span></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ValueNoise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> K_MAX_TABLE_SIZE: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> K_MAX_TABLE_SIZE_MASK: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> vertices: <span class="built_in">number</span>[];</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.K_MAX_TABLE_SIZE = <span class="number">256</span>;</span><br><span class="line">        <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK = <span class="built_in">this</span>.K_MAX_TABLE_SIZE - <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">this</span>.vertices = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.K_MAX_TABLE_SIZE * <span class="built_in">this</span>.K_MAX_TABLE_SIZE; i++) &#123;</span><br><span class="line">           <span class="built_in">this</span>.vertices[i] = <span class="built_in">Math</span>.random();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">computeX</span>(<span class="params">p: vec2</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> xi = <span class="built_in">Math</span>.floor(p.x);</span><br><span class="line">        <span class="keyword">const</span> yi = <span class="built_in">Math</span>.floor(p.y);</span><br><span class="line">        <span class="keyword">const</span> s = p.x - xi;</span><br><span class="line">        <span class="keyword">const</span> t = p.y - yi;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> rx0 = xi &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line">        <span class="keyword">const</span> rx1 = (rx0 + <span class="number">1</span>) &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line">        <span class="keyword">const</span> ry0 = yi &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line">        <span class="keyword">const</span> ry1 = (ry0 + <span class="number">1</span>) &amp; <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//通过置换表查找四个顶点处的随机值</span></span><br><span class="line">        <span class="keyword">const</span> c00 = <span class="built_in">this</span>.vertices[ry0 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx0];</span><br><span class="line">        <span class="keyword">const</span> c10 = <span class="built_in">this</span>.vertices[ry0 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx1];</span><br><span class="line">        <span class="keyword">const</span> c01 = <span class="built_in">this</span>.vertices[ry1 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx0];</span><br><span class="line">        <span class="keyword">const</span> c11 = <span class="built_in">this</span>.vertices[ry1 * <span class="built_in">this</span>.K_MAX_TABLE_SIZE_MASK + rx1];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//对得到的s和t做平滑处理</span></span><br><span class="line">        <span class="keyword">const</span> ss = smoothStep(s);</span><br><span class="line">        <span class="keyword">const</span> st = smoothStep(t);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> a = lerp(c00, c10, ss);</span><br><span class="line">        <span class="keyword">const</span> b = lerp(c01, c11, ss);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> lerp(a, b, st);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/#more" rel="contents">
+              <a class="btn" href="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -259,7 +256,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -327,7 +324,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -372,7 +369,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

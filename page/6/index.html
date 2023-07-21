@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%98%B4%E5%BD%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/" class="post-title-link" itemprop="url">图形学的数学基础（二十一）：立体角</a>
+            <a href="/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%98%B4%E5%BD%B1/" class="post-title-link" itemprop="url">图形学的数学基础（二十九）：阴影</a>
         </h2>
 
         <div class="post-meta">
@@ -184,10 +184,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-09-10 22:34:56 / 修改时间：23:49:36" itemprop="dateCreated datePublished" datetime="2022-09-10T22:34:56+08:00">2022-09-10</time>
+              <time title="创建时间：2022-09-20 13:07:08" itemprop="dateCreated datePublished" datetime="2022-09-20T13:07:08+08:00">2022-09-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-26 11:29:35" itemprop="dateModified" datetime="2022-09-26T11:29:35+08:00">2022-09-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -217,16 +223,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十一）：立体角"><a href="#图形学的数学基础（二十一）：立体角" class="headerlink" title="图形学的数学基础（二十一）：立体角"></a>图形学的数学基础（二十一）：立体角</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>立体角，常用字母$\Omega$表示，是一个物体对特定点的三维空间的角度，是平面角在三维空间中的类比。因此，立体角是单位球面上的一块面积，这和“平面角是单位圆上的一段弧长”类似。</p>
-<h2 id="平面角"><a href="#平面角" class="headerlink" title="平面角"></a>平面角</h2><p>平面角等于张角对应圆上的弧长除以圆的半径，即：</p>
-<p><img src="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/1.png" alt="平面角"></p>
-<p>$\theta = \dfrac{l}{r}$</p>
-<p>而圆的周长等于$2\pi{r}$,因此完整圆<br>对应的角度为：</p>
-<p>$\dfrac{2\pi{r}}{r} = 2\pi\;\;radians$</p>
-<h2 id="立体角（-Solid-angle-）"><a href="#立体角（-Solid-angle-）" class="headerlink" title="立体角（$Solid\;angle$）"></a>立体角（$Solid\;angle$）</h2>
+          <h1 id="阴影（-Shadows-）"><a href="#阴影（-Shadows-）" class="headerlink" title="阴影（$Shadows$）"></a>阴影（$Shadows$）</h1><blockquote>
+<p>All the variety, all the charm, all the beauty<br>of life is made up of light and shadow    </p>
+<pre><code>                          - Tolstoy
+</code></pre></blockquote>
+<p>阴影对于真实感的渲染是极其重要的，因为它能够提供物体在空间中的相对位置关系，使得物体看起来不是<strong>漂浮</strong>在空中的。本章将重点介绍计算阴影的理论以及在光栅化中实时阴影算法。</p>
+<p><img src="/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%98%B4%E5%BD%B1/1.jpg" alt="shadows"></p>
+<blockquote>
+<p>《古墓丽影-暗影》 2018</p>
+</blockquote>
+<p>之前介绍$blinn-Phong\;Model$光照模型是<strong>局部的</strong>，仅考虑光线 着色点 视线三个因素，不考虑其它物体对于当前着色点的影响，例如遮蔽，阴影等，而现实情况是，光照是及其复杂的，需要考虑周围物体对着色点的影响（间接光照），而在传统的局部着色（直接光照）中很难实现准确的表达，往往需要通过其它技术近似的模拟，今天介绍的$shadow\;Mapping$就是其中之一。一种在光栅化成像中实现阴影的技术。</p>
+<h2 id="Shadow-Mapping"><a href="#Shadow-Mapping" class="headerlink" title="$Shadow\;Mapping$"></a>$Shadow\;Mapping$</h2><p>一种图像空间（$Image-Space$）算法。核心思想就是：<strong>如果场景中一个点不在阴影里，那么该着色点既可以被摄像机看到也可以被光源看到。如果一个着色点在阴影里，那么摄像机可以看到，光源是看不到的。</strong></p>
+<p>传统的$Shadow\;Mapping$只能处理点光源，这样的阴影都有明显的边界和锯齿，一个着色点要么在阴影里，要么不在，缺少了中间柔和的过渡。这种阴影我们称之为<strong>硬阴影</strong>。</p>
+<h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E7%AB%8B%E4%BD%93%E8%A7%92/#more" rel="contents">
+              <a class="btn" href="/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%98%B4%E5%BD%B1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -249,7 +261,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -317,7 +329,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -362,7 +374,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

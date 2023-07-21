@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/" class="post-title-link" itemprop="url">图形学的数学基础（二十四）：插值</a>
+            <a href="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/" class="post-title-link" itemprop="url">图形学的数学基础（三十二）：噪声-中</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-11 12:50:32" itemprop="dateCreated datePublished" datetime="2022-09-11T12:50:32+08:00">2022-09-11</time>
+              <time title="创建时间：2022-09-24 21:51:49" itemprop="dateCreated datePublished" datetime="2022-09-24T21:51:49+08:00">2022-09-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-13 08:53:30" itemprop="dateModified" datetime="2022-09-13T08:53:30+08:00">2022-09-13</time>
+                <time title="修改时间：2023-07-21 17:36:49" itemprop="dateModified" datetime="2023-07-21T17:36:49+08:00">2023-07-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,16 +223,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十四）：插值"><a href="#图形学的数学基础（二十四）：插值" class="headerlink" title="图形学的数学基础（二十四）：插值"></a>图形学的数学基础（二十四）：插值</h1><h2 id="线性插值（-Linear-Interpolation-）"><a href="#线性插值（-Linear-Interpolation-）" class="headerlink" title="线性插值（$Linear\;Interpolation$）"></a>线性插值（$Linear\;Interpolation$）</h2><p>在图形学领域插值是一项广泛应用的技术，很多时候，数据是在规则网格上指定的（值写在 2D 或 3D 网格的顶点位置）或在一条线上（在 1D 情况下），但是程序需要计算任意一点的值。如果采样点刚好落在网格顶点处，那么可以读取数值直接使用，但是如果采样点落在其他地方，考虑到那里并没有存储数值，我们需要基于周围顶点计算数值。这种技术称为插值，因为其关键思想是“插值”，通过固定网格顶点的现有值计算网格上其他任意位置的值。</p>
-<p>在二维中这种技术叫双线性插值，与之对应的三维插值称为三线性插值。“线性插值”是一种类似于以下形式的方程：</p>
+          <h1 id="图形学的数学基础（三十二）：噪声-中"><a href="#图形学的数学基础（三十二）：噪声-中" class="headerlink" title="图形学的数学基础（三十二）：噪声-中"></a>图形学的数学基础（三十二）：噪声-中</h1><p>噪声是一个函数，返回一个范围在0-1之间的浮点数。输入参数可能是一维的二维的或者三维四维。本章将主要介绍一维入参的情况。可以使用一个随机数生成器来生成这些浮点数，但是上一章解释过，每次调用噪声函数会生成完全不可预测的数值，这不是我们想要的，生成的这种随机数值通常被称为白噪音（$White\;Noise$）。这种方法生成的数据不适合作为程序化纹理，因为自然界中的噪声纹理通常都是很自然的。</p>
+<p><img src="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/1.png" alt="WHITEnoise"></p>
+<p>首先我们要做的是以固定间隔创建一系列的随机点.在二维空间中,将在网格中的顶点处生成这些随机值,在1维中,这个网格可以被视为一个标尺,为了简单起见,假设网格的顶点或标尺的刻度沿着x和y轴创建。</p>
+<p><img src="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/2.png" alt="WHITEnoise"></p>
+<p>创建$2D\;Noise$需要将随机数分配给网格的每个顶点处。对于$1D\;Noise$，随机数将会被分配到x轴固定的间隔处。无论2D还是1D，顶点坐标均为整数，在本示例中，我们仅对前10个数执行此操作，从0到9。</p>
+<p>先拿$1D\;Noise$举例说明，可以看到在标尺上的整数位置处定义了一系列的点。例如：当x = 0结果为0.36， x=1结果为0.68，但是当x不是整数时，函数的结果是什么呢？<br>要计算x轴上任何点的值，需要做的就是找出x轴上该输入值临近的连个整数值（最小值和最大值）。为了计算这个数字，可以使用一种称为线性插值的简单插值技术（$Linear\;interpolation$）：</p>
 <p>$a(1-t) +bt\;\;\;with\; 0 &lt;=t\;&lt;=\;1$</p>
-<p>其他种种形式的线性插值都是以此为基础的。</p>
-<p><img src="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/1.jpg" alt="线性插值"></p>
-<p>插值技术通常用于图像处理（例如调整图像大小）。但是 3D 技术也可以使用 3D 或 2D 网格（纹理可以看作 2D 网格），例如流体模拟、体积渲染、纹理映射和辐照度缓存等等，无论何时涉及网格，通常也需要插值技术。</p>
-<h2 id="双线性插值（-Bilinear-Interpolation-）"><a href="#双线性插值（-Bilinear-Interpolation-）" class="headerlink" title="双线性插值（$Bilinear\;Interpolation$）"></a>双线性插值（$Bilinear\;Interpolation$）</h2><p>双线性插值是一种用于在二维规则网格中计算任意值的方法。此网格也可以是图像或纹理贴图。思路是取二维平面上周围最近的四个网格顶点作为参照，首先水平方向做两次线性插值，得到两个查之后的结果，根据这两个值，再垂直方向再做一次线性插值。即可拿到p点的值。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求出当前位置临近的最小值和最大值</span></span><br><span class="line"><span class="keyword">const</span> currentX = <span class="number">1.27</span>;</span><br><span class="line"><span class="keyword">const</span> min = <span class="built_in">Math</span>.floor(currentX);</span><br><span class="line"><span class="keyword">const</span> max = <span class="built_in">Math</span>.ceil(currentX);</span><br><span class="line"><span class="comment">//拿到最小值和最大值位置的值</span></span><br><span class="line"><span class="keyword">const</span> a = getValueByX(min);</span><br><span class="line"><span class="keyword">const</span> b = getValueByX(max);</span><br><span class="line"><span class="comment">//求出当前时间t</span></span><br><span class="line"><span class="keyword">const</span> t = currentX - min;</span><br><span class="line"><span class="comment">//线性插值计算当前位置的值。</span></span><br><span class="line"><span class="keyword">return</span> a*(<span class="number">1</span>-t) + b*t;</span><br></pre></td></tr></table></figure>
+<p>使用线性插值计算$[0,1]$范围内任意x值类似于画了一条直线（<strong>线性</strong>）,如果对其它区间的任意x值执行相同的操作，我们会得到如下图所示的曲线。通过这种线性插值技术产生的噪声我们称之为$Value\;Noise$;</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%8F%92%E5%80%BC/#more" rel="contents">
+              <a class="btn" href="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -255,7 +257,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -323,7 +325,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -368,7 +370,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

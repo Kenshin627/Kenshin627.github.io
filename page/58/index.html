@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/02/09/blog/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/02/09/blog/" class="post-title-link" itemprop="url">Hexo+GitHub搭建个人博客</a>
+            <a href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Asp.Net Core DI框架</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-02-09 09:06:50" itemprop="dateCreated datePublished" datetime="2017-02-09T09:06:50+08:00">2017-02-09</time>
+              <time title="创建时间：2019-10-19 17:51:45" itemprop="dateCreated datePublished" datetime="2019-10-19T17:51:45+08:00">2019-10-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog%E5%BB%BA%E7%AB%99/" itemprop="url" rel="index"><span itemprop="name">Blog建站</span></a>
+                  <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
                 </span>
             </span>
 
@@ -215,16 +215,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="http://i1.piimg.com/567571/f63d2030ab646842.png" alt><br><a href="hexo.io">Hexo</a>是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在搭建博客的过程中遇到的问题进行总结，避免以后的小伙伴踩坑。本文从五个方面进行讲解，分别为：</p>
+          <h1 id="Asp-NET-Core-DI框架概览"><a href="#Asp-NET-Core-DI框架概览" class="headerlink" title="Asp.NET Core DI框架概览"></a>Asp.NET Core DI框架概览</h1><p>毫不夸张地说,整个ASP.NET Core框架是建立在一个依赖注入框架之上的,它在应用启动时构建请求处理管道的过程中,以及利用该管道处理每个请求过程中使用到的服务对象均来源于DI容器.该DI容器不仅为ASP.NET Core框架提供必要的服务,同时作为了应用的服务提供者,依赖注入已经成为了ASP.NET Core应用基本的编程模式.</p>
+<h2 id="服务的注册与消费"><a href="#服务的注册与消费" class="headerlink" title="服务的注册与消费"></a>服务的注册与消费</h2><p>ASP.NET Core中的依赖注入框架中,我们添加的服务注册被保存到通过 <strong>IServiceCollection</strong> 接口表示的集合之中,基于这个集合创建的DI容器体现为 <strong>IServiceProvider</strong>.</p>
+<p>DI框架提供了生产实例的三种生命周期模式,分别为:</p>
 <ul>
-<li>环境部署</li>
-<li>HEXO安装与常用命令</li>
-<li>个性化设置</li>
-<li>HEXO部署Github</li>
-<li><p>定制化个性域名</p></li></ul>
+<li><strong>Singleton</strong>:整个应用程序生命周期内单例</li>
+<li><strong>Scoped</strong>:单次服务请求内的单例</li>
+<li><strong>Transient</strong>:每次获取均会产生新的对象</li>
+</ul>
+<p>DI框架注册服务时通常会使用三种方式,分别为:</p>
+<ul>
+<li>指定注册非服务类型和实现类型.</li>
+<li>指定一个现有的服务实例.</li>
+<li>指定一个创建服务实例的委托对象.</li>
+</ul>
+<p>当我们在进行服务注册时,可以为同一类型添加一个服务注册,也可以添加多个,实际上添加的所有服务注册都是有效的,在完成服务注册之后，我们调用IServiceCollection接口的扩展方法  <strong>BuildServiceProvider</strong>创建出代表DI容器的IServiceProvider对象,并利用它调用后者的<strong>GetService<t></t></strong>方法来提供相应的服务实例,总时会返回一个服务实例,这里采用了”后来居上”的原则,即总是采用最近添加的服务注册来创建服务实例.如果我们调用另一个扩展方法<strong>GetServices<t></t></strong>,它将利用返回所有服务注册提供的服务实例.如下所示的代码片段.</p>
+<p><img src="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/DI1.jpg" alt="alt"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/02/09/blog/#more" rel="contents">
+              <a class="btn" href="/2019/10/19/Asp-Net-Core-DI%E6%A1%86%E6%9E%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -247,7 +256,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/57/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><span class="page-number current">58</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/59/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/57/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><span class="page-number current">58</span><a class="page-number" href="/page/59/">59</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/59/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -315,7 +324,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -360,7 +369,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

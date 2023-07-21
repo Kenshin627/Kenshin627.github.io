@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/" class="post-title-link" itemprop="url">图形学的数学基础（二十二）：辐射度量学</a>
+            <a href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" class="post-title-link" itemprop="url">图形学的数学基础（三十）：贝塞尔曲线</a>
         </h2>
 
         <div class="post-meta">
@@ -185,14 +185,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-10 23:58:42" itemprop="dateCreated datePublished" datetime="2022-09-10T23:58:42+08:00">2022-09-10</time>
+              <time title="创建时间：2022-09-21 22:55:12" itemprop="dateCreated datePublished" datetime="2022-09-21T22:55:12+08:00">2022-09-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-13 08:53:30" itemprop="dateModified" datetime="2022-09-13T08:53:30+08:00">2022-09-13</time>
+                <time title="修改时间：2022-09-26 11:29:35" itemprop="dateModified" datetime="2022-09-26T11:29:35+08:00">2022-09-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,15 +223,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="图形学的数学基础（二十二）：辐射度量学"><a href="#图形学的数学基础（二十二）：辐射度量学" class="headerlink" title="图形学的数学基础（二十二）：辐射度量学"></a>图形学的数学基础（二十二）：辐射度量学</h1><h2 id="辐射度量学（-Radiometry-）"><a href="#辐射度量学（-Radiometry-）" class="headerlink" title="辐射度量学（$Radiometry$）"></a>辐射度量学（$Radiometry$）</h2><p> 辐射度量学是基于物理光照的基础，是基于几何光学来定义的，提供了精准的关于光的各种物理量，光与物体表面的作用，光线传播方法的定义等。辐射度量学是反射方程 渲染方程的基础。</p>
-<h2 id="1-辐射能量（-Radiant-energy-）"><a href="#1-辐射能量（-Radiant-energy-）" class="headerlink" title="1.辐射能量（$Radiant\;energy$）"></a>1.辐射能量（$Radiant\;energy$）</h2><p>在辐射度量学中最基本的单位是辐射能量，表示为$Q$,单位是$J(焦耳)$，辐射能量$Q$以辐射的形式发射，传播或接收的能量。每个光子都携带一定的能量，这个能量正比于它的频率：</p>
-<p>$Q = hv$</p>
-<p>其中$h = 6.62620\times (10^{-34})J$.光子的频率（或者说能量）影响着光子与物体表面的交互，更重要的是，它影响着光与感应器之间的作用，使不同频率的光被察觉为不同的颜色。</p>
-<h2 id="2-辐射通量（-Radiant-flux-）"><a href="#2-辐射通量（-Radiant-flux-）" class="headerlink" title="2.辐射通量（$Radiant\;flux$）"></a>2.辐射通量（$Radiant\;flux$）</h2><p>辐射通量，记为为$Φ$，表示单位时间 发射/反射/传播/接受的能量(功率-power)。单位为（$watt$）W或者($lumen$)lm，在辐射测量中，都是基于这个辐射通量来测量能量的，而不是使用能量$Q$。</p>
-<p>$Φ = \dfrac{dQ}{dt}$</p>
+          <h1 id="图形学的数学基础（三十）：贝塞尔曲线"><a href="#图形学的数学基础（三十）：贝塞尔曲线" class="headerlink" title="图形学的数学基础（三十）：贝塞尔曲线"></a>图形学的数学基础（三十）：贝塞尔曲线</h1><h2 id="贝塞尔曲线-Bezier-curve"><a href="#贝塞尔曲线-Bezier-curve" class="headerlink" title="贝塞尔曲线($Bézier\;curve$)"></a>贝塞尔曲线($Bézier\;curve$)</h2><p>用一些列的控制点定义曲线,如下图所示:曲线由四个控制点定义(三阶贝塞尔曲线),从$P_0$开始,沿着$P_0-P_1$切线方向行进,结束时沿着<br>$P_2-P_3$方向,结束于$P_3$点。</p>
+<p><img src="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/1.jpg" alt="贝塞尔曲线"></p>
+<h2 id="参数方程-de-Casteljau-Algorithm"><a href="#参数方程-de-Casteljau-Algorithm" class="headerlink" title="参数方程-$de\;Casteljau\;Algorithm$"></a>参数方程-$de\;Casteljau\;Algorithm$</h2><p>首先考虑由三个控制点组成的二维的贝塞尔曲线（ $quadratic\;Bézier$）：</p>
+<p><img src="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/2.jpg" alt="贝塞尔曲线"></p>
+<p>假设有一颗沿着曲线运动的小球，当$t = 0$,球体在$b_0$点，当$t = 1$，球体在$b_1$点 定义曲线是关于时间$t$的参数方程，实质上就是求在任意时间$t$（$0&lt;=t&lt;=1$）,球体的位置。这就是$de\;Casteljau$算法的核心思想，将曲线方程转换为了求一个点位置。</p>
+<p><img src="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/3.jpg" alt="贝塞尔曲线"></p>
+<p>求解步骤：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/#more" rel="contents">
+              <a class="btn" href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -254,7 +255,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -322,7 +323,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -367,7 +368,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

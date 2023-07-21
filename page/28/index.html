@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">指数函数和对数函数</a>
+            <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">图形学的数学基础（七）：矩阵基础</a>
         </h2>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-03 14:17:37 / 修改时间：16:24:48" itemprop="dateCreated datePublished" datetime="2022-04-03T14:17:37+08:00">2022-04-03</time>
+              <time title="创建时间：2022-08-31 11:15:57 / 修改时间：11:18:48" itemprop="dateCreated datePublished" datetime="2022-08-31T11:15:57+08:00">2022-08-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -194,11 +194,15 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
                 </span>
             </span>
 
@@ -213,51 +217,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="指数法则"><a href="#指数法则" class="headerlink" title="指数法则"></a>指数法则</h2><blockquote>
-<ol>
-<li><p>$b^0=1$</p>
-</li>
-<li><p>$b^1=b$</p>
-</li>
-<li><p>$b^xb^y=b^{x+y}$</p>
-</li>
-<li><p>$\frac{b^x}{b^y}=b^{x-y}$</p>
-</li>
-<li><p>$(b^x)^y=b^{xy}$</p>
-</li>
-</ol>
+          <h1 id="图形学的数学基础（七）：矩阵基础"><a href="#图形学的数学基础（七）：矩阵基础" class="headerlink" title="图形学的数学基础（七）：矩阵基础"></a>图形学的数学基础（七）：矩阵基础</h1><blockquote>
+<p>不幸的是，没有人能够告诉我们矩阵是什么。你必须亲自去看看。<br>                                              -墨菲斯《黑客帝国》</p>
 </blockquote>
-<h2 id="对数法则"><a href="#对数法则" class="headerlink" title="对数法则"></a>对数法则</h2><blockquote>
-<ol>
-<li><p>$b^{\log_by}=y$</p>
-</li>
-<li><p>$\log_b1=0$</p>
-</li>
-<li><p>$\log_bb=1$</p>
-</li>
-<li><p>$\log_b{(xy)}=\log_bx+\log_by$</p>
-</li>
-<li><p>$\log_b(\frac{x}{y})=\log_bx-\log_by$</p>
-</li>
-<li><p>$\log_b(x^y)=y\log_bx$</p>
-</li>
-<li><p>$\log_bx=\frac{\log_cx}{\log_cb}$</p>
-</li>
-<li><p>$\log_xy=\frac{1}{\log_yx}$</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="e"><a href="#e" class="headerlink" title="e"></a>e</h2><p>关于e的四个定义:</p>
-<blockquote>
-<p>$\lim_{h \to \infty}(1+\frac{r}{h})^h=e^r$</p>
-<p>$\lim_{h \to 0}(1+rh)^{\frac{1}{h}}=e^r$</p>
-<p>$\lim_{h \to \infty}(1+\frac{1}{h})^h=e$</p>
-<p>$\lim_{h \to 0}(1+h)^{\frac{1}{h}}=e$</p>
-<h1 id="对数函数和指数函数求导"><a href="#对数函数和指数函数求导" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h1></blockquote>
-<h2 id="对数函数和指数函数求导-1"><a href="#对数函数和指数函数求导-1" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h2><p>$令f(x)=\log_bx$</p>
+<p>矩阵在3D数学中具有重要意义，它们主要用于描述两个坐标空间之间的关系，通过矩阵和矢量相乘，可以将矢量从某一坐标空间转换到另一个坐标空间。通过矩阵和矩阵相乘，可以描述一系列的变换动作。</p>
+<h2 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h2><p>在线性代数中，矩阵是排列成行和列的矩形数字网格。矩阵可以定义为数字的二维数组。因此矢量是标量的数组，而矩阵是矢量的数组。</p>
+<h3 id="矩阵维度和表示法"><a href="#矩阵维度和表示法" class="headerlink" title="矩阵维度和表示法"></a>矩阵维度和表示法</h3><p>通过计算矩阵包含的行数和列数来定义矩阵的大小，对于具有r行和c列的矩阵，称为 $r \times c$矩阵。<br>当希望引用矩阵中的各个元素时，将使用下标表示法。符号$m_{ij}$表示矩阵Mi行j列对应的元素。需要注意的是，矩阵其实索引为1.并不是0.</p>
+<h3 id="方阵（Square-Matrice）"><a href="#方阵（Square-Matrice）" class="headerlink" title="方阵（Square Matrice）"></a>方阵（Square Matrice）</h3><p>具有相同行数和列数的矩阵称为方形矩阵，方阵的对角元素是行和列索引相同的元素。例如 $3\times3$矩阵M的对角元素是$m_{11},m_{22},m_{33}$。<br>如果矩阵中所有的非对角元素都为零，则该矩阵为对角矩阵（Diagonal Matrix）。</p>
+<h3 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a>单位矩阵</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E5%9F%BA%E7%A1%80/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -280,7 +250,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -348,7 +318,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -393,7 +363,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

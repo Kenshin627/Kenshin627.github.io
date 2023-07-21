@@ -161,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mushishi.jpg">
@@ -175,7 +175,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">.net 请求webservice接口</a>
+            <a href="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Asp.Net Core 文件系统</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-04-10 21:29:15" itemprop="dateCreated datePublished" datetime="2019-04-10T21:29:15+08:00">2019-04-10</time>
+              <time title="创建时间：2019-11-05 16:43:00" itemprop="dateCreated datePublished" datetime="2019-11-05T16:43:00+08:00">2019-11-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -200,7 +200,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/net/" itemprop="url" rel="index"><span itemprop="name">.net</span></a>
+                  <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
                 </span>
             </span>
 
@@ -215,14 +215,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="C-调用webservice接口"><a href="#C-调用webservice接口" class="headerlink" title="C#调用webservice接口"></a>C#调用webservice接口</h2><p>由于项目需要调用第三方的webservice接口,以前没有接触过webservice相关知识,故在此记录下来备忘.下边通过webservice天气预报接口为例.简单介绍下如何在.NET项目中调用外部webservice.</p>
-<p>1.项目中添加”服务引用”.如下图:<br>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice1.jpg" alt="alt"></p>
-<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice2.jpg" alt="alt"></p>
-<p>  <img src="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/webservice3.jpg" alt="alt"></p>
-
+          <h1 id="Asp-Net-Core-文件系统"><a href="#Asp-Net-Core-文件系统" class="headerlink" title="Asp.Net Core 文件系统"></a>Asp.Net Core 文件系统</h1><p>ASP.NET Core 具有很多针对文件读取的应用。比如我们倾向于采用JSON文件来定义配置，所以应用就会涉及针对配置文件读取。如果用户发送一个针对物理文件的HTTP请求，应用会根据指定的路径读取目标文件的内容并对请求予以响应。在一个ASP.NET Core MVC应用中，针对View的动态编译会涉及到根据预定义的路径映射关系来读取目标View文件。这些不同应用场景都会出现一个IFileProvider对象的身影，以此对象为核心的文件系统提供了统一的API来读取文件的内容并监控内容的改变。</p>
+<h2 id="物理文件系统"><a href="#物理文件系统" class="headerlink" title="物理文件系统"></a>物理文件系统</h2><h3 id="IChangeToken"><a href="#IChangeToken" class="headerlink" title="IChangeToken"></a>IChangeToken</h3><p>由于IFileProvider提供了针对文件系统变换的监控功能，在.NET Core的世界里类似的功能大都利用一个IChangeToken对象来实现.从字面上理解的IChangeToken对象就是一个与某组监控数据关联的“令牌（Token）”，它能够在检测到数据改变的时候及时地对外发出一个通知。IChangeToken接口具有如下所示的三个成员。</p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg" alt="alt"></p>
+<ul>
+<li><p><strong>HasChanged</strong>:如果关联的数据发生改变，HasChanged属性将变成True.</p>
+</li>
+<li><p><strong>ActiveChangeCallbacks</strong>:它表示当数据发生变化时是否需要主动执行注册的回调操作.</p>
+</li>
+<li><p><strong>RegisterChangeCallback</strong>:注册一个在数据发生改变时可以自动执行的回调，该方法会以一个IDisposable对象的形式返回注册对象，所以我们应该在适当的时机调用其Dispose方法解除注册的回调.</p>
+</li>
+</ul>
+<h3 id="IFileProvider"><a href="#IFileProvider" class="headerlink" title="IFileProvider"></a>IFileProvider</h3><p>IFileProvider的接口定义如下图:</p>
+<p><img src="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider2.jpg" alt="alt"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/#more" rel="contents">
+              <a class="btn" href="/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -245,7 +253,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/54/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><span class="page-number current">55</span><a class="page-number" href="/page/56/">56</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/56/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/54/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/54/">54</a><span class="page-number current">55</span><a class="page-number" href="/page/56/">56</a><span class="space">&hellip;</span><a class="page-number" href="/page/67/">67</a><a class="extend next" rel="next" href="/page/56/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -313,7 +321,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -358,7 +366,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
