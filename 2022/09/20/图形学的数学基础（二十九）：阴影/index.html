@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="阴影（$Shadows$） All the variety, all the charm, all the beautyof life is made up of light and shadow                               - Tolstoy  阴影对于真实感的渲染是极其重要的，因为它能够提供物体在空间中的相对位置关系，使得物体看起来不是漂浮在空中的。本章将重点介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学的数学基础（二十九）：阴影">
+<meta property="og:url" content="http://example.com/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%98%B4%E5%BD%B1/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="阴影（$Shadows$） All the variety, all the charm, all the beautyof life is made up of light and shadow                               - Tolstoy  阴影对于真实感的渲染是极其重要的，因为它能够提供物体在空间中的相对位置关系，使得物体看起来不是漂浮在空中的。本章将重点介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/.com//1.jpg">
+<meta property="og:image" content="http://example.com/.com//2.jpg">
+<meta property="og:image" content="http://example.com/.com//3.png">
+<meta property="og:image" content="http://example.com/.com//4.png">
+<meta property="og:image" content="http://example.com/.com//5.jpg">
+<meta property="og:image" content="http://example.com/.com//6.jpg">
+<meta property="og:image" content="http://example.com/.com//7.jpg">
+<meta property="og:image" content="http://example.com/.com//8.jpg">
+<meta property="og:image" content="http://example.com/.com//9.jpeg">
+<meta property="og:image" content="http://example.com/.com//10.jpg">
+<meta property="og:image" content="http://example.com/.com//11.jpg">
+<meta property="og:image" content="http://example.com/.com//12.jpg">
+<meta property="article:published_time" content="2022-09-20T05:07:08.000Z">
+<meta property="article:modified_time" content="2022-09-21T14:54:29.336Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Computer Graphic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+
+<link rel="canonical" href="http://example.com/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%98%B4%E5%BD%B1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>图形学的数学基础（二十九）：阴影 | KenShin</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KenShin</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%98%B4%E5%BD%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图形学的数学基础（二十九）：阴影
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-20 13:07:08" itemprop="dateCreated datePublished" datetime="2022-09-20T13:07:08+08:00">2022-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-21 22:54:29" itemprop="dateModified" datetime="2022-09-21T22:54:29+08:00">2022-09-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="阴影（-Shadows-）"><a href="#阴影（-Shadows-）" class="headerlink" title="阴影（$Shadows$）"></a>阴影（$Shadows$）</h1><blockquote>
+<p>All the variety, all the charm, all the beauty<br>of life is made up of light and shadow    </p>
+<pre><code>                          - Tolstoy
+</code></pre></blockquote>
+<p>阴影对于真实感的渲染是极其重要的，因为它能够提供物体在空间中的相对位置关系，使得物体看起来不是<strong>漂浮</strong>在空中的。本章将重点介绍计算阴影的理论以及在光栅化中实时阴影算法。</p>
+<p><img src="/.com//1.jpg" alt="shadows"></p>
+<blockquote>
+<p>《古墓丽影-暗影》 2018</p>
+</blockquote>
+<p>之前介绍$blinn-Phong\;Model$光照模型是<strong>局部的</strong>，仅考虑光线 着色点 视线三个因素，不考虑其它物体对于当前着色点的影响，例如遮蔽，阴影等，而现实情况是，光照是及其复杂的，需要考虑周围物体对着色点的影响（间接光照），而在传统的局部着色（直接光照）中很难实现准确的表达，往往需要通过其它技术近似的模拟，今天介绍的$shadow\;Mapping$就是其中之一。一种在光栅化成像中实现阴影的技术。</p>
+<h2 id="Shadow-Mapping"><a href="#Shadow-Mapping" class="headerlink" title="$Shadow\;Mapping$"></a>$Shadow\;Mapping$</h2><p>一种图像空间（$Image-Space$）算法。核心思想就是：<strong>如果场景中一个点不在阴影里，那么该着色点既可以被摄像机看到也可以被光源看到。如果一个着色点在阴影里，那么摄像机可以看到，光源是看不到的。</strong></p>
+<p>传统的$Shadow\;Mapping$只能处理点光源，这样的阴影都有明显的边界和锯齿，一个着色点要么在阴影里，要么不在，缺少了中间柔和的过渡。这种阴影我们称之为<strong>硬阴影</strong>。</p>
+<h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><p>回顾$z-Buffer$算法，$z-Buffer$实际上是一张二维纹理，每一个纹素记录了距离相机最近的片元深度：</p>
+<p><img src="/.com//2.jpg" alt="shadows"></p>
+<ul>
+<li><p>step1：那么自然的，我们可以先将摄像机移动到光源位置和方向，<strong>看向</strong>场景，渲染一张深度图，这张深度图就代表了哪些着色点可以被光源<strong>照亮</strong>，大于这个深度的片元都是没有光照的，这个阶段需要做两件事情，1：渲染深度图（$Shadow\;Mapping$），2：记录相机变换到光源位置的变换矩阵$M$：</p>
+<p> <img src="/.com//3.png" alt="shadows"></p>
+<blockquote>
+<p>光照方向深度图</p>
+</blockquote>
+</li>
+<li><p>step2：将相机摆放到正常的观测方向和位置，对片元进行着色时，考虑每个片元是否有光照，方式是：用步骤1中存储的矩阵$M$将当前着色点变换到光照空间，拿到在光照空间中当前着色点$p$的深度，然后采样$Shadow\;Mapping$中对应的当前点的最小深度，对比两者，如果着色点$p$的深度大于纹理采样得到的深度，则认为当前片元无光照，需要在光照计算中加入shadow因子。</p>
+</li>
+<li><p>step3：通过以上两个步骤可以看出，一个pass无法完成$shadow\;Map$的阴影渲染，需要两个pass，第一个pass负责渲染深度图（不渲染到屏幕，渲染到一张纹理中），第二个pass才是真正的对我们所看到场景的渲染，整体过程如下图所示：</p>
+<p>  <img src="/.com//4.png" alt="shadows"></p>
+</li>
+</ul>
+<h2 id="Shadow-Mapping-存在的问题"><a href="#Shadow-Mapping-存在的问题" class="headerlink" title="$Shadow\;Mapping$存在的问题"></a>$Shadow\;Mapping$存在的问题</h2><p>阴影贴图的一个劣势是生成阴影的质量严重依赖于阴影图的分辨率和$z-Buffer$的浮点数精度，由于阴影图是在比较深度是进行采样的，因此算法容易出现混叠问题。一个常见的现象就是自遮挡（$surface\;acne\;or\;shadow\;acne$）：</p>
+<p><img src="/.com//5.jpg" alt="shadows"></p>
+<p>造成这种奇怪现象的原因有两个。第一：受限于处理器浮点数精度。第二：阴影图受限于它的分辨率，阴影图中一个采样点的数值可能会覆盖离光源位置较远的多个片元。如下图很清晰的解释了分辨率造成$shadow\;acne$问题的原因：</p>
+<p><img src="/.com//6.jpg" alt="shadows"></p>
+<p>上图中每个黄色的倾斜面板代表深度图中的单个纹素，几个片段对相同的深度样本进行了采样。正常情况下这是没问题的，但当光源以某个角度朝向平面时，问题就开始出现了，因为这个时候，我们生成的深度图也是从某个角度渲染的。进行深度比较时，一些片元将得到相同倾斜深度纹理像素，这样就造成了一部分片元深度高于当前纹素值（倾斜的黄色面包那），一些低于当前纹素值。形成了条纹状类似于摩尔纹的现象。</p>
+<p>明白了原理后，问题解决就变得简单了，我们可以引入一个常数偏移量，一般称为$Shadow\;bias$,在进行深度比较时，从深度图采样得到的数值中加上这样一个偏移量，这样就可以避免倾斜面板（单个纹素）与共享同一纹素深度的几个片元形成区域的相交：</p>
+<p><img src="/.com//7.jpg" alt="shadows"></p>
+<p>同样我们也可以发现，当光线与平面夹角越小，这种走样现象表现的越明显，<strong>因为夹角越小，同一纹素覆盖的像素范围更大</strong>。因此常数的$Shadow\;bias$是不可靠的，因为需要额外弥补的偏移量并不是一个常数，而是与光线入射角度相关的。更加通用的做法是，求着色点和和光线的点积，来实现动态的bias计算：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);</span><br></pre></td></tr></table></figure>
+<p>还没有完….引入$Shadow\;bias$会带来另外一个问题，当我们应用一个bias偏移到物体的实际深度后，如果偏差很大，则会看到阴影与实际物体位置偏差比较大：</p>
+<p><img src="/.com//8.jpg" alt="shadows"></p>
+<p>这种现象俗称$Peter\;panning$:</p>
+<p><img src="/.com//9.jpeg" alt="shadows"></p>
+<p>解决这个问题很简单，只需要在渲染阴影图时开启正面剔除即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glCullFace(GL_FRONT);</span><br><span class="line">RenderSceneToDepthMap();</span><br><span class="line">glCullFace(GL_BACK);</span><br></pre></td></tr></table></figure>
+<h2 id="硬阴影-vs-软阴影"><a href="#硬阴影-vs-软阴影" class="headerlink" title="硬阴影 vs 软阴影"></a>硬阴影 vs 软阴影</h2><p><img src="/.com//10.jpg" alt="shadows"><img src="/.com//11.jpg" alt="shadows"></p>
+<p>明显可以看出软阴影没有明显的阴影边界，过渡自然，更符合自然中观察到的实际情况。而基于我们之前介绍的一系列方法是无法实现右侧图所示的软阴影的。</p>
+<p>因为日常中我们所见到的绝大多数都是面光源，生成的阴影包含了两部分:$Umbra和Penumbra$，软阴影其实就是在本影（$Umbra$）和没有阴影之间的区域有一个半影（$Umbra和Penumbra$）,产生了柔和过渡的效果：</p>
+<p><img src="/.com//12.jpg" alt="shadows"></p>
+<p>为了实现软阴影，我们将介绍接下来的概念:$PCF$。</p>
+<h2 id="PCF"><a href="#PCF" class="headerlink" title="$PCF$"></a>$PCF$</h2><p>前边一系列的操作都是为了解决$Shadow\;Mapping$自遮挡的问题，但是边缘锯齿的问题仍然没有解决，本质上是因为深度图具有固定的分辨率，所以同一纹素通常会覆盖多个片元，多个片元从深度图中会提取到相同的深度值，得到相同的阴影判定，从而产生锯齿状的边缘。为了产生柔和的过渡边缘其中一个比较简单的实现就是$PCF$，全称$Percentage-closer\;filtering$.<br>$PCF$最初并不是用于实现软阴影的，而是为了使阴影边缘的抗锯齿。随后基于$PCF$的$PCSS$才是用于软阴影的。</p>
+<p>基本思想很简单：原本我们在比较深度时，是基于当前着色点的深度和阴影图中采样得到的深度进行一次比对，$PCF$的做法是，基于当前着色点的深度，对阴影图进行多次采样。每次采样后比对得出一个shadow因子，然后对多个shadow因子加权平均。有点类似于纹理贴图中抗锯齿的做法。<strong>本质上计算的是这个着色点与本影的接近程度（柔和过渡）。</strong></p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//5x5 PCF</span></span><br><span class="line"><span class="type">ivec2</span> ts = <span class="built_in">textureSize</span>(depthSampler, <span class="number">0</span>);</span><br><span class="line"><span class="type">vec2</span> texelSize = <span class="type">vec2</span>(<span class="number">1</span> / ts.x, <span class="number">1</span> / ts.y);</span><br><span class="line"><span class="type">float</span> shadow = <span class="number">0.0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> x = <span class="number">-2</span>; x &lt;= <span class="number">2</span>; ++x) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> y = <span class="number">-2</span>; y &lt;= <span class="number">2</span>; ++y) &#123;</span><br><span class="line">        <span class="type">float</span> pcfDepth = <span class="built_in">texture</span>(depthSampler, projCoords.xy + <span class="type">vec2</span>(x, y) * texelSize).r;</span><br><span class="line">        shadow += currentDepth - bias  &gt; pcfDepth? <span class="number">1.0</span> : <span class="number">0.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">shadow /= <span class="number">25.0</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="shadowMap部分实现代码"><a href="#shadowMap部分实现代码" class="headerlink" title="shadowMap部分实现代码"></a>shadowMap部分实现代码</h2><p>实现了$Shadow\;bias和PCF$的$Shadow\;Map$ fragmentShader代码：</p>
+<p>fragmentShader<br><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 300 es</span></span><br><span class="line"><span class="keyword">precision</span> <span class="keyword">highp</span> <span class="type">float</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> depthSampler;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> randomColor;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> lightDir;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec3</span> lightPos;</span><br><span class="line"></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec4</span> outColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> <span class="type">vec4</span> lightSpacePosition;</span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> v_normal;</span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> model_Pos;</span><br><span class="line"></span><br><span class="line"><span class="type">float</span> shadowCalc(<span class="type">vec4</span> lightSpacePosition) &#123;</span><br><span class="line">    <span class="type">vec3</span> projCoords = lightSpacePosition.xyz / lightSpacePosition.w;</span><br><span class="line">    projCoords = projCoords * <span class="number">0.5</span> + <span class="number">0.5</span>;</span><br><span class="line">    <span class="comment">//shadow bias</span></span><br><span class="line">    <span class="type">float</span> bias = <span class="built_in">max</span>(<span class="number">0.05</span> * (<span class="number">1.0</span> - <span class="built_in">dot</span>(<span class="built_in">normalize</span>(v_normal), lightDir)), <span class="number">0.005</span>);</span><br><span class="line">    <span class="type">float</span> currentDepth = projCoords.z;</span><br><span class="line">    <span class="type">ivec2</span> ts = <span class="built_in">textureSize</span>(depthSampler, <span class="number">0</span>);</span><br><span class="line">    <span class="type">vec2</span> texelSize = <span class="type">vec2</span>(<span class="number">1</span> / ts.x, <span class="number">1</span> / ts.y);</span><br><span class="line">    <span class="type">float</span> shadow = <span class="number">0.0</span>;</span><br><span class="line">    <span class="comment">//PCF</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> x = <span class="number">-2</span>; x &lt;= <span class="number">2</span>; ++x) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> y = <span class="number">-2</span>; y &lt;= <span class="number">2</span>; ++y) &#123;</span><br><span class="line">            <span class="type">float</span> pcfDepth = <span class="built_in">texture</span>(depthSampler, projCoords.xy + <span class="type">vec2</span>(x, y) * texelSize).r;</span><br><span class="line">            shadow += currentDepth - bias  &gt; pcfDepth? <span class="number">1.0</span> : <span class="number">0.0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    shadow /= <span class="number">25.0</span>;</span><br><span class="line">    <span class="keyword">if</span>(projCoords.z &gt; <span class="number">1.0</span>) &#123;</span><br><span class="line">        shadow = <span class="number">0.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> shadow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main() &#123;</span><br><span class="line">    <span class="type">float</span> shadow = shadowCalc(lightSpacePosition);</span><br><span class="line">    shadow = <span class="built_in">min</span>(shadow, <span class="number">0.5</span>);</span><br><span class="line">    outColor = <span class="type">vec4</span>(randomColor * (<span class="number">1.0</span> - shadow), <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=12&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES202 -高质量实时渲染</a></p>
+<p><a href>Real-Time Rendering</a></p>
+<p><a target="_blank" rel="noopener" href="https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping">learningOpenGL</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E5%85%AB%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/" rel="prev" title="图形学的数学基础（二十七）：纹理应用(下)">
+      <i class="fa fa-chevron-left"></i> 图形学的数学基础（二十七）：纹理应用(下)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" rel="next" title="图形学的数学基础（三十）：贝塞尔曲线">
+      图形学的数学基础（三十）：贝塞尔曲线 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B4%E5%BD%B1%EF%BC%88-Shadows-%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">阴影（$Shadows$）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shadow-Mapping"><span class="nav-number">1.1.</span> <span class="nav-text">$Shadow\;Mapping$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">实现方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shadow-Mapping-%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">$Shadow\;Mapping$存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E9%98%B4%E5%BD%B1-vs-%E8%BD%AF%E9%98%B4%E5%BD%B1"><span class="nav-number">1.3.</span> <span class="nav-text">硬阴影 vs 软阴影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCF"><span class="nav-number">1.4.</span> <span class="nav-text">$PCF$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shadowMap%E9%83%A8%E5%88%86%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81"><span class="nav-number">1.5.</span> <span class="nav-text">shadowMap部分实现代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.6.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenShin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

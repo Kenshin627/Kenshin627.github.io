@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="几何图元-直线和光线几何表述在计算机图形学中，描述几何形状的主要策略有两大类：隐式几何和显示几何。 隐式几何（$implicit Geometry$）通过隐函数的方式描述一个对象,一般采用$f(x,y,z) &#x3D; 0$的定义方式，告诉了我们$x,y,z$需要满足的关系。例如对于三维空间以原点为圆心的单位球可以这表示： $x^2+y^2+z^2 &#x3D; 1$ 隐函数形式可以方便的通过将点带入函数，很方便的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学的数学基础（十五）：几何图元-直线和光线">
+<meta property="og:url" content="http://example.com/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%85%89%E7%BA%BF/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="几何图元-直线和光线几何表述在计算机图形学中，描述几何形状的主要策略有两大类：隐式几何和显示几何。 隐式几何（$implicit Geometry$）通过隐函数的方式描述一个对象,一般采用$f(x,y,z) &#x3D; 0$的定义方式，告诉了我们$x,y,z$需要满足的关系。例如对于三维空间以原点为圆心的单位球可以这表示： $x^2+y^2+z^2 &#x3D; 1$ 隐函数形式可以方便的通过将点带入函数，很方便的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/.com//1.jpg">
+<meta property="og:image" content="http://example.com/.com//2.jpg">
+<meta property="og:image" content="http://example.com/.com//3.jpg">
+<meta property="og:image" content="http://example.com/.com//4.jpg">
+<meta property="og:image" content="http://example.com/.com//5.jpg">
+<meta property="og:image" content="http://example.com/.com//6.jpg">
+<meta property="og:image" content="http://example.com/.com//7.jpg">
+<meta property="article:published_time" content="2022-09-04T05:18:19.000Z">
+<meta property="article:modified_time" content="2022-09-04T08:56:53.392Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Computer Graphic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+
+<link rel="canonical" href="http://example.com/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%85%89%E7%BA%BF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>图形学的数学基础（十五）：几何图元-直线和光线 | KenShin</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KenShin</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%85%89%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图形学的数学基础（十五）：几何图元-直线和光线
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-04 13:18:19 / 修改时间：16:56:53" itemprop="dateCreated datePublished" datetime="2022-09-04T13:18:19+08:00">2022-09-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="几何图元-直线和光线"><a href="#几何图元-直线和光线" class="headerlink" title="几何图元-直线和光线"></a>几何图元-直线和光线</h1><h2 id="几何表述"><a href="#几何表述" class="headerlink" title="几何表述"></a>几何表述</h2><p>在计算机图形学中，描述几何形状的主要策略有两大类：隐式几何和显示几何。</p>
+<h3 id="隐式几何（-implicit-Geometry-）"><a href="#隐式几何（-implicit-Geometry-）" class="headerlink" title="隐式几何（$implicit Geometry$）"></a>隐式几何（$implicit Geometry$）</h3><p>通过隐函数的方式描述一个对象,一般采用$f(x,y,z) = 0$的定义方式，告诉了我们$x,y,z$需要满足的关系。例如对于三维空间以原点为圆心的单位球可以这表示：</p>
+<p>$x^2+y^2+z^2 = 1$</p>
+<p>隐函数形式可以方便的通过将点带入函数，很方便的判断点是否在几何表面上，之内或之外。但是隐函数无法直观的告诉有哪些点是满足这种关系的。</p>
+<p><img src="/.com//1.jpg" alt="隐式几何"></p>
+<ul>
+<li>代数方法</li>
+<li>CSG</li>
+<li>distance Function</li>
+<li>level Set Methods</li>
+<li>Fractals</li>
+</ul>
+<h3 id="显示几何（-explicit-Geometry-）"><a href="#显示几何（-explicit-Geometry-）" class="headerlink" title="显示几何（$explicit Geometry$）"></a>显示几何（$explicit Geometry$）</h3><p>描述几何的另外一种方式是参数方程。同样地，几何仍由函数定义，但这一次$x,y,z$不是作为输入，而是作为输出。我们以二维平面的单位圆为例：</p>
+<p>$x(t) = \cos2\pi{t}$</p>
+<p>$y(t) = \sin2\pi{t}$</p>
+<p>当t从0变为1时，点$(x(t),y(t))$将显示要描述的形状的轮廓:</p>
+<p><img src="/.com//2.jpg" alt="显示几何-单位元"></p>
+<p>另外一个例子，uv坐标映射为三维空间的$x,y,z$：</p>
+<p><img src="/.com//3.jpg" alt="隐式几何-马鞍"></p>
+<p>通常情况下，参数会被归一化为$[0,1]$之间。</p>
+<p>显示几何跟隐式几何相反，它可以直观的告诉空间中的哪些点满足要求，但是对于空间中的一个点，它不好判定点是否在几何表面。</p>
+<h2 id="光线（-Ray-）"><a href="#光线（-Ray-）" class="headerlink" title="光线（$Ray$）"></a>光线（$Ray$）</h2><p>从现在开始将逐步展开介绍特定的几何图元。首先从最基本也是最重要的一个开始，线性段（$Linear Segment$），有三种基本类型的线性段，分别为：</p>
+<ul>
+<li>直线：可以在两个方向上无限延伸</li>
+<li>线段：具有两个端点的直线的有限部分</li>
+<li>光线：具有原点并在一个方向上无限延申</li>
+</ul>
+<h3 id="光线定义"><a href="#光线定义" class="headerlink" title="光线定义"></a>光线定义</h3><p>光线有两个属性，分别为起点和方向,那么在任意时间t（$0 &lt;= t &lt;\infin$）,光线到达的位置由以下方程定义：</p>
+<p>$\textbf{Ray}(t) = \textbf{origin} + t\textbf{d}\;\;\;\;(0 &lt;= t &lt;\infin)$</p>
+<p><img src="/.com//4.jpg" alt="隐式几何-马鞍"></p>
+<p>尽管矢量格式更紧凑，并且具有很好的属性，但是也可以为每个坐标写出一个单独的标量函数：</p>
+<p>$x(t) = origin_x + td_x$</p>
+<p>$y(t) = origin_y + td_y$</p>
+<p>$z(t) = origin_z + td_z$</p>
+<h2 id="直线"><a href="#直线" class="headerlink" title="直线"></a>直线</h2><p>直线虽然简单，却有好几种不同的定义方式，这些定义从不同的角度理解直线。</p>
+<h3 id="斜截式（-Slope-Intercept-）"><a href="#斜截式（-Slope-Intercept-）" class="headerlink" title="斜截式（$Slope-Intercept$）"></a>斜截式（$Slope-Intercept$）</h3><p>斜截式是一种在二维中表达直线的形式，符号$m$表示竖直高度与水平高度的比率（斜率），$y_0$<br>表示y轴截距，是直线与y轴交叉的位置。</p>
+<p>$y = mx + y_0$</p>
+<p><img src="/.com//5.jpg" alt="斜截式"></p>
+<p>注：垂直线有无限斜率（$x = n$），无法用$y = mx + y_0$的方式表达，可以通过以下略有不同的隐函数解决这个奇点问题：</p>
+<p>$ax + by = d$</p>
+<h3 id="点乘法"><a href="#点乘法" class="headerlink" title="点乘法"></a>点乘法</h3><p>$ax + by = d$可以看作$点p\begin{bmatrix}<br>    x\ y\<br>\end{bmatrix}$和矢量$n\begin{bmatrix}<br>    a\ b\<br>\end{bmatrix}$的点积，即：</p>
+<p>$\textbf{p}\cdot\textbf{n} = d$</p>
+<p>根据矢量点积的定义，$\textbf{p}\cdot\textbf{n}$等于$\textbf{p}$在$\textbf{n}$上投影的长度：</p>
+<p><img src="/.com//6.jpg" alt="点乘法"></p>
+<p><strong>矢量$\hat{n}$是与直线垂直的的单位矢量。d是从原点到直线的有符号垂直距离。任何投影到$\hat{n}$的长度等于$d$的点都满足直线方程。这里之所以采用有符号距离，意思是如果直线位于和法线点相同的原点的一侧，则$d$为正，随着$d$的增加，直线将沿着$\hat{n}$的方向移动。</strong></p>
+<h3 id="垂直平分线（-Perpendicular-Bisector-）"><a href="#垂直平分线（-Perpendicular-Bisector-）" class="headerlink" title="垂直平分线（$Perpendicular\;Bisector$）"></a>垂直平分线（$Perpendicular\;Bisector$）</h3><p>定义直线的最后一种方式是作为两点的垂直平分线：</p>
+<p><img src="/.com//7.jpg" alt="点乘法"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://item.jd.com/12659881.html">《3D数学基础》图形和游戏开发(第二版)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=5&amp;spm_id_from=pageDriver&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB/" rel="prev" title="图形学的数学基础（十四）：极坐标系">
+      <i class="fa fa-chevron-left"></i> 图形学的数学基础（十四）：极坐标系
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E5%85%AD%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%90%83%E4%BD%93%E5%9C%86%E5%BD%A2%E5%92%8C%E5%B9%B3%E9%9D%A2/" rel="next" title="图形学的数学基础（十六）：几何图元-球体圆形和平面">
+      图形学的数学基础（十六）：几何图元-球体圆形和平面 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E7%9B%B4%E7%BA%BF%E5%92%8C%E5%85%89%E7%BA%BF"><span class="nav-number">1.</span> <span class="nav-text">几何图元-直线和光线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E8%A1%A8%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">几何表述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E5%87%A0%E4%BD%95%EF%BC%88-implicit-Geometry-%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">隐式几何（$implicit Geometry$）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%88-explicit-Geometry-%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">显示几何（$explicit Geometry$）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E7%BA%BF%EF%BC%88-Ray-%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">光线（$Ray$）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%BA%BF%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">光线定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E7%BA%BF"><span class="nav-number">1.3.</span> <span class="nav-text">直线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%9C%E6%88%AA%E5%BC%8F%EF%BC%88-Slope-Intercept-%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">斜截式（$Slope-Intercept$）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%B9%E4%B9%98%E6%B3%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">点乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E5%B9%B3%E5%88%86%E7%BA%BF%EF%BC%88-Perpendicular-Bisector-%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">垂直平分线（$Perpendicular\;Bisector$）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KenShin</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
