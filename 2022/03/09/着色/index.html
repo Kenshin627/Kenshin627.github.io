@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="为了使物体看起来更有立体感,可以对其使用作色,也就是说使物体表面”涂上”光线,有明暗变化.本章展示了最通用的具有启发式的作色方法.前两个将介绍Lambertian Shading Model和Phong Shading Model, 发明于1970年代,在大多数图形API中都可以使用.最后一个介绍 artistic shading Model,模拟了人类绘制图像的风格. Diffuse Shadi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="着色">
+<meta property="og:url" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="为了使物体看起来更有立体感,可以对其使用作色,也就是说使物体表面”涂上”光线,有明暗变化.本章展示了最通用的具有启发式的作色方法.前两个将介绍Lambertian Shading Model和Phong Shading Model, 发明于1970年代,在大多数图形API中都可以使用.最后一个介绍 artistic shading Model,模拟了人类绘制图像的风格. Diffuse Shadi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/.com//1.jpg">
+<meta property="og:image" content="http://example.com/.com//2.jpg">
+<meta property="og:image" content="http://example.com/.com//8.jpg">
+<meta property="og:image" content="http://example.com/.com//9.jpg">
+<meta property="og:image" content="http://example.com/.com//10.jpg">
+<meta property="og:image" content="http://example.com/.com//12.jpg">
+<meta property="og:image" content="http://example.com/.com//13.jpg">
+<meta property="og:image" content="http://example.com/.com//3.jpg">
+<meta property="og:image" content="http://example.com/.com//4.jpg">
+<meta property="og:image" content="http://example.com/.com//5.jpg">
+<meta property="og:image" content="http://example.com/.com//6.jpg">
+<meta property="og:image" content="http://example.com/.com//7.jpg">
+<meta property="article:published_time" content="2022-03-09T00:46:00.000Z">
+<meta property="article:modified_time" content="2022-03-09T13:44:09.417Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Computer Graphic">
+<meta property="article:tag" content="Shading">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/","path":"2022/03/09/着色/","title":"着色"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>着色 | KenShin</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">KenShin</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Diffuse-Shading"><span class="nav-number">1.</span> <span class="nav-text">Diffuse Shading</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambertian-Shading-Model"><span class="nav-number">1.1.</span> <span class="nav-text">Lambertian Shading Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ambient-Shading"><span class="nav-number">1.2.</span> <span class="nav-text">Ambient Shading</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Phong-Lighting-Model"><span class="nav-number">2.</span> <span class="nav-text">Phong Lighting Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F%E4%B8%80-%E6%B1%82%E5%8F%8D%E5%B0%84%E5%90%91%E9%87%8Fr"><span class="nav-number">2.1.</span> <span class="nav-text">计算方式一: 求反射向量r</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F%E4%BA%8C-%E5%8D%8A%E7%A8%8B%E5%90%91%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">计算方式二: 半程向量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84Blinn-Phong-%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">完整的Blinn-Phong 反射模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9D%80%E8%89%B2%E9%A2%91%E7%8E%87"><span class="nav-number">4.</span> <span class="nav-text">着色频率</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Flat-Shading"><span class="nav-number">4.1.</span> <span class="nav-text">Flat Shading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gouraud-Shading"><span class="nav-number">4.2.</span> <span class="nav-text">Gouraud Shading</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E9%80%90%E9%A1%B6%E7%82%B9%E6%B3%95%E7%BA%BF"><span class="nav-number">4.2.1.</span> <span class="nav-text">定义逐顶点法线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phong-Shading"><span class="nav-number">4.3.</span> <span class="nav-text">Phong Shading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E7%9D%80%E8%89%B2%E9%A2%91%E7%8E%87%E5%AF%B9%E6%AF%94"><span class="nav-number">4.4.</span> <span class="nav-text">三种着色频率对比</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="着色 | KenShin">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          着色
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-03-09 08:46:00 / 修改时间：21:44:09" itemprop="dateCreated datePublished" datetime="2022-03-09T08:46:00+08:00">2022-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>为了使物体看起来更有立体感,可以对其使用作色,也就是说使物体表面”涂上”光线,有明暗变化.本章展示了最通用的具有启发式的作色方法.前两个将介绍Lambertian Shading Model和Phong Shading Model, 发明于1970年代,在大多数图形API中都可以使用.最后一个介绍 artistic shading Model,模拟了人类绘制图像的风格.</p>
+<h1 id="Diffuse-Shading"><a href="#Diffuse-Shading" class="headerlink" title="Diffuse Shading"></a>Diffuse Shading</h1><p>许多物体的表面外观被粗略地描述为“哑光”，这表明该物体根本没有光泽。例如纸张、未打磨的木材和干燥、未打磨的石头。在很大程度上，这些物体表面的颜色不会随着视角的变化而变化。例如，如果你盯着一张纸上的一个特定的点，并且在移动的同时保持你的目光在这个点上，这个点上的颜色将保持相对不变。这样的哑光物体可以被认为是表现为朗伯反射体。本节讨论如何实现这样的着色.关键的一点是，本章中的所有公式都应该在世界坐标中求值，而不是在应用了透视变换的坐标中求值。否则，法线之间的角度将改变，着色将是不准确的.</p>
+<h2 id="Lambertian-Shading-Model"><a href="#Lambertian-Shading-Model" class="headerlink" title="Lambertian Shading Model"></a>Lambertian Shading Model</h2><p>Lambertian object遵循<strong><em>Lambert’s cosine law</em></strong>，即表面的颜色c与表面法线与光源方向夹角的余弦成正比(Gouraud, 1971):<br><img src="/.com//1.jpg" alt="alt"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cosθ  </span><br><span class="line">c ∝ n·l</span><br></pre></td></tr></table></figure><br>其中n和l如上图所示。因此，表面颜色将根据表面法线与光方向之间夹角余弦而变化。注意，通常假设向量l不依赖于对象的位置。这个假设是说相对于物体大小光是“遥远的”。这样的光通常被称为方向光，因为它的位置仅由一个方向来指定。<br>通过改变光源的强度或物体表面的反射率，可以使表面变亮或变暗。漫反射系数cr是光被表面反射的因子。这个系数对于rgb三个颜色分量是不同的。因此不同材质物体的漫反射颜色是不同的.例如，如果一个表面反射的红色入射光比蓝色入射光多，那么它就是红色的。如果我们假设表面颜色与从表面反射的光成比例，改进以上公式,加入漫反射系数cr和光照强度cl<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cr cl n·l</span><br></pre></td></tr></table></figure><br><img src="/.com//2.jpg" alt="alt"><br>以上公式存在一个问题,当物体表面法线与光照方向相反,点积为负,加入max函数来避免这种情况<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cr cl max(0, n·l)   </span><br></pre></td></tr></table></figure></p>
+<h2 id="Ambient-Shading"><a href="#Ambient-Shading" class="headerlink" title="Ambient Shading"></a>Ambient Shading</h2><p>漫反射着色的一个问题是，任何表面法线与光源法线相反的表面将是黑色的。在现实生活中，光被反射到各处，有些光从各个方向反射.解决这个问题的一种方法是使用几个光源。一个常见的技巧是在视角处放置一个昏暗的光源，这样所有可见的点都能收到一些光。另一种方法是使用双面照明。一种更常见的方法是添加一个环境光常量(Gouraud, 1971)。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">= cr (ca + cl max (0, n · l))</span><br></pre></td></tr></table></figure></p>
+<h1 id="Phong-Lighting-Model"><a href="#Phong-Lighting-Model" class="headerlink" title="Phong Lighting Model"></a>Phong Lighting Model</h1><p>仅仅有diffuse Shading无法体现物体的高光特性.Phong Lighting Model引入了高光的概念.高光随着视点的移动而在表面上移动。这意味着我们必须在光照方程中加入一个单位向量e，指向眼睛。如果你仔细观察高光，你会发现它们实际上是光的反射;有时这些反射是模糊的。这些高光的颜色是光的颜色.<br>定义观测向量e,光线的反射向量r.e与e之间的夹角越小则高光越强.因此 c = cl(e · r)<br><img src="/.com//8.jpg" alt="alt"><br>以上方程存在两个问题:</p>
+<ol>
+<li>向量的点乘可能为负值,需要用max约束. c = cl max(e . r)</li>
+<li>以上方程生成的高光区域比实际的要大得多,可以在不降低最大颜色的情况下通过提高幂来收窄它 c = clmax(0, e · r)^p<br>这里p被称冯氏指数;它是一个正数(Phong, 1975)。改变冯氏指数对高光辐射面积的影响如下图所示:<br><img src="/.com//9.jpg" alt="alt"></li>
+</ol>
+<h2 id="计算方式一-求反射向量r"><a href="#计算方式一-求反射向量r" class="headerlink" title="计算方式一: 求反射向量r"></a>计算方式一: 求反射向量r</h2><p>为了实现方程，我们首先需要计算单位向量r。给定单位向量l和n, r为向量l关于n的反射,公式如下:<br><img src="/.com//10.jpg" alt="alt"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r = −l + 2(l · n)n</span><br></pre></td></tr></table></figure></p>
+<h2 id="计算方式二-半程向量"><a href="#计算方式二-半程向量" class="headerlink" title="计算方式二: 半程向量"></a>计算方式二: 半程向量</h2><p><img src="/.com//12.jpg" alt="alt"></p>
+<h1 id="完整的Blinn-Phong-反射模型"><a href="#完整的Blinn-Phong-反射模型" class="headerlink" title="完整的Blinn-Phong 反射模型"></a>完整的Blinn-Phong 反射模型</h1><p><img src="/.com//13.jpg" alt="alt"></p>
+<h1 id="着色频率"><a href="#着色频率" class="headerlink" title="着色频率"></a>着色频率</h1><h2 id="Flat-Shading"><a href="#Flat-Shading" class="headerlink" title="Flat Shading"></a>Flat Shading</h2><p>利用三角形法线,每个三角形计算一次着色,通常会呈现为多面的外观,对于曲面物体表现力不是很好.<br><img src="/.com//3.jpg" alt="alt"></p>
+<h2 id="Gouraud-Shading"><a href="#Gouraud-Shading" class="headerlink" title="Gouraud Shading"></a>Gouraud Shading</h2><p>每个三角形顶点计算一次着色,三角形内部像素通过重心坐标插值计算颜色.问题在于如何获取或计算顶点法线?<br><img src="/.com//4.jpg" alt="alt"></p>
+<h3 id="定义逐顶点法线"><a href="#定义逐顶点法线" class="headerlink" title="定义逐顶点法线"></a>定义逐顶点法线</h3><p>可以通过各种启发式方法计算法线。最简单的方法是将共享每个顶点的三角形的法线求平均然后在顶点处使用这个平均法线。这个平均法线没有经过标准化，所以在使用它做着色之前需要把它转换成一个单位向量。</p>
+<p><img src="/.com//5.jpg" alt="alt"><br><img src="/.com//6.jpg" alt="alt"></p>
+<h2 id="Phong-Shading"><a href="#Phong-Shading" class="headerlink" title="Phong Shading"></a>Phong Shading</h2><p>首先计算每个顶点的法线,通过重心坐标插值计算三角形内部每个像素的法线,每个像素计算一次着色.性能最低但是效果最好.</p>
+<h2 id="三种着色频率对比"><a href="#三种着色频率对比" class="headerlink" title="三种着色频率对比"></a>三种着色频率对比</h2><p><img src="/.com//7.jpg" alt="alt"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+              <a href="/tags/Shading/" rel="tag"># Shading</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" rel="prev" title="信号处理">
+                  <i class="fa fa-chevron-left"></i> 信号处理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/" rel="next" title="纹理映射">
+                  纹理映射 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

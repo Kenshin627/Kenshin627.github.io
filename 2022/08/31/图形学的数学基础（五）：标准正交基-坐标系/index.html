@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="图形学的数学基础（五）：标准正交基&#x2F;坐标系标准正交基对于三维空间任意的三个矢量,如果它们满足  $||\vec{u}|| &#x3D; ||\vec{v}|| &#x3D; ||\vec{w}|| &#x3D; 1$ $\vec{u}.\vec{v} &#x3D; \vec{v}.\vec{w} &#x3D; \vec{u}.\vec{w} &#x3D; 0$ $\vec{w} &#x3D; \vec{u} \times \vec{v}$ (右手系)  即矢量的长度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学的数学基础（五）：标准正交基&#x2F;坐标系">
+<meta property="og:url" content="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="图形学的数学基础（五）：标准正交基&#x2F;坐标系标准正交基对于三维空间任意的三个矢量,如果它们满足  $||\vec{u}|| &#x3D; ||\vec{v}|| &#x3D; ||\vec{w}|| &#x3D; 1$ $\vec{u}.\vec{v} &#x3D; \vec{v}.\vec{w} &#x3D; \vec{u}.\vec{w} &#x3D; 0$ $\vec{w} &#x3D; \vec{u} \times \vec{v}$ (右手系)  即矢量的长度">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/.com//1.jpg">
+<meta property="og:image" content="http://example.com/.com//2.png">
+<meta property="article:published_time" content="2022-08-31T02:45:55.000Z">
+<meta property="article:modified_time" content="2022-08-31T12:33:15.360Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Computer Graphic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/","path":"2022/08/31/图形学的数学基础（五）：标准正交基-坐标系/","title":"图形学的数学基础（五）：标准正交基/坐标系"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>图形学的数学基础（五）：标准正交基/坐标系 | KenShin</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">KenShin</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">图形学的数学基础（五）：标准正交基&#x2F;坐标系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA"><span class="nav-number">1.1.</span> <span class="nav-text">标准正交基</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA"><span class="nav-number">1.2.</span> <span class="nav-text">为什么需要标准正交基</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.</span> <span class="nav-text">多个坐标空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.1.</span> <span class="nav-text">世界空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.2.</span> <span class="nav-text">对象空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E6%9C%BA%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.3.</span> <span class="nav-text">相机空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E7%AB%8B%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.4.</span> <span class="nav-text">直立空间</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="图形学的数学基础（五）：标准正交基/坐标系 | KenShin">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图形学的数学基础（五）：标准正交基/坐标系
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-31 10:45:55 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T10:45:55+08:00">2022-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="图形学的数学基础（五）：标准正交基-坐标系"><a href="#图形学的数学基础（五）：标准正交基-坐标系" class="headerlink" title="图形学的数学基础（五）：标准正交基/坐标系"></a>图形学的数学基础（五）：标准正交基/坐标系</h1><h2 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h2><p>对于三维空间任意的三个矢量,如果它们满足</p>
+<ul>
+<li>$||\vec{u}|| = ||\vec{v}|| = ||\vec{w}|| = 1$</li>
+<li>$\vec{u}.\vec{v} = \vec{v}.\vec{w} = \vec{u}.\vec{w} = 0$</li>
+<li>$\vec{w} = \vec{u} \times \vec{v}$ (右手系)</li>
+</ul>
+<p>即矢量的长度都为1,相互垂直, 这样的三个矢量构成的坐标系称为<strong>标准正交基</strong>,$\vec{u} ,\vec{v},\vec{w}$称为标准正交基的<strong>基矢量</strong>.</p>
+<h2 id="为什么需要标准正交基"><a href="#为什么需要标准正交基" class="headerlink" title="为什么需要标准正交基"></a>为什么需要标准正交基</h2><p>定义这样的坐标系,带来的一点好处就是, 空间中任意一矢量,都可以分解到标准正交基的三个轴上,需要用到前边向量投影的相关知识. 即<strong>矢量可以表示为基矢量的线性组合</strong>.<br><img src="/.com//1.jpg" alt="alt"></p>
+<p>$||\vec{b_⊥}|| = ||\vec{b}|| \cos\theta$</p>
+<p>此时的$\vec{a}$为单位向量,即$||\vec{a}|| = 1$</p>
+<p>因此 $||\vec{b_⊥}|| = ||\vec{b}||||\vec{a}|| \cos\theta = \mathbf{b}.\mathbf{a}$</p>
+<p>重要结论:</p>
+<p>$\vec{p} = (\vec{p}.\vec{u})\vec{u} + (\vec{p}.\vec{v})\vec{v} + (\vec{p}.\vec{w})\vec{w}$</p>
+<p>$x = \vec{p}.\vec{u}$ </p>
+<p>$y = \vec{p}.\vec{v}$</p>
+<p>$z = \vec{p}.\vec{w}$</p>
+<p><strong>将三维矢量表示为基矢量的线性组合</strong></p>
+<p>$\vec{p} = x\vec{u} + y\vec{v} + z\vec{w}$</p>
+<h2 id="多个坐标空间"><a href="#多个坐标空间" class="headerlink" title="多个坐标空间"></a>多个坐标空间</h2><p>在图形学中,我们经常发现需要使用多个坐标空间,例如世界空间, 对象空间, 相机空间等等,为什么需要很繁琐地定义多个坐标空间?毕竟坐标系可以无限延伸,可以表达我们想要的任何信息.原因就在于,某些信息仅在特定的上下文环境(坐标系)中才是有意义的或者说可以用的.这样做,可以为开发提供很多便利.</p>
+<h3 id="世界空间"><a href="#世界空间" class="headerlink" title="世界空间"></a>世界空间</h3><p>世界坐标系(World Coordinate System)是一个特殊的坐标系,它为所有其它要指定的坐标系建立了一个”全局”参考系.换句话说,我们可以用世界坐标空间来表达其它坐标空间的位置,但是我们不能用更待的外部坐标空间来表示世界坐标空间.<br><strong>非技术意义上, 世界坐标系建立了我们关心的”最大”坐标系,大多数情况下,它实际上并不是整个世界,而是由我们定义的.</strong></p>
+<h3 id="对象空间"><a href="#对象空间" class="headerlink" title="对象空间"></a>对象空间</h3><p>对象空间(Object Space)是与特定对象关联的坐标空间,每个对象都有自己独立的对象空间.当一个对象移动或者改变方向,与该对象关联的对象坐标空间被随之携带.因此它也会移动或改变方向.<br>在图形学中,对象空间也被称为模型空间, 因为模型顶点的坐标以模型空间表示.</p>
+<h3 id="相机空间"><a href="#相机空间" class="headerlink" title="相机空间"></a>相机空间</h3><p>相机空间中, 相机位于原点, +x指向右侧, +z指向前方(指向屏幕),+y指向”向上”(此处按照左手系约定),如果右手系,则-z指向屏幕方向.</p>
+<h3 id="直立空间"><a href="#直立空间" class="headerlink" title="直立空间"></a>直立空间</h3><p>对象的直立空间是是世界空间与其对象空间之间的”过渡”,因为直立空间的轴线与世界空间的轴线平行,而直立空间的原点则于与对象空间的原点重合.</p>
+<p><img src="/.com//2.png" alt="alt"></p>
+<p>图片来源《3D Math Primer for Graphics and Game Development, 2nd Edition》</p>
+<p><strong>因此通过旋转可以实现直立空间和对象空间的转换,通过平移可以实现世界空间和直立空间的转换(lookAt矩阵)</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/" rel="prev" title="图形学的数学基础（四）：向量叉积">
+                  <i class="fa fa-chevron-left"></i> 图形学的数学基础（四）：向量叉积
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/" rel="next" title="图形学的数学基础（六）：施密特正交化与叉乘正交化">
+                  图形学的数学基础（六）：施密特正交化与叉乘正交化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

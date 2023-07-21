@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述Hexo是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo+GitHub搭建个人博客">
+<meta property="og:url" content="http://example.com/2017/02/09/blog/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="概述Hexo是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://i1.piimg.com/567571/f63d2030ab646842.png">
+<meta property="og:image" content="http://p1.bqimg.com/567571/b85d00d61646ce19.png">
+<meta property="og:image" content="http://p1.bpimg.com/567571/8ddca7070ac1d6d3.png">
+<meta property="og:image" content="http://p1.bpimg.com/567571/ab706a277d27e1cd.png">
+<meta property="og:image" content="http://i1.piimg.com/567571/15b94723da693034.png">
+<meta property="og:image" content="http://i1.piimg.com/567571/efd23501f3d72f7b.png">
+<meta property="og:image" content="http://i1.piimg.com/567571/fe00cc2a41c9c40b.png">
+<meta property="og:image" content="http://p1.bqimg.com/567571/cf1c9ba7e9372f95.png">
+<meta property="article:published_time" content="2017-02-09T01:06:50.000Z">
+<meta property="article:modified_time" content="2021-10-29T14:03:17.482Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="GitHub">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i1.piimg.com/567571/f63d2030ab646842.png">
+
+
+<link rel="canonical" href="http://example.com/2017/02/09/blog/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2017/02/09/blog/","path":"2017/02/09/blog/","title":"Hexo+GitHub搭建个人博客"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo+GitHub搭建个人博客 | KenShin</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">KenShin</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">环境部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Node-js"><span class="nav-number">2.1.</span> <span class="nav-text">1.Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Git"><span class="nav-number">2.2.</span> <span class="nav-text">2.Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-GitHub%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">3.GitHub配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B3%E8%AF%B7%E8%B4%A6%E5%8F%B7"><span class="nav-number">2.3.1.</span> <span class="nav-text">申请账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E4%BB%93%E5%BA%93"><span class="nav-number">2.3.2.</span> <span class="nav-text">建立仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%B7%BB%E5%8A%A0%E7%A7%98%E9%92%A5"><span class="nav-number">2.3.3.</span> <span class="nav-text">生成添加秘钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BAHexo%E5%AE%89%E8%A3%85Git%E6%8F%92%E4%BB%B6"><span class="nav-number">2.3.4.</span> <span class="nav-text">为Hexo安装Git插件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">Hexo安装与常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">Hexo安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8D%9A%E5%AE%A2"><span class="nav-number">3.2.</span> <span class="nav-text">初始化博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="nav-number">3.2.1.</span> <span class="nav-text">主目录结构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="nav-number">3.2.2.</span> <span class="nav-text">主题目录结构：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.</span> <span class="nav-text">Hexo常用命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AA%E6%80%A7%E5%8C%96%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">个性化设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text">配置博客信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-config-yml"><span class="nav-number">4.1.1.</span> <span class="nav-text">全局配置文件_config.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">网站信息：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E9%A1%B5%E8%AE%BE%E7%BD%AE%EF%BC%9A"><span class="nav-number">4.1.1.2.</span> <span class="nav-text">分页设置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE%EF%BC%9A"><span class="nav-number">4.1.1.3.</span> <span class="nav-text">主题设置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%AE%BE%E7%BD%AE%EF%BC%9A"><span class="nav-number">4.1.1.4.</span> <span class="nav-text">部署设置：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%AA%E6%80%A7%E5%8C%96%E4%B8%BB%E9%A2%98"><span class="nav-number">4.2.</span> <span class="nav-text">设置个性化主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%BB%E9%A2%98"><span class="nav-number">4.2.1.</span> <span class="nav-text">下载主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8%E4%B8%BB%E9%A2%98"><span class="nav-number">4.2.2.</span> <span class="nav-text">启用主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.2.3.</span> <span class="nav-text">修改主题配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%8F%9C%E5%8D%95"><span class="nav-number">4.2.3.1.</span> <span class="nav-text">配置菜单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80"><span class="nav-number">4.2.3.2.</span> <span class="nav-text">设置语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%9B%BE%E6%A0%87"><span class="nav-number">4.2.3.3.</span> <span class="nav-text">修改图标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scheme%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.2.3.4.</span> <span class="nav-text">Scheme设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BE%E4%BA%A4%E9%93%BE%E6%8E%A5"><span class="nav-number">4.2.3.5.</span> <span class="nav-text">社交链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%A7%E8%BE%B9%E6%A0%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">4.2.3.6.</span> <span class="nav-text">侧边栏配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E5%83%8F%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.2.3.7.</span> <span class="nav-text">头像设置</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo%E9%83%A8%E7%BD%B2GitHub"><span class="nav-number">5.</span> <span class="nav-text">Hexo部署GitHub</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/02/09/blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hexo+GitHub搭建个人博客 | KenShin">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo+GitHub搭建个人博客
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-09 09:06:50" itemprop="dateCreated datePublished" datetime="2017-02-09T09:06:50+08:00">2017-02-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-10-29 22:03:17" itemprop="dateModified" datetime="2021-10-29T22:03:17+08:00">2021-10-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Blog%E5%BB%BA%E7%AB%99/" itemprop="url" rel="index"><span itemprop="name">Blog建站</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="http://i1.piimg.com/567571/f63d2030ab646842.png" alt><br><a href="hexo.io">Hexo</a>是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在搭建博客的过程中遇到的问题进行总结，避免以后的小伙伴踩坑。本文从五个方面进行讲解，分别为：</p>
+<ul>
+<li>环境部署</li>
+<li>HEXO安装与常用命令</li>
+<li>个性化设置</li>
+<li>HEXO部署Github</li>
+<li><p>定制化个性域名</p>
+<span id="more"></span>
+<h1 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h1><h2 id="1-Node-js"><a href="#1-Node-js" class="headerlink" title="1.Node.js"></a>1.Node.js</h2><p>首先我们需要安装Node.js，点击进入<a target="_blank" rel="noopener" href="https://nodejs.org/en/">node.js官网</a>，按照通用的安装方式下载安装即可。Node.js主要用于生成静态界面。</p>
+<h2 id="2-Git"><a href="#2-Git" class="headerlink" title="2.Git"></a>2.Git</h2><p>这里说的git实则是为了使用git指令，我们的git使用一般有两种方式，一种是图形化界面（GUI），另一种是通过命令行，我们这里要使用的是后者，点击<a target="_blank" rel="noopener" href="http://git-scm.com/downloads">这里</a>进入git的下载网站下载git的安装包。作用：把本地的hexo内容提交到github上去.</p>
+<h2 id="3-GitHub配置"><a href="#3-GitHub配置" class="headerlink" title="3.GitHub配置"></a>3.GitHub配置</h2><h3 id="申请账号"><a href="#申请账号" class="headerlink" title="申请账号"></a>申请账号</h3><p>如果你没有GitHub账号，请到<a target="_blank" rel="noopener" href="https://github.com/">这里</a>进行注册申请，详细注册过程略。</p>
+<h3 id="建立仓库"><a href="#建立仓库" class="headerlink" title="建立仓库"></a>建立仓库</h3><p>点击右上角的”+”选择New respository 建立新仓库，如图：<br><img src="http://p1.bqimg.com/567571/b85d00d61646ce19.png" alt><br>接下来需要配置仓库信息，如图：<br><img src="http://p1.bpimg.com/567571/8ddca7070ac1d6d3.png" alt><br>这里我们需要填写Repository name，注意这里的命名规范，如果我们要把这个仓库作为我们的个人博客，必须遵照以下规范命名：<strong>github用户名.github.io</strong>,点击Create repository即可。</p>
+<h3 id="生成添加秘钥"><a href="#生成添加秘钥" class="headerlink" title="生成添加秘钥"></a>生成添加秘钥</h3><p>本机生成秘钥是为了方便以后更新博客不用每次都输入用户名密码，这个根据个人需要，不是必须操作。<br>在终端输入：</p>
+<p>  $ ssh-keygen -t rsa -C “Github的注册邮箱地址”<br>待秘钥生成完毕，会得到两个文件id_rsa和id_rsa.pub，这两个文件位于：<br><img src="http://p1.bpimg.com/567571/ab706a277d27e1cd.png" alt><br>这个目录下，用文本编辑器(notepad++ 、Sublime Text)打开id_rsa.pub这个文件,全选复制里边的内容，然后打开<a target="_blank" rel="noopener" href="https://github.com/settings/ssh">网址</a>,如图:<br><img src="http://i1.piimg.com/567571/15b94723da693034.png" alt></p>
+</li>
+</ul>
+<p>点击 New SSH key:<br><img src="http://i1.piimg.com/567571/efd23501f3d72f7b.png" alt><br>Title随便起个名字，将刚才复制的内容粘贴进Key中，然后点击Add SSH Key，这样生成的秘钥就添加完毕了，在今后更新博客，不必每次都输入用户名密码验证登录。</p>
+<h3 id="为Hexo安装Git插件"><a href="#为Hexo安装Git插件" class="headerlink" title="为Hexo安装Git插件"></a>为Hexo安装Git插件</h3><p>安装 hexo-deployer-git，否则会报 ERROR Deployer not found: git 的错误。</p>
+<pre><code>$ npm install hexo-deployer-git --save
+</code></pre><p>至此，环境全部配置完毕，接下来我们讲Hexo的安装，目录结构与常用命令。</p>
+<h1 id="Hexo安装与常用命令"><a href="#Hexo安装与常用命令" class="headerlink" title="Hexo安装与常用命令"></a>Hexo安装与常用命令</h1><h2 id="Hexo安装"><a href="#Hexo安装" class="headerlink" title="Hexo安装"></a>Hexo安装</h2><p>Node和Git都安装好后,首先创建一个文件夹,如blog,用户存放hexo的配置文件,然后进入blog里安装Hexo。执行如下命令安装Hexo：<br>定位blog安装位置：</p>
+<pre><code>$ cd 文件夹路径
+
+$ npm install hexo-cli -g
+</code></pre><p>安装好hexo以后，在终端输入：</p>
+<pre><code>$ hexo
+</code></pre><p>若出现下图，说明Hexo安装成功：<br><img src="http://i1.piimg.com/567571/fe00cc2a41c9c40b.png" alt></p>
+<h2 id="初始化博客"><a href="#初始化博客" class="headerlink" title="初始化博客"></a>初始化博客</h2><pre><code>$ hexo init //初始化博客
+$ npm install //node.js的命令，根据博客的dependencies配置安装所有的依赖包
+</code></pre><p>完成后我们可以看到Blog文件夹下的文件结构是这样的：<br><img src="http://p1.bqimg.com/567571/cf1c9ba7e9372f95.png" alt></p>
+<h3 id="主目录结构："><a href="#主目录结构：" class="headerlink" title="主目录结构："></a>主目录结构：</h3><pre><code>主目录
+1  ├── .deploy       #需要部署的文件
+2  ├── node_modules  #Hexo插件
+3  ├── public        #生成的静态网页文件
+4  ├── scaffolds     #模板
+5  ├── source        #博客正文和其他源文件，CNAME也放这里
+6  | ├── _drafts     #草稿
+7  | ├── _posts      #文章
+8  ├── themes        #主题
+9  ├── _config.yml   #全局配置文件
+10 └── package.json
+</code></pre><p>我们经常需要操作的目录为source &gt; _post(文章目录),themes(主题目录),config.yml(全局配置文件)。</p>
+<h3 id="主题目录结构："><a href="#主题目录结构：" class="headerlink" title="主题目录结构："></a>主题目录结构：</h3><pre><code>主目录
+1  ├── languages          #国际化
+2  |   ├── default.yml    #默认
+3  |   └── zh-CN.yml      #中文
+4  ├── layout             #布局
+5  |   ├── _partial       #局部的布局
+6  |   └── _widget        #小挂件的布局
+7  ├── script             #js脚本
+8  ├── source             #源代码文件
+9  |   ├── css            #CSS
+10 |   |   ├── _base      #基础CSS
+11 |   |   ├── _partial   #局部CSS
+12 |   |   ├── fonts      #字体
+13 |   |   ├── images     #图片
+14 |   |   └── style.styl #style.css
+15 |   ├── fancybox       #fancybox
+16 |   └── js             #js
+17 ├── _config.yml        #主题配置文件
+18 └── README.md          #主题介绍
+</code></pre><h2 id="Hexo常用命令"><a href="#Hexo常用命令" class="headerlink" title="Hexo常用命令"></a>Hexo常用命令</h2><pre><code>$ npm install hexo-cli -g           //安装Hexo
+$ hexo init                         //初始化博客
+$ npm install                       //安装依赖包
+$ hexo server                       //本地启动
+$ npm update hexo -g                //升级 
+$ hexo new &quot;文件名&quot;                  //新建文章
+$ hexo p                            //发布
+$ hexo generate                     //生成静态文件
+$ hexo generate -watch              //监视文件变动
+$ hexo deploy                       //部署
+$ hexo d -g                         //同上
+$ hexo g -d                         //同上
+$ hexo new page &quot;pageName&quot;          //新建页面
+</code></pre><h1 id="个性化设置"><a href="#个性化设置" class="headerlink" title="个性化设置"></a>个性化设置</h1><h2 id="配置博客信息"><a href="#配置博客信息" class="headerlink" title="配置博客信息"></a>配置博客信息</h2><p>博客初始化完毕后，我们需要对博客做一些详细的配置信息，以及个性化设置，主要设置的内容有：博客信息，语言、时区、主题样式、博客目录结构、部署设置(deploy)、插件等。</p>
+<h3 id="全局配置文件-config-yml"><a href="#全局配置文件-config-yml" class="headerlink" title="全局配置文件_config.yml"></a>全局配置文件_config.yml</h3><p>使用sublime Text打开根目录下的config.yml文件，首先我们要对站点信息进行设置:</p>
+<h4 id="网站信息："><a href="#网站信息：" class="headerlink" title="网站信息："></a>网站信息：</h4><pre><code># Site        //站点信息
+title :       //博客名称
+subtilte:     //副标题
+description:  //站点描述信息
+ahthor:       //作者
+language:     //语言(zh-CN) *重要
+timezone:     //时区(Asia/Shanghai) *重要
+</code></pre><p><strong>注意：填写每一项内容时,:后边都要留一个空格再填写内容。</strong></p>
+<h4 id="分页设置："><a href="#分页设置：" class="headerlink" title="分页设置："></a>分页设置：</h4><pre><code># Pagination
+## Set per_page to 0 to disable pagination
+per_page:5     //每页显示文章数
+pagination_dir: page
+</code></pre><h4 id="主题设置："><a href="#主题设置：" class="headerlink" title="主题设置："></a>主题设置：</h4><pre><code>#  Extensions
+## Plugins:https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: next        //主题名称
+</code></pre><h4 id="部署设置："><a href="#部署设置：" class="headerlink" title="部署设置："></a>部署设置：</h4><pre><code>deploy:
+type: git          //类型
+repo:              //Github仓库地址
+branch: master     //项目分支，默认使用主分支即master
+</code></pre><h2 id="设置个性化主题"><a href="#设置个性化主题" class="headerlink" title="设置个性化主题"></a>设置个性化主题</h2><h3 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h3><p>首先找到我们喜欢的<a target="_blank" rel="noopener" href="https://hexo.io/themes/">主题</a>，本篇文章以Next主题为例，将终端定位到Blog根目录，将Next主题从github clone到本地。</p>
+<pre><code>$ cd:d/Blog 
+$ git clone https://github.com/iissnan/hexo-theme-next themes/next   
+</code></pre><p>稍等片刻，Next主题会自动下载到Blog &gt;themes文件夹下。</p>
+<h3 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h3><p>修改config.yml全局配置文件，找到theme字节，修改值为：next</p>
+<pre><code>theme: next
+</code></pre><h3 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h3><h4 id="配置菜单"><a href="#配置菜单" class="headerlink" title="配置菜单"></a>配置菜单</h4><p>打开theme &gt; next &gt;_config.yml，定位到menu,hexo博客框架默认有/home 、/archives、/tags三个一级页面。如果我们要增加其他的页面需要对这里的配置文件进行修改。</p>
+<pre><code>menu：
+  home: /                          //主页(默认打开)
+  #categories: /categories         //分类
+  #about: /about                   //关于
+  archives: /archives              //文章(默认打开)
+  tags: /tags                      //标签(默认打开)
+  #sitemap: /sitemap.xml           //站点地图
+  #commonweal: /404.html           //公益404
+</code></pre><p>我们需要增加哪个页面只需要把前边的#注释去掉即可。然后在终端中新建刚才添加的页面</p>
+<pre><code>hexo new page &quot;categories&quot;          //这里用categories举例
+</code></pre><p>编辑站点的source/categories/index.md，添加</p>
+<pre><code>---
+title: categories
+date: 2017-02-09 17:52:11
+type: &quot;categories&quot;             //添加类型
+comments: false                //禁用评论
+---
+</code></pre><p>保存后<code>hexo s</code>,打开<a target="_blank" rel="noopener" href="http://localhost:4000/查看效果。">http://localhost:4000/查看效果。</a></p>
+<h4 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h4><p>打开themes &gt;next &gt;languages 找到zh-Hans.yml，重命名为zh-CN.yml,或者将全局配置文件_config.yml的languages设置为zh-Hans也可以。</p>
+<h4 id="修改图标"><a href="#修改图标" class="headerlink" title="修改图标"></a>修改图标</h4><p>定位到menu_icons,这里储存了页面使用的图标信息，Next主题采用了FontAwesome的图标，直接使用FontAwesome的图标名称即可调用对应的图标文件,关于FontAwesome的详细信息点击<a target="_blank" rel="noopener" href="http://fontawesome.io/icons/">这里</a>，选择自己喜欢的图标复制名称粘贴即可。</p>
+<pre><code>menu_icons:                    //目录图标配置
+enable: true                   //是否启用
+ #KeyMapsToMenuItemKey: NameOfTheIconFromFontAwesome
+ home: home                    //主页
+ about: user                   //关于
+ categories: th                //分类
+ schedule: calendar            //进度
+ tags: tags                    //标签
+ archives: archive             //文章
+ sitemap: sitemap              //站点地图
+ commonweal: heartbeat
+</code></pre><h4 id="Scheme设置"><a href="#Scheme设置" class="headerlink" title="Scheme设置"></a>Scheme设置</h4><pre><code># Scheme Setting
+# ---------------------------------------------------------------
+# Schemes
+#scheme: Muse
+ scheme: Mist
+#scheme: Pisces
+</code></pre><p>Next主题提供了三种样式，分别为Muse Mist Pisces，将样式前的#注释去掉即可启用该主题，同时只能启用一个。</p>
+<h4 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h4><p>定位到social_icons，修改配置信息。</p>
+<h4 id="侧边栏配置"><a href="#侧边栏配置" class="headerlink" title="侧边栏配置"></a>侧边栏配置</h4><p>定位倒sidebar，可以设置侧边栏的显示位置(左右),显示方式等。</p>
+<h4 id="头像设置"><a href="#头像设置" class="headerlink" title="头像设置"></a>头像设置</h4><p>首先将我们的头像图片copy到themses &gt; next &gt; source &gt;images文件夹下，然后打开next主题下的_config.yml文件，定位到avatar。</p>
+<pre><code>avatar: /images/头像文件名
+</code></pre><h1 id="Hexo部署GitHub"><a href="#Hexo部署GitHub" class="headerlink" title="Hexo部署GitHub"></a>Hexo部署GitHub</h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+              <a href="/tags/Blog/" rel="tag"># Blog</a>
+              <a href="/tags/GitHub/" rel="tag"># GitHub</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/02/08/hello-world/" rel="prev" title="hello world">
+                  <i class="fa fa-chevron-left"></i> hello world
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/02/22/html/" rel="next" title="Html学习笔记整理">
+                  Html学习笔记整理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

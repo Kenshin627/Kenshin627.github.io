@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0-rc2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.17.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="图形学的数学基础（四）：向量叉积（Cross Product）叉积叉积是另一种向量乘积，与上节讲到的点积不同，叉积的结果是一个向量，该向量垂直于原始的两个向量，即垂直于原始两个向量所构成的平面。 定义  $\mathbf{a} \times \mathbf{b}$将产生一个垂直于$\mathbf{a}$和$\mathbf{b}$所构成平面的向量，这样的向量可能有两个，彼此方向相反，朝向由右手螺旋定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学的数学基础（四）：向量叉积">
+<meta property="og:url" content="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/index.html">
+<meta property="og:site_name" content="KenShin">
+<meta property="og:description" content="图形学的数学基础（四）：向量叉积（Cross Product）叉积叉积是另一种向量乘积，与上节讲到的点积不同，叉积的结果是一个向量，该向量垂直于原始的两个向量，即垂直于原始两个向量所构成的平面。 定义  $\mathbf{a} \times \mathbf{b}$将产生一个垂直于$\mathbf{a}$和$\mathbf{b}$所构成平面的向量，这样的向量可能有两个，彼此方向相反，朝向由右手螺旋定">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/.com//1.jpg">
+<meta property="og:image" content="http://example.com/.com//2.jpg">
+<meta property="og:image" content="http://example.com/.com//3.jpg">
+<meta property="og:image" content="http://example.com/.com//4.jpg">
+<meta property="og:image" content="http://example.com/.com//5.png">
+<meta property="article:published_time" content="2022-08-31T02:34:44.000Z">
+<meta property="article:modified_time" content="2022-08-31T12:33:15.377Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Computer Graphic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/","path":"2022/08/31/图形学的数学基础（四）：向量叉积/","title":"图形学的数学基础（四）：向量叉积"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>图形学的数学基础（四）：向量叉积 | KenShin</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">KenShin</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF%EF%BC%88Cross-Product%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">图形学的数学基础（四）：向量叉积（Cross Product）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%89%E7%A7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">叉积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">1.3.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%B3%E6%89%8B%E8%9E%BA%E6%97%8B%E5%AE%9A%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">右手螺旋定则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="nav-number">1.5.</span> <span class="nav-text">几何意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E5%AE%9A%E4%B8%A4%E5%90%91%E9%87%8F%E7%9A%84%E7%9B%B8%E5%AF%B9%E4%BD%8D%E7%BD%AE%E5%85%B3%E7%B3%BB"><span class="nav-number">1.5.1.</span> <span class="nav-text">判定两向量的相对位置关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E5%AE%9A%E7%82%B9%E6%98%AF%E5%90%A6%E5%9C%A8%E4%B8%89%E8%A7%92%E5%BD%A2%E5%86%85"><span class="nav-number">1.5.2.</span> <span class="nav-text">判定点是否在三角形内</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E4%B8%89%E7%BB%B4%E7%9B%B4%E8%A7%92%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">1.5.3.</span> <span class="nav-text">构造三维直角坐标系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.6.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E5%8F%89%E7%A7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KenShin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="图形学的数学基础（四）：向量叉积 | KenShin">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图形学的数学基础（四）：向量叉积
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-31 10:34:44 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T10:34:44+08:00">2022-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="图形学的数学基础（四）：向量叉积（Cross-Product）"><a href="#图形学的数学基础（四）：向量叉积（Cross-Product）" class="headerlink" title="图形学的数学基础（四）：向量叉积（Cross Product）"></a>图形学的数学基础（四）：向量叉积（Cross Product）</h1><h2 id="叉积"><a href="#叉积" class="headerlink" title="叉积"></a>叉积</h2><p>叉积是另一种向量乘积，与上节讲到的点积不同，叉积的结果是一个向量，该向量垂直于原始的两个向量，即垂直于原始两个向量所构成的平面。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><img src="/.com//1.jpg" alt="alt"></p>
+<ul>
+<li><p>$\mathbf{a} \times \mathbf{b}$将产生一个垂直于$\mathbf{a}$和$\mathbf{b}$所构成平面的向量，这样的向量可能有两个，彼此方向相反，朝向由右手螺旋定则判定，具体在后文会详细介绍。</p>
+</li>
+<li><p><strong>$\mathbf{a} \times \mathbf{b}$的长度等于$\mathbf{a}$和$\mathbf{b}$长度的乘积再乘以$\mathbf{a}$和$\mathbf{b}$之间角度的正弦值。</strong></p>
+<p>  $||\mathbf{a} \times \mathbf{b}|| = ||\mathbf{a}|||| \mathbf{b} || \sin\theta$</p>
+</li>
+</ul>
+<p>实际上根据定义不难理解， $\mathbf{a} \times \mathbf{b}$的长度等于由两个边$\mathbf{a}$ $\mathbf{b}$所形成的平行四边形的面积。</p>
+<p>$\textbf{A} =  bh = b(a\sin\theta) = ||\mathbf{a}||||\mathbf{b}||\sin\theta = ||\mathbf{a} \times \mathbf{b}||$</p>
+<p><img src="/.com//2.jpg" alt="alt"></p>
+<h2 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h2><ul>
+<li>叉积交换的，实际上，它是反交换的（anticommutative）的：$\mathbf{a} \times \mathbf{b} = - (\mathbf{b} \times \mathbf{a})$</li>
+<li>向量自身的叉积等于零向量 $ \mathbf{a} \times \mathbf{a} = \vec{0} $</li>
+<li>叉积满足分配律：$ \mathbf{a} \times(\mathbf{b} + \mathbf{c}) = \mathbf{a} \times \mathbf{b} + \mathbf{a} \times \mathbf{c} $</li>
+<li>叉积满足结合律：$ \mathbf{a} \times (k\mathbf{b}) = k(\mathbf{a} \times \mathbf{b})$</li>
+</ul>
+<h2 id="右手螺旋定则"><a href="#右手螺旋定则" class="headerlink" title="右手螺旋定则"></a>右手螺旋定则</h2><p>先将两向量移动到同一起点，右手四指从A转动到B，则拇指所指方向，即为结果向量的方向。<br>符合右手螺旋定则的坐标系称之为右手坐标系，即 $\vec{x} \times \vec{y} = \vec{z}$,否则为左手系。<br><img src="/.com//3.jpg" alt="alt"></p>
+<p>$\vec{x} \times \vec{y} = +\vec{z}$</p>
+<p>$\vec{y} \times \vec{x} = -\vec{z}$</p>
+<p>$\vec{y} \times \vec{z} = +\vec{x}$</p>
+<p>$\vec{z} \times \vec{y} = -\vec{x}$</p>
+<p>$\vec{z} \times \vec{x} = +\vec{y}$</p>
+<p>$\vec{x} \times \vec{z} = -\vec{y}$</p>
+<h2 id="几何意义"><a href="#几何意义" class="headerlink" title="几何意义"></a>几何意义</h2><h3 id="判定两向量的相对位置关系"><a href="#判定两向量的相对位置关系" class="headerlink" title="判定两向量的相对位置关系"></a>判定两向量的相对位置关系</h3><p>向量叉积可以用于判定两个向量的相对位置关系，比如如果我们想知道一个向量在另外一个的左侧还是右侧，可以通过两个向量叉积结果的符号来判断。</p>
+<p>$\mathbf{a} \times \mathbf{b}  = + \mathbf{z}$<br>因此$\mathbf{b}在\mathbf{a}的左侧$</p>
+<p><img src="/.com//4.jpg" alt="alt"></p>
+<h3 id="判定点是否在三角形内"><a href="#判定点是否在三角形内" class="headerlink" title="判定点是否在三角形内"></a>判定点是否在三角形内</h3><p>分别使用三角形的三边向量 $\vec{AB}$ $\vec{BC}$ $\vec{CA}$，叉乘三角形每个顶点与P点构成的向量，如果得到的三个结果向量方向一致，则认为P点在三角形 $\triangle{ABC}$内,否则P点在三角形外。</p>
+<p>$\vec{AB} \times \vec{AP}$</p>
+<p>$\vec{BC} \times \vec{BP}$</p>
+<p>$\vec{CA} \times \vec{CP}$</p>
+<p><img src="/.com//5.png" alt="alt"></p>
+<h3 id="构造三维直角坐标系"><a href="#构造三维直角坐标系" class="headerlink" title="构造三维直角坐标系"></a>构造三维直角坐标系</h3><p>$\vec{x} \times \vec{y} = \vec{z}$</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://item.jd.com/12659881.html">《3D数学基础》图形和游戏开发(第二版)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=2&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F%E7%82%B9%E7%A7%AF/" rel="prev" title="图形学的数学基础（三）：向量点积">
+                  <i class="fa fa-chevron-left"></i> 图形学的数学基础（三）：向量点积
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/" rel="next" title="图形学的数学基础（五）：标准正交基/坐标系">
+                  图形学的数学基础（五）：标准正交基/坐标系 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
