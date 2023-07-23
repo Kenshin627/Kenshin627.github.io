@@ -17,26 +17,26 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="枚举(enum)当一个变量有几种可能的取值时,可以将它定义为枚举类型，  当我们声明一个枚举类型是,虽然没有给它们赋值,但是它们的值其实是默认的数字类型,而且默认从0开始依次累加 因此当我们把第一个值赋值后,后面也会根据第一个值进行累加 枚举类型的值其实也可以是字符串类型 字符串枚举可以和数字枚举混合使用  枚举的本质 &amp; 双向映射枚举具有双向映射的特性，所谓双向映射指的是通过key可以索">
 <meta property="og:type" content="article">
 <meta property="og:title" content="enum">
 <meta property="og:url" content="http://example.com/2021/11/01/enum/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="枚举(enum)当一个变量有几种可能的取值时,可以将它定义为枚举类型，  当我们声明一个枚举类型是,虽然没有给它们赋值,但是它们的值其实是默认的数字类型,而且默认从0开始依次累加 因此当我们把第一个值赋值后,后面也会根据第一个值进行累加 枚举类型的值其实也可以是字符串类型 字符串枚举可以和数字枚举混合使用  枚举的本质 &amp; 双向映射枚举具有双向映射的特性，所谓双向映射指的是通过key可以索">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.png">
-<meta property="og:image" content="http://example.com/.com//2.png">
-<meta property="og:image" content="http://example.com/.com//3.png">
-<meta property="og:image" content="http://example.com/.com//4.png">
+<meta property="og:image" content="http://example.com/2021/11/01/enum/1.png">
+<meta property="og:image" content="http://example.com/2021/11/01/enum/2.png">
+<meta property="og:image" content="http://example.com/2021/11/01/enum/3.png">
+<meta property="og:image" content="http://example.com/2021/11/01/enum/4.png">
 <meta property="article:published_time" content="2021-11-01T07:00:23.000Z">
 <meta property="article:modified_time" content="2021-11-01T14:35:53.483Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="typeScript">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.png">
+<meta name="twitter:image" content="http://example.com/2021/11/01/enum/1.png">
 
 <link rel="canonical" href="http://example.com/2021/11/01/enum/">
 
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>enum | KenShin</title>
+  <title>enum | Pixel World</title>
   
 
 
@@ -102,7 +102,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -122,6 +122,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -160,13 +175,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/01/enum/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -211,14 +226,14 @@
 <li>枚举类型的值其实也可以是字符串类型</li>
 <li>字符串枚举可以和数字枚举混合使用</li>
 </ol>
-<h2 id="枚举的本质-amp-双向映射"><a href="#枚举的本质-amp-双向映射" class="headerlink" title="枚举的本质 &amp; 双向映射"></a>枚举的本质 &amp; 双向映射</h2><p>枚举具有双向映射的特性，所谓双向映射指的是通过key可以索引到value,同时通过value也可以索引到key.<br>原因就在编译后的 JavaScript把枚举类型构造成为了一个对象，而由于其特殊的构造，导致其拥有正反向同时映射的特性<br><img src="/.com//1.png" alt="alt"></p>
+<h2 id="枚举的本质-amp-双向映射"><a href="#枚举的本质-amp-双向映射" class="headerlink" title="枚举的本质 &amp; 双向映射"></a>枚举的本质 &amp; 双向映射</h2><p>枚举具有双向映射的特性，所谓双向映射指的是通过key可以索引到value,同时通过value也可以索引到key.<br>原因就在编译后的 JavaScript把枚举类型构造成为了一个对象，而由于其特殊的构造，导致其拥有正反向同时映射的特性<br><img src="1.png" alt="alt"></p>
 <h2 id="常量枚举"><a href="#常量枚举" class="headerlink" title="常量枚举"></a>常量枚举</h2><p>枚举可以被 const 声明为常量,这样做的好处是，编译后的js代码中实际上是不存在枚举和枚举对象的，使用的是枚举的值，这是性能提升的一个方案。</p>
 <blockquote>
 <p>如果你非要 TypeScript 保留对象 Direction ,那么可以添加编译选项 —preserveConstEnums</p>
 </blockquote>
-<h2 id="联合枚举类型"><a href="#联合枚举类型" class="headerlink" title="联合枚举类型"></a>联合枚举类型</h2><p>将一个变量声明为枚举类型，可以认为声明了一个联合类型，联合类型的值对应枚举的值。<br><img src="/.com//2.png" alt="alt"></p>
-<h2 id="使用数字类型作为标志"><a href="#使用数字类型作为标志" class="headerlink" title="使用数字类型作为标志"></a>使用数字类型作为标志</h2><p><img src="/.com//3.png" alt="alt"></p>
-<h2 id="为枚举添加静态方法"><a href="#为枚举添加静态方法" class="headerlink" title="为枚举添加静态方法"></a>为枚举添加静态方法</h2><p>可以使用enum + namespace 的声明方式向枚举类型添加静态方法.如下例所示，我们将静态成员 isBusinessDay 添加到枚举上<br><img src="/.com//4.png" alt="alt"></p>
+<h2 id="联合枚举类型"><a href="#联合枚举类型" class="headerlink" title="联合枚举类型"></a>联合枚举类型</h2><p>将一个变量声明为枚举类型，可以认为声明了一个联合类型，联合类型的值对应枚举的值。<br><img src="2.png" alt="alt"></p>
+<h2 id="使用数字类型作为标志"><a href="#使用数字类型作为标志" class="headerlink" title="使用数字类型作为标志"></a>使用数字类型作为标志</h2><p><img src="3.png" alt="alt"></p>
+<h2 id="为枚举添加静态方法"><a href="#为枚举添加静态方法" class="headerlink" title="为枚举添加静态方法"></a>为枚举添加静态方法</h2><p>可以使用enum + namespace 的声明方式向枚举类型添加静态方法.如下例所示，我们将静态成员 isBusinessDay 添加到枚举上<br><img src="4.png" alt="alt"></p>
 
     </div>
 
@@ -308,8 +323,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -322,16 +339,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -360,7 +387,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -392,6 +419,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -409,6 +438,8 @@
 
 
 
+
+  
 
   
 

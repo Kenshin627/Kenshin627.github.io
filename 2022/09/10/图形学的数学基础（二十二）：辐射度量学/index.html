@@ -17,30 +17,30 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="图形学的数学基础（二十二）：辐射度量学辐射度量学（$Radiometry$） 辐射度量学是基于物理光照的基础，是基于几何光学来定义的，提供了精准的关于光的各种物理量，光与物体表面的作用，光线传播方法的定义等。辐射度量学是反射方程 渲染方程的基础。 1.辐射能量（$Radiant\;energy$）在辐射度量学中最基本的单位是辐射能量，表示为$Q$,单位是$J(焦耳)$，辐射能量$Q$以辐射的形式发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形学的数学基础（二十二）：辐射度量学">
 <meta property="og:url" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="图形学的数学基础（二十二）：辐射度量学辐射度量学（$Radiometry$） 辐射度量学是基于物理光照的基础，是基于几何光学来定义的，提供了精准的关于光的各种物理量，光与物体表面的作用，光线传播方法的定义等。辐射度量学是反射方程 渲染方程的基础。 1.辐射能量（$Radiant\;energy$）在辐射度量学中最基本的单位是辐射能量，表示为$Q$,单位是$J(焦耳)$，辐射能量$Q$以辐射的形式发">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.png">
-<meta property="og:image" content="http://example.com/.com//2.png">
-<meta property="og:image" content="http://example.com/.com//4.png">
-<meta property="og:image" content="http://example.com/.com//5.png">
-<meta property="og:image" content="http://example.com/.com//6.jpg">
-<meta property="og:image" content="http://example.com/.com//7.png">
-<meta property="og:image" content="http://example.com/.com//8.png">
+<meta property="og:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/1.png">
+<meta property="og:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/2.png">
+<meta property="og:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/4.png">
+<meta property="og:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/5.png">
+<meta property="og:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/6.jpg">
+<meta property="og:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/7.png">
+<meta property="og:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/8.png">
 <meta property="article:published_time" content="2022-09-10T15:58:42.000Z">
 <meta property="article:modified_time" content="2022-09-12T04:29:47.024Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Math">
 <meta property="article:tag" content="Computer Graphic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.png">
+<meta name="twitter:image" content="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/1.png">
 
 <link rel="canonical" href="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
 
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>图形学的数学基础（二十二）：辐射度量学 | KenShin</title>
+  <title>图形学的数学基础（二十二）：辐射度量学 | Pixel World</title>
   
 
 
@@ -106,7 +106,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -126,6 +126,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -164,13 +179,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/10/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -229,34 +244,34 @@
 <h2 id="2-辐射通量（-Radiant-flux-）"><a href="#2-辐射通量（-Radiant-flux-）" class="headerlink" title="2.辐射通量（$Radiant\;flux$）"></a>2.辐射通量（$Radiant\;flux$）</h2><p>辐射通量，记为为$Φ$，表示单位时间 发射/反射/传播/接受的能量(功率-power)。单位为（$watt$）W或者($lumen$)lm，在辐射测量中，都是基于这个辐射通量来测量能量的，而不是使用能量$Q$。</p>
 <p>$Φ = \dfrac{dQ}{dt}$</p>
 <h2 id="3-辐射强度（-Radiant-intensity-）"><a href="#3-辐射强度（-Radiant-intensity-）" class="headerlink" title="3.辐射强度（$Radiant\;intensity$）"></a>3.辐射强度（$Radiant\;intensity$）</h2><p>辐射强度，记为$I$,<strong>表示一个点光源在单位立体角上发射能量的功率</strong>。表示光源在某一方向上的辐射功率。单位为$(candela)$cd.</p>
-<p><img src="/.com//1.png" alt="radiant intensity"></p>
+<p><img src="1.png" alt="radiant intensity"></p>
 <p>在辐射度两学里，通常用$\omega$表示三维空间中的一个方向。$\omega$可以用$\theta和\phi$两个参数定义它的位置。并且可以通过$\sin\theta{d}\theta{d}\phi$表示它的单位立体角。</p>
 <p>$I(w) = \dfrac{dΦ}{dw}$</p>
-<p><img src="/.com//2.png" alt="radiant intensity"></p>
+<p><img src="2.png" alt="radiant intensity"></p>
 <p>对于空间中的一个点光源，$Radiant\;intensity$表示光源在任意方向上的发射功率。</p>
 <h3 id="各向同性点光源"><a href="#各向同性点光源" class="headerlink" title="各向同性点光源"></a>各向同性点光源</h3><p>对于空间中各向同性（各方向发射功率相同）的点光源。任意方向辐射功率都是相同的。因此：</p>
 <p>光源所有方向单位立体角的$Radiant\;intensity$的积分等于光源的总功率。<br>$Φ = \int_{s^2}Idw$</p>
 <p>任意方向上单位立体角的$Radiant\;intensity$等于</p>
 <p>$I = \dfrac{Φ}{4\pi}$</p>
 <h2 id="4-辐射照度（-Irradiance-）"><a href="#4-辐射照度（-Irradiance-）" class="headerlink" title="4. 辐射照度（$Irradiance$）"></a>4. 辐射照度（$Irradiance$）</h2><p>辐射照度，记为$E$，表示单位投影面积的能量功率，用于描述物体表面单位面积接收到的辐射功率。单位为$lux$。</p>
-<p><img src="/.com//4.png" alt="Irradiance"></p>
+<p><img src="4.png" alt="Irradiance"></p>
 <p>$E(x) = \dfrac{dΦ(x)}{dA}$</p>
 <h2 id="5-辐射亮度（-Radiance-）"><a href="#5-辐射亮度（-Radiance-）" class="headerlink" title="5. 辐射亮度（$Radiance$）"></a>5. 辐射亮度（$Radiance$）</h2><p>用于描述光线在传播过程中的属性。记为$L$，<strong>表示为单位投影面积 单位立体角被发射/反射/转换/接收的辐射功率（一条光线所携带的功率）。</strong>.单位为$nit$</p>
 <p>$L(p,w) = \dfrac{d^2Φ(p,w)}{dwdA\cos\theta}$</p>
 <p>$Radiance$做两次微分，一次是单位立体角，一次是投影面积，两次微分后，将功率收束为一条光线。</p>
-<p><img src="/.com//5.png" alt="Radiance"></p>
+<p><img src="5.png" alt="Radiance"></p>
 <h3 id="两种理解方式"><a href="#两种理解方式" class="headerlink" title="两种理解方式"></a>两种理解方式</h3><ol>
 <li>$Radiant\;intensity$</li>
 </ol>
 <p>$Radiant\;intensity$是点光源在某一方向单位立体角的辐射功率，是一个由点及面的过程。</p>
-<p><img src="/.com//6.jpg" alt="Radiance"></p>
+<p><img src="6.jpg" alt="Radiance"></p>
 <p>$Radiance$可以理解为$Radiant\;intensity$在单位投影面积上的微分，将光源从$w$方向单位立体角辐射的功率收束为一条光线。描述了光线发射过程中，光线传播的性质。</p>
 <p>一句话描述$Radiance$等于单位投影面积上的$Radiant\;intensity$</p>
 <p>$L(p,w) = \dfrac{dI(p,w)}{dA\cos\theta}$</p>
 <ol>
 <li>$Irradiance$</li>
 </ol>
-<p><img src="/.com//7.png" alt="Radiance"></p>
+<p><img src="7.png" alt="Radiance"></p>
 <p>$Radiance$可以理解为$Irradiance$在某一方向$W$单位立体角上接收的光照辐射功率，是物体表面单位面积$dA$接收的各个方向的辐射功率（$Irradiance$）在某一单位立体角上的微分。描述了物体接收光照辐射过程中，光线的“形状”。</p>
 <p>一句话描述$Radiance$等于单位立体角上的 $Irradiance$。</p>
 <p>$L(p,w) = \dfrac{dE(p)}{dw\cos\theta}$</p>
@@ -267,7 +282,7 @@
 <p>$E(p) =  \int_{H^2}L_i(p,w)\cos\theta{dw}$</p>
 <p>$dE(p,w) = L_i(p,w)\cos\theta{dw}$</p>
 <p><strong>单位面积$dA$上的$Irradiance$等于各个角度$Radiance$的半球积分。</strong></p>
-<p><img src="/.com//8.png" alt="Radiance"></p>
+<p><img src="8.png" alt="Radiance"></p>
 <h2 id="辐射度测量术语表"><a href="#辐射度测量术语表" class="headerlink" title="辐射度测量术语表"></a>辐射度测量术语表</h2><div class="table-container">
 <table>
 <thead>
@@ -410,8 +425,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -424,16 +441,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -462,7 +489,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -494,6 +521,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -513,6 +542,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

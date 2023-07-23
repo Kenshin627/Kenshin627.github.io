@@ -17,26 +17,26 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化标准正交基在很多情况下，例如在计算相机的lookAt矩阵中，由于传入的$\mathbf{direction}$ $\mathbf{up}$ $\mathbf{right}$三个基矢量不一定是规范化的，需要对三个矢量进行正交化处理，这样才能组成标准正交基。本文将介绍两种常见的矢量正交化方法。施密特正">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形学的数学基础（六）：施密特正交化与叉乘正交化">
 <meta property="og:url" content="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化标准正交基在很多情况下，例如在计算相机的lookAt矩阵中，由于传入的$\mathbf{direction}$ $\mathbf{up}$ $\mathbf{right}$三个基矢量不一定是规范化的，需要对三个矢量进行正交化处理，这样才能组成标准正交基。本文将介绍两种常见的矢量正交化方法。施密特正">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.jpg">
-<meta property="og:image" content="http://example.com/.com//2.png">
-<meta property="og:image" content="http://example.com/.com//3.jpg">
+<meta property="og:image" content="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/1.jpg">
+<meta property="og:image" content="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/2.png">
+<meta property="og:image" content="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/3.jpg">
 <meta property="article:published_time" content="2022-08-31T02:55:33.000Z">
 <meta property="article:modified_time" content="2022-08-31T12:33:15.372Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Math">
 <meta property="article:tag" content="Computer Graphic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+<meta name="twitter:image" content="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/1.jpg">
 
 <link rel="canonical" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/">
 
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>图形学的数学基础（六）：施密特正交化与叉乘正交化 | KenShin</title>
+  <title>图形学的数学基础（六）：施密特正交化与叉乘正交化 | Pixel World</title>
   
 
 
@@ -102,7 +102,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -122,6 +122,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -160,13 +175,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E4%B8%8E%E5%8F%89%E4%B9%98%E6%AD%A3%E4%BA%A4%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -215,19 +230,19 @@
         <h1 id="图形学的数学基础（六）：施密特正交化-Schmidt-orthogonalization-与叉乘正交化"><a href="#图形学的数学基础（六）：施密特正交化-Schmidt-orthogonalization-与叉乘正交化" class="headerlink" title="图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化"></a>图形学的数学基础（六）：施密特正交化(Schmidt orthogonalization)与叉乘正交化</h1><h2 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h2><p>在很多情况下，例如在计算相机的lookAt矩阵中，由于传入的$\mathbf{direction}$ $\mathbf{up}$ $\mathbf{right}$三个基矢量不一定是规范化的，需要对三个矢量进行正交化处理，这样才能组成标准正交基。<br>本文将介绍两种常见的矢量正交化方法。施密特正交化和矢量叉积。</p>
 <h2 id="施密特正交化"><a href="#施密特正交化" class="headerlink" title="施密特正交化"></a>施密特正交化</h2><p>施密特正交化是求欧式空间正交基的一种方法。从欧式空间任意线性无关的向量组$\mathbf{\alpha_1},\mathbf{\alpha_2},…,\mathbf{\alpha_m}$出发，求得正交向量组 $\mathbf{\beta_1},\mathbf{\beta_2},…,\mathbf{\beta_m}$,再将正交向量组中每个向量归一化，得到一个标准正交向量组，这种方法称为施密特正交化。</p>
 <h3 id="计算方法"><a href="#计算方法" class="headerlink" title="计算方法"></a>计算方法</h3><p>如果$\vec{x_1},\vec{x_2},…\vec{x_n}$是某向量空间的基，那么可以通过以下公式找到该向量空间中的n个两两正交的向量$\vec{v_1},\vec{v_2},…\vec{v_n}$</p>
-<p><img src="/.com//1.jpg" alt="alt"><br>配图来源：《马同学图解数学-如何理解施密特正交化？》</p>
+<p><img src="1.jpg" alt="alt"><br>配图来源：《马同学图解数学-如何理解施密特正交化？》</p>
 <h3 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h3><p>施密特正交化主要利用了矢量点积的投影性质，可以将矢量分解为平行和垂直两个矢量。以下我们分别以二维向量空间和三维向量空间为例详细介绍施密特正交化的推导过程。</p>
 <h4 id="二维向量空间的推导"><a href="#二维向量空间的推导" class="headerlink" title="二维向量空间的推导"></a>二维向量空间的推导</h4><ol>
 <li>假设二维空间的任意向量$\vec{x_1}$ $\vec{x_2}$</li>
 </ol>
-<p><img src="/.com//2.png" alt="alt"></p>
+<p><img src="2.png" alt="alt"></p>
 <ol>
-<li>任选其一作为$\vec{v<em>1}$,比如$\vec{x_1}$.利用向量点积，将$\vec{x_2}$在$\vec{v_1}$上投影。得到$\vec{x</em>⊥}$，根据向量的三角形法则，$\vec{x<em>∥} = \vec{x_2} - \vec{x</em>⊥}$即为要求的$\vec{v_2}$</li>
+<li>任选其一作为$\vec{v_1}$,比如$\vec{x_1}$.利用向量点积，将$\vec{x_2}$在$\vec{v_1}$上投影。得到$\vec{x_⊥}$，根据向量的三角形法则，$\vec{x_∥} = \vec{x_2} - \vec{x_⊥}$即为要求的$\vec{v_2}$</li>
 </ol>
-<p><img src="/.com//3.jpg" alt="alt"></p>
+<p><img src="3.jpg" alt="alt"></p>
 <p>$\vec{v_1} = \vec{x_1}$</p>
 <p>$\vec{x_⊥} = \dfrac{\vec{x_2}.\vec{v_1}}{||\vec{v_1}||} \hat{v_1} = \dfrac{\vec{x_2}.\vec{v_1}}{\vec{v_1}.\vec{v_1}} \hat{v_1}||\vec{v_1}|| = \dfrac{\vec{x_2}.\vec{v_1}}{\vec{v_1}.\vec{v_1}}\vec{v_1}$</p>
-<p>$\vec{v<em>2} = \vec{v</em>∥} = \vec{x<em>2} - \vec{x</em>⊥} = \vec{x_2} - \dfrac{\vec{x_2}.\vec{v_1}}{\vec{v_1}.\vec{v_1}}\vec{v_1}$</p>
+<p>$\vec{v_2} = \vec{v_∥} = \vec{x_2} - \vec{x_⊥} = \vec{x_2} - \dfrac{\vec{x_2}.\vec{v_1}}{\vec{v_1}.\vec{v_1}}\vec{v_1}$</p>
 <p>$\hat{v_1} = \dfrac{\vec{v_1}}{||\vec{v_1}||}$</p>
 <p>$\hat{v_2} = \dfrac{\vec{v_2}}{||\vec{v_2}||}$</p>
 <h4 id="三维向量空间的推导"><a href="#三维向量空间的推导" class="headerlink" title="三维向量空间的推导"></a>三维向量空间的推导</h4><p>三维向量空间的正交化推导与二维空间类似，假设三维空间的任意向量 $\vec{x_1}$ $\vec{x_2}$ $\vec{x_3}$.<br>先任选两个向量做二维空间的正交化，例如$\vec{x_1}$ $\vec{x_2}$,得到$\hat{v_1}$,$\hat{v_2}$.<br>将 $\vec{x_3}$在$\hat{v_1}$,$\hat{v_2}$所张成的二维平面上投影，得到$\vec{x_3⊥}$，由于$\vec{x_3⊥}$在$\hat{v_1}$,$\hat{v_2}$的张成平面上，所以$\vec{x_3⊥}$是$\hat{v_1}$,$\hat{v_2}$的线性组合。</p>
@@ -351,8 +366,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -365,16 +382,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -403,7 +430,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -435,6 +462,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -454,6 +483,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -17,35 +17,35 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="为了使物体看起来更有立体感,可以对其使用作色,也就是说使物体表面”涂上”光线,有明暗变化.本章展示了最通用的具有启发式的作色方法.前两个将介绍Lambertian Shading Model和Phong Shading Model, 发明于1970年代,在大多数图形API中都可以使用.最后一个介绍 artistic shading Model,模拟了人类绘制图像的风格. Diffuse Shadi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="着色">
 <meta property="og:url" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="为了使物体看起来更有立体感,可以对其使用作色,也就是说使物体表面”涂上”光线,有明暗变化.本章展示了最通用的具有启发式的作色方法.前两个将介绍Lambertian Shading Model和Phong Shading Model, 发明于1970年代,在大多数图形API中都可以使用.最后一个介绍 artistic shading Model,模拟了人类绘制图像的风格. Diffuse Shadi">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.jpg">
-<meta property="og:image" content="http://example.com/.com//2.jpg">
-<meta property="og:image" content="http://example.com/.com//8.jpg">
-<meta property="og:image" content="http://example.com/.com//9.jpg">
-<meta property="og:image" content="http://example.com/.com//10.jpg">
-<meta property="og:image" content="http://example.com/.com//12.jpg">
-<meta property="og:image" content="http://example.com/.com//13.jpg">
-<meta property="og:image" content="http://example.com/.com//3.jpg">
-<meta property="og:image" content="http://example.com/.com//4.jpg">
-<meta property="og:image" content="http://example.com/.com//5.jpg">
-<meta property="og:image" content="http://example.com/.com//6.jpg">
-<meta property="og:image" content="http://example.com/.com//7.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/1.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/2.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/8.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/9.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/10.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/12.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/13.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/3.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/4.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/5.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/6.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/7.jpg">
 <meta property="article:published_time" content="2022-03-09T00:46:00.000Z">
 <meta property="article:modified_time" content="2022-03-09T13:44:09.417Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Shading">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+<meta name="twitter:image" content="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/1.jpg">
 
 <link rel="canonical" href="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/">
 
@@ -60,7 +60,7 @@
   };
 </script>
 
-  <title>着色 | KenShin</title>
+  <title>着色 | Pixel World</title>
   
 
 
@@ -111,7 +111,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -131,6 +131,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -169,13 +184,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/%E7%9D%80%E8%89%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -215,22 +230,22 @@
       
         <p>为了使物体看起来更有立体感,可以对其使用作色,也就是说使物体表面”涂上”光线,有明暗变化.本章展示了最通用的具有启发式的作色方法.前两个将介绍Lambertian Shading Model和Phong Shading Model, 发明于1970年代,在大多数图形API中都可以使用.最后一个介绍 artistic shading Model,模拟了人类绘制图像的风格.</p>
 <h1 id="Diffuse-Shading"><a href="#Diffuse-Shading" class="headerlink" title="Diffuse Shading"></a>Diffuse Shading</h1><p>许多物体的表面外观被粗略地描述为“哑光”，这表明该物体根本没有光泽。例如纸张、未打磨的木材和干燥、未打磨的石头。在很大程度上，这些物体表面的颜色不会随着视角的变化而变化。例如，如果你盯着一张纸上的一个特定的点，并且在移动的同时保持你的目光在这个点上，这个点上的颜色将保持相对不变。这样的哑光物体可以被认为是表现为朗伯反射体。本节讨论如何实现这样的着色.关键的一点是，本章中的所有公式都应该在世界坐标中求值，而不是在应用了透视变换的坐标中求值。否则，法线之间的角度将改变，着色将是不准确的.</p>
-<h2 id="Lambertian-Shading-Model"><a href="#Lambertian-Shading-Model" class="headerlink" title="Lambertian Shading Model"></a>Lambertian Shading Model</h2><p>Lambertian object遵循<strong><em>Lambert’s cosine law</em></strong>，即表面的颜色c与表面法线与光源方向夹角的余弦成正比(Gouraud, 1971):<br><img src="/.com//1.jpg" alt="alt"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cosθ  </span><br><span class="line">c ∝ n·l</span><br></pre></td></tr></table></figure><br>其中n和l如上图所示。因此，表面颜色将根据表面法线与光方向之间夹角余弦而变化。注意，通常假设向量l不依赖于对象的位置。这个假设是说相对于物体大小光是“遥远的”。这样的光通常被称为方向光，因为它的位置仅由一个方向来指定。<br>通过改变光源的强度或物体表面的反射率，可以使表面变亮或变暗。漫反射系数cr是光被表面反射的因子。这个系数对于rgb三个颜色分量是不同的。因此不同材质物体的漫反射颜色是不同的.例如，如果一个表面反射的红色入射光比蓝色入射光多，那么它就是红色的。如果我们假设表面颜色与从表面反射的光成比例，改进以上公式,加入漫反射系数cr和光照强度cl<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cr cl n·l</span><br></pre></td></tr></table></figure><br><img src="/.com//2.jpg" alt="alt"><br>以上公式存在一个问题,当物体表面法线与光照方向相反,点积为负,加入max函数来避免这种情况<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cr cl max(0, n·l)   </span><br></pre></td></tr></table></figure></p>
+<h2 id="Lambertian-Shading-Model"><a href="#Lambertian-Shading-Model" class="headerlink" title="Lambertian Shading Model"></a>Lambertian Shading Model</h2><p>Lambertian object遵循<strong><em>Lambert’s cosine law</em></strong>，即表面的颜色c与表面法线与光源方向夹角的余弦成正比(Gouraud, 1971):<br><img src="1.jpg" alt="alt"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cosθ  </span><br><span class="line">c ∝ n·l</span><br></pre></td></tr></table></figure><br>其中n和l如上图所示。因此，表面颜色将根据表面法线与光方向之间夹角余弦而变化。注意，通常假设向量l不依赖于对象的位置。这个假设是说相对于物体大小光是“遥远的”。这样的光通常被称为方向光，因为它的位置仅由一个方向来指定。<br>通过改变光源的强度或物体表面的反射率，可以使表面变亮或变暗。漫反射系数cr是光被表面反射的因子。这个系数对于rgb三个颜色分量是不同的。因此不同材质物体的漫反射颜色是不同的.例如，如果一个表面反射的红色入射光比蓝色入射光多，那么它就是红色的。如果我们假设表面颜色与从表面反射的光成比例，改进以上公式,加入漫反射系数cr和光照强度cl<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cr cl n·l</span><br></pre></td></tr></table></figure><br><img src="2.jpg" alt="alt"><br>以上公式存在一个问题,当物体表面法线与光照方向相反,点积为负,加入max函数来避免这种情况<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c ∝ cr cl max(0, n·l)   </span><br></pre></td></tr></table></figure></p>
 <h2 id="Ambient-Shading"><a href="#Ambient-Shading" class="headerlink" title="Ambient Shading"></a>Ambient Shading</h2><p>漫反射着色的一个问题是，任何表面法线与光源法线相反的表面将是黑色的。在现实生活中，光被反射到各处，有些光从各个方向反射.解决这个问题的一种方法是使用几个光源。一个常见的技巧是在视角处放置一个昏暗的光源，这样所有可见的点都能收到一些光。另一种方法是使用双面照明。一种更常见的方法是添加一个环境光常量(Gouraud, 1971)。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">= cr (ca + cl max (0, n · l))</span><br></pre></td></tr></table></figure></p>
-<h1 id="Phong-Lighting-Model"><a href="#Phong-Lighting-Model" class="headerlink" title="Phong Lighting Model"></a>Phong Lighting Model</h1><p>仅仅有diffuse Shading无法体现物体的高光特性.Phong Lighting Model引入了高光的概念.高光随着视点的移动而在表面上移动。这意味着我们必须在光照方程中加入一个单位向量e，指向眼睛。如果你仔细观察高光，你会发现它们实际上是光的反射;有时这些反射是模糊的。这些高光的颜色是光的颜色.<br>定义观测向量e,光线的反射向量r.e与e之间的夹角越小则高光越强.因此 c = cl(e · r)<br><img src="/.com//8.jpg" alt="alt"><br>以上方程存在两个问题:</p>
+<h1 id="Phong-Lighting-Model"><a href="#Phong-Lighting-Model" class="headerlink" title="Phong Lighting Model"></a>Phong Lighting Model</h1><p>仅仅有diffuse Shading无法体现物体的高光特性.Phong Lighting Model引入了高光的概念.高光随着视点的移动而在表面上移动。这意味着我们必须在光照方程中加入一个单位向量e，指向眼睛。如果你仔细观察高光，你会发现它们实际上是光的反射;有时这些反射是模糊的。这些高光的颜色是光的颜色.<br>定义观测向量e,光线的反射向量r.e与e之间的夹角越小则高光越强.因此 c = cl(e · r)<br><img src="8.jpg" alt="alt"><br>以上方程存在两个问题:</p>
 <ol>
 <li>向量的点乘可能为负值,需要用max约束. c = cl max(e . r)</li>
-<li>以上方程生成的高光区域比实际的要大得多,可以在不降低最大颜色的情况下通过提高幂来收窄它 c = clmax(0, e · r)^p<br>这里p被称冯氏指数;它是一个正数(Phong, 1975)。改变冯氏指数对高光辐射面积的影响如下图所示:<br><img src="/.com//9.jpg" alt="alt"></li>
+<li>以上方程生成的高光区域比实际的要大得多,可以在不降低最大颜色的情况下通过提高幂来收窄它 c = clmax(0, e · r)^p<br>这里p被称冯氏指数;它是一个正数(Phong, 1975)。改变冯氏指数对高光辐射面积的影响如下图所示:<br><img src="9.jpg" alt="alt"></li>
 </ol>
-<h2 id="计算方式一-求反射向量r"><a href="#计算方式一-求反射向量r" class="headerlink" title="计算方式一: 求反射向量r"></a>计算方式一: 求反射向量r</h2><p>为了实现方程，我们首先需要计算单位向量r。给定单位向量l和n, r为向量l关于n的反射,公式如下:<br><img src="/.com//10.jpg" alt="alt"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r = −l + 2(l · n)n</span><br></pre></td></tr></table></figure></p>
-<h2 id="计算方式二-半程向量"><a href="#计算方式二-半程向量" class="headerlink" title="计算方式二: 半程向量"></a>计算方式二: 半程向量</h2><p><img src="/.com//12.jpg" alt="alt"></p>
-<h1 id="完整的Blinn-Phong-反射模型"><a href="#完整的Blinn-Phong-反射模型" class="headerlink" title="完整的Blinn-Phong 反射模型"></a>完整的Blinn-Phong 反射模型</h1><p><img src="/.com//13.jpg" alt="alt"></p>
-<h1 id="着色频率"><a href="#着色频率" class="headerlink" title="着色频率"></a>着色频率</h1><h2 id="Flat-Shading"><a href="#Flat-Shading" class="headerlink" title="Flat Shading"></a>Flat Shading</h2><p>利用三角形法线,每个三角形计算一次着色,通常会呈现为多面的外观,对于曲面物体表现力不是很好.<br><img src="/.com//3.jpg" alt="alt"></p>
-<h2 id="Gouraud-Shading"><a href="#Gouraud-Shading" class="headerlink" title="Gouraud Shading"></a>Gouraud Shading</h2><p>每个三角形顶点计算一次着色,三角形内部像素通过重心坐标插值计算颜色.问题在于如何获取或计算顶点法线?<br><img src="/.com//4.jpg" alt="alt"></p>
+<h2 id="计算方式一-求反射向量r"><a href="#计算方式一-求反射向量r" class="headerlink" title="计算方式一: 求反射向量r"></a>计算方式一: 求反射向量r</h2><p>为了实现方程，我们首先需要计算单位向量r。给定单位向量l和n, r为向量l关于n的反射,公式如下:<br><img src="10.jpg" alt="alt"><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r = −l + 2(l · n)n</span><br></pre></td></tr></table></figure></p>
+<h2 id="计算方式二-半程向量"><a href="#计算方式二-半程向量" class="headerlink" title="计算方式二: 半程向量"></a>计算方式二: 半程向量</h2><p><img src="12.jpg" alt="alt"></p>
+<h1 id="完整的Blinn-Phong-反射模型"><a href="#完整的Blinn-Phong-反射模型" class="headerlink" title="完整的Blinn-Phong 反射模型"></a>完整的Blinn-Phong 反射模型</h1><p><img src="13.jpg" alt="alt"></p>
+<h1 id="着色频率"><a href="#着色频率" class="headerlink" title="着色频率"></a>着色频率</h1><h2 id="Flat-Shading"><a href="#Flat-Shading" class="headerlink" title="Flat Shading"></a>Flat Shading</h2><p>利用三角形法线,每个三角形计算一次着色,通常会呈现为多面的外观,对于曲面物体表现力不是很好.<br><img src="3.jpg" alt="alt"></p>
+<h2 id="Gouraud-Shading"><a href="#Gouraud-Shading" class="headerlink" title="Gouraud Shading"></a>Gouraud Shading</h2><p>每个三角形顶点计算一次着色,三角形内部像素通过重心坐标插值计算颜色.问题在于如何获取或计算顶点法线?<br><img src="4.jpg" alt="alt"></p>
 <h3 id="定义逐顶点法线"><a href="#定义逐顶点法线" class="headerlink" title="定义逐顶点法线"></a>定义逐顶点法线</h3><p>可以通过各种启发式方法计算法线。最简单的方法是将共享每个顶点的三角形的法线求平均然后在顶点处使用这个平均法线。这个平均法线没有经过标准化，所以在使用它做着色之前需要把它转换成一个单位向量。</p>
-<p><img src="/.com//5.jpg" alt="alt"><br><img src="/.com//6.jpg" alt="alt"></p>
+<p><img src="5.jpg" alt="alt"><br><img src="6.jpg" alt="alt"></p>
 <h2 id="Phong-Shading"><a href="#Phong-Shading" class="headerlink" title="Phong Shading"></a>Phong Shading</h2><p>首先计算每个顶点的法线,通过重心坐标插值计算三角形内部每个像素的法线,每个像素计算一次着色.性能最低但是效果最好.</p>
-<h2 id="三种着色频率对比"><a href="#三种着色频率对比" class="headerlink" title="三种着色频率对比"></a>三种着色频率对比</h2><p><img src="/.com//7.jpg" alt="alt"></p>
+<h2 id="三种着色频率对比"><a href="#三种着色频率对比" class="headerlink" title="三种着色频率对比"></a>三种着色频率对比</h2><p><img src="7.jpg" alt="alt"></p>
 
     </div>
 
@@ -321,8 +336,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -335,16 +352,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -373,7 +400,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -405,6 +432,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -422,6 +451,8 @@
 
 
 
+
+  
 
   
 

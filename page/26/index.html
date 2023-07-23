@@ -17,13 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KenShin">
+  <meta name="description" content="it&#39;s better be burning out than to fade away.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pixel World">
 <meta property="og:url" content="http://example.com/page/26/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="it&#39;s better be burning out than to fade away.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="KenShin">
 <meta name="twitter:card" content="summary">
@@ -41,7 +43,7 @@
   };
 </script>
 
-  <title>KenShin</title>
+  <title>Pixel World</title>
   
 
 
@@ -92,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -112,6 +114,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -149,13 +166,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2%E5%92%8C%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -203,13 +220,13 @@
 
       
           <h1 id="图形学的数学基础（九）：仿射变换和齐次坐标"><a href="#图形学的数学基础（九）：仿射变换和齐次坐标" class="headerlink" title="图形学的数学基础（九）：仿射变换和齐次坐标"></a>图形学的数学基础（九）：仿射变换和齐次坐标</h1><p>上一章中我们讨论了很多利用矩阵变换矢量的例子，在二维空间中这些变换具有以下形式：</p>
-<p>$\mathbf{x^丶} = m<em>{11}\mathbf{x} + m</em>{12}\mathbf{y}$</p>
-<p>$\mathbf{y^丶} = m<em>{21}\mathbf{x} + m</em>{22}\mathbf{y}$</p>
+<p>$\mathbf{x^丶} = m_{11}\mathbf{x} + m_{12}\mathbf{y}$</p>
+<p>$\mathbf{y^丶} = m_{21}\mathbf{x} + m_{22}\mathbf{y}$</p>
 <p>这种形式的变换都满足矩阵中某个元素和x，y的线性组合，原点(0,0)在线性变换下始终保持不变，这种变换我们称为“<strong>线性变换</strong>”。无法通过这种方式实现平移。平移只能添加额外的表达式，无法在一个矩阵中完成。如下：</p>
-<p>$\begin{bmatrix}<br>    x^丶\ y^丶<br>\end{bmatrix}$ = $\begin{bmatrix}<br>    a&amp;b\ c&amp;d<br>\end{bmatrix}$ $\begin{bmatrix}<br>    x\ y<br>\end{bmatrix}$ + $\begin{bmatrix}<br>    t_x\ t_y<br>\end{bmatrix}$</p>
+<p>$\begin{bmatrix}<br>    x^丶\\ y^丶<br>\end{bmatrix}$ = $\begin{bmatrix}<br>    a&amp;b\\ c&amp;d<br>\end{bmatrix}$ $\begin{bmatrix}<br>    x\\ y<br>\end{bmatrix}$ + $\begin{bmatrix}<br>    t_x\\ t_y<br>\end{bmatrix}$</p>
 <p>这种变换方式称为“<strong>仿射变换($Affine Transformations$)</strong>”。简而言之就是“线性变换” + “平移”。这种方式存在的问题就是写法过于繁琐，不简洁，无法在一个矩阵中完成。因此引入了“齐次坐标”的概念。</p>
-<h2 id="齐次坐标（Homogenous-Coordinates）"><a href="#齐次坐标（Homogenous-Coordinates）" class="headerlink" title="齐次坐标（Homogenous Coordinates）"></a>齐次坐标（Homogenous Coordinates）</h2><p>没有办法通过$\begin{bmatrix}x\ y\end{bmatrix}$乘以一个2 × 2的矩阵来实现平移。 一个在线性变换矩阵中加入平移的可能性方案是简单地将一个单独的平移矢量与每个变换矩阵相关联，让矩阵负责缩放和旋转而矢量负责平移。</p>
-<p>这样就可以通过一次简单的矩阵乘法完成所有变换操作。方法是将点$\begin{bmatrix}x\ y\end{bmatrix}$通过增加额外的维度（$\mathbf{w}$分量）$\begin{bmatrix}x\ y\ 1\end{bmatrix}$来表达。矩阵增加额外的一列用于表示平移，这样平移分量就和x y的线性关系完全独立出来了。</p>
+<h2 id="齐次坐标（Homogenous-Coordinates）"><a href="#齐次坐标（Homogenous-Coordinates）" class="headerlink" title="齐次坐标（Homogenous Coordinates）"></a>齐次坐标（Homogenous Coordinates）</h2><p>没有办法通过$\begin{bmatrix}x\\ y\end{bmatrix}$乘以一个2 × 2的矩阵来实现平移。 一个在线性变换矩阵中加入平移的可能性方案是简单地将一个单独的平移矢量与每个变换矩阵相关联，让矩阵负责缩放和旋转而矢量负责平移。</p>
+<p>这样就可以通过一次简单的矩阵乘法完成所有变换操作。方法是将点$\begin{bmatrix}x\\ y\end{bmatrix}$通过增加额外的维度（$\mathbf{w}$分量）$\begin{bmatrix}x\\ y\\ 1\end{bmatrix}$来表达。矩阵增加额外的一列用于表示平移，这样平移分量就和x y的线性关系完全独立出来了。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2%E5%92%8C%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87/#more" rel="contents">
@@ -293,8 +310,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -307,16 +326,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -345,7 +374,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -377,6 +406,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -396,6 +427,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

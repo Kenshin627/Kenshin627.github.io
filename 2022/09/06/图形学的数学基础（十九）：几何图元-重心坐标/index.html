@@ -17,30 +17,30 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="图形学的数学基础（十九）：几何图元-重心坐标 定义重心坐标($Barycentric\;Coordinates$)对于空间内的三角形$\triangle{v_1v_2v_3}$和任意一点$\textbf{p}$，必定唯一存在三个数$b_1,b_2,b_3$,满足： $b_1+b_2+b_3 &#x3D; 1$ $\textbf{p} &#x3D; b_1\textbf{v}_1 + b_2\textbf{v}_2+">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形学的数学基础（十九）：几何图元-重心坐标">
 <meta property="og:url" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="图形学的数学基础（十九）：几何图元-重心坐标 定义重心坐标($Barycentric\;Coordinates$)对于空间内的三角形$\triangle{v_1v_2v_3}$和任意一点$\textbf{p}$，必定唯一存在三个数$b_1,b_2,b_3$,满足： $b_1+b_2+b_3 &#x3D; 1$ $\textbf{p} &#x3D; b_1\textbf{v}_1 + b_2\textbf{v}_2+">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.jpg">
-<meta property="og:image" content="http://example.com/.com//2.jpg">
-<meta property="og:image" content="http://example.com/.com//3.png">
-<meta property="og:image" content="http://example.com/.com//4.png">
-<meta property="og:image" content="http://example.com/.com//5.png">
-<meta property="og:image" content="http://example.com/.com//6.jpg">
-<meta property="og:image" content="http://example.com/.com//7.jpg">
+<meta property="og:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/1.jpg">
+<meta property="og:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/2.jpg">
+<meta property="og:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/3.png">
+<meta property="og:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/4.png">
+<meta property="og:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/5.png">
+<meta property="og:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/6.jpg">
+<meta property="og:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/7.jpg">
 <meta property="article:published_time" content="2022-09-06T13:45:54.000Z">
 <meta property="article:modified_time" content="2022-09-08T12:44:58.128Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Math">
 <meta property="article:tag" content="Computer Graphic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+<meta name="twitter:image" content="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/1.jpg">
 
 <link rel="canonical" href="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">
 
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>图形学的数学基础（十九）：几何图元-重心坐标 | KenShin</title>
+  <title>图形学的数学基础（十九）：几何图元-重心坐标 | Pixel World</title>
   
 
 
@@ -106,7 +106,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -126,6 +126,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -164,13 +179,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -222,7 +237,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="图形学的数学基础（十九）：几何图元-重心坐标"><a href="#图形学的数学基础（十九）：几何图元-重心坐标" class="headerlink" title="图形学的数学基础（十九）：几何图元-重心坐标"></a>图形学的数学基础（十九）：几何图元-重心坐标</h1><p><img src="/.com//1.jpg" alt="重心坐标"></p>
+        <h1 id="图形学的数学基础（十九）：几何图元-重心坐标"><a href="#图形学的数学基础（十九）：几何图元-重心坐标" class="headerlink" title="图形学的数学基础（十九）：几何图元-重心坐标"></a>图形学的数学基础（十九）：几何图元-重心坐标</h1><p><img src="1.jpg" alt="重心坐标"></p>
 <h2 id="定义重心坐标-Barycentric-Coordinates"><a href="#定义重心坐标-Barycentric-Coordinates" class="headerlink" title="定义重心坐标($Barycentric\;Coordinates$)"></a>定义重心坐标($Barycentric\;Coordinates$)</h2><p>对于空间内的三角形$\triangle{v_1v_2v_3}$和任意一点$\textbf{p}$，必定唯一存在三个数$b_1,b_2,b_3$,满足：</p>
 <p>$b_1+b_2+b_3 = 1$</p>
 <p>$\textbf{p} = b_1\textbf{v}_1 + b_2\textbf{v}_2+ b_3\textbf{v}_3$</p>
@@ -233,11 +248,11 @@
 <p><strong>这种归一化的约束消除了一个自由度，因此即使有三个坐标，它仍然是一个二维空间。</strong></p>
 <p>重心坐标不仅适用于三角形内的点，对于边上的点甚至三角形外的点都是适用的，三角形内的重心坐标都是被限制到[0,1]范围内，三角形外的任何点都至少有一个负坐标。</p>
 <p>还有一种解释重心坐标的角度，丢弃$b_3$,将$(b_1,b_2)$解释为常规的二维坐标，原点位于$\textbf{v}_3$,x轴是$\textbf{v}_1-\textbf{v}_3$,y轴是$\textbf{v}_2-\textbf{v}_3$</p>
-<p><img src="/.com//2.jpg" alt="重心坐标的几何意义"></p>
-<p>$(b_1,b_2,b_3)\=&gt; b_1\textbf{v}_1 + b_2\textbf{v}_2 + b_3\textbf{v}_3\<br>=&gt; b_1\textbf{v}_1 + b_2\textbf{v}_2 + (1-b_1-b_2)\textbf{v}_3\<br>=&gt; b_1\textbf{v}_1 + b_2\textbf{v}_2 + \textbf{v}_3 - b_1\textbf{v}_3-b_2\textbf{v}_3\<br>=&gt; \textbf{v}_3 + b_1(\textbf{v}_1 -\textbf{v}_3) + b_2(\textbf{v}_2 - \textbf{v}_3)<br>$</p>
-<h2 id="计算重心坐标"><a href="#计算重心坐标" class="headerlink" title="计算重心坐标"></a>计算重心坐标</h2><p><img src="/.com//3.png" alt="重心坐标"></p>
+<p><img src="2.jpg" alt="重心坐标的几何意义"></p>
+<p>$(b_1,b_2,b_3)\\=&gt; b_1\textbf{v}_1 + b_2\textbf{v}_2 + b_3\textbf{v}_3\\<br>=&gt; b_1\textbf{v}_1 + b_2\textbf{v}_2 + (1-b_1-b_2)\textbf{v}_3\\<br>=&gt; b_1\textbf{v}_1 + b_2\textbf{v}_2 + \textbf{v}_3 - b_1\textbf{v}_3-b_2\textbf{v}_3\\<br>=&gt; \textbf{v}_3 + b_1(\textbf{v}_1 -\textbf{v}_3) + b_2(\textbf{v}_2 - \textbf{v}_3)<br>$</p>
+<h2 id="计算重心坐标"><a href="#计算重心坐标" class="headerlink" title="计算重心坐标"></a>计算重心坐标</h2><p><img src="3.png" alt="重心坐标"></p>
 <p>已知p的坐标和$v_1,v_2,v_3$的顶点坐标，求p的重心坐标$(b_1,b_2,b_3)$,只需要求解线性方程组即可：</p>
-<p>$\begin{cases}<br>    b_1x_1 +b_2x_2 + b_3x_3 = p_x\<br>    b_1y_1 +b_2y_2 + b_3y_3 = p_x\<br>    b_1+b_2+b_3 = 1<br>\end{cases}$</p>
+<p>$\begin{cases}<br>    b_1x_1 +b_2x_2 + b_3x_3 = p_x\\<br>    b_1y_1 +b_2y_2 + b_3y_3 = p_x\\<br>    b_1+b_2+b_3 = 1<br>\end{cases}$</p>
 <p>求解该方程组得到：</p>
 <p>$b_1 = \dfrac{(p_y-y_3)(x_2-x_3)+(y_2-y_3)(x_3-p_x)}{(y_1-y_3)(x_2-x_3)+(y_2-y_3)(x_3-x_1)}$</p>
 <p>$b_1 = \dfrac{(p_y-y_1)(x_3-x_1)+(y_3-y_1)(x_1-p_x)}{(y_1-y_3)(x_2-x_3)+(y_2-y_3)(x_3-x_1)}$</p>
@@ -246,15 +261,15 @@
 <p>$b_1 = \dfrac{A(T_1)}{A(T)}, b_2 = \dfrac{A(T_2)}{A(T)}, b_3 = \dfrac{A(T_3)}{A(T)}$</p>
 <p>因此得出结论：<strong>重心坐标等于对面子三角形与大三角形的比例。</strong></p>
 <p>所以计算重心坐标可先叉乘计算面积，再求面积比。另外因为公底边三角形面积比等于高(有向高)的比，因此：</p>
-<p><img src="/.com//4.png" alt="重心坐标"></p>
-<p>$\begin{cases}<br>    b_1 = \dfrac{h_1}{H_1}\<br>    b_2 = \dfrac{h_2}{H_2}\<br>    b_3 = \dfrac{h_3}{H_3}\<br>\end{cases}$</p>
+<p><img src="4.png" alt="重心坐标"></p>
+<p>$\begin{cases}<br>    b_1 = \dfrac{h_1}{H_1}\\<br>    b_2 = \dfrac{h_2}{H_2}\\<br>    b_3 = \dfrac{h_3}{H_3}\\<br>\end{cases}$</p>
 <h2 id="重心-内心-外心"><a href="#重心-内心-外心" class="headerlink" title="重心 内心 外心"></a>重心 内心 外心</h2><h3 id="重心（-Center-of-Gravity-）"><a href="#重心（-Center-of-Gravity-）" class="headerlink" title="重心（$Center of Gravity$）"></a>重心（$Center of Gravity$）</h3><p>重心，也称为质心($Centroid$)，是三角形完美平衡的点。它是中线的交点（中线是从一个顶点到对边中点的直线）。如下图：</p>
-<p><img src="/.com//5.png" alt="重心坐标"></p>
+<p><img src="5.png" alt="重心坐标"></p>
 <p>重心是三个顶点的几何平均值：</p>
 <p>$C_{gravity} = \dfrac{\textbf{v}_1 + \textbf{v}_2 + \textbf{v}_3}{3}$</p>
 <p>重心的重心坐标为：$(\dfrac{1}{3},\dfrac{1}{3},\dfrac{1}{3})$</p>
 <h3 id="内心（-Incenter-）"><a href="#内心（-Incenter-）" class="headerlink" title="内心（$Incenter$）"></a>内心（$Incenter$）</h3><p>内心是三角形三条角平分线的交点。它也是三角形内切圆的圆心。由此可知，内心与三角形各条边的距离是相等的：</p>
-<p><img src="/.com//6.jpg" alt="内心"></p>
+<p><img src="6.jpg" alt="内心"></p>
 <p>假设$P = l_1 + l_2 + l_3$为三角形的周长,$l_1,l_2,l_3为每条边长$，则内心的重心坐标可是表示为边长与周长比：</p>
 <p>$(\dfrac{l_1}{p},\dfrac{l_2}{p},\dfrac{l_3}{p})$</p>
 <p>内心的坐标：</p>
@@ -262,7 +277,7 @@
 <p>内切圆半径为三角形面积除以三角形周长：</p>
 <p>$r_{Incenter} = \dfrac{A}{p}$</p>
 <h3 id="外心（-Circumcenter-）"><a href="#外心（-Circumcenter-）" class="headerlink" title="外心（$Circumcenter$）"></a>外心（$Circumcenter$）</h3><p>外心是三角形中与顶点等距的点。它是围绕三角形的外接圆的圆心。外心构造为各条边的垂直平分线的交点。</p>
-<p><img src="/.com//7.jpg" alt="内心"></p>
+<p><img src="7.jpg" alt="内心"></p>
 <h4 id="外心的计算"><a href="#外心的计算" class="headerlink" title="外心的计算"></a>外心的计算</h4><p>$d_1 = -\vec{e_2}\cdot\vec{e_3}$</p>
 <p>$d_2 = -\vec{e_3}\cdot\vec{e_1}$</p>
 <p>$d_3 = -\vec{e_1}\cdot\vec{e_2}$</p>
@@ -364,8 +379,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -378,16 +395,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -416,7 +443,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -448,6 +475,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -467,6 +496,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -17,38 +17,38 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="图形学的数学基础（二十五）：着色渲染过程本质可以上分解为两个步骤:可见性测试和着色。光栅化和射线追踪都是用于解决可见性问题。本章我们将介绍渲染过程的第二部分:着色。着色是一个庞大的主题。一些用于着色的技术在数学上也很复杂。本章我们将学习最基本的着色模型: $Blinn-Phong\;Reflectance\;Model$ $blinn-Phong\;Reflectance\;Model$当我们观察">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形学的数学基础（二十五）：着色">
 <meta property="og:url" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="图形学的数学基础（二十五）：着色渲染过程本质可以上分解为两个步骤:可见性测试和着色。光栅化和射线追踪都是用于解决可见性问题。本章我们将介绍渲染过程的第二部分:着色。着色是一个庞大的主题。一些用于着色的技术在数学上也很复杂。本章我们将学习最基本的着色模型: $Blinn-Phong\;Reflectance\;Model$ $blinn-Phong\;Reflectance\;Model$当我们观察">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.png">
-<meta property="og:image" content="http://example.com/.com//2.jpg">
-<meta property="og:image" content="http://example.com/.com//3.jpg">
-<meta property="og:image" content="http://example.com/.com//4.jpg">
-<meta property="og:image" content="http://example.com/.com//5.jpg">
-<meta property="og:image" content="http://example.com/.com//6.png">
-<meta property="og:image" content="http://example.com/.com//7.jpg">
-<meta property="og:image" content="http://example.com/.com//8.jpg">
-<meta property="og:image" content="http://example.com/.com//9.png">
-<meta property="og:image" content="http://example.com/.com//10.png">
-<meta property="og:image" content="http://example.com/.com//11.png">
-<meta property="og:image" content="http://example.com/.com//12.png">
-<meta property="og:image" content="http://example.com/.com//13.png">
-<meta property="og:image" content="http://example.com/.com//14.png">
-<meta property="og:image" content="http://example.com/.com//15.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/1.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/2.jpg">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/3.jpg">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/4.jpg">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/5.jpg">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/6.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/7.jpg">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/8.jpg">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/9.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/10.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/11.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/12.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/13.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/14.png">
+<meta property="og:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/15.png">
 <meta property="article:published_time" content="2022-09-14T13:05:33.000Z">
 <meta property="article:modified_time" content="2022-09-15T13:50:19.719Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Math">
 <meta property="article:tag" content="Computer Graphic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.png">
+<meta name="twitter:image" content="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/1.png">
 
 <link rel="canonical" href="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/">
 
@@ -63,7 +63,7 @@
   };
 </script>
 
-  <title>图形学的数学基础（二十五）：着色 | KenShin</title>
+  <title>图形学的数学基础（二十五）：着色 | Pixel World</title>
   
 
 
@@ -114,7 +114,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -134,6 +134,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -172,13 +187,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9D%80%E8%89%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -237,54 +252,54 @@
 <li>漫反射部分：颜色变化不明显，表示物体本身的颜色或者diffuseTexture颜色。（物体表面吸收了部分光线，反射出的未被吸收的部分）</li>
 <li>环境光：未被光照直接照亮的部分，<strong>模拟间接光照</strong>。在布林冯模型中简化为常量。这也是为什么布林冯模型被称为经验模型的原因。计算精确的间接光照需要$RayTracing$。</li>
 </ul>
-<p><img src="/.com//1.png" alt="blinn-phong"></p>
+<p><img src="1.png" alt="blinn-phong"></p>
 <p>布林冯光照模型是一个经验模型。整体思想就是按照这三部分来建模的。布林冯光照模型是一个直接光照模型（或者叫局部光照/局部性），不考虑间接光照，即不考虑周围物体反射的光线对其产生的影响。着色权重仅考虑光源。（阴影及SSAO需要多个pass处理）</p>
 <h3 id="定义光照参数"><a href="#定义光照参数" class="headerlink" title="定义光照参数"></a>定义光照参数</h3><p>要计算物体表面着色点光照结果，需要定义一些基本的参数。</p>
-<p><img src="/.com//2.jpg" alt="blinn-phong"></p>
+<p><img src="2.jpg" alt="blinn-phong"></p>
 <ul>
 <li>观测方向（$view direction$）$\hat{v}$:着色点到观测点（相机）的单位矢量</li>
 <li>光照方向（$light direction$）$\hat{l}$：着色点到光源的单位矢量</li>
 <li>着色点法线（$normal$）$\hat{n}$：垂直于表面的矢量，用于描述表面（或着色点）的方向。</li>
 <li>物体表面本身着色参数（漫反射颜色 高光颜色 粗糙度…）</li>
 </ul>
-<h3 id="漫反射（-Diffuse-Reflection-）"><a href="#漫反射（-Diffuse-Reflection-）" class="headerlink" title="漫反射（$Diffuse\;Reflection$）"></a>漫反射（$Diffuse\;Reflection$）</h3><p>当一根光线打到物体表面后，光线会被均匀的反射到不同的方向（其实这也是一种近似）。<br><img src="/.com//3.jpg" alt="blinn-phong"></p>
+<h3 id="漫反射（-Diffuse-Reflection-）"><a href="#漫反射（-Diffuse-Reflection-）" class="headerlink" title="漫反射（$Diffuse\;Reflection$）"></a>漫反射（$Diffuse\;Reflection$）</h3><p>当一根光线打到物体表面后，光线会被均匀的反射到不同的方向（其实这也是一种近似）。<br><img src="3.jpg" alt="blinn-phong"></p>
 <h4 id="Lambert’s-cosine-law"><a href="#Lambert’s-cosine-law" class="headerlink" title="$Lambert’s\;cosine\;law$"></a>$Lambert’s\;cosine\;law$</h4><p>当一束光到达物体表面时，物体朝向（法线方向）与光照方向的角度不同，得到的明暗也是不一样的，着色点法线与光线夹角越大，表面实际接收到的光线越少，<strong>物体表面接收到的光照能量与着色点法线和光照夹角余弦成正比。</strong>由于法线和光照方向均为单位向量。因此表面着色点接收到的能量正比于$\hat{n}\cdot\hat{l}$</p>
-<p><img src="/.com//4.jpg" alt="blinn-phong"></p>
+<p><img src="4.jpg" alt="blinn-phong"></p>
 <h4 id="Lambert-Shading"><a href="#Lambert-Shading" class="headerlink" title="$Lambert\;Shading$"></a>$Lambert\;Shading$</h4><p>我们知道球体表面积公式:$A = 4\pi{r^2}$对于点光源来说，假设点光源辐射的能量是均匀的。那么随着着色点和光源距离的增加，着色点接收到的能量就越少（距离增加导致球体表面积增大，而单位时间点光源辐射的能量是一样的，因此单位面积接收到的能量减少）。着色点接收到的能量与距离平方成反比。</p>
-<p><img src="/.com//5.jpg" alt="blinn-phong"></p>
-<p><img src="/.com//6.png" alt="blinn-phong"></p>
+<p><img src="5.jpg" alt="blinn-phong"></p>
+<p><img src="6.png" alt="blinn-phong"></p>
 <p>漫反射分量$L_d = K_d\dfrac{E}{r^2}max(0, \hat{n}\cdot\hat{l})$</p>
 <ul>
 <li>Kd（漫反射系数）：光到达物体表面后，能量会被吸收一部分（不同材质的物体对不同波长的光线吸收率是不一样的），剩下的会被反射出来，漫反射系数即定义了不被物体所吸收的光照颜色（$diffuseColor$），即物体表现出的颜色。</li>
 <li>$\dfrac{E}{r^2}$：光照能量衰减系数，抵达物体表面的能量与光源和着色点距离平方成反比。</li>
 <li>$max(0,\hat{n}\cdot\hat{l})$:  $Lambert’s\;cosine\;law$，表面着色点接收到的能量正比于$\hat{n}\cdot\hat{l}$。为了避免负值情况使用max做了最小值的限定。</li>
 </ul>
-<p><img src="/.com//7.jpg" alt="blinn-phong"></p>
+<p><img src="7.jpg" alt="blinn-phong"></p>
 <p>$K_d$系数对漫反射表现得影响：</p>
 <p>随着$K_d$的增加（吸收光线减少，反射光线增加），物体表现越来越明亮。</p>
-<p><img src="/.com//8.jpg" alt="blinn-phong"></p>
+<p><img src="8.jpg" alt="blinn-phong"></p>
 <h3 id="高光（-Specular-Reflection-）"><a href="#高光（-Specular-Reflection-）" class="headerlink" title="高光（$Specular\;Reflection$）"></a>高光（$Specular\;Reflection$）</h3><p>让我们从反射开始，反射是光与物质相互作用的一种形式。反射是光子或入射光束撞击到反射表面的结果，例如玻璃，光滑的金属，镜子都容易形成高光反射。反弹的方向与撞击点表面法线方向对称，也就是说，如果入射方向与表面法线的夹角记为$\theta_i$，反射方向与表面法线的夹角为$\theta_r$，则$\theta_i = \theta_r$。这就是的反射定律。因此当观测方向与反射方向接近时，高光表现强烈，反之高光表现减弱，高光项与反射矢量和观测矢量的点积成正比。因此高光是与观测方向紧密相关的。</p>
-<p><img src="/.com//9.png" alt="blinn-phong"></p>
+<p><img src="9.png" alt="blinn-phong"></p>
 <h4 id="计算反射向量"><a href="#计算反射向量" class="headerlink" title="计算反射向量"></a>计算反射向量</h4><p>接下来需要计算反射向量，然后通过反射向量和观测向量做点积，即可得到从当前视角观测着色点的高光分量。那么如何计算反射向量呢？可以线计算$\hat{L}$在$\hat{n}$上的投影向量$\vec{B}$（向量点积即可），然后根据向量加法计算$\vec{A}$向量。如下：</p>
-<p><img src="/.com//10.png" alt="blinn-phong"></p>
-<p>$\vec{B} = \cos\theta_i||\vec{L}||\hat{n} = (\hat{L}\cdot\hat{n})\hat{n}\ \dfrac{\vec{A}}{2} = \vec{B}-\hat{L} = (\hat{L}\cdot\hat{n})\hat{n} - \vec{L}\<br>\vec{R} = \vec{B} + \dfrac{\vec{A}}{2} = (\hat{L}\cdot\hat{n})\hat{n} + (\hat{L}\cdot\hat{n})\hat{n} - \vec{L} =2(\hat{L}\cdot\hat{n})\hat{n} - \hat{L}$</p>
+<p><img src="10.png" alt="blinn-phong"></p>
+<p>$\vec{B} = \cos\theta_i||\vec{L}||\hat{n} = (\hat{L}\cdot\hat{n})\hat{n}\\ \dfrac{\vec{A}}{2} = \vec{B}-\hat{L} = (\hat{L}\cdot\hat{n})\hat{n} - \vec{L}\\<br>\vec{R} = \vec{B} + \dfrac{\vec{A}}{2} = (\hat{L}\cdot\hat{n})\hat{n} + (\hat{L}\cdot\hat{n})\hat{n} - \vec{L} =2(\hat{L}\cdot\hat{n})\hat{n} - \hat{L}$</p>
 <h4 id="半程向量（-half-vector-）"><a href="#半程向量（-half-vector-）" class="headerlink" title="半程向量（$half\;vector$）"></a>半程向量（$half\;vector$）</h4><p>但是以上计算反射向量的方法过去繁琐，有一种更加简便的办法，通过<strong>半程向量</strong>（光照方向和观测方向的角平分线方向，利用向量平行四边形法则求和然后归一化处理即可）。半程向量与法线方向越接近，则观测方向与反射方向就越接近。因此可以计算半程向量和法线的点积来代替反射方向与观测方向的点积，因为半程向量好计算（只需要加法操作），省去了一次向量点积带来运算开销。</p>
-<p><img src="/.com//11.png" alt="blinn-phong"></p>
+<p><img src="11.png" alt="blinn-phong"></p>
 <p>$\hat{h} = \textbf{bisector(\textbf{v}, \textbf{l})} = \dfrac{\hat{l} + \hat{v}}{||\hat{l}|| + ||\hat{v}||}$</p>
-<h4 id="高光计算公式"><a href="#高光计算公式" class="headerlink" title="高光计算公式"></a>高光计算公式</h4><p><img src="/.com//12.png" alt="blinn-phong"></p>
+<h4 id="高光计算公式"><a href="#高光计算公式" class="headerlink" title="高光计算公式"></a>高光计算公式</h4><p><img src="12.png" alt="blinn-phong"></p>
 <ul>
 <li>$K_s$（镜面反射系数）:系数越大，亮度越大。同时因为高光通常是白色，所以表示颜色通常也为白色。</li>
 <li>$\dfrac{E}{r^2}$: 布林冯为经验模型，用抵达着色点的能量近似代替被着色点接收的能量，因此此处并没有像漫反射一样计算夹角余弦。</li>
 <li>$bisector$: 布林冯模型对冯模型的改进，用半程向量代替反射向量，减少了一次点乘计算。</li>
 <li>$指数P$:最后带有一个指数p，该指数用于加快函数的衰减程度，由于在物理世界中高光存在于物体表面很小的一部分，而的衰减速度太慢，通过携带指数，可以促进衰减速度，使得高光只能在与法线向量非常接近的情况下才能被视角看见.</li>
 </ul>
-<p><img src="/.com//13.png" alt="blinn-phong"></p>
-<p><img src="/.com//14.png" alt="blinn-phong"></p>
+<p><img src="13.png" alt="blinn-phong"></p>
+<p><img src="14.png" alt="blinn-phong"></p>
 <h3 id="环境光（-Ambient-）"><a href="#环境光（-Ambient-）" class="headerlink" title="环境光（$Ambient$）"></a>环境光（$Ambient$）</h3><p>在 Blinn-Phong 模型中，举出了一个非常大胆的假设：物体表面接收到的各种环境光都是相同强度的。当然，这并不符合常理，但是可以大大简化了计算环境光的步骤，强度相同，意味着反射光的强度也相同，而由于环境光来自四面八方的物体反射，所以该物体表面反射环境光的方向也是四面八方的，那么：环境光与光源的角度无关，与观察角度也无关，所以它是一个常数。</p>
 <p>计算环境光的公式非常简单，只需要得到物体表面的环境光吸收率和环境光的强度即可：</p>
 <p>$L_a = K_a{E_a}$</p>
 <h3 id="总结-blinn-Phong-Reflectance-Model"><a href="#总结-blinn-Phong-Reflectance-Model" class="headerlink" title="总结$blinn-Phong\;Reflectance\;Model$"></a>总结$blinn-Phong\;Reflectance\;Model$</h3><p>最后，将漫反射光、高光和环境光作用在物体表面上的效果叠加在一起，就可以得到近似于物理光照的效果。</p>
-<p><img src="/.com//15.png" alt="blinn-phong"></p>
+<p><img src="15.png" alt="blinn-phong"></p>
 <p>$L = L_a+L_d+L_s = K_aE_a + K_d\dfrac{E}{r^2}max(0, \hat{n}\cdot\hat{l}) + K_s\dfrac{E}{r^2}max(0, \hat{n}\cdot\hat{h})^p$</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=7&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p>
 
@@ -377,8 +392,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -391,16 +408,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -429,7 +456,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -461,6 +488,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -480,6 +509,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

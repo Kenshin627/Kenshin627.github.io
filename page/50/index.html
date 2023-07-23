@@ -17,13 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KenShin">
+  <meta name="description" content="it&#39;s better be burning out than to fade away.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pixel World">
 <meta property="og:url" content="http://example.com/page/50/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="it&#39;s better be burning out than to fade away.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="KenShin">
 <meta name="twitter:card" content="summary">
@@ -41,7 +43,7 @@
   };
 </script>
 
-  <title>KenShin</title>
+  <title>Pixel World</title>
   
 
 
@@ -92,7 +94,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -112,6 +114,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -149,13 +166,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/Foundations-of-functional-programming/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -207,7 +224,7 @@
 <li>Anytime a function is called with the same argument, it must return the same<br>value</li>
 </ul>
 <p>The third rule is part of the basic mathematical definition of a function. When the rule<br>that the same argument must always produce the same result is applied to function in a<br>programming language, it’s called referential transparency.</p>
-<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="/.com//1.png" alt="alt"></p>
+<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="1.png" alt="alt"></p>
 <h2 id="Practical-lambda-functions-and-lexical-scope"><a href="#Practical-lambda-functions-and-lexical-scope" class="headerlink" title="Practical lambda functions and lexical scope"></a>Practical lambda functions and lexical scope</h2><p>IIFE works on exactly the same principles as our example of replacing a where statement. Whenever you create a new function, named or not, you<br>create a new scope, which is the context in which a variable is defined. When a variable is<br>used, the program looks at the nearest scope; if the definition of the variable isn’t there,<br>it goes to the next one up. This particular type of variable lookup is called lexical scope.<br>Both Haskell and JavaScript use lexical scoping, which is why IIFE and your lambda function variables behave in a similar fashion.</p>
 <h1 id="03-FIRST-CLASS-FUNCTIONS"><a href="#03-FIRST-CLASS-FUNCTIONS" class="headerlink" title="03. FIRST-CLASS FUNCTIONS"></a>03. FIRST-CLASS FUNCTIONS</h1>
           <!--noindex-->
@@ -293,8 +310,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -307,16 +326,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -345,7 +374,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -377,6 +406,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -394,6 +425,8 @@
 
 
 
+
+  
 
   
 

@@ -17,26 +17,26 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="图形学的数学基础（十二）：mvp变换（上）图形系统的一个重要任务是将三维空间中的模型映射到二维平面上（以像素为单位），这是一个复杂的过程，取决于许多因素，包括但不限于相机的位置，方向，投影的类型（正交&#x2F;透视），fov，和viewport宽高，对于所有复杂的矩阵变换，最好的做法是将其分解为几个更简单的矩阵乘积。大多数图形系统通过使用四个转换序列来实现m,以openGL为例：   modelMatri">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形学的数学基础（十二）：mvp变换（上）">
 <meta property="og:url" content="http://example.com/2022/09/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2%EF%BC%88%E4%B8%8A%EF%BC%89/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="图形学的数学基础（十二）：mvp变换（上）图形系统的一个重要任务是将三维空间中的模型映射到二维平面上（以像素为单位），这是一个复杂的过程，取决于许多因素，包括但不限于相机的位置，方向，投影的类型（正交&#x2F;透视），fov，和viewport宽高，对于所有复杂的矩阵变换，最好的做法是将其分解为几个更简单的矩阵乘积。大多数图形系统通过使用四个转换序列来实现m,以openGL为例：   modelMatri">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.png">
-<meta property="og:image" content="http://example.com/.com//2.png">
-<meta property="og:image" content="http://example.com/.com//3.png">
+<meta property="og:image" content="http://example.com/2022/09/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2%EF%BC%88%E4%B8%8A%EF%BC%89/1.png">
+<meta property="og:image" content="http://example.com/2022/09/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2%EF%BC%88%E4%B8%8A%EF%BC%89/2.png">
+<meta property="og:image" content="http://example.com/2022/09/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2%EF%BC%88%E4%B8%8A%EF%BC%89/3.png">
 <meta property="article:published_time" content="2022-09-03T02:55:40.000Z">
 <meta property="article:modified_time" content="2022-09-04T05:16:50.530Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Math">
 <meta property="article:tag" content="Computer Graphic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.png">
+<meta name="twitter:image" content="http://example.com/2022/09/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2%EF%BC%88%E4%B8%8A%EF%BC%89/1.png">
 
 <link rel="canonical" href="http://example.com/2022/09/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2%EF%BC%88%E4%B8%8A%EF%BC%89/">
 
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>图形学的数学基础（十二）：mvp变换（上） | KenShin</title>
+  <title>图形学的数学基础（十二）：mvp变换（上） | Pixel World</title>
   
 
 
@@ -102,7 +102,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -122,6 +122,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -160,13 +175,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2%EF%BC%88%E4%B8%8A%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -219,7 +234,7 @@
 
       
         <h1 id="图形学的数学基础（十二）：mvp变换（上）"><a href="#图形学的数学基础（十二）：mvp变换（上）" class="headerlink" title="图形学的数学基础（十二）：mvp变换（上）"></a>图形学的数学基础（十二）：mvp变换（上）</h1><p>图形系统的一个重要任务是将三维空间中的模型映射到二维平面上（以像素为单位），这是一个复杂的过程，取决于许多因素，包括但不限于相机的位置，方向，投影的类型（正交/透视），fov，和viewport宽高，对于所有复杂的矩阵变换，最好的做法是将其分解为几个更简单的矩阵乘积。大多数图形系统通过使用四个转换序列来实现m,以openGL为例：</p>
-<p><img src="/.com//1.png" alt="mvp变换"></p>
+<p><img src="1.png" alt="mvp变换"></p>
 <ol>
 <li><p><strong>modelMatrix</strong>：将视图从模型空间转换为世界空间。直白的说就是将模型摆放到世界坐标空间的何处。这一步确立了世界空间中各模型的相对布局，摆放位置。</p>
 </li>
@@ -230,8 +245,8 @@
 <li><p><strong>viewport</strong>: 将视图从单位立方体映射到所需的屏幕空间（screenSpace），取决于输出图像的大小和位置。</p>
 </li>
 </ol>
-<p><img src="/.com//2.png" alt="mvp变换"></p>
-<h2 id="view-Transform"><a href="#view-Transform" class="headerlink" title="view Transform"></a>view Transform</h2><p>现实生活中，如果相机和所有物体一起移动（相对位置关系不变），则拍出来的照片也都是一样的。根据这个原理我们得出：将相机移动到原点，朝向-z方向，构造出一个变换矩阵$\textbf{M}<em>{view}$，其他物体随着相机一起移动（应用$\textbf{M}</em>{view}$）。即可完成viewTransform。如何构造$\textbf{M}_{view}$？将视图从世界空间转换到相机空间？首先需要定义相机参数：</p>
+<p><img src="2.png" alt="mvp变换"></p>
+<h2 id="view-Transform"><a href="#view-Transform" class="headerlink" title="view Transform"></a>view Transform</h2><p>现实生活中，如果相机和所有物体一起移动（相对位置关系不变），则拍出来的照片也都是一样的。根据这个原理我们得出：将相机移动到原点，朝向-z方向，构造出一个变换矩阵$\textbf{M}_{view}$，其他物体随着相机一起移动（应用$\textbf{M}_{view}$）。即可完成viewTransform。如何构造$\textbf{M}_{view}$？将视图从世界空间转换到相机空间？首先需要定义相机参数：</p>
 <ul>
 <li>位置（eye Position）：$\mathbf{e}$</li>
 <li>观测方向（gaze Direction）：$\vec{g}$</li>
@@ -246,17 +261,17 @@
 <li>旋转$\vec{g}\times \vec{t}$到x方向。</li>
 </ul>
 <p>因此我们可以将$\textbf{M}_{view}$拆解成平移和旋转两个部分.首先需要对相机参数的矢量进行正交化。</p>
-<p>$\textbf{M}<em>{view}$ = $\textbf{R}</em>{view}$$\textbf{T}_{view}$</p>
-<p><img src="/.com//3.png" alt="mvp变换"></p>
+<p>$\textbf{M}_{view}$ = $\textbf{R}_{view}$$\textbf{T}_{view}$</p>
+<p><img src="3.png" alt="mvp变换"></p>
 <h3 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h3><p>根据前边章节讲过的矢量叉乘正交化的方法，可以计算出：</p>
 <p>$\hat{w} = -\dfrac{\vec{g}}{||g||}$</p>
 <p>$\hat{u} = \dfrac{\mathbf{t}\times \mathbf{w}}{||\mathbf{t}\times \mathbf{w}||}$</p>
 <p>$\hat{v} = \mathbf{w}\times \mathbf{u}$</p>
-<h3 id="平移矩阵"><a href="#平移矩阵" class="headerlink" title="平移矩阵"></a>平移矩阵</h3><p>$\textbf{T}<em>{view}$ = $\begin{bmatrix}<br>    1&amp;0&amp;0&amp;-x</em>{e}\<br>    0&amp;1&amp;0&amp;-y<em>{e}\<br>    0&amp;0&amp;1&amp;-z</em>{e}\<br>    0&amp;0&amp;0&amp;1\<br>\end{bmatrix}$</p>
-<h3 id="旋转矩阵"><a href="#旋转矩阵" class="headerlink" title="旋转矩阵"></a>旋转矩阵</h3><p>旋转矩阵不好写，但是我们可以反过来思考这个问题，将x（1，0，0），y（0，1，0），z（0，0，1）分别旋转到$\hat{u}$,$\hat{v}$, $-\hat{w}$是很好写的，由于这两个矩阵互为逆矩阵，根据旋转矩阵的性质，旋转矩阵都是正交的，而正交矩阵的逆矩阵等于其转置。所以我们可以先求$\textbf{R}<em>{view}$的逆矩阵，然后将其转置，即可得到$\textbf{R}</em>{view}$：</p>
-<p>$\textbf{R}_{view}^{-1}$ = $\begin{bmatrix}<br>    x_u&amp;x_v&amp;x_w&amp;0\<br>    y_u&amp;y_v&amp;y_w&amp;0\<br>    z_u&amp;z_v&amp;z_w&amp;0\<br>    0&amp;0&amp;0&amp;1\<br>\end{bmatrix}$</p>
-<p>$\textbf{R}_{view}$ = $\begin{bmatrix}<br>    x_u&amp;y_u&amp;z_u&amp;0\<br>    x_v&amp;y_v&amp;z_v&amp;0\<br>    x_w&amp;y_w&amp;z_w&amp;0\<br>    0&amp;0&amp;0&amp;1\<br>\end{bmatrix}$</p>
-<h3 id="合到一起"><a href="#合到一起" class="headerlink" title="合到一起"></a>合到一起</h3><p>$\textbf{M}<em>{view} = \textbf{R}</em>{view}\textbf{T}<em>{view} = \begin{bmatrix}<br>    x_u&amp;y_u&amp;z_u&amp;0\<br>    x_v&amp;y_v&amp;z_v&amp;0\<br>    x_w&amp;y_w&amp;z_w&amp;0\<br>    0&amp;0&amp;0&amp;1\<br>\end{bmatrix}\begin{bmatrix}<br>    1&amp;0&amp;0&amp;-x</em>{e}\<br>    0&amp;1&amp;0&amp;-y<em>{e}\<br>    0&amp;0&amp;1&amp;-z</em>{e}\<br>    0&amp;0&amp;0&amp;1\<br>\end{bmatrix}$</p>
+<h3 id="平移矩阵"><a href="#平移矩阵" class="headerlink" title="平移矩阵"></a>平移矩阵</h3><p>$\textbf{T}_{view}$ = $\begin{bmatrix}<br>    1&amp;0&amp;0&amp;-x_{e}\\<br>    0&amp;1&amp;0&amp;-y_{e}\\<br>    0&amp;0&amp;1&amp;-z_{e}\\<br>    0&amp;0&amp;0&amp;1\\<br>\end{bmatrix}$</p>
+<h3 id="旋转矩阵"><a href="#旋转矩阵" class="headerlink" title="旋转矩阵"></a>旋转矩阵</h3><p>旋转矩阵不好写，但是我们可以反过来思考这个问题，将x（1，0，0），y（0，1，0），z（0，0，1）分别旋转到$\hat{u}$,$\hat{v}$, $-\hat{w}$是很好写的，由于这两个矩阵互为逆矩阵，根据旋转矩阵的性质，旋转矩阵都是正交的，而正交矩阵的逆矩阵等于其转置。所以我们可以先求$\textbf{R}_{view}$的逆矩阵，然后将其转置，即可得到$\textbf{R}_{view}$：</p>
+<p>$\textbf{R}_{view}^{-1}$ = $\begin{bmatrix}<br>    x_u&amp;x_v&amp;x_w&amp;0\\<br>    y_u&amp;y_v&amp;y_w&amp;0\\<br>    z_u&amp;z_v&amp;z_w&amp;0\\<br>    0&amp;0&amp;0&amp;1\\<br>\end{bmatrix}$</p>
+<p>$\textbf{R}_{view}$ = $\begin{bmatrix}<br>    x_u&amp;y_u&amp;z_u&amp;0\\<br>    x_v&amp;y_v&amp;z_v&amp;0\\<br>    x_w&amp;y_w&amp;z_w&amp;0\\<br>    0&amp;0&amp;0&amp;1\\<br>\end{bmatrix}$</p>
+<h3 id="合到一起"><a href="#合到一起" class="headerlink" title="合到一起"></a>合到一起</h3><p>$\textbf{M}_{view} = \textbf{R}_{view}\textbf{T}_{view} = \begin{bmatrix}<br>    x_u&amp;y_u&amp;z_u&amp;0\\<br>    x_v&amp;y_v&amp;z_v&amp;0\\<br>    x_w&amp;y_w&amp;z_w&amp;0\\<br>    0&amp;0&amp;0&amp;1\\<br>\end{bmatrix}\begin{bmatrix}<br>    1&amp;0&amp;0&amp;-x_{e}\\<br>    0&amp;1&amp;0&amp;-y_{e}\\<br>    0&amp;0&amp;1&amp;-z_{e}\\<br>    0&amp;0&amp;0&amp;1\\<br>\end{bmatrix}$</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://item.jd.com/12659881.html">《3D数学基础》图形和游戏开发(第二版)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=2&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p>
 <p><a target="_blank" rel="noopener" href="https://item.jd.com/10037953813770.html">fundamentals-of-computer-graphics</a></p>
@@ -350,8 +365,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -364,16 +381,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -402,7 +429,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -434,6 +461,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -453,6 +482,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

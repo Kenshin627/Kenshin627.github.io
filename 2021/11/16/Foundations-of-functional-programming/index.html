@@ -17,30 +17,30 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="01. FunctionsAll functions in Haskell follow three rules that force them to behave like functions inmath:  All functions must take an argument. All functions must return a value. Anytime a function is">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Haskell01 - Foundations of functional programming">
 <meta property="og:url" content="http://example.com/2021/11/16/Foundations-of-functional-programming/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="01. FunctionsAll functions in Haskell follow three rules that force them to behave like functions inmath:  All functions must take an argument. All functions must return a value. Anytime a function is">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.png">
-<meta property="og:image" content="http://example.com/.com//3.png">
-<meta property="og:image" content="http://example.com/.com//4.png">
-<meta property="og:image" content="http://example.com/.com//5.png">
-<meta property="og:image" content="http://example.com/.com//6.png">
-<meta property="og:image" content="http://example.com/.com//7.png">
-<meta property="og:image" content="http://example.com/.com//8.png">
+<meta property="og:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/1.png">
+<meta property="og:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/3.png">
+<meta property="og:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/4.png">
+<meta property="og:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/5.png">
+<meta property="og:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/6.png">
+<meta property="og:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/7.png">
+<meta property="og:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/8.png">
 <meta property="article:published_time" content="2021-11-15T16:06:02.000Z">
 <meta property="article:modified_time" content="2021-11-18T13:19:35.136Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="haskell">
 <meta property="article:tag" content="functional programming">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.png">
+<meta name="twitter:image" content="http://example.com/2021/11/16/Foundations-of-functional-programming/1.png">
 
 <link rel="canonical" href="http://example.com/2021/11/16/Foundations-of-functional-programming/">
 
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>Haskell01 - Foundations of functional programming | KenShin</title>
+  <title>Haskell01 - Foundations of functional programming | Pixel World</title>
   
 
 
@@ -106,7 +106,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -126,6 +126,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -164,13 +179,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/Foundations-of-functional-programming/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -221,22 +236,22 @@
 <li>Anytime a function is called with the same argument, it must return the same<br>value</li>
 </ul>
 <p>The third rule is part of the basic mathematical definition of a function. When the rule<br>that the same argument must always produce the same result is applied to function in a<br>programming language, it’s called referential transparency.</p>
-<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="/.com//1.png" alt="alt"></p>
+<h1 id="02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE"><a href="#02-LAMBDA-FUNCTIONS-AND-LEXICAL-SCOPE" class="headerlink" title="02. LAMBDA FUNCTIONS AND LEXICAL SCOPE"></a>02. LAMBDA FUNCTIONS AND LEXICAL SCOPE</h1><h2 id="Lambda-functions"><a href="#Lambda-functions" class="headerlink" title="Lambda functions"></a>Lambda functions</h2><p>One of the most foundational concepts in functional programming is a function without<br>a name, called a lambda function (hence lambda calculus). Lambda functions are often<br>referred to using the lowercase Greek letter λ. Another common name for a lambda<br>function is an anonymous function.<br><img src="1.png" alt="alt"></p>
 <h2 id="Practical-lambda-functions-and-lexical-scope"><a href="#Practical-lambda-functions-and-lexical-scope" class="headerlink" title="Practical lambda functions and lexical scope"></a>Practical lambda functions and lexical scope</h2><p>IIFE works on exactly the same principles as our example of replacing a where statement. Whenever you create a new function, named or not, you<br>create a new scope, which is the context in which a variable is defined. When a variable is<br>used, the program looks at the nearest scope; if the definition of the variable isn’t there,<br>it goes to the next one up. This particular type of variable lookup is called lexical scope.<br>Both Haskell and JavaScript use lexical scoping, which is why IIFE and your lambda function variables behave in a similar fashion.</p>
 <h1 id="03-FIRST-CLASS-FUNCTIONS"><a href="#03-FIRST-CLASS-FUNCTIONS" class="headerlink" title="03. FIRST-CLASS FUNCTIONS"></a>03. FIRST-CLASS FUNCTIONS</h1><p>The concept of first-class functions is that functions are no different from any other data<br>used in a program. Functions can be used as arguments and returned as values from<br>other functions. This is a deceptively powerful feature for a programming language to<br>have. It allows you to abstract out any repetitive computation from your code, and ultimately allows you to write functions that write other functions.</p>
 <h1 id="04-LISTS"><a href="#04-LISTS" class="headerlink" title="04 LISTS"></a>04 LISTS</h1><p>Lists are the single most important data structure in functional programming. One of<br>the key reasons is that lists are inherently recursive. A list is either an empty list or an<br>element followed by another list</p>
-<h2 id="head-tail"><a href="#head-tail" class="headerlink" title="head tail"></a>head tail</h2><p>When taking apart a list, the main pieces are the head, the tail.The head is just the first element in a list.The tail is the rest of the list left over, after the head<br><img src="/.com//3.png" alt="alt"></p>
-<p><img src="/.com//4.png" alt="alt"></p>
-<h2 id="cons"><a href="#cons" class="headerlink" title="cons(:)"></a>cons(:)</h2><p>To build a list, you need just one function and the infix operator (:),<br>which is called cons. you need to take a value and cons it with another list. The simplest way<br>to make a list is to cons a value with the empty list. <em><strong>By definition, a list is always a<br>value consed with another list (which can also be an empty list)</strong></em><br>If you do want to combine two lists, you need to concatenate them by using ++</p>
+<h2 id="head-tail"><a href="#head-tail" class="headerlink" title="head tail"></a>head tail</h2><p>When taking apart a list, the main pieces are the head, the tail.The head is just the first element in a list.The tail is the rest of the list left over, after the head<br><img src="3.png" alt="alt"></p>
+<p><img src="4.png" alt="alt"></p>
+<h2 id="cons"><a href="#cons" class="headerlink" title="cons(:)"></a>cons(:)</h2><p>To build a list, you need just one function and the infix operator (:),<br>which is called cons. you need to take a value and cons it with another list. The simplest way<br>to make a list is to cons a value with the empty list. _<strong>By definition, a list is always a<br>value consed with another list (which can also be an empty list)</strong>_<br>If you do want to combine two lists, you need to concatenate them by using ++</p>
 <h2 id="lazy-evaluation"><a href="#lazy-evaluation" class="headerlink" title="lazy evaluation"></a>lazy evaluation</h2><p>Haskell uses a special form of evaluation called lazy evaluation. In lazy evaluation,<br>no code is evaluated until it’s needed.</p>
-<h2 id="Common-functions-on-lists"><a href="#Common-functions-on-lists" class="headerlink" title="Common functions on lists"></a>Common functions on lists</h2><h3 id="The-operator"><a href="#The-operator" class="headerlink" title="The !! operator"></a>The !! operator</h3><p>If you want to access a particular element of a list by its index, you can use the !! operator. The !! operator takes a list and a number, returning the element at that location in<br>the list. <em><strong>any infix operator (an operator that’s placed between two values, such as +) can also be used like a prefix function by wrapping it in parentheses</strong></em><br><img src="/.com//5.png" alt="alt"></p>
-<h4 id="partial-application"><a href="#partial-application" class="headerlink" title="partial application"></a>partial application</h4><p><em><strong>Using prefix notation can often make things such as partial application easier. Prefix<br>notation is also useful for using operators as arguments to other functions. You can still<br>use partial application with an infix operator; you just need to wrap the expression in<br>parentheses</strong></em></p>
+<h2 id="Common-functions-on-lists"><a href="#Common-functions-on-lists" class="headerlink" title="Common functions on lists"></a>Common functions on lists</h2><h3 id="The-operator"><a href="#The-operator" class="headerlink" title="The !! operator"></a>The !! operator</h3><p>If you want to access a particular element of a list by its index, you can use the !! operator. The !! operator takes a list and a number, returning the element at that location in<br>the list. _<strong>any infix operator (an operator that’s placed between two values, such as +) can also be used like a prefix function by wrapping it in parentheses</strong>_<br><img src="5.png" alt="alt"></p>
+<h4 id="partial-application"><a href="#partial-application" class="headerlink" title="partial application"></a>partial application</h4><p>_<strong>Using prefix notation can often make things such as partial application easier. Prefix<br>notation is also useful for using operators as arguments to other functions. You can still<br>use partial application with an infix operator; you just need to wrap the expression in<br>parentheses</strong>_</p>
 <h3 id="length"><a href="#length" class="headerlink" title="length"></a>length</h3><p>give the length of the list</p>
 <h3 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h3><p>reverse the list</p>
-<h3 id="elem"><a href="#elem" class="headerlink" title="elem"></a>elem</h3><p>The elem function takes a value and a list and checks whether the value is in the list.elem is a function that you may want to treat as an infix operator for readability. <em><strong>Any<br>binary function can be treated as an infix operator by wrapping it in back-quotes (`)</strong></em></p>
+<h3 id="elem"><a href="#elem" class="headerlink" title="elem"></a>elem</h3><p>The elem function takes a value and a list and checks whether the value is in the list.elem is a function that you may want to treat as an infix operator for readability. _<strong>Any<br>binary function can be treated as an infix operator by wrapping it in back-quotes (`)</strong>_</p>
 <h3 id="take-and-drop"><a href="#take-and-drop" class="headerlink" title="take and drop"></a>take and drop</h3><p>The take function takes a number and a list as arguments and then returns the first n elements of the list. f you ask for more values then a list has, take gives you what it can, with no error.</p>
 <h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>You use zip when you want to combine two lists into tuple pairs. The arguments to zip<br>are two lists. If one list happens to be longer, zip will stop whenever one of the two lists<br>is empty.</p>
-<h3 id="cycle"><a href="#cycle" class="headerlink" title="cycle"></a>cycle</h3><p> cycle uses lazy evaluation to create an infinite list. Given a list, cycle repeats that list endlessly.<br><img src="/.com//6.png" alt="alt"></p>
+<h3 id="cycle"><a href="#cycle" class="headerlink" title="cycle"></a>cycle</h3><p> cycle uses lazy evaluation to create an infinite list. Given a list, cycle repeats that list endlessly.<br><img src="6.png" alt="alt"></p>
 <h1 id="05-RECURSION-AND-PATTERN-MATCHING"><a href="#05-RECURSION-AND-PATTERN-MATCHING" class="headerlink" title="05 RECURSION AND PATTERN MATCHING"></a>05 RECURSION AND PATTERN MATCHING</h1><p>In general, something is recursive if it’s defined in terms of itself.</p>
 <h2 id="Rules-from-Recursion"><a href="#Rules-from-Recursion" class="headerlink" title="Rules from Recursion"></a>Rules from Recursion</h2><ol>
 <li>Identify the end goal(s).</li>
@@ -247,16 +262,16 @@
 </ol>
 <h2 id="Pattern-matching"><a href="#Pattern-matching" class="headerlink" title="Pattern matching"></a>Pattern matching</h2><p>Haskell has an amazing feature called pattern matching<br>that allows you to peek at the values passed as arguments and behave accordingly.</p>
 <ol>
-<li><em><strong>Pattern matching, just like case, looks at the options in order</strong></em></li>
-<li><em><strong>pattern matching is that it can look only at arguments, but it can’t do any computation on them when matching</strong></em></li>
-<li><em>**it’s standard practice to use </em> as a wildcard for values you don’t use**_</li>
+<li>_<strong>Pattern matching, just like case, looks at the options in order</strong>_</li>
+<li>_<strong>pattern matching is that it can look only at arguments, but it can’t do any computation on them when matching</strong>_</li>
+<li>_<strong>it’s standard practice to use _ as a wildcard for values you don’t use</strong>_</li>
 </ol>
-<h2 id="Recursion-on-lists"><a href="#Recursion-on-lists" class="headerlink" title="Recursion on lists"></a>Recursion on lists</h2><h3 id="implements-built-in-length-take-cycle"><a href="#implements-built-in-length-take-cycle" class="headerlink" title="implements built-in length take cycle"></a>implements built-in length take cycle</h3><p><img src="/.com//7.png" alt="alt"></p>
+<h2 id="Recursion-on-lists"><a href="#Recursion-on-lists" class="headerlink" title="Recursion on lists"></a>Recursion on lists</h2><h3 id="implements-built-in-length-take-cycle"><a href="#implements-built-in-length-take-cycle" class="headerlink" title="implements built-in length take cycle"></a>implements built-in length take cycle</h3><p><img src="7.png" alt="alt"></p>
 <h1 id="06-HIGHER-ORDER-FUNCTIONS"><a href="#06-HIGHER-ORDER-FUNCTIONS" class="headerlink" title="06 HIGHER-ORDER FUNCTIONS"></a>06 HIGHER-ORDER FUNCTIONS</h1><p>A higher-order function is technically any function that takes another function as an argument.<br>Typically, when higher-order functions are mentioned, a specific group of them comes<br>to mind, and nearly all of these are used to abstract away common patterns of recursion.<br>The main reason that you use first-class functions, and therefore have higher-order<br>functions, is so you can abstract out programming patterns</p>
 <h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>The map function takes another function and a list as arguments and applies that<br>function to each element in the list.</p>
 <h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><p>The filter function looks and behaves similarly to map, taking a function and a list as arguments and<br>returning a list. The difference is that the function passed to filter must be passed a<br>function that returns True or False. The filter function works by keeping only the elements of the list that pass the test</p>
 <h2 id="foldl-foldr"><a href="#foldl-foldr" class="headerlink" title="foldl(foldr)"></a>foldl(foldr)</h2><p>The function foldl (the l stands for left) takes a list and reduces<br>it to a single value. The function takes three arguments: a binary function, an initial<br>value, and a list. The most common use of foldl is to sum a list.</p>
-<h2 id="implements-map-filter-amp-foldl"><a href="#implements-map-filter-amp-foldl" class="headerlink" title="implements map filter &amp; foldl"></a>implements map filter &amp; foldl</h2><p><img src="/.com//8.png" alt="alt"></p>
+<h2 id="implements-map-filter-amp-foldl"><a href="#implements-map-filter-amp-foldl" class="headerlink" title="implements map filter &amp; foldl"></a>implements map filter &amp; foldl</h2><p><img src="8.png" alt="alt"></p>
 
     </div>
 
@@ -347,8 +362,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -361,16 +378,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -399,7 +426,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -431,6 +458,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -448,6 +477,8 @@
 
 
 
+
+  
 
   
 

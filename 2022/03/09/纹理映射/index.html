@@ -17,24 +17,24 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="&nbsp;&nbsp;&nbsp;&nbsp;当试图重现真实世界的样貌时，人们很快就会意识到任何物体都有自己的特征。木材随纹理生长;皮肤长出皱纹;布显示其编织结构;油漆显示了刷子或辊子留下的痕迹。即使是光滑的塑料也是用模压成型的凸起物制成的，而光滑的金属则显示出制造它的加工过程的痕迹。曾经毫无特色的材料很快就会被标记、凹痕、污渍、划痕、指纹和污垢所覆盖.&nbsp;&nbsp;&nbsp;&amp;nb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="纹理映射">
 <meta property="og:url" content="http://example.com/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="&nbsp;&nbsp;&nbsp;&nbsp;当试图重现真实世界的样貌时，人们很快就会意识到任何物体都有自己的特征。木材随纹理生长;皮肤长出皱纹;布显示其编织结构;油漆显示了刷子或辊子留下的痕迹。即使是光滑的塑料也是用模压成型的凸起物制成的，而光滑的金属则显示出制造它的加工过程的痕迹。曾经毫无特色的材料很快就会被标记、凹痕、污渍、划痕、指纹和污垢所覆盖.&nbsp;&nbsp;&nbsp;&amp;nb">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/1.jpg">
 <meta property="article:published_time" content="2022-03-09T13:49:09.000Z">
 <meta property="article:modified_time" content="2022-03-13T14:22:06.483Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Texture Mapping">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+<meta name="twitter:image" content="http://example.com/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/1.jpg">
 
 <link rel="canonical" href="http://example.com/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/">
 
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>纹理映射 | KenShin</title>
+  <title>纹理映射 | Pixel World</title>
   
 
 
@@ -100,7 +100,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -120,6 +120,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -158,13 +173,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -214,7 +229,7 @@
 <li>纹理映射是一个重采样的过程,就像重新调整一张图片的大小, 重采样会产生走样问题.</li>
 </ol>
 <h1 id="纹理查询"><a href="#纹理查询" class="headerlink" title="纹理查询"></a>纹理查询</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;首先，让我们考虑一个简单的纹理映射应用。我们有一个木地板的场景，我们希望地板的漫反射颜色是由一个木地板木纹图像控制。无论我们使用光线追踪或光栅化,着色代码需要知道当前作色点对应的纹理图片的颜色值,用作布林冯光照模型中的漫反射颜色系数.<br>为了拿到着色点对应纹理图片的颜色值, 着色器会执行一次纹理查询(<strong><em>texture lookup</em></strong>)-它计算在纹理图像的坐标系统中，对应于着色点的位置，然后读取图像中的颜色，从而得到纹理样本.这种颜色随后被用于着色.伪代码如下:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Color texture_lookup(Texture t, float u, float v) &#123;</span><br><span class="line">    int i = round(u * t.width() - 0.5)</span><br><span class="line">    int j = round(v * t.height() - 0.5)</span><br><span class="line">    return t.get_pixel(i,j)</span><br><span class="line">&#125;</span><br><span class="line">Color shade_surface_point(Surface s, Point p, Texture t) &#123;</span><br><span class="line">    Vector normal = s.get_normal(p)</span><br><span class="line">    (u,v) = s.get_texcoord(p)</span><br><span class="line">    Color diffuse_color = texture_lookup(u,v)</span><br><span class="line">    // compute shading using diffuse_color and normal</span><br><span class="line">    // return shading result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="纹理坐标方程"><a href="#纹理坐标方程" class="headerlink" title="纹理坐标方程"></a>纹理坐标方程</h1><h2 id="平铺-环绕方式-纹理坐标变换"><a href="#平铺-环绕方式-纹理坐标变换" class="headerlink" title="平铺, 环绕方式, 纹理坐标变换"></a>平铺, 环绕方式, 纹理坐标变换</h2><p>模型的纹理坐标不总是在[0,1]的区间内,纹理映射机制有不同的处理方式.<br>如果一张纹理被设计只覆盖部分表面，但纹理坐标已经设置好将整个表面映射到单元正方形，其中一种方式是准备一个几乎是空白的纹理图像，其中的内容位于一个小区域。<br>但这可能需要非常高分辨率的纹理图像来获得相关区域的足够细节。另一种做法是缩放所有纹理坐标，使它们覆盖更大的范围，例如，到位置在表面中心面积为十分之一的正方形单位。<br>在这种情况下，纹理覆盖的单元正方形区域之外的纹理查找应该返回一个固定的背景色。一种方法是设置一个背景色，由单元正方形外的纹理查找返回。如果已经有一个恒定的背景颜色纹理图像(例如,一个标志在白色背景),另一种方法是返回纹理图像的颜色最接近边缘的颜色.<br>有时我们想要一个重复的图案，比如棋盘，瓷砖地板，或砖墙。如果可以使图案在矩形网格上重复，那么使用相同数据的许多副本创建图像将是一种浪费。相反，我们可以使用环绕索引处理纹理图像外部的纹理查找—当查找点离开纹理图像的右边缘时，它会绕到左边缘。使用像素坐标上的整数余数操作可以非常简单地处理这个问题。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//repeat</span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(i % t.width(), j % t.height())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//clamp </span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(max(0, min(i, t.width()-1)),</span><br><span class="line">(max(0, min(j, t.height()-1))))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>以上是纹理查询在越界查找时的两种不同规则,具体选择哪种由纹理的环绕方式指定,环绕方式包含平铺,约束以及两者的各种组合和变体构成.拿openGL来说,wrapMode有以下四种方式:<br><img src="/.com//1.jpg" alt="alt"></p>
+<h1 id="纹理坐标方程"><a href="#纹理坐标方程" class="headerlink" title="纹理坐标方程"></a>纹理坐标方程</h1><h2 id="平铺-环绕方式-纹理坐标变换"><a href="#平铺-环绕方式-纹理坐标变换" class="headerlink" title="平铺, 环绕方式, 纹理坐标变换"></a>平铺, 环绕方式, 纹理坐标变换</h2><p>模型的纹理坐标不总是在[0,1]的区间内,纹理映射机制有不同的处理方式.<br>如果一张纹理被设计只覆盖部分表面，但纹理坐标已经设置好将整个表面映射到单元正方形，其中一种方式是准备一个几乎是空白的纹理图像，其中的内容位于一个小区域。<br>但这可能需要非常高分辨率的纹理图像来获得相关区域的足够细节。另一种做法是缩放所有纹理坐标，使它们覆盖更大的范围，例如，到位置在表面中心面积为十分之一的正方形单位。<br>在这种情况下，纹理覆盖的单元正方形区域之外的纹理查找应该返回一个固定的背景色。一种方法是设置一个背景色，由单元正方形外的纹理查找返回。如果已经有一个恒定的背景颜色纹理图像(例如,一个标志在白色背景),另一种方法是返回纹理图像的颜色最接近边缘的颜色.<br>有时我们想要一个重复的图案，比如棋盘，瓷砖地板，或砖墙。如果可以使图案在矩形网格上重复，那么使用相同数据的许多副本创建图像将是一种浪费。相反，我们可以使用环绕索引处理纹理图像外部的纹理查找—当查找点离开纹理图像的右边缘时，它会绕到左边缘。使用像素坐标上的整数余数操作可以非常简单地处理这个问题。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//repeat</span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(i % t.width(), j % t.height())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//clamp </span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(max(0, min(i, t.width()-1)),</span><br><span class="line">(max(0, min(j, t.height()-1))))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>以上是纹理查询在越界查找时的两种不同规则,具体选择哪种由纹理的环绕方式指定,环绕方式包含平铺,约束以及两者的各种组合和变体构成.拿openGL来说,wrapMode有以下四种方式:<br><img src="1.jpg" alt="alt"></p>
 <h2 id="透视矫正插值"><a href="#透视矫正插值" class="headerlink" title="透视矫正插值"></a>透视矫正插值</h2><h1 id="抗锯齿"><a href="#抗锯齿" class="headerlink" title="抗锯齿"></a>抗锯齿</h1>
     </div>
 
@@ -305,8 +320,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -319,16 +336,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -357,7 +384,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -389,6 +416,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -406,6 +435,8 @@
 
 
 
+
+  
 
   
 

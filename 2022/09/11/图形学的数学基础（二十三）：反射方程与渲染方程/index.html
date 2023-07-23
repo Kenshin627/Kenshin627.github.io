@@ -17,28 +17,28 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="图形学的数学基础（二十三）：反射方程与渲染方程双向反射分布函数($BRDF$)描述$BRDF$全称$Bidirectional\;Reflectance\;Distribution\;Function$。$BRDF$是描述了物体表面对能量反射分布特性的函数。假设物体表面单位面积$dA$接收到来自$W_i$方向光线的能量，用$E$来表示，这些能量$E$到达物体表面后，会向各个不同的方向反射（每个方向">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图形学的数学基础（二十三）：反射方程与渲染方程">
 <meta property="og:url" content="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/index.html">
-<meta property="og:site_name" content="KenShin">
+<meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="图形学的数学基础（二十三）：反射方程与渲染方程双向反射分布函数($BRDF$)描述$BRDF$全称$Bidirectional\;Reflectance\;Distribution\;Function$。$BRDF$是描述了物体表面对能量反射分布特性的函数。假设物体表面单位面积$dA$接收到来自$W_i$方向光线的能量，用$E$来表示，这些能量$E$到达物体表面后，会向各个不同的方向反射（每个方向">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//1.jpg">
-<meta property="og:image" content="http://example.com/.com//2.jpg">
-<meta property="og:image" content="http://example.com/.com//3.jpg">
-<meta property="og:image" content="http://example.com/.com//4.jpg">
-<meta property="og:image" content="http://example.com/.com//6.jpg">
+<meta property="og:image" content="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/1.jpg">
+<meta property="og:image" content="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/2.jpg">
+<meta property="og:image" content="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/3.jpg">
+<meta property="og:image" content="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/4.jpg">
+<meta property="og:image" content="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/6.jpg">
 <meta property="article:published_time" content="2022-09-11T03:00:03.000Z">
 <meta property="article:modified_time" content="2022-09-12T05:50:20.915Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Math">
 <meta property="article:tag" content="Computer Graphic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//1.jpg">
+<meta name="twitter:image" content="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/1.jpg">
 
 <link rel="canonical" href="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/">
 
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>图形学的数学基础（二十三）：反射方程与渲染方程 | KenShin</title>
+  <title>图形学的数学基础（二十三）：反射方程与渲染方程 | Pixel World</title>
   
 
 
@@ -104,7 +104,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">KenShin</h1>
+      <h1 class="site-title">Pixel World</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
       <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
@@ -124,6 +124,21 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -162,13 +177,13 @@
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/11/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%8F%8D%E5%B0%84%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%96%B9%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="KenShin">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KenShin">
+      <meta itemprop="name" content="Pixel World">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -221,23 +236,23 @@
 
       
         <h1 id="图形学的数学基础（二十三）：反射方程与渲染方程"><a href="#图形学的数学基础（二十三）：反射方程与渲染方程" class="headerlink" title="图形学的数学基础（二十三）：反射方程与渲染方程"></a>图形学的数学基础（二十三）：反射方程与渲染方程</h1><h2 id="双向反射分布函数-BRDF"><a href="#双向反射分布函数-BRDF" class="headerlink" title="双向反射分布函数($BRDF$)"></a>双向反射分布函数($BRDF$)</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>$BRDF$全称$Bidirectional\;Reflectance\;Distribution\;Function$。$BRDF$是描述了物体表面对能量反射分布特性的函数。假设物体表面单位面积$dA$接收到来自$W_i$方向光线的能量，用$E$来表示，这些能量$E$到达物体表面后，会向各个不同的方向反射（每个方向反射的能量不同），$BRDF$函数就是描述这束能量向特定方向$W_r$的反射占比。</p>
-<p><img src="/.com//1.jpg" alt="BRDF"></p>
+<p><img src="1.jpg" alt="BRDF"></p>
 <ul>
 <li>Differential irradiance incoming：$dE(w_i) = L(w_i)\cos\theta_i{d}w_i$</li>
 <li>Differential intensity exiting: $dL_r(w_r)$ </li>
 </ul>
 <h3 id="正式定义"><a href="#正式定义" class="headerlink" title="正式定义"></a>正式定义</h3><p>单位面积$dA$从单位立体角$w_i$接收到的$irradiance$，会被如何反射到各个不同的方向上去。更通俗点来说就是BRDF描述的是单位面积接收单位立体角$w_i$的能量的反射分布（比例）。反射比例依赖于出射方向（$w_r$）。$BRDF$描述了光与物体表面是如何相互作用的。即物体的材质属性由$BRDF$定义。</p>
-<p><img src="/.com//2.jpg" alt="BRDF"></p>
+<p><img src="2.jpg" alt="BRDF"></p>
 <p>$f_r(w_i -&gt; w_r) = \dfrac{dL_r(w_r)}{dE_i(w_i)} = \dfrac{dl_r(w_r)}{L_i(w_i)\cos\theta_i{d}w_i}$</p>
 <h2 id="反射方程（-The-Reflection-Equation-）"><a href="#反射方程（-The-Reflection-Equation-）" class="headerlink" title="反射方程（$The\;Reflection\;Equation$）"></a>反射方程（$The\;Reflection\;Equation$）</h2><p>$BRDF$告诉了我们特定入射方向光线对特定出射方向的能量反射比例。而当我们观察物体表面的某一点时，该点反射的能量汇聚了各个不同方向的入射光线。对于每一条光线，都可以通过$BRDF$计算出其特定出射角度的反射比例。因此某一点特定出射方向的反射能量等于该点各个入射方向$BRDF$的半球积分。这就是反射方程。</p>
-<p><img src="/.com//3.jpg" alt="BRDF"></p>
-<p>$L<em>r(p, w_r) = \int</em>{H^2}f_r(p, w_i -&gt; w_r)L_i(p, w_i)\cos\theta_i{d}w_i$</p>
+<p><img src="3.jpg" alt="BRDF"></p>
+<p>$L_r(p, w_r) = \int_{H^2}f_r(p, w_i -&gt; w_r)L_i(p, w_i)\cos\theta_i{d}w_i$</p>
 <h3 id="递归性"><a href="#递归性" class="headerlink" title="递归性"></a>递归性</h3><p>假设观察某一着色点，需要考虑到达该着色点的各个光线，这些光线有些是直接来自于光照的，有些是来自于其他物体的反射。也就是说着色点接收来自各个方向的光线经过$BRDF$计算求和形成$Radiance$，而出射的$Radiance$又可以照亮其它物体，成为照亮其它某个着色点各个不同入射方向$Radiance$的某一部分。这样就形成了递归。</p>
-<p><img src="/.com//4.jpg" alt="BRDF"></p>
+<p><img src="4.jpg" alt="BRDF"></p>
 <h2 id="渲染方程（The-Rendering-Equation）"><a href="#渲染方程（The-Rendering-Equation）" class="headerlink" title="渲染方程（The Rendering Equation）"></a>渲染方程（The Rendering Equation）</h2><p>反射方程告诉我们某一点特定出射方向的反射能量等于该点各个入射方向$BRDF$的半球积分。但是<br>反射方程没有考虑物体自身的发光情况。而物体的自发光也是需要参与到计算中的，完善反射方程，加上自发光部分就得到了渲染方程：</p>
 <p>渲染方程 = 自发光项 + 反射方程</p>
-<p>$L<em>o(p, w_o) = L_e(p, w_o) + \int</em>{H^2}L_i(p, w_i)f_r(p, w_i -&gt; w_o)(\hat{n}\cdot{w_i})dw_i$</p>
-<h3 id="抽象渲染方程"><a href="#抽象渲染方程" class="headerlink" title="抽象渲染方程"></a>抽象渲染方程</h3><p>$L<em>o(p, w_o) = L_e(p, w_o) + \int</em>{H^2}L_i(p, w_i)f_r(p, w_i -&gt; w_o)(\hat{n}\cdot{w_i})dw_i$</p>
+<p>$L_o(p, w_o) = L_e(p, w_o) + \int_{H^2}L_i(p, w_i)f_r(p, w_i -&gt; w_o)(\hat{n}\cdot{w_i})dw_i$</p>
+<h3 id="抽象渲染方程"><a href="#抽象渲染方程" class="headerlink" title="抽象渲染方程"></a>抽象渲染方程</h3><p>$L_o(p, w_o) = L_e(p, w_o) + \int_{H^2}L_i(p, w_i)f_r(p, w_i -&gt; w_o)(\hat{n}\cdot{w_i})dw_i$</p>
 <p>-&gt;</p>
 <p>$L(u) = e(u) + \int{L(v)}K(u,v)dv$</p>
 <p>-&gt; </p>
@@ -249,7 +264,7 @@
 <p>$L = (I-K)^{-1}E$</p>
 <p>$L = (I +K+K^2+K^3+…)E$</p>
 <p>$L = E + KE + K^2E + K^3E+…$</p>
-<p><img src="/.com//6.jpg" alt="BRDF"></p>
+<p><img src="6.jpg" alt="BRDF"></p>
 <p>通过将方程用K算符简化，我们将渲染方程拆解成了自发光项，直接光照，间接光照。所有这些因子共同构成了全局光照。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?p=15&amp;vd_source=b3b87210888ec87be647603921054a36">GAMES101 -现代计算机图形学入门-闫令琪</a></p>
 <p><a target="_blank" rel="noopener" href="https://item.jd.com/12659881.html">《3D数学基础》图形和游戏开发(第二版)</a></p>
@@ -343,8 +358,10 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">KenShin</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -357,16 +374,26 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Kenshin627" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
 
 
 
@@ -395,7 +422,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">KenShin</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
@@ -427,6 +454,8 @@
 <script src="/js/next-boot.js"></script>
 
 
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="true"></script>
 
 
   
@@ -446,6 +475,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
