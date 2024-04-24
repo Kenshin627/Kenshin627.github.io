@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/" class="post-title-link" itemprop="url">连续性和可导性</a>
+          <a href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/" class="post-title-link" itemprop="url">函数 图形和直线</a>
         </h2>
 
         <div class="post-meta-container">
@@ -200,7 +200,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-03-30 10:39:34" itemprop="dateCreated datePublished" datetime="2022-03-30T10:39:34+08:00">2022-03-30</time>
+      <time title="创建时间：2022-03-29 08:43:19" itemprop="dateCreated datePublished" datetime="2022-03-29T08:43:19+08:00">2022-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -233,26 +233,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="连续性"><a href="#连续性" class="headerlink" title="连续性"></a>连续性</h1><p>我们先从一个函数是连续的, 这到底意味着什么开始. 正如我上面所说, 直觉上, 可以一笔画出连续函数的图像.</p>
-<h2 id="在一点处的连续"><a href="#在一点处的连续" class="headerlink" title="在一点处的连续"></a>在一点处的连续</h2><p>如果f(x)在a点连续,则必须满足以下三个条件:</p>
-<ul>
-<li>双侧极限${\lim_{x \to a} f(x)}$存在并且是有限的</li>
-<li>函数在点a处有定义,$f(a)$存在并且是有限的</li>
-<li>以上两个量相等,即: ${\lim_{x \to a} f(x) = f(x)}$</li>
+          <h1 id="奇函数与偶函数"><a href="#奇函数与偶函数" class="headerlink" title="奇函数与偶函数"></a>奇函数与偶函数</h1><ul>
+<li>当对f定义域内所有的x都有f(-x) = -f(x)时,f是奇函数.奇函数的图像关于原点有180°的对称性.</li>
+<li>当对f定义域内所有的x都有f(-x) = f(x)时,f是偶函数,偶函数的图像关于y轴具有镜面对称性.</li>
 </ul>
-<h2 id="在一个区间上连续"><a href="#在一个区间上连续" class="headerlink" title="在一个区间上连续"></a>在一个区间上连续</h2><p>函数f在[a, b] 上连续,需满足以下三个条件:</p>
-<ul>
-<li>f在(a,b)的每一点都连续</li>
-<li>函数f在x = a处右连续,即 ${\lim_{x \to a^+} f(x)} = f(a)$</li>
-<li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
-</ul>
-<p><strong><em>★介值定理</em></strong></p>
+<h1 id="线性函数的图像"><a href="#线性函数的图像" class="headerlink" title="线性函数的图像"></a>线性函数的图像</h1><p>形如f(x) = mx + b的函数叫做线性函数,函数的图像为直线,斜率为m.</p>
+<p> <strong><em>点斜式</em></strong></p>
 <blockquote>
-<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
+<p>如果已知直线通过点(x0, y0),斜率为m,则它的方程为 y - y0 = m(x - x0)</p>
+<p>如果一条直线通过点 (x1, y1) 和 (x2, y2), 则它的斜率等于 (y2 − y1) / (x2 − x1)</p>
 </blockquote>
+<h1 id="常见函数及其图像"><a href="#常见函数及其图像" class="headerlink" title="常见函数及其图像"></a>常见函数及其图像</h1><h2 id="多项式"><a href="#多项式" class="headerlink" title="多项式"></a>多项式</h2><p>有许多函数是基于 x 的非负次幂建立起来的.你可以以 1、x、$x^2$、$x^3$等为基本项, 然后用实数同这些基本项做乘法, 最后把有限个这样的项加到一起.基本项 $x^n$ 的倍数叫作 $x^n$ 的系数.最大的幂指数n(该项系数不能为零) 叫作多项式的次数.</p>
+<h3 id="二次函数"><a href="#二次函数" class="headerlink" title="二次函数"></a>二次函数</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
+              <a class="btn" href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -276,7 +271,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/38/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/38/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

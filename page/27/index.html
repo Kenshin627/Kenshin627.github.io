@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2%E5%92%8C%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2%E5%92%8C%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87/" class="post-title-link" itemprop="url">图形学的数学基础（九）：仿射变换和齐次坐标</a>
+          <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5/" class="post-title-link" itemprop="url">图形学的数学基础（三）：矩阵</a>
         </h2>
 
         <div class="post-meta-container">
@@ -199,9 +199,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-08-31 14:08:13 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T14:08:13+08:00">2022-08-31</time>
+      <time title="创建时间：2022-08-31 11:15:57" itemprop="dateCreated datePublished" datetime="2022-08-31T11:15:57+08:00">2022-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-24 10:52:43" itemprop="dateModified" datetime="2024-04-24T10:52:43+08:00">2024-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -231,17 +237,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（九）：仿射变换和齐次坐标"><a href="#图形学的数学基础（九）：仿射变换和齐次坐标" class="headerlink" title="图形学的数学基础（九）：仿射变换和齐次坐标"></a>图形学的数学基础（九）：仿射变换和齐次坐标</h1><p>上一章中我们讨论了很多利用矩阵变换矢量的例子，在二维空间中这些变换具有以下形式：</p>
-<p>$\mathbf{x^丶} = m_{11}\mathbf{x} + m_{12}\mathbf{y}$</p>
-<p>$\mathbf{y^丶} = m_{21}\mathbf{x} + m_{22}\mathbf{y}$</p>
-<p>这种形式的变换都满足矩阵中某个元素和x，y的线性组合，原点(0,0)在线性变换下始终保持不变，这种变换我们称为“<strong>线性变换</strong>”。无法通过这种方式实现平移。平移只能添加额外的表达式，无法在一个矩阵中完成。如下：</p>
-<p>$\begin{bmatrix}<br>    x^丶\\ y^丶<br>\end{bmatrix}$ = $\begin{bmatrix}<br>    a&amp;b\\ c&amp;d<br>\end{bmatrix}$ $\begin{bmatrix}<br>    x\\ y<br>\end{bmatrix}$ + $\begin{bmatrix}<br>    t_x\\ t_y<br>\end{bmatrix}$</p>
-<p>这种变换方式称为“<strong>仿射变换($Affine Transformations$)</strong>”。简而言之就是“线性变换” + “平移”。这种方式存在的问题就是写法过于繁琐，不简洁，无法在一个矩阵中完成。因此引入了“齐次坐标”的概念。</p>
-<h2 id="齐次坐标（Homogenous-Coordinates）"><a href="#齐次坐标（Homogenous-Coordinates）" class="headerlink" title="齐次坐标（Homogenous Coordinates）"></a>齐次坐标（Homogenous Coordinates）</h2><p>没有办法通过$\begin{bmatrix}x\\ y\end{bmatrix}$乘以一个2 × 2的矩阵来实现平移。 一个在线性变换矩阵中加入平移的可能性方案是简单地将一个单独的平移矢量与每个变换矩阵相关联，让矩阵负责缩放和旋转而矢量负责平移。</p>
-<p>这样就可以通过一次简单的矩阵乘法完成所有变换操作。方法是将点$\begin{bmatrix}x\\ y\end{bmatrix}$通过增加额外的维度（$\mathbf{w}$分量）$\begin{bmatrix}x\\ y\\ 1\end{bmatrix}$来表达。矩阵增加额外的一列用于表示平移，这样平移分量就和x y的线性关系完全独立出来了。</p>
+          <h1 id="图形学的数学基础（三）：矩阵"><a href="#图形学的数学基础（三）：矩阵" class="headerlink" title="图形学的数学基础（三）：矩阵"></a>图形学的数学基础（三）：矩阵</h1><blockquote>
+<p>不幸的是，没有人能够告诉我们矩阵是什么。你必须亲自去看看。</p>
+<pre><code>                                          -墨菲斯《黑客帝国》
+</code></pre></blockquote>
+<p>矩阵在图形学中具有重要意义，它们主要用于描述两个坐标空间之间的转换关系，通过矩阵和向量相乘，可以将向量从某一坐标空间转换到另一个坐标空间。通过矩阵和矩阵相乘，可以描述一系列的变换动作。</p>
+<h2 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h2><p>在线性代数中，矩阵是排列成行和列的矩形数字网格。矩阵可以定义为数字的二维数组。因此向量是标量的数组，而矩阵是向量的数组。</p>
+<h3 id="矩阵维度和表示法"><a href="#矩阵维度和表示法" class="headerlink" title="矩阵维度和表示法"></a>矩阵维度和表示法</h3><p>通过计算矩阵包含的行数和列数来定义矩阵的大小，对于具有$r$行和$c$列的矩阵，称为 $r \times c$矩阵。<br>当希望引用矩阵中的各个元素时，可以使用下标表示法。符号$m_{ij}$表示矩阵$Mi行j列$对应的元素。需要注意的是，矩阵初始索引为1,并不是0.</p>
+<h3 id="方阵（Square-Matrice）"><a href="#方阵（Square-Matrice）" class="headerlink" title="方阵（Square Matrice）"></a>方阵（Square Matrice）</h3><p>具有相同行数和列数的矩阵称为方形矩阵，方阵的对角元素是行和列索引相同的元素。例如 $3\times3$矩阵M的对角元素是$m_{11},m_{22},m_{33}$。<br>如果矩阵中所有的非对角元素都为零，则该矩阵为对角矩阵（Diagonal Matrix）。</p>
+<h3 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a>单位矩阵</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2%E5%92%8C%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -265,7 +272,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/26/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/64/">64</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/28/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/26/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/28/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
