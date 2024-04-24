@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/19/Ioc%E6%A8%A1%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/10/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/19/Ioc%E6%A8%A1%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">Ioc模式对应的几种设计模式</a>
+          <a href="/2019/04/10/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">javaScript学习笔记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -200,7 +200,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-10-19 16:40:52" itemprop="dateCreated datePublished" datetime="2019-10-19T16:40:52+08:00">2019-10-19</time>
+      <time title="创建时间：2019-04-10 22:27:28" itemprop="dateCreated datePublished" datetime="2019-04-10T22:27:28+08:00">2019-04-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -208,15 +208,6 @@
       </span>
       <span class="post-meta-item-text">更新于</span>
       <time title="修改时间：2021-10-29 22:03:17" itemprop="dateModified" datetime="2021-10-29T22:03:17+08:00">2021-10-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Asp-Net-Core/" itemprop="url" rel="index"><span itemprop="name">Asp.Net Core</span></a>
-        </span>
     </span>
 
   
@@ -229,14 +220,26 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Ioc原则对应的几种设计模式"><a href="#Ioc原则对应的几种设计模式" class="headerlink" title="Ioc原则对应的几种设计模式"></a>Ioc原则对应的几种设计模式</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>IoC仅仅是一种设计原则,针对IoC的设计原则有多种设计模式,例如:模板方法,简单工厂,抽象工厂等.以下通过这三种设计模式阐述如何实现IoC设计原则的.</p>
-<h2 id="模板方法"><a href="#模板方法" class="headerlink" title="模板方法"></a>模板方法</h2><p>该模式主张将一个可复用的工作流程或者由多个步骤组成的算法定义成模板方法，组成这个流程或者算法的步骤实现在相应的虚方法之中，模板方法根据按照预先编排的流程去调用这些虚方法。所有这些方法均定义在同一个类中，我们可以通过派生该类并重写相应的虚方法达到对流程定制的目的。</p>
-<h2 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h2><p>对于一个复杂的流程来说，我们倾向于将组成该流程的各个环节实现在相对独立的组件之中，那么针对流程的定制就可以通过提供定制组件的方式来实现。我们知道23种设计模式之中有一种重要的类型，那就是“创建型模式”，比如常用的“工厂方法”和“抽象工厂”，IoC所体现的针对流程的共享与定制可以通过它们来完成。</p>
-<p>所谓的工厂方法，说白了就是在某个类中定义用于提供依赖对象的方法，这个方法可以是一个单纯的虚方法，也可以是具有默认实现的虚方法，至于方法声明的返回类型，可以是一个接口或者抽象类，也可以是未被封闭（Sealed）的具体类型。作为它的派生类型，它可以实现或者重写工厂方法以提供所需的具体对象。</p>
-<h2 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h2><p>然工厂方法和抽象工厂均提供了一个“生产”对象实例的工厂，但是两者在设计上却有本质的不同。工厂方法利用定义在某个类型的抽象方法或者虚方法实现了针对单一对象提供方式的抽象，而抽象工厂则利用一个独立的接口或者抽象类来提供一组相关的对象。</p>
+          <h2 id="JavaScript的组成部分"><a href="#JavaScript的组成部分" class="headerlink" title="JavaScript的组成部分"></a>JavaScript的组成部分</h2><ul>
+<li>ECMAScript:由ECMA-262定义,提供核心语言功能</li>
+<li>文档对象模型(DOM):提供访问和操作网页内容的方法和接口</li>
+<li>浏览器对象模型(BOM):提供与浏览器交互的方法和接口</li>
+</ul>
+<h2 id="变量-作用域和内存问题"><a href="#变量-作用域和内存问题" class="headerlink" title="变量 作用域和内存问题"></a>变量 作用域和内存问题</h2><p>JavaScript的变量与其他语言有很大区别.不存在定义某个变量必须要保存何种数据类型值的规则,变量的值以及数据类型可以在脚本的生命周期内改变.</p>
+<h3 id="复制变量值"><a href="#复制变量值" class="headerlink" title="复制变量值"></a>复制变量值</h3><ul>
+<li><p>从一个变量向另一个变量赋值基本类型的值,会在变量对象上创建一个新值,然后把该值赋值带为新变量分配的位置上.</p>
+</li>
+<li><p>当从一个变量向另一个变量复制引用类型的值时,同样也会将存储在变量对象中的值复制一份跟放到为新变量分配的空间中,不同的是,这个值的副本实际上是一个指针.而这个指针指向存储在堆内存中的一个对象.</p>
+</li>
+</ul>
+<h3 id="传递参数"><a href="#传递参数" class="headerlink" title="传递参数"></a>传递参数</h3><p>Js中所有函数的参数都是按值传递的.不同的是,对于基本类型的值来说,被传递的值会复制给一个局部变量.对于引用类型的值,会把这个值在内存中的地址复制给一个局部变量.<strong>因此这个局部变量的变化会反映在函数的外部</strong>.</p>
+<h3 id="检测类型"><a href="#检测类型" class="headerlink" title="检测类型"></a>检测类型</h3><ul>
+<li>检测基本数据类型,通常使用typeof操作符,换句话说,typeof操作符是确定一个变量是字符串,数字,布尔值还是undefined的最佳工具.</li>
+<li>检测引用类型,通常使用instanceof操作符.语法如下:<br><code>result = variable instanceof constructor</code></li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/10/19/Ioc%E6%A8%A1%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+              <a class="btn" href="/2019/04/10/javaScript%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -260,7 +263,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/59/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/68/">68</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/61/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/59/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/61/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

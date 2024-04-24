@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">求解微分问题</a>
+          <a href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/" class="post-title-link" itemprop="url">函数 图形和直线</a>
         </h2>
 
         <div class="post-meta-container">
@@ -199,9 +199,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-03-31 17:28:28 / 修改时间：22:45:54" itemprop="dateCreated datePublished" datetime="2022-03-31T17:28:28+08:00">2022-03-31</time>
+      <time title="创建时间：2022-03-29 08:43:19" itemprop="dateCreated datePublished" datetime="2022-03-29T08:43:19+08:00">2022-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-31 11:17:45" itemprop="dateModified" datetime="2022-03-31T11:17:45+08:00">2022-03-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -227,22 +233,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="求解微分常用技巧"><a href="#求解微分常用技巧" class="headerlink" title="求解微分常用技巧"></a>求解微分常用技巧</h1><h2 id="使用定义求导"><a href="#使用定义求导" class="headerlink" title="使用定义求导"></a>使用定义求导</h2><p>根据导数的定义:<br>$f’(x) = \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}$</p>
-<p>$例如:对于 f(x) = \frac{1}{x}$</p>
-<p>$f’(x) = \lim_{h \to 0}\frac{\frac{1}{x+h} - \frac{1}{x}}{h}$</p>
-<p>$f’(x)=\lim_{h \to 0}\frac{\frac{x-(x+h)}{x(x+h)}}{h}=\lim_{h \to 0}\frac{-h}{hx(x+h)}=-\frac{1}{x^2}$</p>
+          <h1 id="奇函数与偶函数"><a href="#奇函数与偶函数" class="headerlink" title="奇函数与偶函数"></a>奇函数与偶函数</h1><ul>
+<li>当对f定义域内所有的x都有f(-x) = -f(x)时,f是奇函数.奇函数的图像关于原点有180°的对称性.</li>
+<li>当对f定义域内所有的x都有f(-x) = f(x)时,f是偶函数,偶函数的图像关于y轴具有镜面对称性.</li>
+</ul>
+<h1 id="线性函数的图像"><a href="#线性函数的图像" class="headerlink" title="线性函数的图像"></a>线性函数的图像</h1><p>形如f(x) = mx + b的函数叫做线性函数,函数的图像为直线,斜率为m.</p>
+<p> <strong><em>点斜式</em></strong></p>
 <blockquote>
-<p>$\frac{d}{dx}(\frac{1}{x})=-\frac{1}{x^2}$</p>
-<p>$\frac{d}{dx}\sqrt{x}=\frac{1}{2\sqrt{x}}$</p>
-<p>$\frac{d}{dx}x^a=ax^{a-1}$</p>
+<p>如果已知直线通过点(x0, y0),斜率为m,则它的方程为 y - y0 = m(x - x0)</p>
+<p>如果一条直线通过点 (x1, y1) 和 (x2, y2), 则它的斜率等于 (y2 − y1) / (x2 − x1)</p>
 </blockquote>
-<h2 id="函数的常数倍"><a href="#函数的常数倍" class="headerlink" title="函数的常数倍"></a>函数的常数倍</h2><p>处理一个函数的常数倍时,只需要用常数乘以该函数的导数就可以了.</p>
-<blockquote>
-<p>$\frac{d}{dx}Cf(x)=Cf’(x)$</p>
-</blockquote>
+<h1 id="常见函数及其图像"><a href="#常见函数及其图像" class="headerlink" title="常见函数及其图像"></a>常见函数及其图像</h1><h2 id="多项式"><a href="#多项式" class="headerlink" title="多项式"></a>多项式</h2><p>有许多函数是基于 x 的非负次幂建立起来的.你可以以 1、x、$x^2$、$x^3$等为基本项, 然后用实数同这些基本项做乘法, 最后把有限个这样的项加到一起.基本项 $x^n$ 的倍数叫作 $x^n$ 的系数.最大的幂指数n(该项系数不能为零) 叫作多项式的次数.</p>
+<h3 id="二次函数"><a href="#二次函数" class="headerlink" title="二次函数"></a>二次函数</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/#more" rel="contents">
+              <a class="btn" href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -266,7 +271,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/39/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/68/">68</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/41/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/39/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/65/">65</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/41/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

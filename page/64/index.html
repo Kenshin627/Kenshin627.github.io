@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/02/09/blog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">.net 请求webservice接口</a>
+          <a href="/2017/02/09/blog/" class="post-title-link" itemprop="url">Hexo+GitHub搭建个人博客</a>
         </h2>
 
         <div class="post-meta-container">
@@ -200,7 +200,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2019-04-10 21:29:15" itemprop="dateCreated datePublished" datetime="2019-04-10T21:29:15+08:00">2019-04-10</time>
+      <time title="创建时间：2017-02-09 09:06:50" itemprop="dateCreated datePublished" datetime="2017-02-09T09:06:50+08:00">2017-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -215,7 +215,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/net/" itemprop="url" rel="index"><span itemprop="name">.net</span></a>
+          <a href="/categories/Blog%E5%BB%BA%E7%AB%99/" itemprop="url" rel="index"><span itemprop="name">Blog建站</span></a>
         </span>
     </span>
 
@@ -229,14 +229,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="C-调用webservice接口"><a href="#C-调用webservice接口" class="headerlink" title="C#调用webservice接口"></a>C#调用webservice接口</h2><p>由于项目需要调用第三方的webservice接口,以前没有接触过webservice相关知识,故在此记录下来备忘.下边通过webservice天气预报接口为例.简单介绍下如何在.NET项目中调用外部webservice.</p>
-<p>1.项目中添加”服务引用”.如下图:<br>  <img src="webservice1.jpg" alt="alt"></p>
-<p>  <img src="webservice2.jpg" alt="alt"></p>
-<p>  <img src="webservice3.jpg" alt="alt"></p>
-
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><img src="http://i1.piimg.com/567571/f63d2030ab646842.png" alt><br><a href="hexo.io">Hexo</a>是一个快捷、简单、功能强大的个人博客框架，使用Node.js下载与安装，上百个文件仅需几秒就可以安装完毕;Hexo的页面使用Markdown语法，简洁高效;通过简单的命令即可发布到网站，支持发布到GitHub Pages Heroku和其他站点;同时Hexo拥有丰富强大的插件系统，可以根据个人需要进行安装。本文主要针对技术开发人员如何快速的搭建Hexo博客做一个详尽的教程，也是对自己在搭建博客的过程中遇到的问题进行总结，避免以后的小伙伴踩坑。本文从五个方面进行讲解，分别为：</p>
+<ul>
+<li>环境部署</li>
+<li>HEXO安装与常用命令</li>
+<li>个性化设置</li>
+<li>HEXO部署Github</li>
+<li><p>定制化个性域名</p></li></ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019/04/10/NET%E8%AE%BF%E9%97%AEwebservice%E6%8E%A5%E5%8F%A3/#more" rel="contents">
+              <a class="btn" href="/2017/02/09/blog/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -260,7 +262,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/63/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><span class="page-number current">64</span><a class="page-number" href="/page/65/">65</a><span class="space">&hellip;</span><a class="page-number" href="/page/68/">68</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/65/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/63/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><span class="page-number current">64</span><a class="page-number" href="/page/65/">65</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/65/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
