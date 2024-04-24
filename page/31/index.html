@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/" class="post-title-link" itemprop="url">图形学的数学基础（五）：标准正交基/坐标系</a>
+          <a href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/" class="post-title-link" itemprop="url">图形学的数学基础（二）：标准正交基/坐标系</a>
         </h2>
 
         <div class="post-meta-container">
@@ -199,9 +199,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-08-31 10:45:55 / 修改时间：20:33:15" itemprop="dateCreated datePublished" datetime="2022-08-31T10:45:55+08:00">2022-08-31</time>
+      <time title="创建时间：2022-08-31 10:45:55" itemprop="dateCreated datePublished" datetime="2022-08-31T10:45:55+08:00">2022-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-24 10:00:46" itemprop="dateModified" datetime="2024-04-24T10:00:46+08:00">2024-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -231,20 +237,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（五）：标准正交基-坐标系"><a href="#图形学的数学基础（五）：标准正交基-坐标系" class="headerlink" title="图形学的数学基础（五）：标准正交基/坐标系"></a>图形学的数学基础（五）：标准正交基/坐标系</h1><h2 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h2><p>对于三维空间任意的三个矢量,如果它们满足</p>
+          <h1 id="图形学的数学基础（二）：标准正交基-坐标系"><a href="#图形学的数学基础（二）：标准正交基-坐标系" class="headerlink" title="图形学的数学基础（二）：标准正交基/坐标系"></a>图形学的数学基础（二）：标准正交基/坐标系</h1><h2 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h2><p>对于三维空间任意三个向量,如果它们满足</p>
 <ul>
 <li>$||\vec{u}|| = ||\vec{v}|| = ||\vec{w}|| = 1$</li>
 <li>$\vec{u}.\vec{v} = \vec{v}.\vec{w} = \vec{u}.\vec{w} = 0$</li>
 <li>$\vec{w} = \vec{u} \times \vec{v}$ (右手系)</li>
 </ul>
-<p>即矢量的长度都为1,相互垂直, 这样的三个矢量构成的坐标系称为<strong>标准正交基</strong>,$\vec{u} ,\vec{v},\vec{w}$称为标准正交基的<strong>基矢量</strong>.</p>
+<p>即向量长度都为1,相互垂直, 这样的三个向量构成的坐标系称为<strong>标准正交基</strong>,$\vec{u} ,\vec{v},\vec{w}$称为标准正交基的<strong>基矢量</strong>.</p>
 <h2 id="为什么需要标准正交基"><a href="#为什么需要标准正交基" class="headerlink" title="为什么需要标准正交基"></a>为什么需要标准正交基</h2><p>定义这样的坐标系,带来的一点好处就是, 空间中任意一矢量,都可以分解到标准正交基的三个轴上,需要用到前边向量投影的相关知识. 即<strong>矢量可以表示为基矢量的线性组合</strong>.<br><img src="1.jpg" alt="alt"></p>
 <p>$||\vec{b_⊥}|| = ||\vec{b}|| \cos\theta$</p>
 <p>此时的$\vec{a}$为单位向量,即$||\vec{a}|| = 1$</p>
 <p>因此 $||\vec{b_⊥}|| = ||\vec{b}||||\vec{a}|| \cos\theta = \mathbf{b}.\mathbf{a}$</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/#more" rel="contents">
+              <a class="btn" href="/2022/08/31/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
