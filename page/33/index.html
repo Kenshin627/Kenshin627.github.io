@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">求解微分问题</a>
+          <a href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/" class="post-title-link" itemprop="url">连续性和可导性</a>
         </h2>
 
         <div class="post-meta-container">
@@ -199,9 +199,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-03-31 17:28:28 / 修改时间：22:45:54" itemprop="dateCreated datePublished" datetime="2022-03-31T17:28:28+08:00">2022-03-31</time>
+      <time title="创建时间：2022-03-30 10:39:34" itemprop="dateCreated datePublished" datetime="2022-03-30T10:39:34+08:00">2022-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-31 11:17:45" itemprop="dateModified" datetime="2022-03-31T11:17:45+08:00">2022-03-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -227,22 +233,26 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="求解微分常用技巧"><a href="#求解微分常用技巧" class="headerlink" title="求解微分常用技巧"></a>求解微分常用技巧</h1><h2 id="使用定义求导"><a href="#使用定义求导" class="headerlink" title="使用定义求导"></a>使用定义求导</h2><p>根据导数的定义:<br>$f’(x) = \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}$</p>
-<p>$例如:对于 f(x) = \frac{1}{x}$</p>
-<p>$f’(x) = \lim_{h \to 0}\frac{\frac{1}{x+h} - \frac{1}{x}}{h}$</p>
-<p>$f’(x)=\lim_{h \to 0}\frac{\frac{x-(x+h)}{x(x+h)}}{h}=\lim_{h \to 0}\frac{-h}{hx(x+h)}=-\frac{1}{x^2}$</p>
+          <h1 id="连续性"><a href="#连续性" class="headerlink" title="连续性"></a>连续性</h1><p>我们先从一个函数是连续的, 这到底意味着什么开始. 正如我上面所说, 直觉上, 可以一笔画出连续函数的图像.</p>
+<h2 id="在一点处的连续"><a href="#在一点处的连续" class="headerlink" title="在一点处的连续"></a>在一点处的连续</h2><p>如果f(x)在a点连续,则必须满足以下三个条件:</p>
+<ul>
+<li>双侧极限${\lim_{x \to a} f(x)}$存在并且是有限的</li>
+<li>函数在点a处有定义,$f(a)$存在并且是有限的</li>
+<li>以上两个量相等,即: ${\lim_{x \to a} f(x) = f(x)}$</li>
+</ul>
+<h2 id="在一个区间上连续"><a href="#在一个区间上连续" class="headerlink" title="在一个区间上连续"></a>在一个区间上连续</h2><p>函数f在[a, b] 上连续,需满足以下三个条件:</p>
+<ul>
+<li>f在(a,b)的每一点都连续</li>
+<li>函数f在x = a处右连续,即 ${\lim_{x \to a^+} f(x)} = f(a)$</li>
+<li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
+</ul>
+<p><strong><em>★介值定理</em></strong></p>
 <blockquote>
-<p>$\frac{d}{dx}(\frac{1}{x})=-\frac{1}{x^2}$</p>
-<p>$\frac{d}{dx}\sqrt{x}=\frac{1}{2\sqrt{x}}$</p>
-<p>$\frac{d}{dx}x^a=ax^{a-1}$</p>
-</blockquote>
-<h2 id="函数的常数倍"><a href="#函数的常数倍" class="headerlink" title="函数的常数倍"></a>函数的常数倍</h2><p>处理一个函数的常数倍时,只需要用常数乘以该函数的导数就可以了.</p>
-<blockquote>
-<p>$\frac{d}{dx}Cf(x)=Cf’(x)$</p>
+<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/#more" rel="contents">
+              <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -266,7 +276,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/32/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/34/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/32/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><span class="page-number current">33</span><a class="page-number" href="/page/34/">34</a><span class="space">&hellip;</span><a class="page-number" href="/page/60/">60</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/34/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
