@@ -21,35 +21,35 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="图形学的数学基础（三十四）：柏林噪声$Perlin\;Noise$1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置">
+    <meta name="description" content="计算机图形学（十）：柏林噪声$Perlin\;Noise$1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图形学的数学基础（三十四）：柏林噪声">
-<meta property="og:url" content="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/index.html">
+<meta property="og:title" content="计算机图形学（十）：柏林噪声">
+<meta property="og:url" content="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/index.html">
 <meta property="og:site_name" content="Pixel World">
-<meta property="og:description" content="图形学的数学基础（三十四）：柏林噪声$Perlin\;Noise$1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置">
+<meta property="og:description" content="计算机图形学（十）：柏林噪声$Perlin\;Noise$1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/1.jpg">
-<meta property="og:image" content="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/7.jpg">
-<meta property="og:image" content="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/2.jpg">
-<meta property="og:image" content="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/3.jpg">
-<meta property="og:image" content="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/4.jpg">
+<meta property="og:image" content="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/1.jpg">
+<meta property="og:image" content="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/7.jpg">
+<meta property="og:image" content="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/2.jpg">
+<meta property="og:image" content="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/3.jpg">
+<meta property="og:image" content="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/4.jpg">
 <meta property="article:published_time" content="2022-09-26T13:11:48.000Z">
-<meta property="article:modified_time" content="2022-09-28T15:05:50.352Z">
+<meta property="article:modified_time" content="2024-04-25T15:23:19.944Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Math">
 <meta property="article:tag" content="Computer Graphic">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/1.jpg">
+<meta name="twitter:image" content="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/1.jpg">
 
 
-<link rel="canonical" href="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
+<link rel="canonical" href="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/","path":"2022/09/26/图形学的数学基础（三十四）：柏林噪声/","title":"图形学的数学基础（三十四）：柏林噪声"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/","path":"2022/09/26/计算机图形学（十）：柏林噪声/","title":"计算机图形学（十）：柏林噪声"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>图形学的数学基础（三十四）：柏林噪声 | Pixel World</title>
+<title>计算机图形学（十）：柏林噪声 | Pixel World</title>
   
 
 
@@ -122,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0"><span class="nav-number">1.</span> <span class="nav-text">图形学的数学基础（三十四）：柏林噪声</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perlin-Noise"><span class="nav-number">1.1.</span> <span class="nav-text">$Perlin\;Noise$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%87%E5%8C%80%E5%88%86%E5%B8%83%E6%A2%AF%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text">均匀分布梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perlin-Noise-%E7%9B%B8%E6%AF%94-Value-Nosie-%E4%BC%98%E5%8A%BF"><span class="nav-number">1.4.</span> <span class="nav-text">$Perlin\;Noise$相比$Value\;Nosie$优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0"><span class="nav-number">1.</span> <span class="nav-text">计算机图形学（十）：柏林噪声</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perlin-Noise"><span class="nav-number">1.1.</span> <span class="nav-text">$Perlin\;Noise$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%87%E5%8C%80%E5%88%86%E5%B8%83%E6%A2%AF%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text">均匀分布梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perlin-Noise-%E7%9B%B8%E6%AF%94-Value-Nosie-%E4%BC%98%E5%8A%BF"><span class="nav-number">1.4.</span> <span class="nav-text">$Perlin\;Noise$相比$Value\;Nosie$优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -137,7 +137,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,7 +189,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -202,12 +202,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="图形学的数学基础（三十四）：柏林噪声 | Pixel World">
+      <meta itemprop="name" content="计算机图形学（十）：柏林噪声 | Pixel World">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          图形学的数学基础（三十四）：柏林噪声
+          计算机图形学（十）：柏林噪声
         </h1>
 
         <div class="post-meta-container">
@@ -225,7 +225,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-28 23:05:50" itemprop="dateModified" datetime="2022-09-28T23:05:50+08:00">2022-09-28</time>
+      <time title="修改时间：2024-04-25 23:23:19" itemprop="dateModified" datetime="2024-04-25T23:23:19+08:00">2024-04-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,7 +276,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="图形学的数学基础（三十四）：柏林噪声"><a href="#图形学的数学基础（三十四）：柏林噪声" class="headerlink" title="图形学的数学基础（三十四）：柏林噪声"></a>图形学的数学基础（三十四）：柏林噪声</h1><h2 id="Perlin-Noise"><a href="#Perlin-Noise" class="headerlink" title="$Perlin\;Noise$"></a>$Perlin\;Noise$</h2><p>1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之前我们详细介绍了1D和2D$Value\;Noise$的创建。本章将实现$Perlin\;Nosie$的3D版本。<br>那么$Perlin\;Nosie$和$Value\;Noise$有什么区别呢？在$Value\;Noise$情况下，我们只需在网格的顶点处分配随机数，并使用该点所在格子内的点的位置对这些值进行插值（双线性插值）。在$Perlin\;Nosie$中，$Ken\;Perlin$建议将网格顶点的随机值替换为梯度（归一化的三维矢量），方法是在$[0,1]$范围内生成三个随机浮点数，再将这些随机数重映射到$[-1,1]$范围内，最后对矢量进行归一化。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="计算机图形学（十）：柏林噪声"><a href="#计算机图形学（十）：柏林噪声" class="headerlink" title="计算机图形学（十）：柏林噪声"></a>计算机图形学（十）：柏林噪声</h1><h2 id="Perlin-Noise"><a href="#Perlin-Noise" class="headerlink" title="$Perlin\;Noise$"></a>$Perlin\;Noise$</h2><p>1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之前我们详细介绍了1D和2D$Value\;Noise$的创建。本章将实现$Perlin\;Nosie$的3D版本。<br>那么$Perlin\;Nosie$和$Value\;Noise$有什么区别呢？在$Value\;Noise$情况下，我们只需在网格的顶点处分配随机数，并使用该点所在格子内的点的位置对这些值进行插值（双线性插值）。在$Perlin\;Nosie$中，$Ken\;Perlin$建议将网格顶点的随机值替换为梯度（归一化的三维矢量），方法是在$[0,1]$范围内生成三个随机浮点数，再将这些随机数重映射到$[-1,1]$范围内，最后对矢量进行归一化。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableSize = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> gradients = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tableSize; i++) &#123;</span><br><span class="line">    gradients[i] = <span class="title function_">vec3</span>(<span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>);</span><br><span class="line">    gradients[i] = gradients[i].<span class="title function_">normalize</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>相比通过随机数插值的$Value\;Noise$，现在网格顶点分布的是三维矢量，由于噪声函数需要返回一个浮点数，如何通过三维矢量生成浮点数呢？$Ken\;Perlin$建议计算每个网格顶点到我们要计算的点$p$的方向矢量，我们可以得到8个3D向量（一个立方体有8个角或顶点）和4个2D向量（二维）。然后，在网格顶点的梯度和从该顶点到$p$点的向量之间使用点积。由于两个向量的点积给出了一个实数，因此，我们将梯度或矢量转换为了浮点数。与 2D 情况一样，为了计算点$p$在“虚构”3D 网格的局部坐标中的坐标，我们将点坐标从浮点数转换为整数值($floor$)，然后将这些整数坐标取模 N，即我们的大小随机方向的数组（在关于值噪声的课程中，我们选择了 N = 256）。。正如我们在上一章中解释的那样，我们不想生成 256x256x256 方向的晶格。因此，我们使用包含 256 个随机方向的单个 1D 数组，并使用置换表的技术通过将点的整数坐标转换为带有哈希的置换表的索引来“随机拾取”存储在该表中的方向之一功能。</p>
 <p>代码实现如下：</p>
@@ -346,7 +346,7 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/" rel="prev" title="图形学的数学基础（七）：噪声-下">
+                <a href="/2022/09/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/" rel="prev" title="图形学的数学基础（七）：噪声-下">
                   <i class="fa fa-angle-left"></i> 图形学的数学基础（七）：噪声-下
                 </a>
             </div>

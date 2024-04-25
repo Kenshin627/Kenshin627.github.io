@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -292,7 +292,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -310,7 +310,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/" class="post-title-link" itemprop="url">图形学的数学基础（三十四）：柏林噪声</a>
+          <a href="/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/" class="post-title-link" itemprop="url">计算机图形学（十）：柏林噪声</a>
         </h2>
 
         <div class="post-meta-container">
@@ -328,7 +328,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-28 23:05:50" itemprop="dateModified" datetime="2022-09-28T23:05:50+08:00">2022-09-28</time>
+      <time title="修改时间：2024-04-25 23:23:19" itemprop="dateModified" datetime="2024-04-25T23:23:19+08:00">2024-04-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -373,7 +373,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（三十四）：柏林噪声"><a href="#图形学的数学基础（三十四）：柏林噪声" class="headerlink" title="图形学的数学基础（三十四）：柏林噪声"></a>图形学的数学基础（三十四）：柏林噪声</h1><h2 id="Perlin-Noise"><a href="#Perlin-Noise" class="headerlink" title="$Perlin\;Noise$"></a>$Perlin\;Noise$</h2><p>1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之前我们详细介绍了1D和2D$Value\;Noise$的创建。本章将实现$Perlin\;Nosie$的3D版本。<br>那么$Perlin\;Nosie$和$Value\;Noise$有什么区别呢？在$Value\;Noise$情况下，我们只需在网格的顶点处分配随机数，并使用该点所在格子内的点的位置对这些值进行插值（双线性插值）。在$Perlin\;Nosie$中，$Ken\;Perlin$建议将网格顶点的随机值替换为梯度（归一化的三维矢量），方法是在$[0,1]$范围内生成三个随机浮点数，再将这些随机数重映射到$[-1,1]$范围内，最后对矢量进行归一化。</p>
+          <h1 id="计算机图形学（十）：柏林噪声"><a href="#计算机图形学（十）：柏林噪声" class="headerlink" title="计算机图形学（十）：柏林噪声"></a>计算机图形学（十）：柏林噪声</h1><h2 id="Perlin-Noise"><a href="#Perlin-Noise" class="headerlink" title="$Perlin\;Noise$"></a>$Perlin\;Noise$</h2><p>1985年，$Ken\;Perlin$发表了一篇名为“A Image Synthetizer”的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数,但是表现更好。柏林噪声和我们之前学习的噪声函数很相似，于$Value\;Noise$类似，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之前我们详细介绍了1D和2D$Value\;Noise$的创建。本章将实现$Perlin\;Nosie$的3D版本。<br>那么$Perlin\;Nosie$和$Value\;Noise$有什么区别呢？在$Value\;Noise$情况下，我们只需在网格的顶点处分配随机数，并使用该点所在格子内的点的位置对这些值进行插值（双线性插值）。在$Perlin\;Nosie$中，$Ken\;Perlin$建议将网格顶点的随机值替换为梯度（归一化的三维矢量），方法是在$[0,1]$范围内生成三个随机浮点数，再将这些随机数重映射到$[-1,1]$范围内，最后对矢量进行归一化。</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableSize = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> gradients = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tableSize; i++) &#123;</span><br><span class="line">    gradients[i] = <span class="title function_">vec3</span>(<span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>);</span><br><span class="line">    gradients[i] = gradients[i].<span class="title function_">normalize</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>相比通过随机数插值的$Value\;Noise$，现在网格顶点分布的是三维矢量，由于噪声函数需要返回一个浮点数，如何通过三维矢量生成浮点数呢？$Ken\;Perlin$建议计算每个网格顶点到我们要计算的点$p$的方向矢量，我们可以得到8个3D向量（一个立方体有8个角或顶点）和4个2D向量（二维）。然后，在网格顶点的梯度和从该顶点到$p$点的向量之间使用点积。由于两个向量的点积给出了一个实数，因此，我们将梯度或矢量转换为了浮点数。与 2D 情况一样，为了计算点$p$在“虚构”3D 网格的局部坐标中的坐标，我们将点坐标从浮点数转换为整数值($floor$)，然后将这些整数坐标取模 N，即我们的大小随机方向的数组（在关于值噪声的课程中，我们选择了 N = 256）。。正如我们在上一章中解释的那样，我们不想生成 256x256x256 方向的晶格。因此，我们使用包含 256 个随机方向的单个 1D 数组，并使用置换表的技术通过将点的整数坐标转换为带有哈希的置换表的索引来“随机拾取”存储在该表中的方向之一功能。</p>
 <p>代码实现如下：</p>
@@ -382,7 +382,7 @@
 <p><img src="1.jpg" alt="perlinNoise"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/26/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E5%9B%9B%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/#more" rel="contents">
+              <a class="btn" href="/2022/09/26/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -413,7 +413,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -431,7 +431,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/" class="post-title-link" itemprop="url">图形学的数学基础（七）：噪声-下</a>
+          <a href="/2022/09/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/" class="post-title-link" itemprop="url">图形学的数学基础（七）：噪声-下</a>
         </h2>
 
         <div class="post-meta-container">
@@ -449,7 +449,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-25 19:45:38" itemprop="dateModified" datetime="2024-04-25T19:45:38+08:00">2024-04-25</time>
+      <time title="修改时间：2024-04-25 23:21:46" itemprop="dateModified" datetime="2024-04-25T23:21:46+08:00">2024-04-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -504,7 +504,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">lerp</span>(<span class="params">min:<span class="built_in">number</span>, max: nmber, t: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> min * (<span class="number">1</span>-t) + max * t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">smoothStep</span>(<span class="params">t: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> t * t * (<span class="number">3</span>- <span class="number">2</span> * t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">vec2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="attr">x</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="attr">y</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">x: <span class="built_in">number</span>,y: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">x</span> = x;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">y</span> = y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ValueNoise</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="attr">K_MAX_TABLE_SIZE</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="attr">K_MAX_TABLE_SIZE_MASK</span>: <span class="built_in">number</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="attr">vertices</span>: <span class="built_in">number</span>[];</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE</span> = <span class="number">256</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span> = <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE</span> - <span class="number">1</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">vertices</span> = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE</span> * <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE</span>; i++) &#123;</span><br><span class="line">           <span class="variable language_">this</span>.<span class="property">vertices</span>[i] = <span class="title class_">Math</span>.<span class="title function_">random</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">computeX</span>(<span class="params">p: vec2</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> xi = <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">x</span>);</span><br><span class="line">        <span class="keyword">const</span> yi = <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">y</span>);</span><br><span class="line">        <span class="keyword">const</span> s = p.<span class="property">x</span> - xi;</span><br><span class="line">        <span class="keyword">const</span> t = p.<span class="property">y</span> - yi;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> rx0 = xi &amp; <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span>;</span><br><span class="line">        <span class="keyword">const</span> rx1 = (rx0 + <span class="number">1</span>) &amp; <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span>;</span><br><span class="line">        <span class="keyword">const</span> ry0 = yi &amp; <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span>;</span><br><span class="line">        <span class="keyword">const</span> ry1 = (ry0 + <span class="number">1</span>) &amp; <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//通过置换表查找四个顶点处的随机值</span></span><br><span class="line">        <span class="keyword">const</span> c00 = <span class="variable language_">this</span>.<span class="property">vertices</span>[ry0 * <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span> + rx0];</span><br><span class="line">        <span class="keyword">const</span> c10 = <span class="variable language_">this</span>.<span class="property">vertices</span>[ry0 * <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span> + rx1];</span><br><span class="line">        <span class="keyword">const</span> c01 = <span class="variable language_">this</span>.<span class="property">vertices</span>[ry1 * <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span> + rx0];</span><br><span class="line">        <span class="keyword">const</span> c11 = <span class="variable language_">this</span>.<span class="property">vertices</span>[ry1 * <span class="variable language_">this</span>.<span class="property">K_MAX_TABLE_SIZE_MASK</span> + rx1];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//对得到的s和t做平滑处理</span></span><br><span class="line">        <span class="keyword">const</span> ss = <span class="title function_">smoothStep</span>(s);</span><br><span class="line">        <span class="keyword">const</span> st = <span class="title function_">smoothStep</span>(t);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> a = <span class="title function_">lerp</span>(c00, c10, ss);</span><br><span class="line">        <span class="keyword">const</span> b = <span class="title function_">lerp</span>(c01, c11, ss);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">lerp</span>(a, b, st);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%B8%89%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/#more" rel="contents">
+              <a class="btn" href="/2022/09/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -535,7 +535,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -553,123 +553,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/" class="post-title-link" itemprop="url">图形学的数学基础（三十二）：噪声-中</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-09-24 21:51:49" itemprop="dateCreated datePublished" datetime="2022-09-24T21:51:49+08:00">2022-09-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-25 22:56:34" itemprop="dateModified" datetime="2024-04-25T22:56:34+08:00">2024-04-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>17</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（三十二）：噪声-中"><a href="#图形学的数学基础（三十二）：噪声-中" class="headerlink" title="图形学的数学基础（三十二）：噪声-中"></a>图形学的数学基础（三十二）：噪声-中</h1><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.scratchapixel.com/">Scratchapixel</a></p>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/09/24/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%AD/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/23/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/23/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/" class="post-title-link" itemprop="url">图形学的数学基础（七）：噪声-上</a>
+          <a href="/2022/09/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/" class="post-title-link" itemprop="url">计算机图形学（八）：噪声-上</a>
         </h2>
 
         <div class="post-meta-container">
@@ -687,7 +571,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-25 23:16:21" itemprop="dateModified" datetime="2024-04-25T23:16:21+08:00">2024-04-25</time>
+      <time title="修改时间：2024-04-25 23:21:17" itemprop="dateModified" datetime="2024-04-25T23:21:17+08:00">2024-04-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -732,7 +616,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（七）：噪声-上"><a href="#图形学的数学基础（七）：噪声-上" class="headerlink" title="图形学的数学基础（七）：噪声-上"></a>图形学的数学基础（七）：噪声-上</h1><p>本章将介绍噪声的基础内容，包括噪声是什么，它的属性以及可以用来做什么。噪声不是一个难以理解的复杂概念，但它有许多微妙之处需要注意。 正确使用它需要了解它的工作原理和实现方式。 为了创建一些图像并使用各种参数进行实验，我们将实现一个简单（但功能齐全）的噪声函数，称为$Value Noise$。 本章我们将忽略许多过于复杂而无法在此处全面研究的技术，只是对噪声及其一些应用的初步介绍。 </p>
+          <h1 id="计算机图形学（八）：噪声-上"><a href="#计算机图形学（八）：噪声-上" class="headerlink" title="计算机图形学（八）：噪声-上"></a>计算机图形学（八）：噪声-上</h1><p>本章将介绍噪声的基础内容，包括噪声是什么，它的属性以及可以用来做什么。噪声不是一个难以理解的复杂概念，但它有许多微妙之处需要注意。 正确使用它需要了解它的工作原理和实现方式。 为了创建一些图像并使用各种参数进行实验，我们将实现一个简单（但功能齐全）的噪声函数，称为$Value Noise$。 本章我们将忽略许多过于复杂而无法在此处全面研究的技术，只是对噪声及其一些应用的初步介绍。 </p>
 <h2 id="历史背景"><a href="#历史背景" class="headerlink" title="历史背景"></a>历史背景</h2><p>噪声是在80年代中期发明的，起初是作为图像纹理的替代方法。主要原因在于80年代中期的电脑内存有限，无法容纳用于纹理映射的图片，于是人们开始寻找替代解决方案。用纯色渲染物体看起来太无趣了，需要通过调整物体的表面材质属性来打破这种干净的外观。在编程中，我们通常在需要创建随机时使用伪随机数生成器。然而使用$RNG(Random\;number\;generator)$是远远不够的。我们在自然界中观察到的随机模式通常是很自然的，物体表面上距离很近的两个点通常看起来会比较相似。但是同一物体上相距很远的两个点却差异很大。换句话说：<strong>局部变化是细微的，是渐进的，而全局变化则是很大的。</strong>$RNG$无法满足这个要求，因为每次调用随机数生成器它会返回和其它数值完全不相干的随机数。因此调用这个函数会产生两个完全不同的数字，最终产生杂乱无章的白噪声。下面是一个例子：让我们观察一块真实岩石的图像，假设我们想要复现该CG图像。这个例子很有趣，因为我们可以看到岩石图案由三种颜色组成：绿色，粉色和灰色。这些颜色或多或少分布在岩石表面上。我们首先使用随机数生成器的版本：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GenerateRandPattern</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="type">unsigned</span> imageWidth, imageHeight; </span><br><span class="line">    imageWidth = imageHeight = <span class="number">512</span>; </span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">unsigned</span> kNumColors = <span class="number">3</span>; </span><br><span class="line">    Color3f rockColors[ kNumColors ] = &#123; </span><br><span class="line">        &#123; <span class="number">0.4078</span>, <span class="number">0.4078</span>, <span class="number">0.3764</span> &#125;, </span><br><span class="line">        &#123; <span class="number">0.7606</span>, <span class="number">0.6274</span>, <span class="number">0.6313</span> &#125;, </span><br><span class="line">        &#123; <span class="number">0.8980</span>, <span class="number">0.9372</span>, <span class="number">0.9725</span> &#125; &#125;; </span><br><span class="line">    <span class="function">std::ofstream <span class="title">ofs</span><span class="params">( <span class="string">&quot;./rockpattern.ppm&quot;</span> )</span></span>; </span><br><span class="line">    ofs &lt;&lt; <span class="string">&quot;P6\n&quot;</span> &lt;&lt; imageWidth &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; imageHeight &lt;&lt; <span class="string">&quot;\n255\n&quot;</span>; </span><br><span class="line">    <span class="keyword">for</span> ( <span class="type">int</span> j = <span class="number">0</span>; j &lt; imageWidth; ++j ) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">for</span> ( <span class="type">int</span> i = <span class="number">0</span>; i &lt; imageHeight; ++i ) </span><br><span class="line">        &#123; </span><br><span class="line">            <span class="type">unsigned</span> colorIndex = std::<span class="built_in">min</span>( <span class="built_in">unsigned</span>( <span class="built_in">drand48</span> () * kNumColors ), kNumColors - <span class="number">1</span> ); </span><br><span class="line">            ofs &lt;&lt; <span class="built_in">uchar</span>( rockColors[ colorIndex ][ <span class="number">0</span> ] * <span class="number">255</span> ) &lt;&lt; </span><br><span class="line">                   <span class="built_in">uchar</span>( rockColors[ colorIndex ][ <span class="number">1</span> ] * <span class="number">255</span> ) &lt;&lt; </span><br><span class="line">                   <span class="built_in">uchar</span>( rockColors[ colorIndex ][ <span class="number">2</span> ] * <span class="number">255</span> ); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    ofs.<span class="built_in">close</span>(); </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <p><img src="1.jpg" alt="RNG"></p>
@@ -742,7 +626,128 @@
 <p><img src="2.jpg" alt="RNG"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/23/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/#more" rel="contents">
+              <a class="btn" href="/2022/09/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" class="post-title-link" itemprop="url">图形学的数学基础（十五）：贝塞尔曲线</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-21 22:55:12" itemprop="dateCreated datePublished" datetime="2022-09-21T22:55:12+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-25 17:56:01" itemprop="dateModified" datetime="2024-04-25T17:56:01+08:00">2024-04-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>874</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="图形学的数学基础（十五）：贝塞尔曲线"><a href="#图形学的数学基础（十五）：贝塞尔曲线" class="headerlink" title="图形学的数学基础（十五）：贝塞尔曲线"></a>图形学的数学基础（十五）：贝塞尔曲线</h1><h2 id="贝塞尔曲线-Bezier-curve"><a href="#贝塞尔曲线-Bezier-curve" class="headerlink" title="贝塞尔曲线($Bézier\;curve$)"></a>贝塞尔曲线($Bézier\;curve$)</h2><p>用一系列控制点定义的曲线,如下图所示:曲线由四个控制点定义(三阶贝塞尔曲线),从$P_0$开始,沿着$P_0-P_1$切线方向行进,结束时沿着<br>$P_2-P_3$方向,结束于$P_3$点。</p>
+<p><img src="1.png" alt="贝塞尔曲线"></p>
+<h2 id="参数方程-de-Casteljau-Algorithm"><a href="#参数方程-de-Casteljau-Algorithm" class="headerlink" title="参数方程-$de\;Casteljau\;Algorithm$"></a>参数方程-$de\;Casteljau\;Algorithm$</h2><p>首先考虑由三个控制点组成的二次贝塞尔曲线（ $quadratic\;Bézier$）：</p>
+<p><img src="2.png" alt="贝塞尔曲线"></p>
+<p>假设有一颗沿着曲线运动的小球，当$t = 0$,球体在$b_0$点，当$t = 1$，球体在$b_1$点 定义曲线关于时间$t$的参数方程，实质上就是求在任意时间$t$（$0&lt;=t&lt;=1$）,球体的位置。这就是$de\;Casteljau$算法的核心思想，将曲线方程转换成了求一个点位置。</p>
+<p>求解步骤：</p>
+<p>1&gt; 三个控制点$b_0,b_1,b_2$组成了两条线段，假设时间为$t$,分别去计算两条线段$b_0-b_1和b_1-b_2$在时间$t$上的位置（实际上是线性插值）,得到$b^1_0和b^1_1$.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
