@@ -541,7 +541,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/18/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8A/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -559,7 +559,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/18/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8A/" class="post-title-link" itemprop="url">图形学的数学基础（二十七）：纹理应用(上)</a>
+          <a href="/2022/09/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8A/" class="post-title-link" itemprop="url">计算机图形学（四）：纹理应用-上</a>
         </h2>
 
         <div class="post-meta-container">
@@ -577,7 +577,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-20 10:13:46" itemprop="dateModified" datetime="2022-09-20T10:13:46+08:00">2022-09-20</time>
+      <time title="修改时间：2024-04-25 12:42:24" itemprop="dateModified" datetime="2024-04-25T12:42:24+08:00">2024-04-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -622,7 +622,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（二十七）：纹理应用-上"><a href="#图形学的数学基础（二十七）：纹理应用-上" class="headerlink" title="图形学的数学基础（二十七）：纹理应用(上)"></a>图形学的数学基础（二十七）：纹理应用(上)</h1><p>在计算机图形学中，纹理贴图是使用图像、函数或其他数据源来改变物体表面外观的技术。例如，可以将一幅砖墙的彩色图像应用到一个多边形上，而不用对砖墙的几何形状进行确表示。通过这种方式将图像和物体表面结合起来，可以在建模、存储空间和速度方面节省很多资源。当然纹理不仅仅用于改变物体表面漫反射颜色,<strong>纹理本质上是一个数据集</strong>,可以用来存储任何我们需要的顶点数据,因此在方方面面得到了广泛的应用.本文将介绍MaterialMap、AlphaMap、BumpMap、NormalMap、ReliefMap、DisplacementMap、ParallaxMap、TexturedLight、ShadowMap、EnvironmentMap。<br>我们将以上纹理贴图的应用划分为6个大类：</p>
+          <h1 id="计算机图形学（四）：纹理应用-上"><a href="#计算机图形学（四）：纹理应用-上" class="headerlink" title="计算机图形学（四）：纹理应用-上"></a>计算机图形学（四）：纹理应用-上</h1><p>在计算机图形学中，纹理贴图是使用图像、函数或其他数据源来改变物体表面外观的技术。例如，可以将一张砖墙贴图应用到一个多边形上，而不用对砖墙的几何形状进行精确建模。通过这种方式将图像和物体表面结合起来，可以在建模、存储空间和速度方面节省很多资源。当然纹理不仅仅用于改变物体表面漫反射颜色,<strong>纹理本质上是一个数据集</strong>,可以用来存储任何我们需要的数据,因此在各方面都得到了广泛的应用.本文将介绍MaterialMap、AlphaMap、BumpMap、NormalMap、ReliefMap、DisplacementMap、ParallaxMap、TexturedLight、ShadowMap、EnvironmentMap。<br>我们将以上纹理贴图的应用划分为6个大类：</p>
 <ul>
 <li>控制着色信息</li>
 <li>控制片元透明度</li>
@@ -633,7 +633,7 @@
 </ul>
 <h2 id="控制着色信息"><a href="#控制着色信息" class="headerlink" title="控制着色信息"></a>控制着色信息</h2><p>根据$Blinn-phong\;Model$可知，物体表面着色信息有以下因子来控制：</p>
 <p><img src="15.png" alt="blinn-phong"></p>
-<p>$L = L_a+L_d+L_s = K_aE_a + K_d\dfrac{E}{r^2}max(0, \hat{n}\cdot\hat{l}) + K_s\dfrac{E}{r^2}max(0, \hat{n}\cdot\hat{h})^p$</p>
+<p>$L = L_a+L_d+L_s = K_aI_a + K_d\dfrac{I}{r^2}max(0, \hat{n}\cdot\hat{l}) + K_s\dfrac{I}{r^2}max(0, \hat{n}\cdot\hat{h})^p$</p>
 <div class="table-container">
 <table>
 <thead>
@@ -648,11 +648,11 @@
 <td>物体表面环境光吸收率</td>
 </tr>
 <tr>
-<td>$E_a$</td>
+<td>$I_a$</td>
 <td>环境光强度</td>
 </tr>
 <tr>
-<td>$\dfrac{E}{r^2}$</td>
+<td>$\dfrac{I}{r^2}$</td>
 <td>到达物体表面的光线</td>
 </tr>
 <tr>
@@ -665,7 +665,7 @@
 </tr>
 <tr>
 <td>$\hat{l}$</td>
-<td>光线单位矢量</td>
+<td>光线单位向量</td>
 </tr>
 <tr>
 <td>$K_s$</td>
@@ -678,11 +678,11 @@
 </tbody>
 </table>
 </div>
-<p>可以看到有许多可以调节的参数来控制着色点的着色表现。虽然可以赋予顶点更多的属性来改变这些参数，但是要做到亚三角形的细节，就需要使用各种纹理，<strong>对每个片元的着色参数进行调节</strong>，这些纹理映射方法统称为材质映射（$Material\;Map$）。</p>
-<p>最简单的就是漫反射映射，将纹理采样得到的值直接用于$K_d$项，很直观也很简单，这里不做过多赘述。</p>
+<p>可以看到有许多可以调节的参数来控制像素的着色表现。虽然可以赋予顶点更多的属性来改变这些参数，但是要做到亚三角形的细节程度，就需要使用各种纹理，<strong>对每个片元的着色参数进行调节</strong>，这些纹理映射方法统称为材质映射（$Material\;Map$）。</p>
+<p>最简单的就是漫反射贴图，将纹理采样得到的值直接用于$K_d$项，很直观也很简单，这里不做过多赘述。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/18/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%E5%8D%81%E4%B8%83%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8A/#more" rel="contents">
+              <a class="btn" href="/2022/09/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8A/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
