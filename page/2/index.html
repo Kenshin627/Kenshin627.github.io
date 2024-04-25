@@ -177,7 +177,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -195,7 +195,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" class="post-title-link" itemprop="url">图形学的数学基础（三十）：贝塞尔曲线</a>
+          <a href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/" class="post-title-link" itemprop="url">图形学的数学基础（十五）：贝塞尔曲线</a>
         </h2>
 
         <div class="post-meta-container">
@@ -213,7 +213,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-22 00:12:58" itemprop="dateModified" datetime="2022-09-22T00:12:58+08:00">2022-09-22</time>
+      <time title="修改时间：2024-04-25 17:56:01" itemprop="dateModified" datetime="2024-04-25T17:56:01+08:00">2024-04-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -240,7 +240,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>877</span>
+      <span>874</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -258,16 +258,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（三十）：贝塞尔曲线"><a href="#图形学的数学基础（三十）：贝塞尔曲线" class="headerlink" title="图形学的数学基础（三十）：贝塞尔曲线"></a>图形学的数学基础（三十）：贝塞尔曲线</h1><h2 id="贝塞尔曲线-Bezier-curve"><a href="#贝塞尔曲线-Bezier-curve" class="headerlink" title="贝塞尔曲线($Bézier\;curve$)"></a>贝塞尔曲线($Bézier\;curve$)</h2><p>用一些列的控制点定义曲线,如下图所示:曲线由四个控制点定义(三阶贝塞尔曲线),从$P_0$开始,沿着$P_0-P_1$切线方向行进,结束时沿着<br>$P_2-P_3$方向,结束于$P_3$点。</p>
-<p><img src="1.jpg" alt="贝塞尔曲线"></p>
-<h2 id="参数方程-de-Casteljau-Algorithm"><a href="#参数方程-de-Casteljau-Algorithm" class="headerlink" title="参数方程-$de\;Casteljau\;Algorithm$"></a>参数方程-$de\;Casteljau\;Algorithm$</h2><p>首先考虑由三个控制点组成的二维的贝塞尔曲线（ $quadratic\;Bézier$）：</p>
-<p><img src="2.jpg" alt="贝塞尔曲线"></p>
-<p>假设有一颗沿着曲线运动的小球，当$t = 0$,球体在$b_0$点，当$t = 1$，球体在$b_1$点 定义曲线是关于时间$t$的参数方程，实质上就是求在任意时间$t$（$0&lt;=t&lt;=1$）,球体的位置。这就是$de\;Casteljau$算法的核心思想，将曲线方程转换为了求一个点位置。</p>
-<p><img src="3.jpg" alt="贝塞尔曲线"></p>
+          <h1 id="图形学的数学基础（十五）：贝塞尔曲线"><a href="#图形学的数学基础（十五）：贝塞尔曲线" class="headerlink" title="图形学的数学基础（十五）：贝塞尔曲线"></a>图形学的数学基础（十五）：贝塞尔曲线</h1><h2 id="贝塞尔曲线-Bezier-curve"><a href="#贝塞尔曲线-Bezier-curve" class="headerlink" title="贝塞尔曲线($Bézier\;curve$)"></a>贝塞尔曲线($Bézier\;curve$)</h2><p>用一系列控制点定义的曲线,如下图所示:曲线由四个控制点定义(三阶贝塞尔曲线),从$P_0$开始,沿着$P_0-P_1$切线方向行进,结束时沿着<br>$P_2-P_3$方向,结束于$P_3$点。</p>
+<p><img src="1.png" alt="贝塞尔曲线"></p>
+<h2 id="参数方程-de-Casteljau-Algorithm"><a href="#参数方程-de-Casteljau-Algorithm" class="headerlink" title="参数方程-$de\;Casteljau\;Algorithm$"></a>参数方程-$de\;Casteljau\;Algorithm$</h2><p>首先考虑由三个控制点组成的二次贝塞尔曲线（ $quadratic\;Bézier$）：</p>
+<p><img src="2.png" alt="贝塞尔曲线"></p>
+<p>假设有一颗沿着曲线运动的小球，当$t = 0$,球体在$b_0$点，当$t = 1$，球体在$b_1$点 定义曲线关于时间$t$的参数方程，实质上就是求在任意时间$t$（$0&lt;=t&lt;=1$）,球体的位置。这就是$de\;Casteljau$算法的核心思想，将曲线方程转换成了求一个点位置。</p>
 <p>求解步骤：</p>
+<p>1&gt; 三个控制点$b_0,b_1,b_2$组成了两条线段，假设时间为$t$,分别去计算两条线段$b_0-b_1和b_1-b_2$在时间$t$上的位置（实际上是线性插值）,得到$b^1_0和b^1_1$.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%E5%8D%81%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/#more" rel="contents">
+              <a class="btn" href="/2022/09/21/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89%EF%BC%9A%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
