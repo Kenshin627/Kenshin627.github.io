@@ -1616,7 +1616,7 @@ pre code {
 }
 .reading-progress-bar {
   --progress: 0;
-  background: #ff7b0f;
+  background: #575757;
   height: 5px;
   position: fixed;
   z-index: 50;
@@ -2560,7 +2560,7 @@ header.header {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #d1c95b;
+  background: #e0878c;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
