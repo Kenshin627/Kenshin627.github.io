@@ -126,18 +126,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -168,250 +168,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">求解微分问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-03-31 17:28:28 / 修改时间：22:45:54" itemprop="dateCreated datePublished" datetime="2022-03-31T17:28:28+08:00">2022-03-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>571</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="求解微分常用技巧"><a href="#求解微分常用技巧" class="headerlink" title="求解微分常用技巧"></a>求解微分常用技巧</h1><h2 id="使用定义求导"><a href="#使用定义求导" class="headerlink" title="使用定义求导"></a>使用定义求导</h2><p>根据导数的定义:<br>$f’(x) = \lim_{h \to 0}\frac{f(x+h) - f(x)}{h}$</p>
-<p>$例如:对于 f(x) = \frac{1}{x}$</p>
-<p>$f’(x) = \lim_{h \to 0}\frac{\frac{1}{x+h} - \frac{1}{x}}{h}$</p>
-<p>$f’(x)=\lim_{h \to 0}\frac{\frac{x-(x+h)}{x(x+h)}}{h}=\lim_{h \to 0}\frac{-h}{hx(x+h)}=-\frac{1}{x^2}$</p>
-<blockquote>
-<p>$\frac{d}{dx}(\frac{1}{x})=-\frac{1}{x^2}$</p>
-<p>$\frac{d}{dx}\sqrt{x}=\frac{1}{2\sqrt{x}}$</p>
-<p>$\frac{d}{dx}x^a=ax^{a-1}$</p>
-</blockquote>
-<h2 id="函数的常数倍"><a href="#函数的常数倍" class="headerlink" title="函数的常数倍"></a>函数的常数倍</h2><p>处理一个函数的常数倍时,只需要用常数乘以该函数的导数就可以了.</p>
-<blockquote>
-<p>$\frac{d}{dx}Cf(x)=Cf’(x)$</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/31/%E6%B1%82%E8%A7%A3%E5%BE%AE%E5%88%86%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/" class="post-title-link" itemprop="url">连续性和可导性</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-03-30 10:39:34" itemprop="dateCreated datePublished" datetime="2022-03-30T10:39:34+08:00">2022-03-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-31 11:17:45" itemprop="dateModified" datetime="2022-03-31T11:17:45+08:00">2022-03-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>300</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="连续性"><a href="#连续性" class="headerlink" title="连续性"></a>连续性</h1><p>我们先从一个函数是连续的, 这到底意味着什么开始. 正如我上面所说, 直觉上, 可以一笔画出连续函数的图像.</p>
-<h2 id="在一点处的连续"><a href="#在一点处的连续" class="headerlink" title="在一点处的连续"></a>在一点处的连续</h2><p>如果f(x)在a点连续,则必须满足以下三个条件:</p>
-<ul>
-<li>双侧极限${\lim_{x \to a} f(x)}$存在并且是有限的</li>
-<li>函数在点a处有定义,$f(a)$存在并且是有限的</li>
-<li>以上两个量相等,即: ${\lim_{x \to a} f(x) = f(x)}$</li>
-</ul>
-<h2 id="在一个区间上连续"><a href="#在一个区间上连续" class="headerlink" title="在一个区间上连续"></a>在一个区间上连续</h2><p>函数f在[a, b] 上连续,需满足以下三个条件:</p>
-<ul>
-<li>f在(a,b)的每一点都连续</li>
-<li>函数f在x = a处右连续,即 ${\lim_{x \to a^+} f(x)} = f(a)$</li>
-<li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
-</ul>
-<p><strong><em>★介值定理</em></strong></p>
-<blockquote>
-<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -668,7 +424,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/22/Context/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -686,7 +442,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/" class="post-title-link" itemprop="url">纹理映射</a>
+          <a href="/2021/11/22/Context/" class="post-title-link" itemprop="url">Haskell03 - Context</a>
         </h2>
 
         <div class="post-meta-container">
@@ -697,14 +453,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-03-09 21:49:09" itemprop="dateCreated datePublished" datetime="2022-03-09T21:49:09+08:00">2022-03-09</time>
+      <time title="创建时间：2021-11-22 11:46:20" itemprop="dateCreated datePublished" datetime="2021-11-22T11:46:20+08:00">2021-11-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-13 22:22:06" itemprop="dateModified" datetime="2022-03-13T22:22:06+08:00">2022-03-13</time>
+      <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -712,7 +468,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+          <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
         </span>
     </span>
 
@@ -723,7 +479,229 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>510</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Functor"><a href="#Functor" class="headerlink" title="Functor"></a>Functor</h1><h2 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h2><p>This solution means that you’d have to rewrite a special version of every existing function you want to use in a Maybe! This greatly limits the usefulness of tools such as Maybe. It turns out Haskell has a type class that solves this problem, called Functor.</p>
+<h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><p>Maybe is a member of the Functor type class. The Functor type class requires only one definition: fmap.<br><img src="1.jpg" alt="alt"><br>_<strong>fmap provides an adapter</strong>_, Notice that we’re using &lt;$&gt;, which is a synonym for fmap (except it’s a binary operator rather than a function._<strong>This ability to transform the types of values inside a Maybe is the true power of the Functor type class.</strong>_<br><img src="2.jpg" alt="alt"></p>
+<p>Though fmap is the official function name, in practice the binary operator &lt;$&gt; is used much more frequently<br><img src="3.png" alt="alt"></p>
+<h1 id="Applicative"><a href="#Applicative" class="headerlink" title="Applicative"></a>Applicative</h1><p>_<strong>the Applicative type class allows you to use functions that are inside a context, such as Maybe or IO, Functor is a superclass of Applicative.</strong>_<br><img src="4.jpg" alt="alt"><br><img src="5.jpg" alt="alt"></p>
+<h2 id="The-pure-method"><a href="#The-pure-method" class="headerlink" title="The pure method"></a>The pure method</h2><p>The pure method is a useful helper function for taking an ordinary value(also function) or function and putting it into a context.<br><img src="7.png" alt="alt"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/22/Context/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/20/IO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/20/IO/" class="post-title-link" itemprop="url">Haskell03 - IO</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-20 12:44:13" itemprop="dateCreated datePublished" datetime="2021-11-20T12:44:13+08:00">2021-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>485</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="IO-TYPES"><a href="#IO-TYPES" class="headerlink" title="IO TYPES"></a>IO TYPES</h1><p>Haskell has a special parameterized type called IO. Any value in an IO context must stay in this context. This prevents code that’s pure (meaning it upholds referential transparency and doesn’t change state) and code that’s necessarily impure from mixing.</p>
+<h2 id="IO-types—dealing-with-an-impure-world"><a href="#IO-types—dealing-with-an-impure-world" class="headerlink" title="IO types—dealing with an impure world"></a>IO types—dealing with an impure world</h2><p>IO in Haskell is a parameterized type that’s similar to Maybe.The first thing they share in common is that they’re parameterized types of the same kind.The other thing that Maybe and IO have in common is that (unlike List or Map) they describe a context for their parameters rather than a container. The context for the IO type is that the value has come from an input/output operation.To keep Haskell code pure and predictable, you use the IO type to provide a context for data that may not behave the way all of the rest of your Haskell code does. IO actions aren’t functions.</p>
+<h2 id="Examples-of-IO-actions"><a href="#Examples-of-IO-actions" class="headerlink" title="Examples of IO actions"></a>Examples of IO actions</h2><p>main doesn’t return any meaningful value; it simply performs an action. It turns out that main isn’t a function, because it breaks one of the fundamental rules of functions: it doesn’t return a value. Because of this, we refer to main as an IO action. IO actions work much like functions except they violate at least one of the three rules we established for functions early in the book. Some IO actions return no value, some take no input, and others don’t always return the same value given the same input.<br><img src="1.png" alt="alt"></p>
+<h2 id="Do-notation"><a href="#Do-notation" class="headerlink" title="Do-notation"></a>Do-notation</h2><p>This do-notation allows you to treat IO types as if they were regular types. This also explains why some variables use let and others use &lt;-. Variables assigned with &lt;- allow you to act as though a type IO a is just of type a. You use let statements whenever you create variables that aren’t IO types.</p>
+<h3 id="lt"><a href="#lt" class="headerlink" title="&lt;-"></a>&lt;-</h3><p>Donotation allows you to assign an IO String variable by using &lt;-, to act like it’s an ordinary String, and then to pass it to functions that work with only regular Strings<br><img src="2.png" alt="alt"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/20/IO/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/18/types/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/18/types/" class="post-title-link" itemprop="url">Haskell02 - types</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-18 16:30:41" itemprop="dateCreated datePublished" datetime="2021-11-18T16:30:41+08:00">2021-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-11-20 12:49:21" itemprop="dateModified" datetime="2021-11-20T12:49:21+08:00">2021-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -741,16 +719,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;当试图重现真实世界的样貌时，人们很快就会意识到任何物体都有自己的特征。木材随纹理生长;皮肤长出皱纹;布显示其编织结构;油漆显示了刷子或辊子留下的痕迹。即使是光滑的塑料也是用模压成型的凸起物制成的，而光滑的金属则显示出制造它的加工过程的痕迹。曾经毫无特色的材料很快就会被标记、凹痕、污渍、划痕、指纹和污垢所覆盖.<br>&nbsp;&nbsp;&nbsp;&nbsp;在图形学中,我们把所有这些现象归结为”空间性的改变物体属性”- 物体表面属性因位置而异，但并不真正改变物体形状几何构造.为了实现这些效果，所有类型的建模和渲染系统都提供了一些纹理映射的方法:使用称为纹理映射的图像、纹理图像或者纹理来存储数据, 然后通过数学的方法将图片映射到物体表面.<br>&nbsp;&nbsp;&nbsp;&nbsp;事实证明,除了表现物体表面细节的基本目的外，还有许多其他应用纹理映射的方式.例如:生成阴影(shadow mapping), 反射, 提供光照(Environment mapping),甚至定义形状(bump mapping).<br>本章讨论通过纹理来表示表面细节、阴影和反射。虽然基本思想简单，但仍然面临几个问题需要处理.</p>
-<ol>
-<li>实现从纹理到物体表面的映射函数.</li>
-<li>纹理映射是一个重采样的过程,就像重新调整一张图片的大小, 重采样会产生走样问题.</li>
-</ol>
-<h1 id="纹理查询"><a href="#纹理查询" class="headerlink" title="纹理查询"></a>纹理查询</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;首先，让我们考虑一个简单的纹理映射应用。我们有一个木地板的场景，我们希望地板的漫反射颜色是由一个木地板木纹图像控制。无论我们使用光线追踪或光栅化,着色代码需要知道当前作色点对应的纹理图片的颜色值,用作布林冯光照模型中的漫反射颜色系数.<br>为了拿到着色点对应纹理图片的颜色值, 着色器会执行一次纹理查询(<strong><em>texture lookup</em></strong>)-它计算在纹理图像的坐标系统中，对应于着色点的位置，然后读取图像中的颜色，从而得到纹理样本.这种颜色随后被用于着色.伪代码如下:<br></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Color texture_lookup(Texture t, float u, float v) &#123;</span><br><span class="line">    int i = round(u * t.width() - 0.5)</span><br><span class="line">    int j = round(v * t.height() - 0.5)</span><br><span class="line">    return t.get_pixel(i,j)</span><br><span class="line">&#125;</span><br><span class="line">Color shade_surface_point(Surface s, Point p, Texture t) &#123;</span><br><span class="line">    Vector normal = s.get_normal(p)</span><br><span class="line">    (u,v) = s.get_texcoord(p)</span><br><span class="line">    Color diffuse_color = texture_lookup(u,v)</span><br><span class="line">    // compute shading using diffuse_color and normal</span><br><span class="line">    // return shading result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
-<h1 id="纹理坐标方程"><a href="#纹理坐标方程" class="headerlink" title="纹理坐标方程"></a>纹理坐标方程</h1><h2 id="平铺-环绕方式-纹理坐标变换"><a href="#平铺-环绕方式-纹理坐标变换" class="headerlink" title="平铺, 环绕方式, 纹理坐标变换"></a>平铺, 环绕方式, 纹理坐标变换</h2><p>模型的纹理坐标不总是在[0,1]的区间内,纹理映射机制有不同的处理方式.<br>如果一张纹理被设计只覆盖部分表面，但纹理坐标已经设置好将整个表面映射到单元正方形，其中一种方式是准备一个几乎是空白的纹理图像，其中的内容位于一个小区域。<br>但这可能需要非常高分辨率的纹理图像来获得相关区域的足够细节。另一种做法是缩放所有纹理坐标，使它们覆盖更大的范围，例如，到位置在表面中心面积为十分之一的正方形单位。<br>在这种情况下，纹理覆盖的单元正方形区域之外的纹理查找应该返回一个固定的背景色。一种方法是设置一个背景色，由单元正方形外的纹理查找返回。如果已经有一个恒定的背景颜色纹理图像(例如,一个标志在白色背景),另一种方法是返回纹理图像的颜色最接近边缘的颜色.<br>有时我们想要一个重复的图案，比如棋盘，瓷砖地板，或砖墙。如果可以使图案在矩形网格上重复，那么使用相同数据的许多副本创建图像将是一种浪费。相反，我们可以使用环绕索引处理纹理图像外部的纹理查找—当查找点离开纹理图像的右边缘时，它会绕到左边缘。使用像素坐标上的整数余数操作可以非常简单地处理这个问题。<br></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//repeat</span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(i % t.width(), j % t.height())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//clamp </span><br><span class="line">Color texture_lookup_wrap(Texture t, float u, float v) &#123;</span><br><span class="line">int i = round(u * t.width() - 0.5)</span><br><span class="line">int j = round(v * t.height() - 0.5)</span><br><span class="line">return t.get_pixel(max(0, min(i, t.width()-1)),</span><br><span class="line">(max(0, min(j, t.height()-1))))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="01-TYPE-BASICS"><a href="#01-TYPE-BASICS" class="headerlink" title="01. TYPE BASICS"></a>01. TYPE BASICS</h1><p>in Haskell, you haven’t had to write down any information about the<br>type you’re using for any of your values. It turns out this is because Haskell has done it<br>for you! Haskell uses type inference to automatically determine the types of all values at<br>compile time based on the way they’re used! You don’t have to rely on Haskell to determine your types for you.</p>
+<p><img src="1.png" alt="alt"></p>
+<h2 id="list-tuple-function"><a href="#list-tuple-function" class="headerlink" title="list  tuple  function"></a>list  tuple  function</h2><p><img src="2.png" alt="alt"></p>
+<h3 id="Functions-with-multiple-arguments"><a href="#Functions-with-multiple-arguments" class="headerlink" title="Functions with multiple arguments"></a>Functions with multiple arguments</h3><p>why are type signatures this way? The reason is that behind the scenes in Haskell, all functions take only one argument. By rewriting makeAddress by using a series of nested lambda functions.</p>
+<p><img src="3.png" alt="alt"></p>
+<h3 id="Types-for-first-class-functions"><a href="#Types-for-first-class-functions" class="headerlink" title="Types for first-class functions"></a>Types for first-class functions</h3><p>functions can take functions as arguments and return<br>functions as values. To write these type signatures, you write the individual function<br>values in parentheses.</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/03/09/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84/#more" rel="contents">
+              <a class="btn" href="/2021/11/18/types/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -774,7 +751,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -797,14 +774,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">81k</span>
+    <span title="站点总字数">78k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:53</span>
+    <span title="站点阅读时长">4:42</span>
   </span>
 </div>
 <div class="busuanzi-count">

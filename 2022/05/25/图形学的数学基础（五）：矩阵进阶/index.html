@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#000"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#000">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="图形学的数学基础（五）：矩阵进阶行列式对于方形矩阵，有一个特殊的标量称为矩阵的行列式（$Determinant$。方形矩阵$\textbf{M}$的行列式表示为$|\textbf{M}|$,也表示为“det M”。非方形矩阵的行列式是未定义的。 $2\times 2$和$3\times 3$矩阵的行列式$2\times 2$矩阵行列式： $\begin{vmatrix}M\end{vmatrix}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学的数学基础（五）：矩阵进阶">
+<meta property="og:url" content="http://example.com/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/index.html">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="图形学的数学基础（五）：矩阵进阶行列式对于方形矩阵，有一个特殊的标量称为矩阵的行列式（$Determinant$。方形矩阵$\textbf{M}$的行列式表示为$|\textbf{M}|$,也表示为“det M”。非方形矩阵的行列式是未定义的。 $2\times 2$和$3\times 3$矩阵的行列式$2\times 2$矩阵行列式： $\begin{vmatrix}M\end{vmatrix}">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/1.png">
+<meta property="og:image" content="http://example.com/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/2.webp">
+<meta property="article:published_time" content="2022-05-25T00:46:17.000Z">
+<meta property="article:modified_time" content="2024-04-26T02:02:04.162Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Computer Graphic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/1.png">
+
+
+<link rel="canonical" href="http://example.com/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/","path":"2022/05/25/图形学的数学基础（五）：矩阵进阶/","title":"图形学的数学基础（五）：矩阵进阶"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>图形学的数学基础（五）：矩阵进阶 | Pixel World</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Pixel World</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6"><span class="nav-number">1.</span> <span class="nav-text">图形学的数学基础（五）：矩阵进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E5%88%97%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">行列式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-times-2-%E5%92%8C-3-times-3-%E7%9F%A9%E9%98%B5%E7%9A%84%E8%A1%8C%E5%88%97%E5%BC%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">$2\times 2$和$3\times 3$矩阵的行列式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E7%9F%A9%E9%98%B5%E8%A1%8C%E5%88%97%E5%BC%8F-Minor-%E5%92%8C%E4%BD%99%E5%AD%90%E5%BC%8F-Cofactor"><span class="nav-number">1.1.2.</span> <span class="nav-text">子矩阵行列式($Minor$)和余子式($Cofactor$)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E7%9F%A9%E9%98%B5%E8%A1%8C%E5%88%97%E5%BC%8F"><span class="nav-number">1.1.3.</span> <span class="nav-text">子矩阵行列式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%99%E5%AD%90%E5%BC%8F"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">余子式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%95%B0%E5%AD%A6%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">行列式的数学定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8"><span class="nav-number">1.1.5.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E8%A7%A3%E9%87%8A"><span class="nav-number">1.1.6.</span> <span class="nav-text">几何解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E7%9F%A9%E9%98%B5%EF%BC%88Inverse%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">逆矩阵（Inverse）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">数学定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E4%BC%B4%E9%9A%8F%E7%9F%A9%E9%98%B5%EF%BC%88-Classical-Adjoint-%EF%BC%89"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">经典伴随矩阵（$Classical\;Adjoint$）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%B4%A8-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E8%A7%A3%E9%87%8A-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">几何解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E4%BA%A4%E7%9F%A9%E9%98%B5%EF%BC%88-Orthogonal-Matrix-%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">正交矩阵（$Orthogonal\;Matrix$）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%AE%9A%E4%B9%89-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">数学定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%BD%95%E8%A7%A3%E9%87%8A-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">几何解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E7%9A%84%E6%AD%A3%E4%BA%A4%E5%8C%96"><span class="nav-number">1.3.3.</span> <span class="nav-text">矩阵的正交化</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/author.png">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kenshin627" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/97340526/" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;97340526&#x2F;" rel="noopener me" target="_blank"><i class="fa-brands fa-bilibili fa-fw"></i>BiliBili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=11906050" title="网易云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;11906050" rel="noopener me" target="_blank"><i class="fa-solid fa-music fa-fw"></i>网易云</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="图形学的数学基础（五）：矩阵进阶 | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图形学的数学基础（五）：矩阵进阶
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-25 08:46:17" itemprop="dateCreated datePublished" datetime="2022-05-25T08:46:17+08:00">2022-05-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 10:02:04" itemprop="dateModified" datetime="2024-04-26T10:02:04+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="图形学的数学基础（五）：矩阵进阶"><a href="#图形学的数学基础（五）：矩阵进阶" class="headerlink" title="图形学的数学基础（五）：矩阵进阶"></a>图形学的数学基础（五）：矩阵进阶</h1><h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><p>对于方形矩阵，有一个特殊的标量称为矩阵的行列式（$Determinant$。方形矩阵$\textbf{M}$的行列式表示为$|\textbf{M}|$,也表示为“det M”。非方形矩阵的行列式是未定义的。</p>
+<h3 id="2-times-2-和-3-times-3-矩阵的行列式"><a href="#2-times-2-和-3-times-3-矩阵的行列式" class="headerlink" title="$2\times 2$和$3\times 3$矩阵的行列式"></a>$2\times 2$和$3\times 3$矩阵的行列式</h3><p>$2\times 2$矩阵行列式：</p>
+<p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}\\ m_{21}&amp;m_{22}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21}$</p>
+<p>$3\times 3$矩阵行列式：</p>
+<p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}&amp;m_{13}\\ m_{21}&amp;m_{22}&amp;m_{23}\\ m_{31}&amp;m_{32}&amp;m_{33}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21} = m_{11}m_{22}m_{33} + m_{12}m_{23}m_{31} + m_{13}m_{21}m_{32} - m_{13}m_{22}m_{31} - m_{12}m_{21}m_{33} - m_{11}m_{23}m_{32} = m_{11}(m_{22}m_{33} - m_{23}m_{32}) + m_{12}(m_{23}m_{31} - m_{21}m_{33}) + m_{13}(m_{21}m_{32} - m_{22}m_{31})$</p>
+<p><img src="1.png" alt="3x3矩阵行列式"></p>
+<p>如果将$X\times 3$矩阵的行解释为3个向量，那么该矩阵的行列式等价于3个向量的三重积。</p>
+<p>$\begin{vmatrix}<br>    a_x&amp;a_y&amp;a_z\\ b_x&amp;b_y&amp;b_z\\ c_x&amp;c_y&amp;c_z<br>\end{vmatrix}$ = $(a_yb_z -a_zb_y)c_x + (a_zb_x - a_xb_z)c_y + (a_xb_y - a_yb_x)c_z = (\mathbf{a}\times \mathbf{b})\cdot \mathbf{c}$</p>
+<h3 id="子矩阵行列式-Minor-和余子式-Cofactor"><a href="#子矩阵行列式-Minor-和余子式-Cofactor" class="headerlink" title="子矩阵行列式($Minor$)和余子式($Cofactor$)"></a>子矩阵行列式($Minor$)和余子式($Cofactor$)</h3><h3 id="子矩阵行列式"><a href="#子矩阵行列式" class="headerlink" title="子矩阵行列式"></a>子矩阵行列式</h3><p>假设$\textbf{M}$具有$r$行和$c$列的矩阵，考虑通过$\textbf{M}$中删除行i和列j而获得的矩阵。该矩阵具有r-1行和c-1列。这个矩阵的行列式表示为$\textbf{M}^{ij}$,被称为$\textbf{M}$的子矩阵行列式。</p>
+<h4 id="余子式"><a href="#余子式" class="headerlink" title="余子式"></a>余子式</h4><p>给定行和列的方形矩阵$\textbf{M}$的余子式与相应的子矩阵行列式相同，但余子式会交替变负，正负取决于因子$(-1)^{i + j}$.矩阵的余子式用来计算$n\times n$任意维度矩阵的行列式。</p>
+<p>$C^{ij} = (-1)^{i+j}M^{ij}$</p>
+<p>我们使用$C^{ij}$表示行i列j中的$\textbf{M}$的余子式。<br>+&amp;-&amp;+&amp;-&amp;…\\<br>$\begin{bmatrix}<br>    +&amp;-&amp;+&amp;-&amp;…\\ -&amp;+&amp;-&amp;+&amp;…\\ +&amp;-&amp;+&amp;-&amp;…\\  -&amp;+&amp;-&amp;+&amp;…\\ …&amp;…&amp;…&amp;…&amp;…<br>\end{bmatrix}$</p>
+<h3 id="行列式的数学定义"><a href="#行列式的数学定义" class="headerlink" title="行列式的数学定义"></a>行列式的数学定义</h3><p>对于任意维度$n\times n$矩阵的行列式，可以通过它的余子式计算。这个定义是递归的，因为<strong>余子式本质上是有符号的行列式</strong>。首先从矩阵中任意选择一行或一列。对于行或列中的每个元素，将此元素乘以相应的余子式，对这些乘积求和可得出最终的行列式：</p>
+<p>$\begin{vmatrix}<br>    \textbf{M}<br>\end{vmatrix} = \sum\limits_{j=1}^n{m_{ij}C^{ij}} = \sum\limits_{j=1}^n{m_{ij}(-1)^{i + j}M^{ij}}$</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><p>．任何维度的单位矩阵行列式为1：$\begin{vmatrix}I\end{vmatrix} = 1$</p>
+<p>．矩阵乘积的行列式等于矩阵行列式的乘积：　$\begin{vmatrix}AB\end{vmatrix} = \begin{vmatrix}A\end{vmatrix}\begin{vmatrix}B\end{vmatrix}$</p>
+<p>. 矩阵转置的行列式等于原始矩阵行列式：$\begin{vmatrix}M^T\end{vmatrix} = \begin{vmatrix}M\end{vmatrix}$<br>. 如果矩阵中的任何行或者列包含全0元素，则该矩阵的行列式为0<br>. 交换任意行会让行列式变负</p>
+<h3 id="几何解释"><a href="#几何解释" class="headerlink" title="几何解释"></a>几何解释</h3><p><strong>在几何上行列式表示了当前变换矩阵对空间的压缩或者拉伸程度。</strong>。即经过一次变换后，空间被压缩或者拉伸了多少。二维中，行列式等于具有基向量作为两条边的平行四边形的有符号面积。三维中，行列式是平行六面体的体积。</p>
+<p><img src="2.webp" alt="行列式的几何意义"></p>
+<h2 id="逆矩阵（Inverse）"><a href="#逆矩阵（Inverse）" class="headerlink" title="逆矩阵（Inverse）"></a>逆矩阵（Inverse）</h2><p>对于方形矩阵来说，另一个重要运算是逆矩阵。方形矩阵$\textbf{M}$的逆矩阵表示为$\textbf{M}^{-1}$.</p>
+<p>并非所有矩阵都有逆矩阵。如果某个矩阵有逆矩阵，则称其为可逆或者非奇异（$Nonsingular$）矩阵。没有逆的矩阵被认为是不可逆或奇异矩阵。<strong>可逆矩阵的列是先行独立的，列也如此。奇异矩阵的行和列是线性相关的。</strong></p>
+<p>奇异矩阵的行列式为零。非奇异矩阵的行列式为非零。一般情况下检查行列式的大小是最常用的可逆性测试。但是也有极端情况，本文对此暂不讨论。</p>
+<h3 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h3><h4 id="经典伴随矩阵（-Classical-Adjoint-）"><a href="#经典伴随矩阵（-Classical-Adjoint-）" class="headerlink" title="经典伴随矩阵（$Classical\;Adjoint$）"></a>经典伴随矩阵（$Classical\;Adjoint$）</h4><p>本小节会实用经典伴随矩阵的方法，计算矩阵的逆。<br><strong>矩阵$\textbf{M}$的经典伴随矩阵，表示为“adj M”,被定义为$\textbf{M}$的余子式的矩阵的转置</strong></p>
+<p>$adj M(3\times 3) = \begin{bmatrix}<br>    C^{11}&amp;C^{12}&amp;C^{13}\\<br>    C^{21}&amp;C^{22}&amp;C^{23}\\<br>    C^{31}&amp;C^{32}&amp;C^{33}<br>\end{bmatrix}^T$</p>
+<p><strong>矩阵的逆等于经典伴随矩阵除以行列式</strong></p>
+<p>$\textbf{M}^{-1} = \dfrac{adj\;M}{\begin{vmatrix}<br>    \textbf{M}<br>\end{vmatrix}}$</p>
+<p>注：上式同时也证明了，矩阵行列式为0，则不可逆，其实也可以从几何角度做出解释，行列式为0，表示空间至少被压缩了一个维度,因此无法从低维度恢复到高纬度，因为不是1对1的关系。</p>
+<h3 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h3><ol>
+<li>矩阵逆矩阵的逆等于原始矩阵：$(\textbf{M}^{-1})^{-1} = \textbf{M}$</li>
+<li>矩阵转置的逆等于矩阵逆的转置：$(\textbf{M}^T)^{-1} = (\textbf{M}^{-1})^T$</li>
+<li>矩阵乘积的逆等于矩阵逆的乘积：$(\textbf{AB})^{-1} = \textbf{B}^{-1}\textbf{A}^{-1}$</li>
+<li>逆矩阵的行列式是原矩阵行列式的倒数：$\begin{vmatrix}M^{-1}\end{vmatrix} = \dfrac{1}{\begin{bmatrix}M\end{bmatrix}}$</li>
+</ol>
+<h3 id="几何解释-1"><a href="#几何解释-1" class="headerlink" title="几何解释"></a>几何解释</h3><p>从几何视角来看，逆矩阵通常代表了“反向”或“撤销”操作。</p>
+<h2 id="正交矩阵（-Orthogonal-Matrix-）"><a href="#正交矩阵（-Orthogonal-Matrix-）" class="headerlink" title="正交矩阵（$Orthogonal\;Matrix$）"></a>正交矩阵（$Orthogonal\;Matrix$）</h2><h3 id="数学定义-1"><a href="#数学定义-1" class="headerlink" title="数学定义"></a>数学定义</h3><p>当且仅当矩阵及其转置乘积是单位矩阵时，方形矩阵$\textbf{M}$才是正交的。定义如下：</p>
+<p>$M是正交矩阵  &lt;=&gt;  \textbf{M}\textbf{M}^T = \textbf{I}$</p>
+<p>根据逆矩阵的定义，矩阵与其逆相乘等于单位矩阵（$\textbf{M}\textbf{M}^{-1} = \textbf{I}$）,因此，<strong>如果矩阵是正交的，则其转置矩阵等于其逆矩阵</strong></p>
+<p>$M是正交矩阵  &lt;=&gt;  \textbf{M}^T = \textbf{M}^{-1}$</p>
+<p>利用正交矩阵的这一特性,可以轻易得到矩阵的逆,只要证明其是正交矩阵即可,这样就避免了复杂的的逆矩阵计算过程(使用转置矩阵即可)。图形学中有很多正交矩阵，例如旋转矩阵和反射矩阵都是正交的。</p>
+<h3 id="几何解释-2"><a href="#几何解释-2" class="headerlink" title="几何解释"></a>几何解释</h3><p>在很多情况下，我们可能会获得矩阵构造方式的信息，因此可以先验地知道矩阵仅包含旋转或反射。但如果事先对矩阵一无所知，如何判断矩阵的正交性呢？</p>
+<p>根据正交矩阵的定义可知：</p>
+<p>$M是正交矩阵  &lt;=&gt;  \textbf{M}\textbf{M}^T = \textbf{I}$</p>
+<p>$\begin{bmatrix}m_{11}&amp;m_{12}&amp;m_{13}\\ m_{21}&amp;m_{22}&amp;m_{23}\\ m_{31}&amp;m_{32}&amp;m_{33}\end{bmatrix}\begin{bmatrix}m_{11}&amp;m_{21}&amp;m_{31}\\ m_{12}&amp;m_{22}&amp;m_{32}\\ m_{13}&amp;m_{23}&amp;m_{33}\end{bmatrix} = \begin{bmatrix}1&amp;0&amp;0\\ 0&amp;1&amp;0\\ 0&amp;0&amp;1\end{bmatrix}$</p>
+<p>设以下向量$\mathbf{r_1},\mathbf{r_2},\mathbf{r_3}$代表$\textbf{M}$的行：</p>
+<p>$\textbf{M} = \begin{bmatrix}-&amp;r_1&amp;-\\ -&amp;r_2&amp;-\\ -&amp;r_3&amp;-\\ \end{bmatrix}$</p>
+<p>简化上述矩阵和转置相乘的表达式可得：</p>
+<p>$\mathbf{r_1}\cdot\mathbf{r_1} = 1\;\;\;\;\;\;\mathbf{r_1}\cdot\mathbf{r_2} = 0\;\;\;\;\;\;\mathbf{r_1}\cdot\mathbf{r_3} = 0$</p>
+<p>$\mathbf{r_2}\cdot\mathbf{r_1} = 0\;\;\;\;\;\;\mathbf{r_2}\cdot\mathbf{r_2} = 1\;\;\;\;\;\;\mathbf{r_2}\cdot\mathbf{r_3} = 0$</p>
+<p>$\mathbf{r_3}\cdot\mathbf{r_1} = 0\;\;\;\;\;\;\mathbf{r_3}\cdot\mathbf{r_2} = 0\;\;\;\;\;\;\mathbf{r_3}\cdot\mathbf{r_3} = 1$</p>
+<p>通过上述式子我们推导出正交矩阵需要满足以下几个条件：</p>
+<ol>
+<li>当且仅当向量为单位向量时，向量与自身的点积才为1。 因此$\mathbf{r_1},\mathbf{r_2},\mathbf{r_3}$为单位向量。即矩阵的每一行必须是单位向量。</li>
+<li>当且仅当两个向量相互垂直时，点积才为0， 因此$\mathbf{r_1},\mathbf{r_2},\mathbf{r_3}$相互垂直，即矩阵的行相互垂直。</li>
+</ol>
+<p><strong>结论： 当且仅当矩阵每一行都为单位向量且相互垂直的矩阵才是正交矩阵。可以对矩阵的列做同样的描述。因为如果$\textbf{M}$是正交的，$\textbf{M}^T$必然也是正交的。</strong></p>
+<h3 id="矩阵的正交化"><a href="#矩阵的正交化" class="headerlink" title="矩阵的正交化"></a>矩阵的正交化</h3><p>用于构造一组标准正交基向量的算法是$Gram-Schmidt$正交化。基本思想是按顺序遍历基向量。对每个基向量，减去与基向量平行的向量，这必然会产生垂直向量，具体推导细节可以参考之前的文章。</p>
+<p>$\textbf{Gram-Schmidt}\begin{cases}<br>    \vec{v_1} = \vec{x_1}\\<br>    \vec{v_2} = \vec{v_∥} = \vec{x_2} - \vec{x_⊥} = \vec{x_2} - \dfrac{\vec{x_2}.\vec{v_1}}{\vec{v_1}.\vec{v_1}}\vec{v_1}\\<br>    \vec{v_3} = \vec{x_3} - k_1\hat{v_1} - k_2\hat{v_2} = \vec{x_3} - \dfrac{\vec{x_3}.\hat{v_1}}{\hat{v_1}.\hat{v_1}}\hat{v_1} - \dfrac{\vec{x_3}.\hat{v_2}}{\hat{v_2}.\hat{v_2}}\hat{v_2}<br>\end{cases}$</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" rel="prev" title="图形学的数学基础（四）：矩阵线性变换">
+                  <i class="fa fa-angle-left"></i> 图形学的数学基础（四）：矩阵线性变换
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2/" rel="next" title="图形学的数学基础（六）：mvp变换">
+                  图形学的数学基础（六）：mvp变换 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:42</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Kenshin627/BlogGiscus","repo_id":"R_kgDOJ-E6Aw","category":"Announcements","category_id":"DIC_kwDOJ-E6A84CYCOU","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"dark_dimmed","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false,"tagMode":false});</script></body>
+</html>

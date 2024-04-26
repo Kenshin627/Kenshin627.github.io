@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#000"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#000">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="计算机图形学（十）：柏林噪声$Perlin\;Noise$1985年，$Ken\;Perlin$发表了一篇名为《A Image Synthetizer》的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数算法,但是表现更好。柏林噪声和之前的噪声函数很相似，和$Value\;Noise$一样，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机图形学（十）：柏林噪声">
+<meta property="og:url" content="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/index.html">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="计算机图形学（十）：柏林噪声$Perlin\;Noise$1985年，$Ken\;Perlin$发表了一篇名为《A Image Synthetizer》的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数算法,但是表现更好。柏林噪声和之前的噪声函数很相似，和$Value\;Noise$一样，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/1.jpg">
+<meta property="og:image" content="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/7.jpg">
+<meta property="og:image" content="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/2.jpg">
+<meta property="og:image" content="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/3.jpg">
+<meta property="og:image" content="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/4.jpg">
+<meta property="article:published_time" content="2023-03-01T13:30:00.000Z">
+<meta property="article:modified_time" content="2024-04-26T01:53:35.691Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Math">
+<meta property="article:tag" content="Computer Graphic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/","path":"2023/03/01/计算机图形学（十）：柏林噪声/","title":"计算机图形学（十）：柏林噪声"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机图形学（十）：柏林噪声 | Pixel World</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Pixel World</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0"><span class="nav-number">1.</span> <span class="nav-text">计算机图形学（十）：柏林噪声</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Perlin-Noise"><span class="nav-number">1.1.</span> <span class="nav-text">$Perlin\;Noise$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%87%E5%8C%80%E5%88%86%E5%B8%83%E6%A2%AF%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text">均匀分布梯度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Perlin-Noise-%E7%9B%B8%E6%AF%94-Value-Nosie-%E4%BC%98%E5%8A%BF"><span class="nav-number">1.4.</span> <span class="nav-text">$Perlin\;Noise$相比$Value\;Nosie$优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/author.png">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kenshin627" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/97340526/" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;97340526&#x2F;" rel="noopener me" target="_blank"><i class="fa-brands fa-bilibili fa-fw"></i>BiliBili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=11906050" title="网易云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;11906050" rel="noopener me" target="_blank"><i class="fa-solid fa-music fa-fw"></i>网易云</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="计算机图形学（十）：柏林噪声 | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机图形学（十）：柏林噪声
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-01 21:30:00" itemprop="dateCreated datePublished" datetime="2023-03-01T21:30:00+08:00">2023-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 09:53:35" itemprop="dateModified" datetime="2024-04-26T09:53:35+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="计算机图形学（十）：柏林噪声"><a href="#计算机图形学（十）：柏林噪声" class="headerlink" title="计算机图形学（十）：柏林噪声"></a>计算机图形学（十）：柏林噪声</h1><h2 id="Perlin-Noise"><a href="#Perlin-Noise" class="headerlink" title="$Perlin\;Noise$"></a>$Perlin\;Noise$</h2><p>1985年，$Ken\;Perlin$发表了一篇名为《A Image Synthetizer》的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数算法,但是表现更好。柏林噪声和之前的噪声函数很相似，和$Value\;Noise$一样，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之前我们详细介绍了1D和2D$Value\;Noise$的创建。本章将实现$Perlin\;Nosie$的3D版本。那么$Perlin\;Nosie$和$Value\;Noise$有什么区别呢？对于$Value\;Noise$来说，我们只需在网格的顶点处分配随机数，采样点对所在单元格四个顶点做双线性插值即可。在$Perlin\;Nosie$中，$Ken\;Perlin$建议将网格顶点的随机值替换为梯度（归一化的三维向量），方法是在$[0,1]$范围内生成三个随机浮点数，再将这些随机数重映射到$[-1,1]$范围内，最后对向量进行归一化。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableSize = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> gradients = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tableSize; i++) &#123;</span><br><span class="line">    gradients[i] = <span class="title function_">vec3</span>(<span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>);</span><br><span class="line">    gradients[i] = gradients[i].<span class="title function_">normalize</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>相比通过随机数插值的$Value\;Noise$，$Perlin\;Nosie$在网格顶点分布的是三维向量，由于噪声函数需要返回一个浮点数，如何通过三维向量生成浮点数呢？$Ken\;Perlin$建议计算每个网格顶点到我们要计算的点$p$的方向向量，我们可以得到8个3D向量（一个立方体有8个角或顶点）和4个2D向量（二维）。然后计算网格顶点的梯度和从该顶点到$p$点向量的点积。由于向量点积返回一个浮点数，因此，我们将梯度或向量转换为了浮点数。与2D情况一样，为了计算点$p$在3D网格中的坐标，我们将点坐标从浮点数转换为整数值($floor$)，然后将这些整数坐标取模$N$，即随机方向的数组（N = 256）。正如在上一章中解释的那样，我们不想生成256x256x256方向的网格。使用包含256个随机方向的单个一维数组，并使用置换表通过将点的整数坐标转换为带有哈希的置换表的索引来“随机拾取”存储在该表中的方向之一。</p>
+<p>代码实现如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableSize = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">const</span> tableSizeMask = tableSize - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> gradients = [];</span><br><span class="line"><span class="keyword">const</span> permutationTable = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PerlinNoise</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tableSize; i++) &#123;</span><br><span class="line">            gradients[i] = <span class="title function_">vec3</span>(<span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>);</span><br><span class="line">            gradients[i] = gradients[i].<span class="title function_">normalize</span>();</span><br><span class="line">            permutationTable[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (unsigned i = <span class="number">0</span>; i &lt; tableSize; ++i) </span><br><span class="line">        <span class="attr">std</span>::<span class="title function_">swap</span>(permutationTable[i], permutationTable[<span class="title function_">diceInt</span>() &amp; tableSizeMask]); </span><br><span class="line">        <span class="comment">// extend the permutation table in the index range [256:512]</span></span><br><span class="line">        <span class="keyword">for</span> (unsigned i = <span class="number">0</span>; i &lt; tableSize; ++i) &#123; </span><br><span class="line">            permutationTable[tableSize + i] = permutationTable[i]; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">hash</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span>, z: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">permutationTable</span>[<span class="variable language_">this</span>.<span class="property">permutationTable</span>[<span class="variable language_">this</span>.<span class="property">permutationTable</span>[x] +y ] + z]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">computeX</span>(<span class="params">p: vec3</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> xi0 = <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">x</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> yi0 = <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">y</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> zi0 = math.<span class="title function_">floor</span>(p.<span class="property">z</span>) &amp; tableSizeMask;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> xi1 = (xi0 + <span class="number">1</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> xi1 = (xi0 + <span class="number">1</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> xi1 = (xi0 + <span class="number">1</span>) &amp; tableSizeMask;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> tx = p.<span class="property">x</span> - <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">x</span>);</span><br><span class="line">        <span class="keyword">const</span> ty = p.<span class="property">y</span> - <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">y</span>);</span><br><span class="line">        <span class="keyword">const</span> tz = p.<span class="property">z</span> - <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">z</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> u = <span class="title function_">smoothStep</span>(tx);</span><br><span class="line">        <span class="keyword">const</span> v = <span class="title function_">smoothStep</span>(tx);</span><br><span class="line">        <span class="keyword">const</span> w = <span class="title function_">smoothStep</span>(tx);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> c000 = gradients[<span class="title function_">hash</span>(xi0, yi0, zi0)]; </span><br><span class="line">        <span class="keyword">const</span> c100 = gradients[<span class="title function_">hash</span>(xi1, yi0, zi0)]; </span><br><span class="line">        <span class="keyword">const</span> c010 = gradients[<span class="title function_">hash</span>(xi0, yi1, zi0)]; </span><br><span class="line">        <span class="keyword">const</span> c110 = gradients[<span class="title function_">hash</span>(xi1, yi1, zi0)]; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> c001 = gradients[<span class="title function_">hash</span>(xi0, yi0, zi1)]; </span><br><span class="line">        <span class="keyword">const</span> c101 = gradients[<span class="title function_">hash</span>(xi1, yi0, zi1)]; </span><br><span class="line">        <span class="keyword">const</span> c011 = gradients[<span class="title function_">hash</span>(xi0, yi1, zi1)]; </span><br><span class="line">        <span class="keyword">const</span> c111 = gradients[<span class="title function_">hash</span>(xi1, yi1, zi1)]; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> x0 = tx, x1 = tx - <span class="number">1</span>; </span><br><span class="line">        <span class="keyword">const</span> y0 = ty, y1 = ty - <span class="number">1</span>; </span><br><span class="line">        <span class="keyword">const</span> z0 = tz, z1 = tz - <span class="number">1</span>; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> p000 = <span class="title function_">vec3</span>(x0, y0, z0); </span><br><span class="line">        <span class="keyword">const</span> p100 = <span class="title function_">vec3</span>(x1, y0, z0); </span><br><span class="line">        <span class="keyword">const</span> p010 = <span class="title function_">vec3</span>(x0, y1, z0); </span><br><span class="line">        <span class="keyword">const</span> p110 = <span class="title function_">vec3</span>(x1, y1, z0); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> p001 = <span class="title function_">vec3</span>(x0, y0, z1); </span><br><span class="line">        <span class="keyword">const</span> p101 = <span class="title function_">vec3</span>(x1, y0, z1); </span><br><span class="line">        <span class="keyword">const</span> p011 = <span class="title function_">vec3</span>(x0, y1, z1); </span><br><span class="line">        <span class="keyword">const</span> p111 = <span class="title function_">vec3</span>(x1, y1, z1); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// linear interpolation</span></span><br><span class="line">        <span class="keyword">const</span> a = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c000, p000), <span class="title function_">dot</span>(c100, p100), u); </span><br><span class="line">        <span class="keyword">const</span> b = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c010, p010), <span class="title function_">dot</span>(c110, p110), u); </span><br><span class="line">        <span class="keyword">const</span> c = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c001, p001), <span class="title function_">dot</span>(c101, p101), u); </span><br><span class="line">        <span class="keyword">const</span> d = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c011, p011), <span class="title function_">dot</span>(c111, p111), u); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> e = <span class="title function_">lerp</span>(a, b, v); </span><br><span class="line">        <span class="keyword">const</span> f = <span class="title function_">lerp</span>(c, d, v); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">lerp</span>(e, f, w);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了平滑插值，我们在使用tx ty tz之前对其分别使用smoothStep函数重新映射为uvw。<br>通过代码可以看出，$Perlin\;Nosie$和$Value\;Noise$非常类似，唯一不同的是我们将网格顶点的随机值替换为随机的单位向量，然后计算顶点梯度和顶点到当前点的方向向量的点积。</p>
+<p><img src="1.jpg" alt="perlinNoise"></p>
+<h2 id="均匀分布梯度"><a href="#均匀分布梯度" class="headerlink" title="均匀分布梯度"></a>均匀分布梯度</h2><p>生成均匀分布的随机方向看似很简单，但要正确实现还是比较麻烦的。上述代码生成的随机梯度不是均匀分布的。它们是在立方体的体积内而不是球体的体积内产生随机方向。因此，相对于球体来说分布是不均匀的。一种简单的方案是随机生成单位球坐标$\theta和\phi$，并将这些球坐标转换为笛卡尔坐标：</p>
+<p><img src="7.jpg" alt="二维极坐标系"></p>
+<p>$d = r\sin\phi$</p>
+<p>$x = d\cos\theta = r\sin\phi\cos\theta$</p>
+<p>$y = d\sin\theta = r\sin\phi\sin\theta$</p>
+<p>$z = r\cos\phi$</p>
+<p>根据球坐标系转换笛卡尔坐标系公式：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> phi = <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="title class_">Math</span>.<span class="property">PI</span>;</span><br><span class="line"><span class="keyword">const</span> theta = <span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="title class_">Math</span>.<span class="property">PI</span>;</span><br><span class="line"><span class="keyword">const</span> x = <span class="title class_">Math</span>.<span class="title function_">cos</span>(phi) * <span class="title class_">Math</span>.<span class="title function_">sin</span>(theta);</span><br><span class="line"><span class="keyword">const</span> y = <span class="title class_">Math</span>.<span class="title function_">sin</span>(phi) * <span class="title class_">Math</span>.<span class="title function_">sin</span>(theta);</span><br><span class="line"><span class="keyword">const</span> z = <span class="title class_">Math</span>.<span class="title function_">cos</span>(theta);</span><br></pre></td></tr></table></figure>
+<p>这种方式看起来很不错,当生成随机球坐标时,这些坐标也确实均匀的分布在定义它的坐标空间中。但是当将矩形包裹到球体上时，可以明显看到矩形被挤压在球体的两极，换句话说，极点附近的密度要大于其它地方，因此这种分布也是不均匀的。</p>
+<p><img src="2.jpg" alt="二维极坐标系"></p>
+<p>我们知道球体的立体角为$4\pi$,$PDF$（概率密度函数）的积分为1，因此，球体微分立体角的概率为$\dfrac{1}{4\pi}$：</p>
+<p>$\int_0^{4\pi} p(w)dw = 1$</p>
+<p>$p(w) = \dfrac{1}{4\pi}$</p>
+<p>用极坐标的形式表达$PDF$：</p>
+<p>$p(\phi, \theta)d\phi d\theta = p(w)dw$</p>
+<p>根据微分立体角的定义可知：</p>
+<p>$dw = \sin\theta d\theta d\phi$</p>
+<p>综合以上两个公式：</p>
+<p>$p(\phi, \theta)d\phi d\theta = p(w)dw$</p>
+<p>$dw = \sin\theta d\theta d\phi$</p>
+<p>$p(\phi, \theta)d\phi d\theta = p(w) \sin\theta d\theta d\phi$</p>
+<p>$p(\phi, \theta) = p(w) \sin\theta$</p>
+<p>$p(\phi, \theta) = \dfrac{\sin\theta}{4\pi}$</p>
+<p>接下来将$p(\phi,\theta)$对$\phi$积分，得到：</p>
+<p>$p(\theta) = \int_{\phi}^{2\pi} p(\phi, \theta) d\phi = \int_{\phi}^{2\pi} \dfrac{\sin\theta}{4\pi} d\phi = 2\pi * \dfrac{\sin\theta}{4\pi} = \dfrac{\sin\theta}{2}$</p>
+<p>$p(\phi) = \dfrac{p(\phi, \theta)}{p(\theta)} = \dfrac{1}{2\pi}$</p>
+<p>至此就得到了$\phi和\theta$的$PDF$,通过$PDF$可以很轻易的计算出$CDF$（累积分布函数）：</p>
+<p>$P_r(X &lt;= \theta) = P(\theta) = \int_0^{\theta} p(\theta)d\theta = \int_0^{\theta} \dfrac{\sin\theta}{2}d\theta = \dfrac{1}{2} - \dfrac{\cos\theta}{2}$.</p>
+<p>$p(\phi)$的$CDF$求解过程类似：</p>
+<p>$P_r(X &lt;= \phi) = P(\phi) = \int_0^{\phi} \dfrac{1}{2\pi}d\phi = \dfrac{1}{2\pi}[\phi - 0] = \dfrac{\phi}{2\pi}$</p>
+<p>最后反转$CDF$：</p>
+<p>$\xi = \dfrac{1}{2} - \dfrac{\cos\theta}{2}$</p>
+<p>$\dfrac{\cos\theta}{2} = \dfrac{1}{2} - \xi$</p>
+<p>$\cos\theta = 1 - 2\xi$</p>
+<p>$\theta = cos^{-1}(1-2\xi) = cps^{-1}(2\xi-1)$</p>
+<p>$\xi = \dfrac{\phi}{2\pi}$</p>
+<p>$\phi = 2\pi\xi$</p>
+<p>其中希腊字母$\xi$表示[0,1]范围内均匀分布的随机数。也就是说要在球体表面上生成均匀的随机点，需要对代码做优化：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tableSize; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> theta = <span class="title class_">Math</span>.<span class="title function_">arccos</span>(<span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() -<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">const</span> phi = <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="title class_">Math</span>.<span class="property">PI</span>;</span><br><span class="line">    <span class="keyword">const</span> x = <span class="title class_">Math</span>.<span class="title function_">cos</span>(phi)*<span class="title class_">Math</span>.<span class="title function_">sin</span>(theta);</span><br><span class="line">    <span class="keyword">const</span> y = <span class="title class_">Math</span>.<span class="title function_">sin</span>(phi)*<span class="title class_">Math</span>.<span class="title function_">sin</span>(theta);</span><br><span class="line">    <span class="keyword">const</span> z = <span class="title class_">Math</span>.<span class="title function_">cos</span>(theta);</span><br><span class="line">    gradients[i] = <span class="title function_">vec3</span>(x, y, z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Perlin-Noise-相比-Value-Nosie-优势"><a href="#Perlin-Noise-相比-Value-Nosie-优势" class="headerlink" title="$Perlin\;Noise$相比$Value\;Nosie$优势"></a>$Perlin\;Noise$相比$Value\;Nosie$优势</h2><p>拿一维举例，值噪声在整数位置生成随机数，然后在这些整数位置之间插入这些值，因为这些值是随机选择的，所以几个连续的值可能非常相似，导致噪声的某些部分会快速变化，而某些部分会缓变化慢。噪声函数中变化缓慢的部分频率低，快速变化的部分频率高，这意味着值噪声由高频和低频组成。良好的噪声是一种看起来随机的噪声，局部变化平滑，但通常也呈现出相当均匀的变化。换句话说，构成噪声的特征通常应该具有相似的大小（相似的频率）。这显然不是值噪声的特征。</p>
+<p><img src="3.jpg" alt="二维极坐标系"></p>
+<p>而柏林噪声不同的是，柏林噪声在整数位置生成随机梯度，梯度可以被看作是一维噪声函数的“切线”。<strong>随机的梯度不会导致噪声值的随机</strong>，正如在下图中看到的那样，梯度指向哪个方向并不重要，因为如果它导致曲线在单元格顶点的一侧上，它会导致曲线在同一点的另一侧下降。在最坏的情况下，如果两个连续的单元格顶点梯度指向完全相反的方向（一个指向上方，另一个指向下方），则噪声函数将在两个点之间具有类似“S”的形状。在另一种情况下，曲线将上升或下降。</p>
+<p><img src="4.jpg" alt="二维极坐标系"></p>
+<p>由于这种结构，所有特征都具有或多或少相同的大小并且是平滑连续的。它是两个连续单元格顶点之间的凸起或凹陷或类似“S”的形状。因此，$Perlin\;Noise$的频率分布比$Value\;Noise$的频谱更规则（特别是它消除了后者的低频）。正如Perlin在他的论文中指出的那样：</p>
+<blockquote>
+<p>The above texture has a band-limited character to it; there is no detail outside of a certain range of size.</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.scratchapixel.com/lessons/procedural-generation-virtual-worlds/perlin-noise-part-2">scratchapixel</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"># Math</a>
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/" rel="prev" title="计算机图形学（九）：噪声-下">
+                  <i class="fa fa-angle-left"></i> 计算机图形学（九）：噪声-下
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" rel="next" title="计算机图形学（十一）：信号处理">
+                  计算机图形学（十一）：信号处理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:42</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Kenshin627/BlogGiscus","repo_id":"R_kgDOJ-E6Aw","category":"Announcements","category_id":"DIC_kwDOJ-E6A84CYCOU","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"dark_dimmed","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false,"tagMode":false});</script></body>
+</html>
