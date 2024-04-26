@@ -542,7 +542,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/23/Computer%20Graphic01-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -560,7 +560,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/" class="post-title-link" itemprop="url">Computer Graphic03-空间变换(上)</a>
+          <a href="/2023/01/23/Computer%20Graphic01-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-title-link" itemprop="url">Computer Graphic01-线性代数</a>
         </h2>
 
         <div class="post-meta-container">
@@ -571,14 +571,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-02-01 12:00:57" itemprop="dateCreated datePublished" datetime="2023-02-01T12:00:57+08:00">2023-02-01</time>
+      <time title="创建时间：2023-01-23 23:00:09" itemprop="dateCreated datePublished" datetime="2023-01-23T23:00:09+08:00">2023-01-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 20:21:21" itemprop="dateModified" datetime="2024-04-26T20:21:21+08:00">2024-04-26</time>
+      <time title="修改时间：2024-04-26 20:34:08" itemprop="dateModified" datetime="2024-04-26T20:34:08+08:00">2024-04-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -601,14 +601,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>3.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>13 分钟</span>
     </span>
 </div>
 
@@ -619,30 +619,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Computer-Graphic03-空间变换-上-Spatial-Transformation"><a href="#Computer-Graphic03-空间变换-上-Spatial-Transformation" class="headerlink" title="Computer-Graphic03-空间变换-上(Spatial Transformation)"></a>Computer-Graphic03-空间变换-上(Spatial Transformation)</h1><p>本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来再变换到相机空间(即我们观看的视角,就像拿个相机拍照一样,我们是从哪个角度对场景进行观察的),即$mvp$矩阵中的”$m(model Matrix)$和$v(view Matrix)$”.这一系列操作即光栅化渲染管线的第一个阶段,也是理解光栅化背后原理的基础.本章将介绍涉及图形学的基础变换。</p>
-<p><img src="1.png" alt="1.png"></p>
-<p>任何将一个点变换到新位置的函数都可以被认为是空间变换<br>$f: R^n \to  R^n$<br>今天我们将重点学习几种基础变换:</p>
-<ul>
-<li>旋转($Rotation$)</li>
-<li>缩放($Scaling$)</li>
-<li>平移($Translation$)(仿射变换)</li>
-<li>错切($Shearing$)</li>
-<li>镜像($Reflect$)</li>
-</ul>
-<p>重点讲解：</p>
-<ol>
-<li>空间几何表示 </li>
-<li>矩阵表示 </li>
-<li>齐次坐标 </li>
-<li>如何用齐次坐标解决仿射变换和线性变换统一问题</li>
-</ol>
-<h2 id="线性变换回顾"><a href="#线性变换回顾" class="headerlink" title="线性变换回顾"></a>线性变换回顾</h2><p>前几章详细阐述了<a target="_blank" rel="noopener" href="https://kenshin.tech/2024/03/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E4%B8%80-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/#more">线性变换</a>的定义,并从几何上和代数上分别对其做了解释:</p>
-<ol>
-<li>从几何的角度,线性变换会保持直线变换后仍然为直线,并保持原点不变</li>
-</ol>
+          <h1 id="Computer-Graphic01-线性代数"><a href="#Computer-Graphic01-线性代数" class="headerlink" title="Computer Graphic01-线性代数"></a>Computer Graphic01-线性代数</h1><p>线性代数是关于向量空间以及它们之线性变换的学科</p>
+<h2 id="向量空间"><a href="#向量空间" class="headerlink" title="向量空间"></a>向量空间</h2><h3 id="向量是什么"><a href="#向量是什么" class="headerlink" title="向量是什么"></a>向量是什么</h3><p>直觉上来说向量其实就是一个小箭头</p>
+<p><img src="01.png" alt="arrow"><br>在计算机图形学中，需要处理多种类型数据，这些数据可能看起来不像一个小箭头，比如多项式，图像，辐射亮度(radiance)等，但它们的行为表现却是和向量一致的，所以这个小箭头仍然是一个有用的思维模式。</p>
+<h3 id="向量如何表示"><a href="#向量如何表示" class="headerlink" title="向量如何表示"></a>向量如何表示</h3><h4 id="极坐标系"><a href="#极坐标系" class="headerlink" title="极坐标系"></a>极坐标系</h4><p>一个向量需要编码哪些信息可以定义它的唯一性？</p>
+<p>从根本上说向量就是方向和大小：<br><img src="02.png" alt="arrow"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/02/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/#more" rel="contents">
+              <a class="btn" href="/2023/01/23/Computer%20Graphic01-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
