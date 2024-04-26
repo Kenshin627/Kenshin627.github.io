@@ -1,0 +1,212 @@
+<h1 id="空间变换-下-Spatial-Transformation"><a href="#空间变换-下-Spatial-Transformation" class="headerlink" title="空间变换-下(Spatial Transformation)"></a>空间变换-下(Spatial Transformation)</h1><p>书接上文,本章我们继续讲变换,上一章介绍了旋转和反射,这章我们开始介绍剩下几种变换:缩放/平移/错切</p>
+<h2 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h2><h3 id="均匀缩放"><a href="#均匀缩放" class="headerlink" title="均匀缩放"></a>均匀缩放</h3><p>每一个向量被映射到自身与缩放因子的乘积.</p>
+<p>$f(\mathbf{u}) = a\mathbf{u} \ \ \ \ a \in R$</p>
+<p>旋转变换保持变换后向量的模不变,缩放保持方向不变:</p>
+<p>$\frac{\mathbf{u}}{|\mathbf{u}|}  = \frac{a\mathbf{u}}{|a\mathbf{u}|}$</p>
+<p>缩放是线性变换吗?可以用线性变化的代数定义来证明:</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/50ba42699c42434f9eebaf89906e76b3~tplv-k3u1fbpfcp-watermark.image?" alt="1.jpg"><br>通过上图可知,缩放是线性变换!</p>
+<p>矩阵表示:<br>假如我们想用因数$a$缩放向量$\mathbf{u} = (u_{1},u_{2},u_{3})$,我们如何用矩阵来表示该变换?</p>
+<p>用缩放因子$a$构造一个对角矩阵($diagonal \ matrix \ D$)即可:</p>
+<p>$\begin{bmatrix}<br> a &amp; 0 &amp; 0<br> 0 &amp; a &amp; 0 \\<br> 0 &amp; 0 &amp; a<br>\end{bmatrix}\begin{bmatrix}<br> u_{1}\\<br> u_{2}\\<br> u_{3}<br>\end{bmatrix} = \begin{bmatrix}<br> au_{1}\\<br> au_{2}\\<br> au_{3}<br>\end{bmatrix}$</p>
+<h3 id="负数缩放"><a href="#负数缩放" class="headerlink" title="负数缩放"></a>负数缩放</h3><p>如果缩放因子为负,假设$a = -1$,可以把缩放分解为一系列的反射变换.负因子缩放的这种性质在二维和三维中的表现是不同的,因为二维缩放分解为两个反射矩阵的乘积,而三维缩放分解为三个反射矩阵的乘积:</p>
+<p>$\begin{bmatrix}<br> -1 &amp; 0\\<br> 0 &amp; -1<br>\end{bmatrix} = \begin{bmatrix}<br> -1 &amp; 0\\<br> 0 &amp; 1<br>\end{bmatrix}\begin{bmatrix}<br> 1 &amp; 0\\<br> 0 &amp; -1<br>\end{bmatrix}$</p>
+<p>对于二维负数缩放,可以将其分解为沿着$Y$轴和$X$轴做两次镜像,两次朝向反转相互抵消,最终面朝向保持不变,本质上这是一次180°的旋转变换.</p>
+<p>$\begin{bmatrix}<br> -1 &amp; 0 &amp; 0 \\<br> 0 &amp; -1 &amp; 0 \\<br> 0 &amp; 0 &amp; -1<br>\end{bmatrix} = \begin{bmatrix}<br> -1 &amp; 0 &amp; 0\\<br> 0 &amp; 1 &amp; 0\\<br> 0 &amp; 0 &amp; 1<br>\end{bmatrix}\begin{bmatrix}<br> 1 &amp; 0 &amp; 0\\<br> 0 &amp; -1 &amp; 0\\<br> 0 &amp; 0 &amp; 1<br>\end{bmatrix}\begin{bmatrix}<br> 1 &amp; 0 &amp; 0\\<br> 0 &amp; 1 &amp; 0\\<br> 0 &amp; 0 &amp; -1<br>\end{bmatrix}$</p>
+<p>对于三维负数缩放,可以分解为沿着$Y$轴$X$和$Z$轴做三次镜像,两次抵消一次反转,最终面朝向是反转的.</p>
+<h3 id="非均匀缩放-轴向"><a href="#非均匀缩放-轴向" class="headerlink" title="非均匀缩放(轴向)"></a>非均匀缩放(轴向)</h3><p>上边介绍的几种缩放缩放因子都是统一的,每个轴的缩放系数保持一致,如果每个轴按照不同的因子缩放,该如何去表达呢?</p>
+<p>$f(\mathbf{u_{1}}, \mathbf{u_{2}}, \mathbf{u_{3}}) = (a\mathbf{u_{1}}, b\mathbf{u_{2}}, c\mathbf{u_{3}}) $</p>
+<p>$ a,b,c \in R$</p>
+<p>和均匀缩放矩阵表示一样,只不过在对角线上替换成不同的缩放因子即可:</p>
+<p>$\begin{bmatrix}<br> a &amp; 0 &amp; 0 \\<br> 0 &amp; b &amp; 0 \\<br> 0 &amp; 0 &amp; c<br>\end{bmatrix}\begin{bmatrix}<br> \mathbf{u_{1}}\\<br> \mathbf{u_{2}}\\<br>\mathbf{u_{3}}<br>\end{bmatrix}=\begin{bmatrix}<br> a\mathbf{u_{1}}\\<br> b\mathbf{u_{2}}\\<br>c\mathbf{u_{3}}<br>\end{bmatrix}$</p>
+<h3 id="非轴向缩放"><a href="#非轴向缩放" class="headerlink" title="非轴向缩放"></a>非轴向缩放</h3><p>非轴向缩放即未按照当前标准基进行缩放,因此无法直接写出这样的矩阵,但是可以换个角度,可以先将其转换(旋转)到新的坐标空间,应用轴向缩放,再转换回原始的坐标空间,基本步骤分解如下:</p>
+<ol>
+<li>应用旋转矩阵转换到新的坐标系空间($R$)</li>
+<li>应用轴向缩放矩阵($D$)</li>
+<li>旋转回原始的坐标空间($R^T$)</li>
+</ol>
+<p><strong>注:旋转矩阵的逆等于其转置,因此可以用其转置来表示逆变换</strong></p>
+<p>可以将非轴向缩放用对称矩阵($Symmetric \ matrix$)来表示:</p>
+<p>$f(\mathbf{X}) = R^TDR\mathbf{X}$</p>
+<p><strong>对称矩阵:对称矩阵的转置等于其自身:$A = A^T$</strong></p>
+<p>那么所有的对阵矩阵都表示了非均匀缩放吗?答案是肯定的.下一小节我们根据谱定理来推导为什么所有的对称矩阵都代表了非均匀缩放?</p>
+<h3 id="谱定理-Spectral-theorem"><a href="#谱定理-Spectral-theorem" class="headerlink" title="谱定理($Spectral \ theorem$)"></a>谱定理($Spectral \ theorem$)</h3><p>谱定理告诉我们对于任意一个对称矩阵$A = A^T$包含:</p>
+<ul>
+<li>正交特征向量:  $e_{1},…,e_{n} \in R^n$</li>
+<li>特征值: $\lambda_{1},…,\lambda_{n} \in R$</li>
+</ul>
+<p>根据特征向量和特征值的定义可以得到:</p>
+<p>$Ae_{i} = \lambda_{i}e_{i}$</p>
+<p>也可以换一种表述方式:</p>
+<p>$AR = RD$</p>
+<p>$R = [e_{1}…e_{n}]$</p>
+<p>$D = \begin{bmatrix}<br> \lambda_{1} &amp;  &amp; \\<br>  &amp; \cdot \cdot \cdot  &amp; \\<br>  &amp;  &amp; \lambda_{n}<br>\end{bmatrix}$</p>
+<p>$\Rightarrow $</p>
+<p>$A = RDR^T$</p>
+<p>因此得出结论,<strong>所有的对称矩阵都代表了沿某一方向的非均匀缩放</strong>,这也给对称矩阵提供了一种几何视角,当我们看到一个对称矩阵,就明白它代表了某个方向上的非均匀缩放.</p>
+<h2 id="切变-Shear"><a href="#切变-Shear" class="headerlink" title="切变($Shear$)"></a>切变($Shear$)</h2><p>先从简单的二维切变着手,如下图表示了一种切变变换过程:</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/05624da08838485fbeae86ec54c9c7e8~tplv-k3u1fbpfcp-watermark.image?" alt="3.png"></p>
+<p>通过观察发现,变换后点的$y$不变,$x$的变化和$y$成一定的比例关系,取一个特殊点,$(0, 1)$在转换后变成$(a, 1)$,中间的任一点转换满足这种线性关系即:</p>
+<p>$(x,y) \longrightarrow \ (x + ay, y)$</p>
+<p>用矩阵表示:</p>
+<p>$\begin{bmatrix}<br>x^丶 \\<br>y^丶<br>\end{bmatrix} = \begin{bmatrix}<br> 1 &amp; a\\<br>0 &amp; 1<br>\end{bmatrix}\begin{bmatrix}<br>x\\<br>y<br>\end{bmatrix}$</p>
+<p>切变严格定义: 切变使每个点$x$向u方向位移,移动距离和点$x$在$v$方向上的投影长度成正比:</p>
+<p> $f_{u,v}(\mathbf{x}) = \mathbf{x} + &lt;\mathbf{v},\mathbf{x}&gt;\mathbf{u}$</p>
+<p> $A_{u,v} = I + \mathbf{u}\mathbf{v^T}$</p>
+<p>举例:</p>
+<p>$\mathbf{u} = (\cos(t), 0, 0)$</p>
+<p>$\mathbf{v} = (0 , 1, 0)$</p>
+<p>$A_{u,v} = \begin{bmatrix}<br> 1 &amp; \cos(t) &amp;0 \\<br> 0 &amp; 1 &amp; 0\\<br> 0 &amp; 0 &amp; 1<br>\end{bmatrix}$</p>
+<h2 id="组合变换"><a href="#组合变换" class="headerlink" title="组合变换"></a>组合变换</h2><p>通过这些基本变换(旋转,反射,缩放,切变)的组合,我们可以构建一个复合变换,只需要将这些矩阵相乘即可:</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d97dd73dfc644533be984f6c6c7fb73a~tplv-k3u1fbpfcp-watermark.image?" alt="4.png"></p>
+<p><strong>应用变换的顺序:从右到左</strong></p>
+<p>假设现在有一个代表变换的矩阵,如何将其分解为这些基础的变换呢?</p>
+<h2 id="线性变换的分解"><a href="#线性变换的分解" class="headerlink" title="线性变换的分解"></a>线性变换的分解</h2><p>有许多线性变换分解的方法:</p>
+<ol>
+<li>奇异值分解($Singular \ value \ decomposition$) (信号处理领域)</li>
+<li>LU分解($LU factorization$)(解线性方程组)</li>
+<li>极分解($Polar \ decomposition$)(空间变换领域)</li>
+</ol>
+<p>对于本章主题,着重介绍奇异值分解和极分解.</p>
+<p>考虑如下变换:<br><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/af46c14bf40c4fd8bd5f6a094b0bb603~tplv-k3u1fbpfcp-watermark.image?" alt="5.png"></p>
+<h3 id="极分解-amp-奇异值分解"><a href="#极分解-amp-奇异值分解" class="headerlink" title="极分解 &amp; 奇异值分解"></a>极分解 &amp; 奇异值分解</h3><p>极分解将任意矩阵$A$分解为一个正交矩阵$Q$和对阵矩阵$P$(缩放因子非负):</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b7bc2da4f41a48b78938977ad51cb7a8~tplv-k3u1fbpfcp-watermark.image?" alt="6.png"></p>
+<p>$QP$被称为矩阵$A$极分解.</p>
+<p>由于$P$是对称矩阵,根据谱分解定理,可以将$P$继续分解为:$P = VDV^T$(V是正交矩阵,D是对角矩阵),因此:</p>
+<p>$A = QVDV^T$</p>
+<p>将QV合成一个旋转矩阵:</p>
+<p>$A = QVDV^T = UDV^T$</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/41490a0f0bd44886980121965b98ba53~tplv-k3u1fbpfcp-watermark.image?" alt="7.png"></p>
+<p>$UDV^T$被称为矩阵$A$的奇异值分解.</p>
+<h3 id="线性变换分解的意义"><a href="#线性变换分解的意义" class="headerlink" title="线性变换分解的意义"></a>线性变换分解的意义</h3><p>这些线性变换的分解方法有什么作用,具体在图形学中有什么重要意义呢?</p>
+<p>考虑在两个线性变换$A_{0},A_{1}$之间做插值:</p>
+<p>最简单的做法就是在两个矩阵之间根据时间($t \in [0, 1]$)做线性插值:</p>
+<p>$A(t) = (1- t)A_{0} + tA_{1}$</p>
+<p>我们发现在开始和结束时,变换是正确的,但是中间的插值过程看起来却很奇怪,现在正是矩阵分解该上场的时候了,其基本思想为分别对极分解生成的两个矩阵做插值而非原始矩阵自身.</p>
+<p>我们先将$A_{0}和A_{1}$分别分解为$Q_{0}P_{0}和Q_{1}P_{1}$:</p>
+<p>$A_{0} = Q_{0}P_{0}$</p>
+<p>$A_{1} = Q_{1}P_{1}$</p>
+<p>接下来我们不对矩阵本身做插值,而是对分解后的$QP$做插值:</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7b813d8b2c0b4e659ba0b7eaaf5d1d42~tplv-k3u1fbpfcp-watermark.image?" alt="9.png"></p>
+<h2 id="平移-Translations"><a href="#平移-Translations" class="headerlink" title="平移(Translations)"></a>平移(Translations)</h2><p>截止到现在我们介绍了 旋转/反射/缩放/错切变换,却忽略了一种最基础的变换:平移,平移用代数很好表达:</p>
+<p>$f_{u}(\mathbf{X}) = \mathbf{X} + \mathbf{U}$</p>
+<p>平移变换是线性的吗?让我们用线性变换的两条规则验证下:</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b310f1963adf451c97aa0db304394143~tplv-k3u1fbpfcp-watermark.image?" alt="10.png"></p>
+<p><strong>显然平移变换不满足线性变换的加性法则和乘性法则,因此平移变换不是线性变换,相反它是仿射变换.</strong></p>
+<p>回忆前边说过的复合线性变换可以用矩阵乘法来表示:</p>
+<p>$A_{3}(A_{2}(A_{1}\mathbf{X})) = A_{3}A_{2}A_{1}\mathbf{X}$</p>
+<p>同样复合平移变换可以用向量的加法来表示:</p>
+<p>$f_{u3}(f_{u2}{f_{u1}(\mathbf{X})}) = f_{u1+u2+u3}(\mathbf{X})$</p>
+<p>但是如果一个变换中既包含线性变换又包含平移变换:</p>
+<p>$A_{2}(A_{1}\mathbf{X} + \mathbf{b_{1}}) + \mathbf{b_{2}} = (A_{2}A{1})\mathbf{X} + (A_{2}\mathbf{b_{1}} + \mathbf{b_{2}})$</p>
+<p>既要处理矩阵计算又要处理向量计算,有没有什么方法统一二者,用简单明了的方式来表达?</p>
+<p><strong>或许可以通过提高维度的方式将平移变换转换为线性变换…</strong>.这其实就是齐次坐标的基本思想.</p>
+<h3 id="齐次坐标-Homogeneous-Coordinates"><a href="#齐次坐标-Homogeneous-Coordinates" class="headerlink" title="齐次坐标($Homogeneous \ Coordinates$)"></a>齐次坐标($Homogeneous \ Coordinates$)</h3><p>齐次坐标的概念起源于绘画中的透视法,由Möbius引入(为直线分配坐标):</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8adba8c8fae4e928c5efa42bc26acc4~tplv-k3u1fbpfcp-watermark.image?" alt="11.png"></p>
+<p>是一个很重要的概念,广泛应用在图形学的方方面面:</p>
+<ul>
+<li>3D变换</li>
+<li>透视投影</li>
+<li>曲面简化</li>
+<li>预乘计算透明度</li>
+<li>阴影生成</li>
+<li>….</li>
+</ul>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6c0fe7832dac4116bdd8ddf32ade32a7~tplv-k3u1fbpfcp-watermark.image?" alt="12.png"></p>
+<h3 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h3><p>想象三维空间中任意二维平面(与原点不相交),每一条穿过三维空间原点的直线$L$都会在二维平面上找到相应唯一的点$P$:</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/03a92290d82740408bc4da67e3d21585~tplv-k3u1fbpfcp-watermark.image?" alt="13.png"></p>
+<p>因此,在直线$L$上的任意一点$\hat{P}$可以被用来”表示”点$P$</p>
+<h3 id="二维空间下的齐次坐标"><a href="#二维空间下的齐次坐标" class="headerlink" title="二维空间下的齐次坐标"></a>二维空间下的齐次坐标</h3><p>先从二维空间来解释,假设二维平面上的任意一点$P = (x, y)$,二维平面在三维空间中的$Z$值为1.</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5cc9e74d281244a8b9f2c4e7fff2ea45~tplv-k3u1fbpfcp-watermark.image?" alt="14.png"></p>
+<p>任何满足$(a/c, b/c) = (x,y)$的点$\hat{P} = (a, b, c)$即为点$P$的齐次坐标.例如:</p>
+<ul>
+<li>$(x, y, 1)$</li>
+<li>$(cx,cy,c) \ for \ c != 0$</li>
+</ul>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bebfbc5d5c554f0b8fbd976bb448d0c5~tplv-k3u1fbpfcp-watermark.image?" alt="15.png"></p>
+<p>因此可以得出结论,两个点$\hat{p},\hat{q} \in R^3$描述的是二维空间中相同的点,只要满足 $\hat{p} = \lambda\hat{q}$并且$\lambda \ != 0$,同样我们可以说<strong>齐次坐标是低维空间坐标的高维度空间表示.</strong></p>
+<h4 id="齐次坐标下的二维平移变换"><a href="#齐次坐标下的二维平移变换" class="headerlink" title="齐次坐标下的二维平移变换"></a>齐次坐标下的二维平移变换</h4><p>想象一下在齐次坐标空间下应用二维平移变换会发生什么:</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2d571d7efd2f4f5d8908d8299195d220~tplv-k3u1fbpfcp-watermark.image?" alt="16.png"></p>
+<p>这种变换和三维空间下的切变很像….其实它就是三维空间上的切变($Z$不变)…</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/846b1d50092e459ab0428670c7fe6b7c~tplv-k3u1fbpfcp-watermark.image?" alt="17.png"></p>
+<p>让我们尝试证明齐次坐标下的平移变换是一个仿射变换:</p>
+<p>假设将一个二维点 $\mathbf{p} = (p_{1}, p_{2})$平移$\mathbf{u} = (u_{1}, u_{2})$得到$p^丶 = (p_{1} + u_{1}, p_{2} + u_{2})$</p>
+<p>在齐次坐标空间下用$\hat{p}$来表示$p$:</p>
+<p>$\hat{p} = (cp_{1}, cp_{2}, c) \ \ \ \Rightarrow \ \ \ \hat{p^丶} = (cp_{1} + cu_{1}, cp_{2} + cu{2}, c)$</p>
+<p><strong>注意我们将点$\hat{p}$沿着$u$方向位移,位移距离c和与第三个轴的距离成正比,这正是切变的定义.</strong></p>
+<blockquote>
+<p><em>重要结论:利用齐次坐标,可以用三维空间的线性变换(切变)来表示二维空间的仿射变换(平移)</em></p>
+</blockquote>
+<h4 id="齐次坐标下二维空间平移变换的矩阵表示"><a href="#齐次坐标下二维空间平移变换的矩阵表示" class="headerlink" title="齐次坐标下二维空间平移变换的矩阵表示"></a>齐次坐标下二维空间平移变换的矩阵表示</h4><p>既然用三维空间的切变来表示二维空间的平移,根据前文所述切变的代数定义可知:</p>
+<p>$f_{u,v}(\mathbf{x}) = \mathbf{x} + &lt;\mathbf{v}, \mathbf{x}&gt;\mathbf{u}$</p>
+<p>矩阵形式:</p>
+<p>$f_{u,v}(\mathbf{x}) = (\mathbf{I} +\mathbf{u}\mathbf{v}^T)\mathbf{x}$</p>
+<p>在我们表达平移这种情况下 $\mathbf{v} = (0, 0, 1)$,因此我们得到矩阵:</p>
+<p>$\begin{bmatrix}<br> 1 &amp; 0 &amp; u_{1}\\<br> 0 &amp; 1 &amp; u_{2}\\<br> 0 &amp; 0 &amp; 1<br>\end{bmatrix}$</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/96aceaddf2384802aa0a924d8ab7a0b3~tplv-k3u1fbpfcp-watermark.image?" alt="18.png"></p>
+<h4 id="齐次坐标空间下的其他变换"><a href="#齐次坐标空间下的其他变换" class="headerlink" title="齐次坐标空间下的其他变换"></a>齐次坐标空间下的其他变换</h4><p>二维空间下的原始形状在三维齐次坐标空间下可以被表示为很多份均匀沿着$x_{3}$方向缩放的拷贝.</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e366395ddf554ccba84016b8baccc1f6~tplv-k3u1fbpfcp-watermark.image?" alt="22.png"></p>
+<p>齐次坐标空间下的旋转:</p>
+<p>齐次坐标空间下的二维旋转可以被表示为沿着$x_{3}$的旋转</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ee510898e7948fdb788a74f63abaec7~tplv-k3u1fbpfcp-watermark.image?" alt="19.png"></p>
+<p>齐次坐标空间下的缩放:</p>
+<p>齐次坐标空间下的缩放可以被看作缩放$x_{1}和x_{2}$保持$x_{3}$不变</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2076b273337f4e01a338d851df3997b1~tplv-k3u1fbpfcp-watermark.image?" alt="20.png"></p>
+<p>齐次坐标空间下的平移:</p>
+<p>二维空间的平移被看作三维空间的切变($Z$不变)</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/803d737e333e41e78a32e4daf8d2851c~tplv-k3u1fbpfcp-watermark.image?" alt="21.png"></p>
+<p><strong>以上我们就将几种基本变换完美的统一了起来,在齐次坐标空间下计算变换矩阵,将平移转换为切变,这样就可以用矩阵乘法来表示所有的变换组合,用一个矩阵表示任意的变换.</strong></p>
+<h3 id="三维空间平移的齐次坐标表示"><a href="#三维空间平移的齐次坐标表示" class="headerlink" title="三维空间平移的齐次坐标表示"></a>三维空间平移的齐次坐标表示</h3><p> 和二维空间下一样,三维空间下的齐次坐标用四维空间表示:</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/97d39a751acf4f789790e8c649b5b017~tplv-k3u1fbpfcp-watermark.image?" alt="23.png"></p>
+<h3 id="点-vs-向量"><a href="#点-vs-向量" class="headerlink" title="点 vs 向量"></a>点 vs 向量</h3><p>齐次坐标有另外一个有用的特性:区分空间中的点和向量</p>
+<p>假设三维空间下一个三角形,由三个顶点组成, $a,b,c \in R^3$,法线为$\mathbf{n} \in R^3$:</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/45cf87e724a6454aa389050b9b7b1dc6~tplv-k3u1fbpfcp-watermark.image?" alt="24.png"></p>
+<p>假设我们对三个顶点和法线应用同样的变换:</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/add4d320a873416da68fcc51c4259aa0~tplv-k3u1fbpfcp-watermark.image?" alt="25.png"></p>
+<p>我们发现在变换后,法线不再垂直于三角形平面,为什么?我们来看下当对法线做变换时发生了什么</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ba9af8af33c54b1c800526cf9f4b1428~tplv-k3u1fbpfcp-watermark.image?" alt="26.png"></p>
+<p>但是当我们旋转 &amp; 平移一个三角形时,它的法线不应该被平移,因为法线是一个向量,代表空间中的一个方向,它没有自己的起点($Base Point$),空间中任意两个向量方向相同长度相同,则它们应该是相等的,因此平移变换对于向量不应该起作用,有什么办法能避免法线被平移呢?我们只需要将向量的$w$分量设置为0即可:</p>
+<p>$\begin{bmatrix}<br>n_{1}\\<br>n_{2}\\<br>n_{3}\\<br>0<br>\end{bmatrix}$</p>
+<p>这样经过变换后,我们得到的三角形法线是垂直于其表面的:</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/04078922cdb1406190419413047d3eae~tplv-k3u1fbpfcp-watermark.image?" alt="27.png"></p>
+<p><strong>因此,齐次坐标下的点和向量表示是不同的,向量应该忽略平移变换,其$w$分量应该被设置为0,点的$w$分量为1</strong></p>
+<p>但是最终齐次坐标需要除以$w$得到原空间的坐标,但是对于向量$w$分量为0的情况,这意味着什么?</p>
+<p>假设我们不断缩小除数$c$,当$c$无限趋近于0时,可以认为向量是在无限远处的一个点:</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9452729c7ef04fafa748dcbb9499c27e~tplv-k3u1fbpfcp-watermark.image?" alt="28.png"></p>
+<h2 id="齐次坐标空间下的投影矩阵"><a href="#齐次坐标空间下的投影矩阵" class="headerlink" title="齐次坐标空间下的投影矩阵"></a>齐次坐标空间下的投影矩阵</h2><p>用齐次坐标如何表达一个投影矩阵呢,根据小孔相机模型的定义:</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/11f028e8217d489ab4c7fb930f41a551~tplv-k3u1fbpfcp-watermark.image?" alt="30.png"></p>
+<p>$(x,y,z) \Rightarrow (x/z, y/z, 1)$</p>
+<p>因此我们可以构建一个矩阵:把z坐标赋值给齐次坐标分量$w$,除以齐次坐标分量$w$会得到在z平面上的投影:</p>
+<p>$\begin{bmatrix}<br>1  &amp; 0 &amp; 0 &amp; 0\\<br>0  &amp; 1 &amp; 0 &amp; 0\\<br>0  &amp; 0 &amp; 1 &amp; 0\\<br>0  &amp; 0 &amp; 1 &amp; 0<br>\end{bmatrix}\begin{bmatrix}<br> x\\<br> y\\<br> z\\<br> 1<br>\end{bmatrix} = \begin{bmatrix}<br> x\\<br> y\\<br> z\\<br> z<br>\end{bmatrix} \Rightarrow \begin{bmatrix}<br> x/z\\<br> y/z\\<br> 1<br>\end{bmatrix}$</p>
+<h2 id="NDC-To-ScreenSpace"><a href="#NDC-To-ScreenSpace" class="headerlink" title="NDC To ScreenSpace"></a>NDC To ScreenSpace</h2><p>经过mvp变换后,原始的顶点被转换为$[-1,1]^3$的标准立方体中(NDC Space),接下来我们需要将顶点从Ndc空间转换到屏幕空间(多种不同的叫法:$ScreenSpace/PixelSpace/ImageSpace$),即我们常常看到视口变换($viewport$)</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/994b85e7304b49bab9ded86560e54163~tplv-k3u1fbpfcp-watermark.image?" alt="34.png"><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4c938f1bb470494287eaa199a76247f9~tplv-k3u1fbpfcp-watermark.image?" alt="33.png"></p>
+<h3 id="屏幕空间"><a href="#屏幕空间" class="headerlink" title="屏幕空间"></a>屏幕空间</h3><p>什么是屏幕空间?顾名思义就是我们的显示器,由像素组成的数组构成,数组的大小被我们称为分辨率</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4862226e73ee49a0a3f0a65af16f68f1~tplv-k3u1fbpfcp-watermark.image?" alt="32.png"></p>
+<ul>
+<li>像素由$(x,y)$的形式来表示,$x和y$均为整数,假设像素是一个小方块,$(x,y)$为该小方块左下角的坐标</li>
+<li>坐标范围从 $(0,0) -(width-1,height-1) $</li>
+<li>像素$(x,y)$的中心点位于$(x+0.5, y+0.5)$</li>
+<li>屏幕空间覆盖范围:$(0,0) - (width, height)$</li>
+</ul>
+<h3 id="viewport矩阵"><a href="#viewport矩阵" class="headerlink" title="$viewport矩阵$"></a>$viewport矩阵$</h3><p>先对Ndc应用缩放矩阵,由于Ndc空间是$[-1,1]$,所以缩放矩阵应该是屏幕w和h各除以2,然后应用平移变换,将原点从中心移到左下角,平移的量正好是宽高的一半$(width/2, height/2)$,矩阵形式表示如下:</p>
+<p>$M_{viewport} = \begin{bmatrix}<br> width/2 &amp; 0 &amp; 0 &amp; width/2\\<br> 0 &amp; height/2 &amp; 0 &amp; height/2\\<br> 0 &amp; 0 &amp; 1 &amp; 0\\<br> 0 &amp; 0 &amp; 0 &amp; 1<br>\end{bmatrix}$</p>
+<h2 id="在组合转换时，顺序很重要"><a href="#在组合转换时，顺序很重要" class="headerlink" title="在组合转换时，顺序很重要!"></a>在组合转换时，顺序很重要!</h2><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/039ac486484b45b081e3062b21e0244d~tplv-k3u1fbpfcp-watermark.image?" alt="35.png"></p>
+<h3 id="实现基于自身旋转"><a href="#实现基于自身旋转" class="headerlink" title="实现基于自身旋转"></a>实现基于自身旋转</h3><p>如果对空间中的一个物体直接应用旋转矩阵,物体将围绕原点做旋转而非自身.<br>物体实现自身旋转的一个常用技巧就是,先将物体平移到原点,应用旋转变换,然后再将其移动到原位置:</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/44238cbe0018456dbcfc2f774d741e8e~tplv-k3u1fbpfcp-watermark.image?" alt="36.png"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>让我们总结下在光栅化管线中,从顶点到屏幕坐标一系列的变换过程:</p>
+<ol>
+<li>首先，我们使用场景图对立方体的多个副本应用变换($ModelSpace-&gt;WorldSpace$)</li>
+</ol>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0a26747b0080429583d50acc52d04ef7~tplv-k3u1fbpfcp-watermark.image?" alt="37.png"></p>
+<ol>
+<li>然后应用相机变换,即我们观看场景的视角($WorldSpace-&gt;ViewSpace$)</li>
+</ol>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e7d2b147f04433697b65b6f7e685c83~tplv-k3u1fbpfcp-watermark.image?" alt="38.png"></p>
+<ol>
+<li>应用投影变换(perspective)($ViewSpace-&gt;NdcSpace$)</li>
+</ol>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f2896eed3f1b43bebc0c36fd0ae36180~tplv-k3u1fbpfcp-watermark.image?" alt="39.png"></p>
+<ol>
+<li>最后将ndc标准立方体转换到屏幕空间($NdcSpace-&gt;ScreenSpace$)</li>
+</ol>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/af1c08943de1437db1abb7d981ffbe9a~tplv-k3u1fbpfcp-watermark.image?" alt="40.png"></p>
+<p>经过以上四个步骤,我们将顶点转换为了屏幕上的像素点,接下来就是光栅化着色的过程.</p>

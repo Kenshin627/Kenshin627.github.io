@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#000"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#000">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本系列文章将一步步深入介绍计算机在渲染输出呈现一张图片经历的各种步骤细节以及涉及到的相关其他领域的知识串联,例如:几何,渲染方程, 采样, 蒙特卡洛积分,重要性采样, 辐射度量学, 光照计算, 基于物理的渲染等等.本系列文章不涉及API(openGL directX vulkan 等),皆在带你理解这些API背后的图形学原理,理解图形API函数调用的背后到底在做些什么,有了这些知识做铺垫,可以快速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Computer Graphic02-渲染管线-光栅化-采样">
+<meta property="og:url" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/index.html">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="本系列文章将一步步深入介绍计算机在渲染输出呈现一张图片经历的各种步骤细节以及涉及到的相关其他领域的知识串联,例如:几何,渲染方程, 采样, 蒙特卡洛积分,重要性采样, 辐射度量学, 光照计算, 基于物理的渲染等等.本系列文章不涉及API(openGL directX vulkan 等),皆在带你理解这些API背后的图形学原理,理解图形API函数调用的背后到底在做些什么,有了这些知识做铺垫,可以快速">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/1.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/2.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/3.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/6.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/5.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/4.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/7.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/8.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/9.png">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/10.png">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/11.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/12.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/13.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/14.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/15.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/16.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/17.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/18.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/19.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/20.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/21.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/22.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/23.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/24.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/25.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/26.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/27.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/28.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/29.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/30.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/31.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/34.gif">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/32.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/33.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/35.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/26.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/37.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/38.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/39.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/40.jpg">
+<meta property="og:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/41.png">
+<meta property="article:published_time" content="2024-03-26T02:20:09.000Z">
+<meta property="article:modified_time" content="2024-04-26T03:41:18.840Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Computer Graphic">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/","path":"2024/03/26/Computer Graphic02-渲染管线-光栅化-采样/","title":"Computer Graphic02-渲染管线-光栅化-采样"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Computer Graphic02-渲染管线-光栅化-采样 | Pixel World</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Pixel World</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E6%A0%85%E5%8C%96-Rasterization-vs-%E5%85%89%E8%BF%BD-Ray-tracing"><span class="nav-number">1.</span> <span class="nav-text">光栅化(Rasterization) vs 光追(Ray tracing)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E6%A0%85%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">光栅化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA"><span class="nav-number">1.2.</span> <span class="nav-text">光线追踪</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-pipeLine"><span class="nav-number">2.</span> <span class="nav-text">渲染管线(pipeLine)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9B%BE%E5%85%83%E5%87%A0%E4%B9%8E%E9%83%BD%E6%98%AF%E4%B8%89%E8%A7%92%E5%BD%A2"><span class="nav-number">2.1.</span> <span class="nav-text">为什么图元几乎都是三角形?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E6%A0%85%E5%8C%96%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF"><span class="nav-number">2.2.</span> <span class="nav-text">光栅化渲染管线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Coverage-amp-Occlusion"><span class="nav-number">2.3.</span> <span class="nav-text">Coverage &amp; Occlusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.</span> <span class="nav-text">可见性问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-Coverage-%E5%93%AA%E4%BA%9B%E5%83%8F%E7%B4%A0%E4%BC%9A%E8%A2%AB%E4%B8%89%E8%A7%92%E5%BD%A2%E8%A6%86%E7%9B%96"><span class="nav-number">2.5.</span> <span class="nav-text">Q1:Coverage(哪些像素会被三角形覆盖?)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E7%90%86%E8%AE%BA"><span class="nav-number">3.</span> <span class="nav-text">采样理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E6%A0%B7-Sampling"><span class="nav-number">4.</span> <span class="nav-text">采样(Sampling)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1D-singal-Sampling"><span class="nav-number">4.1.</span> <span class="nav-text">1D singal Sampling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%BB%BA-Reconstruction"><span class="nav-number">5.</span> <span class="nav-text">重建(Reconstruction)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E4%BF%A1%E5%8F%B7%E7%9A%84%E9%87%87%E6%A0%B7%E4%B8%8E%E9%87%8D%E5%BB%BA"><span class="nav-number">5.1.</span> <span class="nav-text">二维信号的采样与重建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E5%88%A4%E5%AE%9A"><span class="nav-number">7.</span> <span class="nav-text">边界判定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B0%E6%A0%B7-Aliasing"><span class="nav-number">8.</span> <span class="nav-text">走样(Aliasing)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E9%87%87%E6%A0%B7%E5%92%8C%E9%87%8D%E5%BB%BA"><span class="nav-number">8.1.</span> <span class="nav-text">回顾采样和重建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%A6%E8%BD%AE%E6%95%88%E5%BA%94"><span class="nav-number">8.2.</span> <span class="nav-text">车轮效应</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86-Nyquist-Shannon-theorem"><span class="nav-number">9.</span> <span class="nav-text">香农定理(Nyquist-Shannon theorem)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E8%B5%B0%E6%A0%B7"><span class="nav-number">10.</span> <span class="nav-text">反走样</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E9%87%87%E6%A0%B7-superSampling"><span class="nav-number">10.1.</span> <span class="nav-text">超采样(superSampling)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0coverage%E5%87%BD%E6%95%B0"><span class="nav-number">11.</span> <span class="nav-text">实现coverage函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E7%82%B9%E6%98%AF%E5%90%A6%E5%9C%A8%E4%B8%89%E8%A7%92%E5%BD%A2%E5%86%85%E9%83%A8"><span class="nav-number">11.1.</span> <span class="nav-text">如何判断一个点是否在三角形内部?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%BD%A2%E5%8C%85%E5%9B%B4%E7%9B%92"><span class="nav-number">11.2.</span> <span class="nav-text">三角形包围盒</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/author.png">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kenshin627" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/97340526/" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;97340526&#x2F;" rel="noopener me" target="_blank"><i class="fa-brands fa-bilibili fa-fw"></i>BiliBili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=11906050" title="网易云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;11906050" rel="noopener me" target="_blank"><i class="fa-solid fa-music fa-fw"></i>网易云</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/26/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Computer Graphic02-渲染管线-光栅化-采样 | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Computer Graphic02-渲染管线-光栅化-采样
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-26 10:20:09" itemprop="dateCreated datePublished" datetime="2024-03-26T10:20:09+08:00">2024-03-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 11:41:18" itemprop="dateModified" datetime="2024-04-26T11:41:18+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本系列文章将一步步深入介绍计算机在渲染输出呈现一张图片经历的各种步骤细节以及涉及到的相关其他领域的知识串联,例如:几何,渲染方程, 采样, 蒙特卡洛积分,重要性采样, 辐射度量学, 光照计算, 基于物理的渲染等等.本系列文章不涉及API(openGL directX vulkan 等),皆在带你理解这些API背后的图形学原理,理解图形API函数调用的背后到底在做些什么,有了这些知识做铺垫,可以快速上手API的学习,并且发现bug后也可以快速定位问题所在,而不会被GPU的黑盒搞得一头雾水,因为不同的API虽然架构不同,实现不一,但背后的底层逻辑都是一致的。</p>
+<h2 id="光栅化-Rasterization-vs-光追-Ray-tracing"><a href="#光栅化-Rasterization-vs-光追-Ray-tracing" class="headerlink" title="光栅化(Rasterization) vs 光追(Ray tracing)"></a>光栅化(Rasterization) vs 光追(Ray tracing)</h2><p>在本节中，我们将看看渲染到底意味着什么，我们需要解决什么样的问题来将一个三维场景渲染成一张二维图片，以及快速回顾为解决这些问题而实现的种种技术;<strong>本质上渲染需要解决两个问题,1. 可见性, 2.着色.</strong> 我们将集中光线追踪和光栅化两种方法，这两种常用的算法用于解决可见性问题(找到哪些物体在相机视角下的视口(viewport)中是可见的).</p>
+<h3 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h3><p><img src="1.jpg" alt="1.jpg"></p>
+<p><strong>光栅化本质上是一种基于图元解决可见性问题的一种算法</strong>,所谓基于图元,是指对于每一个图元我们会计算屏幕上哪些像素被该图元覆盖,<strong>光栅化的外层循环为图元集合,内层循环为像素.</strong></p>
+<ul>
+<li>对于每一个图元,屏幕中的哪些像素会被点亮?</li>
+<li>相较于光线追踪,光栅化计算效率很高</li>
+<li>生成照片级图片比较困难(很难处理全局光照问题,但是可以通过其他方式近似模拟, shadow Maps , SSAO IBL SSR等)<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a>光线追踪</h3></li>
+</ul>
+<p><img src="2.jpg" alt="2.jpg"></p>
+<p>和光栅化从图元出发不同,光线追踪是基于屏幕像素的,从摄像机位置出发，往每个像素方向发射光线($Ray$),计算光线与场景(boundingBox/mesh/primitives)求交,找到最近相交的图元,递归计算光照信息的过程.因此我们可以说<strong>光线追踪是基于屏幕空间像素解决可见性问题的一种算法</strong></p>
+<ul>
+<li>对于每一个像素,能看到哪些图元?</li>
+<li>利用光线追踪算法生成照片级图片很容易,因为它可以通过”追踪光线”递归计算光照轻易解决全局光照问题</li>
+<li>速度要比光栅化要慢</li>
+</ul>
+<h2 id="渲染管线-pipeLine"><a href="#渲染管线-pipeLine" class="headerlink" title="渲染管线(pipeLine)"></a>渲染管线(pipeLine)</h2><p>我们把输入的数据通过一系列步骤最终生成图片的过程称为渲染管线(pipeLine):</p>
+<ol>
+<li>$inputs$: 由顶点构成的3D图元(primitives本质上几乎都是三角形图元, 顶点数据通常包含顶点位置,法线,切线,纹理坐标等等)</li>
+<li>$stages$: 接受渲染管线前一阶段的输出作为输入,加工处理后生成新的数据,做为管线下一阶段的输入</li>
+<li>$outputs$: 位图</li>
+</ol>
+<p><img src="3.jpg" alt="3.jpg"></p>
+<p>在工业界,光栅化渲染管线通常都是由硬件GPU来执行的,GPU相比CPU有更多的处理单元,并发能力更强,可以同时处理更多像素;另外GPU对光栅化中的很多计算(例如重心坐标插值)做了很多优化处理,计算速度非常快,这也是为什么GPU可以很轻松的每秒生成60张图片的一个重要原因.</p>
+<p><img src="6.jpg" alt="6.jpg"></p>
+<h3 id="为什么图元几乎都是三角形"><a href="#为什么图元几乎都是三角形" class="headerlink" title="为什么图元几乎都是三角形?"></a>为什么图元几乎都是三角形?</h3><p>光栅化渲染管线会把所有图元转换成三角形,即使是点和线也不例外.</p>
+<p><img src="5.jpg" alt="5.jpg"></p>
+<p>为什么这样做呢?有以下几点原因:</p>
+<ol>
+<li>三角形能近似表达所有形状,只要三角形数量够多,近似描述任何形状都不成问题.</li>
+</ol>
+<p><img src="4.jpg" alt="4.jpg"></p>
+<ol>
+<li>三角形构成的图元永远都是一个平面, 利于法线计算(法线即为三角形平面的法线)和着色</li>
+<li>光栅化的过程中,容易对三角形的三个顶点进行插值(重心坐标插值/barycentric coordinates)得到像素着色参数</li>
+</ol>
+<p>这样做还有一个很重要的原因就是,一旦所有的图元都转换为三角形,GPU可以只处理三角形,只需要做好这一件事,可以把更多的硬件资源用于优化三角形的绘制($triangle pipeline$)</p>
+<h3 id="光栅化渲染管线"><a href="#光栅化渲染管线" class="headerlink" title="光栅化渲染管线"></a>光栅化渲染管线</h3><p><img src="7.jpg" alt="7.jpg"></p>
+<h3 id="Coverage-amp-Occlusion"><a href="#Coverage-amp-Occlusion" class="headerlink" title="Coverage &amp; Occlusion"></a>Coverage &amp; Occlusion</h3><p>当需要在屏幕上绘制一些三角形时,需要首先考虑的两个问题是,屏幕空间中的哪些像素会被三角形所覆盖?当两个三角形叠加时,屏幕空间的每个像素应该采样哪个三角形的颜色?</p>
+<p><img src="8.jpg" alt="8.jpg"></p>
+<h3 id="可见性问题"><a href="#可见性问题" class="headerlink" title="可见性问题"></a>可见性问题</h3><p>其实这两个问题最终解决的都是可见性问题,之前的章节提到渲染本质上需要解决两个问题,一个是可见性,另一个是着色.</p>
+<p>举例1:回顾小孔相机原理, 从小孔朝每个像素的方向看去,我们能看到什么?</p>
+<p><img src="9.png" alt="9.png"></p>
+<p>举例2: 从光线的角度理解可见性问题</p>
+<ul>
+<li>$Coverage$: 从相机位置出发,向每个像素方向发射一条光线,场景中的哪些三角形会被光线击中,这其实间接的给了我们三角形会覆盖哪些像素的信息.</li>
+<li>$Occlusion$: 沿着光线行进的方向,哪个三角形是第一个被击中的,解决了三角形相互遮挡的问题</li>
+</ul>
+<h3 id="Q1-Coverage-哪些像素会被三角形覆盖"><a href="#Q1-Coverage-哪些像素会被三角形覆盖" class="headerlink" title="Q1:Coverage(哪些像素会被三角形覆盖?)"></a>Q1:Coverage(哪些像素会被三角形覆盖?)</h3><p>光栅化阶段的输入是投影到二维屏幕空间的三角形顶点($P_{0},P_{1},P_{2}$),输出为被三角形所覆盖的像素的集合(二值, 1表示被覆盖,0表示未被覆盖,没有中间地带)</p>
+<p><img src="10.png" alt="10.png"></p>
+<p>但是使用二值的方式来表示像素是否被三角形所覆盖会产生很多问题,如下图:</p>
+<p><img src="11.jpg" alt="11.jpg"></p>
+<p>上图的像素被四个三角形中的哪一个所覆盖?使用二值的方式很难精确的回答这个问题,我们不妨改进下像素是否被覆盖的表述方式:<strong>计算像素被三角形覆盖区域占比</strong>,像素着色亮度依照百分比调整.</p>
+<p><img src="12.jpg" alt="12.jpg"></p>
+<p>但是这也是一种理想主义.现实中,当我们考虑三角形叠加覆盖穿插,其实很难实时计算像素被三角形覆盖的占比,如下图所示:</p>
+<p><img src="13.jpg" alt="13.jpg"></p>
+<p>所以与其精确计算三角形覆盖了像素多少,我们能否粗略的对其进行估算呢?<br>答案就是采样(sampling).比如一个像素内均匀划分25个采样点,计算这些采样点哪些被三角形所覆盖是很容易的,然后将被三角形覆盖的采样点数量除以总采样个数,就得到了像素被三角形所覆盖的占比(估算).</p>
+<p>总结:</p>
+<ol>
+<li>现实的场景是非常复杂的,存在三角形相互遮挡,半透明等等问题…</li>
+<li>因此计算精确的覆盖占比是很理想化的</li>
+<li>取而代之,我们可以采用近似的方式,将计算覆盖率的问题转换为采样的问题</li>
+<li>采样不会计算精确的覆盖率,它会测试一系列的采样点,这样在拥有足够多的采样点后,可以达到非常好的近似效果.</li>
+</ol>
+<p><img src="14.jpg" alt="14.jpg"></p>
+<h2 id="采样理论"><a href="#采样理论" class="headerlink" title="采样理论"></a>采样理论</h2><p>本小节,将简单介绍广泛意义上的采样理论,涉及音频,图片,视频等信号处理,会着重介绍采样与重构,香农定理等等,下边我们从最简单的一维信号采样开始.</p>
+<h2 id="采样-Sampling"><a href="#采样-Sampling" class="headerlink" title="采样(Sampling)"></a>采样(Sampling)</h2><h3 id="1D-singal-Sampling"><a href="#1D-singal-Sampling" class="headerlink" title="1D singal Sampling"></a>1D singal Sampling</h3><p>一维信号可以理解为一个函数$f$,参数为$x$</p>
+<p><img src="15.jpg" alt="15.jpg"></p>
+<p>对一维信号采样的过程可以理解为:在函数$f$定义域内取不同的$x$值,计算对应的函数返回值,<strong>采样是对原始连续信号离散化的过程.</strong></p>
+<p><img src="16.jpg" alt="16.jpg"><br>$x_{0}$,$x_{1}$,$x_{2}$,$x_{3}$是函数$f$的一组采样点.</p>
+<p>举一个实际生活中的例子来说明,日常生活中的音频文件(.mp3等),存储的其实就是一维原始信号的离散采样点.$f$是振幅,$x$是时间,音频文件是对时间的离散采样:</p>
+<p><img src="17.jpg" alt="17.jpg"></p>
+<h2 id="重建-Reconstruction"><a href="#重建-Reconstruction" class="headerlink" title="重建(Reconstruction)"></a>重建(Reconstruction)</h2><p>当我们得到一系列的采样点后,最终我们输出的其实是连续信号,如何将这些采样点重建为原始的连续信号$f(x)$?如何填补采样点之间的间隙?  我们先看看最简单的两种方式.</p>
+<ol>
+<li>分段常数近似(piecewise constant approximation)：寻找与当前点最近的采样点,直接使用采样点的值</li>
+</ol>
+<p><img src="18.jpg" alt="18.jpg"></p>
+<ol>
+<li>线性插值：与当前点$x$最近的两个采样点之间做线性插值</li>
+</ol>
+<p><img src="19.jpg" alt="19.jpg"></p>
+<p>但是以上两种方式效果并不好,和原始信号相比差太远,重建后的信号相比原始信号丢失了很多细节,如何提高重建质量?最简单的方式就是提高采样率,这样就会很大程度上减少丢失原始信号细节的风险:</p>
+<p><img src="20.jpg" alt="20.jpg"></p>
+<h3 id="二维信号的采样与重建"><a href="#二维信号的采样与重建" class="headerlink" title="二维信号的采样与重建"></a>二维信号的采样与重建</h3><p>和一维信号一样,图片也是一种信号(二维的),也需要经过采样和重建的过程.如下图所示:左侧图片为原始信号,中间图片为采样/重建(piecewise const)后的信号,右侧图片为采样/重建(peicewise bi-linear)后的信号表示.</p>
+<p><img src="21.jpg" alt="21.jpg"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>采样</strong>-是一种测量信号的方法,输入原始连续信号,输出离散的采样点.</p>
+<ol>
+<li>将信号编码为一组离散采样点</li>
+<li>原则上，应该表示特定点的值(特征值)(尽管在现实中很难测量)</li>
+</ol>
+<p><strong>重建</strong>-和采样相反,重建是将一组离散采样点通过重建函数(各种滤波器)生成连续信号的过程.</p>
+<ol>
+<li>构造一个重建函数,通过插值或近似的方式生成函数值,将采样点转换为连续信号.</li>
+<li>不管一维信号, 二维信号 三维信号的采样值,都可以做信号重建.下图分别对一维 二维 三维信号做采样/重建.</li>
+</ol>
+<p><img src="22.jpg" alt="22.jpg"></p>
+<p>那么重新回到主线,对于光栅化,我们是对什么方法做了采样?光栅化为什么可以做为一个采样问题来处理?</p>
+<p>答案是覆盖率函数:</p>
+<p>$coverage(x, y) = \begin{cases}<br>  1, triangle\ contains\ point(x, y)\\<br>  0, otherwise<br>\end{cases}$</p>
+<p><img src="23.jpg" alt="23.jpg"></p>
+<p>对屏幕空间任意一个点做采样(不一定是像素中心点,可以是任意的点),用覆盖率函数判断当前三角形是否覆盖该采样点,如果覆盖则返回1,否则返回0.当然二维平面有无数个点构成(连续信号),而覆盖率函数通过屏幕空间的采样点来近似/逼近三角形对像素的覆盖情况,因此我们说<strong>光栅化本质是一个采样问题.</strong></p>
+<h2 id="边界判定"><a href="#边界判定" class="headerlink" title="边界判定"></a>边界判定</h2><p>假设有一个采样点,正好落在三角形的公共边上,那么覆盖率函数在做采样测试时,该采样点被哪个三角形覆盖了呢?</p>
+<p><img src="24.jpg" alt="24.jpg"></p>
+<p>Opengl/directX定义了一些规则用于解决采样点正好落在三角形边上判定是否被包含的问题,规则如下:<br>当采样点落在三角形边上时,并且该边是三角形的上边或左边时,则判定该采样点被三角形所覆盖.</p>
+<p><img src="25.jpg" alt="25.jpg"></p>
+<h2 id="走样-Aliasing"><a href="#走样-Aliasing" class="headerlink" title="走样(Aliasing)"></a>走样(Aliasing)</h2><p>光栅化过程中,我们首先对屏幕空间做采样</p>
+<p><img src="26.jpg" alt="26.jpg"></p>
+<p>假设每个像素会发射均匀强度的光,则通过采样重建后,在屏幕上我们会看到这样的图片</p>
+<p><img src="27.jpg" alt="27.jpg"></p>
+<p>而实际的原始图片却是这样的</p>
+<p><img src="28.jpg" alt="28.jpg"></p>
+<h3 id="回顾采样和重建"><a href="#回顾采样和重建" class="headerlink" title="回顾采样和重建"></a>回顾采样和重建</h3><p>采样是将自然界 现实中的连续信号离散化为一组采样点,这些采样点其实就是一组数据,拿音频信号举例,在音乐录制时,连续的声音信号被采样录制为音频文件(离散采样点),可以被存储在电脑中,在网络中传输,当需要播放该音频时,播放设备会将采样点重建为连续信号,即我们听到的音乐.</p>
+<p><strong>采样和重建的最终目标是尽可能的还原/逼近原始信号.</strong></p>
+<p><img src="29.jpg" alt="29.jpg"><br>但是如上图所示,重建后的信号丢失了原始信号的很多细节表现.</p>
+<p>那么我们应该通过什么样的角度来理解这种误差呢?<br>前边的文章中我们提到过一个重要的观点,信号是一系列拥有不同频率的信号的线性组合<a target="_blank" rel="noopener" href="https://juejin.cn/post/7247342069618049061">(傅里叶变换)</a>:</p>
+<p><img src="30.jpg" alt="30.jpg"></p>
+<p><strong>当我们对一个原始信号做采样时,特别是高频信号,有限的采样点无法表现高频信号的所有细节,这就是造成走样问题的本质.换句话说采样频率低于原始信号频率,丢失了原始信号的细节表现,产生走样.</strong></p>
+<p><img src="31.jpg" alt="31.jpg"></p>
+<blockquote>
+<p>aliasing: high frequencies in original signal masquerade as low frequencies after reconstruction(due to undersampling)</p>
+</blockquote>
+<h3 id="车轮效应"><a href="#车轮效应" class="headerlink" title="车轮效应"></a>车轮效应</h3><p>相机采样频率(对时间的采样)低于轮子旋转的频率(欠采样),造成轮子倒转的视觉效果:</p>
+<p><img src="34.gif" alt="34.gif"></p>
+<p>我们将一维信号延伸到二维空间(image),图片也可以被分解为不同频率信号的线性组合(时域-&gt;频域)</p>
+<p><img src="32.jpg" alt="32.jpg"></p>
+<p><img src="33.jpg" alt="33.jpg"></p>
+<h2 id="香农定理-Nyquist-Shannon-theorem"><a href="#香农定理-Nyquist-Shannon-theorem" class="headerlink" title="香农定理(Nyquist-Shannon theorem)"></a>香农定理(Nyquist-Shannon theorem)</h2><p>考虑一个频带受限的信号，没有高于某个阈值$w_{0}$的频率</p>
+<ul>
+<li>一维信号:低通滤波过滤后的信号</li>
+<li>二维信号:模糊的图片</li>
+</ul>
+<p>信号可以被完美重建:<br>1.<strong>当采样周期 $T = 1/2w_{0}$</strong><br>2.<strong>重建函数采用sinc滤波器(sincFilter)</strong></p>
+<p><img src="35.jpg" alt="35.jpg"></p>
+<h2 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h2><p>采样在图形学中面临的挑战:</p>
+<ol>
+<li>图形学中信号往往是非频带受限的</li>
+<li>sinc滤波器是一种理想的滤波器,但是由于其昂贵耗时的操作,在实时渲染中往往无法使用</li>
+</ol>
+<p>图片走样(Aliasing artifacts) = 不完美的采样+不完美的重建</p>
+<p>那么我们该如何做,才能减少图片走样现象呢?首先需要认识到一个现实,无论我们怎么做,走样现象都会存在,或多或少的问题,因为采样意味着失真,任何采样都无法捕获高频信号的所有细节.<br>但是我们仍然可以尽力匹配采样频率和重建函数,逼近模拟原始信号.</p>
+<h3 id="超采样-superSampling"><a href="#超采样-superSampling" class="headerlink" title="超采样(superSampling)"></a>超采样(superSampling)</h3><p>之前对每个像素点只采样一次:</p>
+<p><img src="26.jpg" alt="26.jpg"></p>
+<p>现在我们提高采样频率,假设每个像素做四次采样</p>
+<p><img src="37.jpg" alt="37.jpg"></p>
+<p>接下来我们需要将超采样转换为最终的采样(匹配屏幕空间像素),用于重建:</p>
+<p><img src="38.jpg" alt="38.jpg"></p>
+<h2 id="实现coverage函数"><a href="#实现coverage函数" class="headerlink" title="实现coverage函数"></a>实现coverage函数</h2><h3 id="如何判断一个点是否在三角形内部"><a href="#如何判断一个点是否在三角形内部" class="headerlink" title="如何判断一个点是否在三角形内部?"></a>如何判断一个点是否在三角形内部?</h3><p>通过向量叉乘可以轻易计算一个点是否在三角形内,分别对每条边组成的向量和顶点与当前采样点构成的向量叉乘,如果结果一致(都为正 或 都为负),则采样点在三角形内部.</p>
+<p><img src="39.jpg" alt="39.png"></p>
+<h3 id="三角形包围盒"><a href="#三角形包围盒" class="headerlink" title="三角形包围盒"></a>三角形包围盒</h3><p>显然对屏幕空间的每一个像素做三角形inSide判断是非常耗时低效的,因此我们可以先计算三角形包围盒,包围盒外部的像素肯定在三角形外,仅需要对三角形内部的像素做循环判断即可.</p>
+<p>当然对于某些极端情况采用三角形包围盒遍历像素仍然很低效:</p>
+<p><img src="40.jpg" alt="40.jpg"></p>
+<p>针对这种极端情况,我们可以把屏幕空间划分为不同的区块:</p>
+<ol>
+<li>首先判断大的区块是否和三角形相交,如果未相交,则区块包含的所有像素均可以排除.</li>
+<li>如果区块完整的在三角形内部,则其内部的所有像素均在三角形内.</li>
+<li>此外,再遍历区块所包含的像素,分别与三角形求交.</li>
+</ol>
+<p><img src="41.png" alt="41.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+              <a href="/tags/Math/" rel="tag"># Math</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/23/Computer%20Graphic01-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="prev" title="Computer Graphic01-线性代数">
+                  <i class="fa fa-angle-left"></i> Computer Graphic01-线性代数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/04/26/Computer-Graphic04-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8B/5/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">92k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:34</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Kenshin627/BlogGiscus","repo_id":"R_kgDOJ-E6Aw","category":"Announcements","category_id":"DIC_kwDOJ-E6A84CYCOU","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"dark_dimmed","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false,"tagMode":false});</script></body>
+</html>
