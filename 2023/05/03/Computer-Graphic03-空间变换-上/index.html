@@ -24,34 +24,34 @@
     <meta name="description" content="Computer-Graphic03-空间变换-上(Spatial Transformation)本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer Graphic03-空间变换(上)">
-<meta property="og:url" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/index.html">
+<meta property="og:url" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="Computer-Graphic03-空间变换-上(Spatial Transformation)本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/1.png">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/2.jpg">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/3.jpg">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/4.jpg">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/5.png">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/19.png">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/20.png">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/21.png">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/22.png">
-<meta property="og:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/18.jpg">
-<meta property="article:published_time" content="2023-05-01T04:00:57.000Z">
-<meta property="article:modified_time" content="2024-04-26T12:34:18.365Z">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/1.png">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/2.jpg">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/3.jpg">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/4.jpg">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/5.png">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/19.png">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/20.png">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/21.png">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/22.png">
+<meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/18.jpg">
+<meta property="article:published_time" content="2023-05-03T04:00:57.000Z">
+<meta property="article:modified_time" content="2024-04-26T12:40:07.061Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/1.png">
+<meta name="twitter:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/1.png">
 
 
-<link rel="canonical" href="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/">
+<link rel="canonical" href="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/","path":"2023/05/01/Computer-Graphic03-空间变换-上/","title":"Computer Graphic03-空间变换(上)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/","path":"2023/05/03/Computer-Graphic03-空间变换-上/","title":"Computer Graphic03-空间变换(上)"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Computer Graphic03-空间变换(上) | Pixel World</title>
@@ -194,7 +194,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/01/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -223,14 +223,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-05-01 12:00:57" itemprop="dateCreated datePublished" datetime="2023-05-01T12:00:57+08:00">2023-05-01</time>
+      <time title="创建时间：2023-05-03 12:00:57" itemprop="dateCreated datePublished" datetime="2023-05-03T12:00:57+08:00">2023-05-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 20:34:18" itemprop="dateModified" datetime="2024-04-26T20:34:18+08:00">2024-04-26</time>
+      <time title="修改时间：2024-04-26 20:40:07" itemprop="dateModified" datetime="2024-04-26T20:40:07+08:00">2024-04-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -408,8 +408,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" rel="prev" title="计算机图形学（十一）：信号处理">
-                  <i class="fa fa-angle-left"></i> 计算机图形学（十一）：信号处理
+                <a href="/2023/05/02/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/" rel="prev" title="Computer Graphic02-渲染管线-光栅化-采样">
+                  <i class="fa fa-angle-left"></i> Computer Graphic02-渲染管线-光栅化-采样
                 </a>
             </div>
             <div class="post-nav-item">

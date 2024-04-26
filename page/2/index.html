@@ -177,6 +177,247 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">计算机图形学（十一）：信号处理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-12 21:30:00" itemprop="dateCreated datePublished" datetime="2023-04-12T21:30:00+08:00">2023-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 09:53:45" itemprop="dateModified" datetime="2024-04-26T09:53:45+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="计算机图形学（十一）：信号处理"><a href="#计算机图形学（十一）：信号处理" class="headerlink" title="计算机图形学（十一）：信号处理"></a>计算机图形学（十一）：信号处理</h1><p>在图形学中,通常要处理些连续变量的函数:图片是你见过的第一个例子，但是当你继续探索图形学的时候，你会遇到很多类似的情况.就其本质而言,计算机无法直接表达连续的函数,必须使用有限的位数表达他们- <strong>采样(将函数的值离散的存储起来,在需要时进行重建).</strong><br>本章首先用数字音频的具体一维例子来总结采样和重构。然后，我们继续介绍在一维和二维的采样和重构基础上的基本数学和算法。最后，我们深入频域观点的细节，它为这些算法的行为提供了许多见解。</p>
+<h2 id="数字音频-一维采样"><a href="#数字音频-一维采样" class="headerlink" title="数字音频: 一维采样"></a>数字音频: 一维采样</h2><p>尽管采样在电信领域已经应用了很多年,但随着数字音频的使用增加，1982年cd的推出是采样在消费者中的第一次大规模应用.<br><img src="1.jpg" alt="alt"><br>在录音过程中，麦克风将空气中以压力波形式存在的声音转换成时变的电压，这相当于在麦克风所在的位置测量空气压力的变化。这种电信号需要以某种方式储存起来，以便在以后的某个时间播放，并发送到扬声器中，通过与电压同步移动膜片，将电压转换回压力波.<br>录制音频的过程中使用了采样技术, 模数转换器 analog-to-digital converter (A/D converter, or ADC)每秒钟数千次测量电压,生成容易被存储下来的数据流(例如记录在计算机硬盘中).<br>在回放时,数据流以适当的速率被读取,并被发送到数模转换器 digital-to-analog converter (D/A converter, or DAC),DAC根据它接收到的数字产生一个电压，并且如果我们取足够多的样本来表示电压的变化，所得到的电信号，都是相同的输入信号.<br>事实证明，每秒钟需要多少样本来完成一次良好的录制，取决于我们试图记录的声音有多高。一个可以很好录制弦乐低音或者鼓的采样率，应用于录制短笛或铙钹，就会产生奇怪的结果;但这些声音在较高的采样率下被录制得很好。为了避免这些采样不足的影响，数字音频记录器对ADC的输入进行滤波，去除可能导致问题的高频。<br>另一种问题出现在输出端。DAC产生的电压在新采样进入时发生变化，但在下一个采样进入前保持不变，产生阶梯型的波形。这些楼梯就像噪音一样，增加了一种高频的、依赖于信号的嗡嗡声。为了消除这种重建带来的问题，数字音频播放器过滤DAC的输出以平滑波形.</p>
+<h2 id="采样偏差与失真"><a href="#采样偏差与失真" class="headerlink" title="采样偏差与失真"></a>采样偏差与失真</h2><p>数字音频记录链可以作为采样和重建过程的具体模型，发生在图形中。同样的欠采样和重构伪影也会发生在图像或图形中的其他采样信号上，解决方法是一样的:采样前进行滤波，重构时再进行滤波.<br><img src="2.png" alt="alt"><br>上图显示了一个由过低的采样频率导致的走样具体例子。在这里，我们用两种不同的采样频率对一个简单的正弦波进行采样:顶部的高频采样和底部的低频采样。高频采样显然能够更好的还原信号,但是由低采样率产生的样本与低频正弦波的样本是无法区分的.<br>一旦采样完成，就无法区分两个信号——快正弦波和慢正弦波——哪个是原始信号，因此没有单一的方法可以在这两种情况下正确地重建信号。因为高频信号可以“假装”成低频信号，这种现象被称为失真。<br>在图形领域,失真经常表现为: </p>
+<ul>
+<li>摩尔纹(moire patterns)  </li>
+<li>边缘锯齿</li>
+</ul>
+<p>采样和重构的基本问题可以简单地根据特征太小或太大来理解，但一些更定量的问题很难回答:</p>
+<ul>
+<li>多高的采样率能够还原重建结果?</li>
+<li>什么样的滤波器适合于采样和重建?</li>
+<li>为了避免失真,需要多大程度的平滑过渡?</li>
+</ul>
+<h2 id="卷积-Convolution"><a href="#卷积-Convolution" class="headerlink" title="卷积(Convolution)"></a>卷积(Convolution)</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/" class="post-title-link" itemprop="url">计算机图形学（十）：柏林噪声</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-01 21:30:00" itemprop="dateCreated datePublished" datetime="2023-03-01T21:30:00+08:00">2023-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 09:53:35" itemprop="dateModified" datetime="2024-04-26T09:53:35+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="计算机图形学（十）：柏林噪声"><a href="#计算机图形学（十）：柏林噪声" class="headerlink" title="计算机图形学（十）：柏林噪声"></a>计算机图形学（十）：柏林噪声</h1><h2 id="Perlin-Noise"><a href="#Perlin-Noise" class="headerlink" title="$Perlin\;Noise$"></a>$Perlin\;Noise$</h2><p>1985年，$Ken\;Perlin$发表了一篇名为《A Image Synthetizer》的Siggraph学术论文。提出了一种类似于之前介绍的噪声函数算法,但是表现更好。柏林噪声和之前的噪声函数很相似，和$Value\;Noise$一样，它也依赖于网格系统。在网格的每个顶点处定义随机值，然后对其进行插值以计算空间中某个位置的噪声值。之前我们详细介绍了1D和2D$Value\;Noise$的创建。本章将实现$Perlin\;Nosie$的3D版本。那么$Perlin\;Nosie$和$Value\;Noise$有什么区别呢？对于$Value\;Noise$来说，我们只需在网格的顶点处分配随机数，采样点对所在单元格四个顶点做双线性插值即可。在$Perlin\;Nosie$中，$Ken\;Perlin$建议将网格顶点的随机值替换为梯度（归一化的三维向量），方法是在$[0,1]$范围内生成三个随机浮点数，再将这些随机数重映射到$[-1,1]$范围内，最后对向量进行归一化。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableSize = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> gradients = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tableSize; i++) &#123;</span><br><span class="line">    gradients[i] = <span class="title function_">vec3</span>(<span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>);</span><br><span class="line">    gradients[i] = gradients[i].<span class="title function_">normalize</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>相比通过随机数插值的$Value\;Noise$，$Perlin\;Nosie$在网格顶点分布的是三维向量，由于噪声函数需要返回一个浮点数，如何通过三维向量生成浮点数呢？$Ken\;Perlin$建议计算每个网格顶点到我们要计算的点$p$的方向向量，我们可以得到8个3D向量（一个立方体有8个角或顶点）和4个2D向量（二维）。然后计算网格顶点的梯度和从该顶点到$p$点向量的点积。由于向量点积返回一个浮点数，因此，我们将梯度或向量转换为了浮点数。与2D情况一样，为了计算点$p$在3D网格中的坐标，我们将点坐标从浮点数转换为整数值($floor$)，然后将这些整数坐标取模$N$，即随机方向的数组（N = 256）。正如在上一章中解释的那样，我们不想生成256x256x256方向的网格。使用包含256个随机方向的单个一维数组，并使用置换表通过将点的整数坐标转换为带有哈希的置换表的索引来“随机拾取”存储在该表中的方向之一。</p>
+<p>代码实现如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> tableSize = <span class="number">256</span>;</span><br><span class="line"><span class="keyword">const</span> tableSizeMask = tableSize - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> gradients = [];</span><br><span class="line"><span class="keyword">const</span> permutationTable = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PerlinNoise</span> &#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; tableSize; i++) &#123;</span><br><span class="line">            gradients[i] = <span class="title function_">vec3</span>(<span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>, <span class="number">2</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">1</span>);</span><br><span class="line">            gradients[i] = gradients[i].<span class="title function_">normalize</span>();</span><br><span class="line">            permutationTable[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (unsigned i = <span class="number">0</span>; i &lt; tableSize; ++i) </span><br><span class="line">        <span class="attr">std</span>::<span class="title function_">swap</span>(permutationTable[i], permutationTable[<span class="title function_">diceInt</span>() &amp; tableSizeMask]); </span><br><span class="line">        <span class="comment">// extend the permutation table in the index range [256:512]</span></span><br><span class="line">        <span class="keyword">for</span> (unsigned i = <span class="number">0</span>; i &lt; tableSize; ++i) &#123; </span><br><span class="line">            permutationTable[tableSize + i] = permutationTable[i]; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">hash</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span>, z: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">permutationTable</span>[<span class="variable language_">this</span>.<span class="property">permutationTable</span>[<span class="variable language_">this</span>.<span class="property">permutationTable</span>[x] +y ] + z]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">computeX</span>(<span class="params">p: vec3</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> xi0 = <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">x</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> yi0 = <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">y</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> zi0 = math.<span class="title function_">floor</span>(p.<span class="property">z</span>) &amp; tableSizeMask;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> xi1 = (xi0 + <span class="number">1</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> xi1 = (xi0 + <span class="number">1</span>) &amp; tableSizeMask;</span><br><span class="line">        <span class="keyword">const</span> xi1 = (xi0 + <span class="number">1</span>) &amp; tableSizeMask;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> tx = p.<span class="property">x</span> - <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">x</span>);</span><br><span class="line">        <span class="keyword">const</span> ty = p.<span class="property">y</span> - <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">y</span>);</span><br><span class="line">        <span class="keyword">const</span> tz = p.<span class="property">z</span> - <span class="title class_">Math</span>.<span class="title function_">floor</span>(p.<span class="property">z</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> u = <span class="title function_">smoothStep</span>(tx);</span><br><span class="line">        <span class="keyword">const</span> v = <span class="title function_">smoothStep</span>(tx);</span><br><span class="line">        <span class="keyword">const</span> w = <span class="title function_">smoothStep</span>(tx);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> c000 = gradients[<span class="title function_">hash</span>(xi0, yi0, zi0)]; </span><br><span class="line">        <span class="keyword">const</span> c100 = gradients[<span class="title function_">hash</span>(xi1, yi0, zi0)]; </span><br><span class="line">        <span class="keyword">const</span> c010 = gradients[<span class="title function_">hash</span>(xi0, yi1, zi0)]; </span><br><span class="line">        <span class="keyword">const</span> c110 = gradients[<span class="title function_">hash</span>(xi1, yi1, zi0)]; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> c001 = gradients[<span class="title function_">hash</span>(xi0, yi0, zi1)]; </span><br><span class="line">        <span class="keyword">const</span> c101 = gradients[<span class="title function_">hash</span>(xi1, yi0, zi1)]; </span><br><span class="line">        <span class="keyword">const</span> c011 = gradients[<span class="title function_">hash</span>(xi0, yi1, zi1)]; </span><br><span class="line">        <span class="keyword">const</span> c111 = gradients[<span class="title function_">hash</span>(xi1, yi1, zi1)]; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> x0 = tx, x1 = tx - <span class="number">1</span>; </span><br><span class="line">        <span class="keyword">const</span> y0 = ty, y1 = ty - <span class="number">1</span>; </span><br><span class="line">        <span class="keyword">const</span> z0 = tz, z1 = tz - <span class="number">1</span>; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> p000 = <span class="title function_">vec3</span>(x0, y0, z0); </span><br><span class="line">        <span class="keyword">const</span> p100 = <span class="title function_">vec3</span>(x1, y0, z0); </span><br><span class="line">        <span class="keyword">const</span> p010 = <span class="title function_">vec3</span>(x0, y1, z0); </span><br><span class="line">        <span class="keyword">const</span> p110 = <span class="title function_">vec3</span>(x1, y1, z0); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> p001 = <span class="title function_">vec3</span>(x0, y0, z1); </span><br><span class="line">        <span class="keyword">const</span> p101 = <span class="title function_">vec3</span>(x1, y0, z1); </span><br><span class="line">        <span class="keyword">const</span> p011 = <span class="title function_">vec3</span>(x0, y1, z1); </span><br><span class="line">        <span class="keyword">const</span> p111 = <span class="title function_">vec3</span>(x1, y1, z1); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// linear interpolation</span></span><br><span class="line">        <span class="keyword">const</span> a = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c000, p000), <span class="title function_">dot</span>(c100, p100), u); </span><br><span class="line">        <span class="keyword">const</span> b = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c010, p010), <span class="title function_">dot</span>(c110, p110), u); </span><br><span class="line">        <span class="keyword">const</span> c = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c001, p001), <span class="title function_">dot</span>(c101, p101), u); </span><br><span class="line">        <span class="keyword">const</span> d = <span class="title function_">lerp</span>(<span class="title function_">dot</span>(c011, p011), <span class="title function_">dot</span>(c111, p111), u); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> e = <span class="title function_">lerp</span>(a, b, v); </span><br><span class="line">        <span class="keyword">const</span> f = <span class="title function_">lerp</span>(c, d, v); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">lerp</span>(e, f, w);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了平滑插值，我们在使用tx ty tz之前对其分别使用smoothStep函数重新映射为uvw。<br>通过代码可以看出，$Perlin\;Nosie$和$Value\;Noise$非常类似，唯一不同的是我们将网格顶点的随机值替换为随机的单位向量，然后计算顶点梯度和顶点到当前点的方向向量的点积。</p>
+<p><img src="1.jpg" alt="perlinNoise"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E6%9F%8F%E6%9E%97%E5%99%AA%E5%A3%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -391,247 +632,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/02/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/29/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/01/29/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/" class="post-title-link" itemprop="url">Computer Graphic02-渲染管线-光栅化-采样</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-01-29 20:20:09" itemprop="dateCreated datePublished" datetime="2023-01-29T20:20:09+08:00">2023-01-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 20:36:50" itemprop="dateModified" datetime="2024-04-26T20:36:50+08:00">2024-04-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本系列文章将一步步深入介绍计算机在渲染输出呈现一张图片经历的各种步骤细节以及涉及到的相关其他领域的知识串联,例如:几何,渲染方程, 采样, 蒙特卡洛积分,重要性采样, 辐射度量学, 光照计算, 基于物理的渲染等等.本系列文章不涉及API(openGL directX vulkan 等),皆在带你理解这些API背后的图形学原理,理解图形API函数调用的背后到底在做些什么,有了这些知识做铺垫,可以快速上手API的学习,并且发现bug后也可以快速定位问题所在,而不会被GPU的黑盒搞得一头雾水,因为不同的API虽然架构不同,实现不一,但背后的底层逻辑都是一致的。</p>
-<h2 id="光栅化-Rasterization-vs-光追-Ray-tracing"><a href="#光栅化-Rasterization-vs-光追-Ray-tracing" class="headerlink" title="光栅化(Rasterization) vs 光追(Ray tracing)"></a>光栅化(Rasterization) vs 光追(Ray tracing)</h2><p>在本节中，我们将看看渲染到底意味着什么，我们需要解决什么样的问题来将一个三维场景渲染成一张二维图片，以及快速回顾为解决这些问题而实现的种种技术;<strong>本质上渲染需要解决两个问题,1. 可见性, 2.着色.</strong> 我们将集中光线追踪和光栅化两种方法，这两种常用的算法用于解决可见性问题(找到哪些物体在相机视角下的视口(viewport)中是可见的).</p>
-<h3 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h3><p><img src="1.jpg" alt="1.jpg"></p>
-<p><strong>光栅化本质上是一种基于图元解决可见性问题的一种算法</strong>,所谓基于图元,是指对于每一个图元我们会计算屏幕上哪些像素被该图元覆盖,<strong>光栅化的外层循环为图元集合,内层循环为像素.</strong></p>
-<ul>
-<li>对于每一个图元,屏幕中的哪些像素会被点亮?</li>
-<li>相较于光线追踪,光栅化计算效率很高</li>
-<li>生成照片级图片比较困难(很难处理全局光照问题,但是可以通过其他方式近似模拟, shadow Maps , SSAO IBL SSR等)<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a>光线追踪</h3></li>
-</ul>
-<p><img src="2.jpg" alt="2.jpg"></p>
-<p>和光栅化从图元出发不同,光线追踪是基于屏幕像素的,从摄像机位置出发，往每个像素方向发射光线($Ray$),计算光线与场景(boundingBox/mesh/primitives)求交,找到最近相交的图元,递归计算光照信息的过程.因此我们可以说<strong>光线追踪是基于屏幕空间像素解决可见性问题的一种算法</strong></p>
-<ul>
-<li>对于每一个像素,能看到哪些图元?</li>
-<li>利用光线追踪算法生成照片级图片很容易,因为它可以通过”追踪光线”递归计算光照轻易解决全局光照问题</li>
-<li>速度要比光栅化要慢</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/01/29/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/23/Computer%20Graphic01-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/01/23/Computer%20Graphic01-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-title-link" itemprop="url">Computer Graphic01-线性代数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-01-23 23:00:09" itemprop="dateCreated datePublished" datetime="2023-01-23T23:00:09+08:00">2023-01-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 20:36:55" itemprop="dateModified" datetime="2024-04-26T20:36:55+08:00">2024-04-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Computer-Graphic01-线性代数"><a href="#Computer-Graphic01-线性代数" class="headerlink" title="Computer Graphic01-线性代数"></a>Computer Graphic01-线性代数</h1><p>线性代数是关于向量空间以及它们之线性变换的学科</p>
-<h2 id="向量空间"><a href="#向量空间" class="headerlink" title="向量空间"></a>向量空间</h2><h3 id="向量是什么"><a href="#向量是什么" class="headerlink" title="向量是什么"></a>向量是什么</h3><p>直觉上来说向量其实就是一个小箭头</p>
-<p><img src="01.png" alt="arrow"><br>在计算机图形学中，需要处理多种类型数据，这些数据可能看起来不像一个小箭头，比如多项式，图像，辐射亮度(radiance)等，但它们的行为表现却是和向量一致的，所以这个小箭头仍然是一个有用的思维模式。</p>
-<h3 id="向量如何表示"><a href="#向量如何表示" class="headerlink" title="向量如何表示"></a>向量如何表示</h3><h4 id="极坐标系"><a href="#极坐标系" class="headerlink" title="极坐标系"></a>极坐标系</h4><p>一个向量需要编码哪些信息可以定义它的唯一性？</p>
-<p>从根本上说向量就是方向和大小：<br><img src="02.png" alt="arrow"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/01/23/Computer%20Graphic01-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
