@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -168,6 +168,132 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/02/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/05/02/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/" class="post-title-link" itemprop="url">Computer Graphic02-渲染管线-光栅化-采样</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-02 20:20:09" itemprop="dateCreated datePublished" datetime="2023-05-02T20:20:09+08:00">2023-05-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 20:40:05" itemprop="dateModified" datetime="2024-04-26T20:40:05+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本系列文章将一步步深入介绍计算机在渲染输出呈现一张图片经历的各种步骤细节以及涉及到的相关其他领域的知识串联,例如:几何,渲染方程, 采样, 蒙特卡洛积分,重要性采样, 辐射度量学, 光照计算, 基于物理的渲染等等.本系列文章不涉及API(openGL directX vulkan 等),皆在带你理解这些API背后的图形学原理,理解图形API函数调用的背后到底在做些什么,有了这些知识做铺垫,可以快速上手API的学习,并且发现bug后也可以快速定位问题所在,而不会被GPU的黑盒搞得一头雾水,因为不同的API虽然架构不同,实现不一,但背后的底层逻辑都是一致的。</p>
+<h2 id="光栅化-Rasterization-vs-光追-Ray-tracing"><a href="#光栅化-Rasterization-vs-光追-Ray-tracing" class="headerlink" title="光栅化(Rasterization) vs 光追(Ray tracing)"></a>光栅化(Rasterization) vs 光追(Ray tracing)</h2><p>在本节中，我们将看看渲染到底意味着什么，我们需要解决什么样的问题来将一个三维场景渲染成一张二维图片，以及快速回顾为解决这些问题而实现的种种技术;<strong>本质上渲染需要解决两个问题,1. 可见性, 2.着色.</strong> 我们将集中光线追踪和光栅化两种方法，这两种常用的算法用于解决可见性问题(找到哪些物体在相机视角下的视口(viewport)中是可见的).</p>
+<h3 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h3><p><img src="1.jpg" alt="1.jpg"></p>
+<p><strong>光栅化本质上是一种基于图元解决可见性问题的一种算法</strong>,所谓基于图元,是指对于每一个图元我们会计算屏幕上哪些像素被该图元覆盖,<strong>光栅化的外层循环为图元集合,内层循环为像素.</strong></p>
+<ul>
+<li>对于每一个图元,屏幕中的哪些像素会被点亮?</li>
+<li>相较于光线追踪,光栅化计算效率很高</li>
+<li>生成照片级图片比较困难(很难处理全局光照问题,但是可以通过其他方式近似模拟, shadow Maps , SSAO IBL SSR等)<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a>光线追踪</h3></li>
+</ul>
+<p><img src="2.jpg" alt="2.jpg"></p>
+<p>和光栅化从图元出发不同,光线追踪是基于屏幕像素的,从摄像机位置出发，往每个像素方向发射光线($Ray$),计算光线与场景(boundingBox/mesh/primitives)求交,找到最近相交的图元,递归计算光照信息的过程.因此我们可以说<strong>光线追踪是基于屏幕空间像素解决可见性问题的一种算法</strong></p>
+<ul>
+<li>对于每一个像素,能看到哪些图元?</li>
+<li>利用光线追踪算法生成照片级图片很容易,因为它可以通过”追踪光线”递归计算光照轻易解决全局光照问题</li>
+<li>速度要比光栅化要慢</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/02/Computer%20Graphic02-%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%85%89%E6%A0%85%E5%8C%96-%E9%87%87%E6%A0%B7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -625,128 +751,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/02/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/" class="post-title-link" itemprop="url">计算机图形学（八）：噪声-上</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-02-15 19:30:00" itemprop="dateCreated datePublished" datetime="2023-02-15T19:30:00+08:00">2023-02-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 09:52:57" itemprop="dateModified" datetime="2024-04-26T09:52:57+08:00">2024-04-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>16 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="计算机图形学（八）：噪声-上"><a href="#计算机图形学（八）：噪声-上" class="headerlink" title="计算机图形学（八）：噪声-上"></a>计算机图形学（八）：噪声-上</h1><p>本章将介绍噪声的基础内容，包括噪声是什么，它的属性以及可以用来做什么。噪声不是一个难以理解的复杂概念，但它有许多微妙之处需要注意。 正确使用它需要了解它的工作原理和实现方式。 为了创建一些图像并使用各种参数进行实验，我们将实现一个简单（但功能齐全）的噪声函数，称为$Value Noise$。 本章我们将忽略许多过于复杂而无法在此处全面研究的技术，只是对噪声及其一些应用的初步介绍。 </p>
-<h2 id="历史背景"><a href="#历史背景" class="headerlink" title="历史背景"></a>历史背景</h2><p>噪声是在80年代中期发明的，起初是作为图像纹理的替代方法。主要原因在于80年代中期的电脑内存有限，无法容纳用于纹理映射的图片，于是人们开始寻找替代解决方案。用纯色渲染物体看起来太无趣了，需要通过调整物体的表面材质属性来打破这种干净的外观。在编程中，我们通常在需要创建随机时使用伪随机数生成器。然而使用$RNG(Random\;number\;generator)$是远远不够的。我们在自然界中观察到的随机模式通常是很自然的，物体表面上距离很近的两个点通常看起来会比较相似。但是同一物体上相距很远的两个点却差异很大。换句话说：<strong>局部变化是细微的，是渐进的，而全局变化则是很大的。</strong>$RNG$无法满足这个要求，因为每次调用随机数生成器它会返回和其它数值完全不相干的随机数。因此调用这个函数会产生两个完全不同的数字，最终产生杂乱无章的白噪声。下面是一个例子：让我们观察一块真实岩石的图像，假设我们想要复现该CG图像。这个例子很有趣，因为我们可以看到岩石图案由三种颜色组成：绿色，粉色和灰色。这些颜色或多或少分布在岩石表面上。我们首先使用随机数生成器的版本：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GenerateRandPattern</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="type">unsigned</span> imageWidth, imageHeight; </span><br><span class="line">    imageWidth = imageHeight = <span class="number">512</span>; </span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">unsigned</span> kNumColors = <span class="number">3</span>; </span><br><span class="line">    Color3f rockColors[ kNumColors ] = &#123; </span><br><span class="line">        &#123; <span class="number">0.4078</span>, <span class="number">0.4078</span>, <span class="number">0.3764</span> &#125;, </span><br><span class="line">        &#123; <span class="number">0.7606</span>, <span class="number">0.6274</span>, <span class="number">0.6313</span> &#125;, </span><br><span class="line">        &#123; <span class="number">0.8980</span>, <span class="number">0.9372</span>, <span class="number">0.9725</span> &#125; &#125;; </span><br><span class="line">    <span class="function">std::ofstream <span class="title">ofs</span><span class="params">( <span class="string">&quot;./rockpattern.ppm&quot;</span> )</span></span>; </span><br><span class="line">    ofs &lt;&lt; <span class="string">&quot;P6\n&quot;</span> &lt;&lt; imageWidth &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; imageHeight &lt;&lt; <span class="string">&quot;\n255\n&quot;</span>; </span><br><span class="line">    <span class="keyword">for</span> ( <span class="type">int</span> j = <span class="number">0</span>; j &lt; imageWidth; ++j ) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">for</span> ( <span class="type">int</span> i = <span class="number">0</span>; i &lt; imageHeight; ++i ) </span><br><span class="line">        &#123; </span><br><span class="line">            <span class="type">unsigned</span> colorIndex = std::<span class="built_in">min</span>( <span class="built_in">unsigned</span>( <span class="built_in">drand48</span> () * kNumColors ), kNumColors - <span class="number">1</span> ); </span><br><span class="line">            ofs &lt;&lt; <span class="built_in">uchar</span>( rockColors[ colorIndex ][ <span class="number">0</span> ] * <span class="number">255</span> ) &lt;&lt; </span><br><span class="line">                   <span class="built_in">uchar</span>( rockColors[ colorIndex ][ <span class="number">1</span> ] * <span class="number">255</span> ) &lt;&lt; </span><br><span class="line">                   <span class="built_in">uchar</span>( rockColors[ colorIndex ][ <span class="number">2</span> ] * <span class="number">255</span> ); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    ofs.<span class="built_in">close</span>(); </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<p><img src="1.jpg" alt="RNG"></p>
-<p>上图中间的图像是程序生成的，结果并不理想，实际上这个模式有个名字，白噪声（$white\;Noise$）（稍后会解释什么是白噪声）。使用$RNG$为程序生成纹理的每个像素随机选择一种颜色，使得结果中每个像素的颜色变化很大。为了改进结果，我们复制了纹理的一小块区域（10x10像素），将其调整到原始图像的尺寸（256x256），进行高斯模糊处理，生成的图像如上右所示，局部有了较小的变化，而全局变化比较明显。</p>
-<p>这个实验结论告诉我们，为了创建平滑的随机图案，需要在网格的固定位置上使用$RNG$分配随机数，然后使用高斯模糊来模糊这些值。下章将详细介绍如何对随机数做模糊，现在只需要记住：<strong>噪声（在图形学上下文中）是一个用于模糊在网格上生成的随机数的函数。</strong></p>
-<p>目前应用最广泛的噪声版本是由$Ken\;Perlin$在1983年实现的，称为柏林噪声（$Perlin\;Noise$）当时他正在制作1982年版本的电影 Tron（© Walt Disney Pictures）。肯·柏林 (Ken Perlin) 于1997年获得美国电影艺术与科学学院颁发的奥斯卡技术成就奖，以表彰他对这部电影的贡献。 他于1984年在Siggraph展示了他的工作，并于1985年发表了一篇论文《An Image Synthesiser》，这是程序化纹理开创性的成果。Perlin噪声会在后续章节中进行解释。</p>
-<p><img src="2.jpg" alt="RNG"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%85%AB%EF%BC%89%EF%BC%9A%E5%99%AA%E5%A3%B0-%E4%B8%8A/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
