@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -168,128 +168,6 @@
     </div>
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5/" class="post-title-link" itemprop="url">图形学的数学基础（三）：矩阵</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-03 21:46:17" itemprop="dateCreated datePublished" datetime="2022-05-03T21:46:17+08:00">2022-05-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 10:05:43" itemprop="dateModified" datetime="2024-04-26T10:05:43+08:00">2024-04-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（三）：矩阵"><a href="#图形学的数学基础（三）：矩阵" class="headerlink" title="图形学的数学基础（三）：矩阵"></a>图形学的数学基础（三）：矩阵</h1><blockquote>
-<p>不幸的是，没有人能够告诉我们矩阵是什么。你必须亲自去看看。 -墨菲斯《黑客帝国》</p>
-</blockquote>
-<p>矩阵在图形学中具有重要意义，它们主要用于描述两个坐标空间之间的转换关系，通过矩阵和向量相乘，可以将向量从某一坐标空间转换到另一个坐标空间。通过矩阵和矩阵相乘，可以描述一系列的变换动作。</p>
-<h2 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h2><p>在线性代数中，矩阵是排列成行和列的矩形数字网格。矩阵可以定义为数字的二维数组。因此向量是标量的数组，而矩阵是向量的数组。</p>
-<h3 id="矩阵维度和表示法"><a href="#矩阵维度和表示法" class="headerlink" title="矩阵维度和表示法"></a>矩阵维度和表示法</h3><p>通过计算矩阵包含的行数和列数来定义矩阵的大小，对于具有$r$行和$c$列的矩阵，称为 $r \times c$矩阵。<br>当希望引用矩阵中的各个元素时，可以使用下标表示法。符号$m_{ij}$表示矩阵$Mi行j列$对应的元素。需要注意的是，矩阵初始索引为1,并不是0.</p>
-<h3 id="方阵（Square-Matrice）"><a href="#方阵（Square-Matrice）" class="headerlink" title="方阵（Square Matrice）"></a>方阵（Square Matrice）</h3><p>具有相同行数和列数的矩阵称为方形矩阵，方阵的对角元素是行和列索引相同的元素。例如 $3\times3$矩阵M的对角元素是$m_{11},m_{22},m_{33}$。<br>如果矩阵中所有的非对角元素都为零，则该矩阵为对角矩阵（Diagonal Matrix）。</p>
-<h3 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a>单位矩阵</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -812,6 +690,133 @@
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/" class="post-title-link" itemprop="url">连续性和可导性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-30 10:39:34" itemprop="dateCreated datePublished" datetime="2022-03-30T10:39:34+08:00">2022-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 09:45:18" itemprop="dateModified" datetime="2024-04-26T09:45:18+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="连续性"><a href="#连续性" class="headerlink" title="连续性"></a>连续性</h1><p>我们先从一个函数是连续的, 这到底意味着什么开始. 正如我上面所说, 直觉上, 可以一笔画出连续函数的图像.</p>
+<h2 id="在一点处的连续"><a href="#在一点处的连续" class="headerlink" title="在一点处的连续"></a>在一点处的连续</h2><p>如果f(x)在a点连续,则必须满足以下三个条件:</p>
+<ul>
+<li>双侧极限${\lim_{x \to a} f(x)}$存在并且是有限的</li>
+<li>函数在点a处有定义,$f(a)$存在并且是有限的</li>
+<li>以上两个量相等,即: ${\lim_{x \to a} f(x) = f(x)}$</li>
+</ul>
+<h2 id="在一个区间上连续"><a href="#在一个区间上连续" class="headerlink" title="在一个区间上连续"></a>在一个区间上连续</h2><p>函数f在[a, b] 上连续,需满足以下三个条件:</p>
+<ul>
+<li>f在(a,b)的每一点都连续</li>
+<li>函数f在x = a处右连续,即 ${\lim_{x \to a^+} f(x)} = f(a)$</li>
+<li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
+</ul>
+<p><strong><em>★介值定理</em></strong></p>
+<blockquote>
+<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -836,14 +841,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">99k</span>
+    <span title="站点总字数">94k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:59</span>
+    <span title="站点阅读时长">5:43</span>
   </span>
 </div>
 <div class="busuanzi-count">
