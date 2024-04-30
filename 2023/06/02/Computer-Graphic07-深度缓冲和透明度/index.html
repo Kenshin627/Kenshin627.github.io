@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#000"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#000">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Computer Graphic07-深度缓冲和透明度回顾光栅化管线光栅化渲染管线以一些三角形顶点做为输入，将这些数据发送到渲染管线(显卡硬件)，经过一系列处理过程，最终绘制生成一张图片的过程。  截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Computer Graphic07-深度缓冲和透明度">
+<meta property="og:url" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/index.html">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="Computer Graphic07-深度缓冲和透明度回顾光栅化管线光栅化渲染管线以一些三角形顶点做为输入，将这些数据发送到渲染管线(显卡硬件)，经过一系列处理过程，最终绘制生成一张图片的过程。  截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$u">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/0.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/1.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/2.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/3.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/4.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/5.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/6.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/7.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/8.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/9.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/10.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/11.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/12.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/13.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/14.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/15.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/16.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/17.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/18.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/19.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/20.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/21.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/22.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/23.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/24.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/25.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/26.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/27.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/28.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/29.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/30.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/31.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/32.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/33.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/34.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/35.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/36.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/37.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/38.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/39.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/40.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/41.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/42.png">
+<meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/43.png">
+<meta property="article:published_time" content="2023-06-02T12:18:00.000Z">
+<meta property="article:modified_time" content="2024-04-30T08:49:56.142Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Computer Graphic">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/0.png">
+
+
+<link rel="canonical" href="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/","path":"2023/06/02/Computer-Graphic07-深度缓冲和透明度/","title":"Computer Graphic07-深度缓冲和透明度"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Computer Graphic07-深度缓冲和透明度 | Pixel World</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Pixel World</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">Computer Graphic07-深度缓冲和透明度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE%E5%85%89%E6%A0%85%E5%8C%96%E7%AE%A1%E7%BA%BF"><span class="nav-number">1.1.</span> <span class="nav-text">回顾光栅化管线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%AE%E6%8C%A1%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">遮挡性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E9%87%87%E6%A0%B7-Sampling-Depth"><span class="nav-number">1.2.1.</span> <span class="nav-text">深度采样($Sampling Depth$)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2-depthBuffer-zBuffer"><span class="nav-number">1.2.2.</span> <span class="nav-text">深度缓冲($depthBuffer&#x2F;zBuffer$)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E7%AE%97%E6%B3%95%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">深度缓冲算法伪代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2-%E7%9B%B8%E4%BA%A4%E4%B8%89%E8%A7%92%E5%BD%A2"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">深度缓冲+相交三角形</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2-%E8%B6%85%E9%87%87%E6%A0%B7"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">深度缓冲+超采样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E9%81%AE%E6%8C%A1%E6%80%A7%E5%88%A4%E6%96%AD%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">深度缓冲遮挡性判断算法总结：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8A%E9%80%8F%E6%98%8E%E7%89%A9%E4%BD%93%E6%B7%B7%E5%90%88"><span class="nav-number">1.2.3.</span> <span class="nav-text">半透明物体混合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#over-%E6%93%8D%E4%BD%9C%E7%AC%A6-alpha-%E5%90%88%E6%88%90"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">$over$操作符($alpha$合成)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#over-%E6%93%8D%E4%BD%9C%E7%AC%A6-%E9%9D%9E%E9%A2%84%E4%B9%98"><span class="nav-number">1.2.3.1.1.</span> <span class="nav-text">$over$操作符:非预乘</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#over-%E6%93%8D%E4%BD%9C%E7%AC%A6-%E9%A2%84%E4%B9%98"><span class="nav-number">1.2.3.1.2.</span> <span class="nav-text">$over$操作符:预乘</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8A%E9%87%87%E6%A0%B7-%E9%9D%9E%E9%A2%84%E4%B9%98-%E9%A2%84%E4%B9%98"><span class="nav-number">1.2.3.1.3.</span> <span class="nav-text">上采样(非预乘&#x2F;预乘)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E9%87%87%E6%A0%B7-%E9%9D%9E%E9%A2%84%E4%B9%98-%E9%A2%84%E4%B9%98"><span class="nav-number">1.2.3.1.4.</span> <span class="nav-text">下采样(非预乘&#x2F;预乘)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%88%E6%88%90%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87"><span class="nav-number">1.2.3.1.5.</span> <span class="nav-text">合成多张图片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E9%A2%84%E4%B9%98-alpha-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.2.3.1.6.</span> <span class="nav-text">总结预乘$alpha$的优势</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E7%BB%98%E5%88%B6%E5%8D%8A%E9%80%8F%E6%98%8E%E7%89%A9%E4%BD%93%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">单独绘制半透明物体策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E4%B8%8D%E9%80%8F%E6%98%8E%E7%89%A9%E4%BD%93%E5%92%8C%E5%8D%8A%E9%80%8F%E6%98%8E%E7%89%A9%E4%BD%93"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">绘制不透明物体和半透明物体</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%85%89%E6%A0%85%E5%8C%96%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF-%E5%AE%8C%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结光栅化渲染管线(完结)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E6%8D%A2%E5%88%B0%E7%9B%B8%E6%9C%BA%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.1.</span> <span class="nav-text">变换到相机空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E7%9B%B8%E6%9C%BA%E7%A9%BA%E9%97%B4%E5%88%B0-NDC-%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.2.</span> <span class="nav-text">从相机空间到$NDC$空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%81%E5%89%AA"><span class="nav-number">1.3.3.</span> <span class="nav-text">裁剪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E-NDC-%E5%88%B0%E5%B1%8F%E5%B9%95%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.4.</span> <span class="nav-text">从$NDC$到屏幕空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%89%E8%A7%92%E5%BD%A2-%E4%B8%89%E8%A7%92%E5%BD%A2%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.3.5.</span> <span class="nav-text">初始化三角形(三角形预处理)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E8%A6%86%E7%9B%96%E7%8E%87%E8%AE%A1%E7%AE%97"><span class="nav-number">1.3.6.</span> <span class="nav-text">采样覆盖率计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7"><span class="nav-number">1.3.7.</span> <span class="nav-text">纹理采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2"><span class="nav-number">1.3.8.</span> <span class="nav-text">深度缓冲</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF"><span class="nav-number">1.4.</span> <span class="nav-text">现代图形渲染管线</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/author.png">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kenshin627" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/97340526/" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;97340526&#x2F;" rel="noopener me" target="_blank"><i class="fa-brands fa-bilibili fa-fw"></i>BiliBili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=11906050" title="网易云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;11906050" rel="noopener me" target="_blank"><i class="fa-solid fa-music fa-fw"></i>网易云</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Computer Graphic07-深度缓冲和透明度 | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Computer Graphic07-深度缓冲和透明度
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-02 20:18:00" itemprop="dateCreated datePublished" datetime="2023-06-02T20:18:00+08:00">2023-06-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-30 16:49:56" itemprop="dateModified" datetime="2024-04-30T16:49:56+08:00">2024-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Computer-Graphic07-深度缓冲和透明度"><a href="#Computer-Graphic07-深度缓冲和透明度" class="headerlink" title="Computer Graphic07-深度缓冲和透明度"></a>Computer Graphic07-深度缓冲和透明度</h1><h2 id="回顾光栅化管线"><a href="#回顾光栅化管线" class="headerlink" title="回顾光栅化管线"></a>回顾光栅化管线</h2><p>光栅化渲染管线以一些三角形顶点做为输入，将这些数据发送到渲染管线(显卡硬件)，经过一系列处理过程，最终绘制生成一张图片的过程。</p>
+<p><img src="0.png" alt="0.png"></p>
+<p>截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样…)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)</p>
+<p><img src="1.png" alt="1.png"></p>
+<h2 id="遮挡性问题"><a href="#遮挡性问题" class="headerlink" title="遮挡性问题"></a>遮挡性问题</h2><p>首先让我们看下遮挡性问题，它本质上阐述的是我们会将很多三角形绘制到屏幕上，这些三角形有些彼此覆盖重叠，那么这些三角形所覆盖的片元中的哪个三角形对我们是可见的？这个问题又可以分成两类来看待，一种是不透明物体，另一种是半透明物体，针对这两种情况处理策略是不同的。先说下不透明物体的解决方案。</p>
+<p><img src="2.png" alt="2.png"></p>
+<h3 id="深度采样-Sampling-Depth"><a href="#深度采样-Sampling-Depth" class="headerlink" title="深度采样($Sampling Depth$)"></a>深度采样($Sampling Depth$)</h3><p>假设这里有一个三角形：</p>
+<ul>
+<li>投影到二维屏幕上的顶点坐标分别为$(x_i, y_i)$，$(x_j, y_j)$，$(x_k, y_k)$</li>
+<li>每个顶点的深度分别为$d_i,d_j,d_k$</li>
+</ul>
+<p><img src="3.png" alt="3.png"></p>
+<p>通过三角形重心坐标插值，可以得到当前片元的深度,接下来面临的挑战就是如何判断对于每个采样点哪个三角形应该显示？我们期望的是采样点拥有最小深度，也就是离相机最近。我们知道对于光栅化渲染管线，一次只处理一个三角形，输入三角形顶点信息，空间变换，投影映射，光栅化等等，然后处理下一个三角形，本质上没有记录上个三角形的任何信息，三角形之间是不知道彼此存在的，在渲染管线中我们并没有存储一系列三角形的列表，那么在仅知道当前三角形信息的前提下，如何判断哪个三角形里屏幕最近，哪个三角形被遮挡？解决方案就是深度缓冲。</p>
+<h3 id="深度缓冲-depthBuffer-zBuffer"><a href="#深度缓冲-depthBuffer-zBuffer" class="headerlink" title="深度缓冲($depthBuffer/zBuffer$)"></a>深度缓冲($depthBuffer/zBuffer$)</h3><p>对于每一个采样点，不只记录它的颜色信息，需要额外一张表记录当前采样点离屏幕的最小深度。</p>
+<p><img src="4.png" alt="4.png"></p>
+<p>这里是一张实际场景的深度图，黑色建筑距离我们较近，远处的山峦丛林距离我们较远，颜色较浅(深度值大)</p>
+<p><img src="5.png" alt="5.png"></p>
+<p>那么如何将深度缓冲应用于光栅化渲染管线中？让我们从一个简单的例子开始，绘制三个相互遮挡的不透明三角形：</p>
+<p><img src="6.png" alt="6.png"></p>
+<p>首先任意选一个三角形，通过光栅化将其绘制到屏幕上，对于每个采样点判断是否位于三角形内部，但是在将颜色输出到颜色缓冲前，需要额外执行一项操作：深度测试，判断当前采样点深度是否小于存储于深度缓冲的值，由于深度缓冲初始值为最大值，所以第一个三角形的采样点全部通过：</p>
+<p><img src="7.png" alt="7.png"></p>
+<p>第一个三角形处理完后，更新颜色缓冲对应像素的颜色值，同时更新深度缓冲相应的深度值：</p>
+<p><img src="8.png" alt="8.png"></p>
+<p>接下来处理第二个三角形，一部分被第一个三角形遮挡，和第一个三角形处理过程一样，首先判断采样点是否在三角形内部，然后获取采样点深度和深度缓冲中的值比较，如果小于深度缓冲的值，更新颜色缓冲和更新深度缓冲，如果大于深度缓冲中的值，则保持不变：</p>
+<p><img src="9.png" alt="9.png"></p>
+<p><img src="10.png" alt="10.png"></p>
+<p>同样对于第三个三角形：</p>
+<p><img src="11.png" alt="11.png"></p>
+<p><img src="12.png" alt="12.png"></p>
+<h4 id="深度缓冲算法伪代码"><a href="#深度缓冲算法伪代码" class="headerlink" title="深度缓冲算法伪代码"></a>深度缓冲算法伪代码</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">bool <span class="title function_">pass_depth_test</span>(<span class="params">d1, d2</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> d1 &lt; d2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * x: 当前采样点的x坐标</span></span><br><span class="line"><span class="comment"> * y: 当前采样点的y坐标</span></span><br><span class="line"><span class="comment"> * d: 当前采样点的深度</span></span><br><span class="line"><span class="comment"> * c: 当前采样点的颜色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="title function_">draw_sample</span>(<span class="params">x, y, d, c</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//如果通过深度测试，则当前采样点离我们更近，同时更新深度缓冲和颜色缓冲</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_">pass_depth_test</span>(d, zbuffer[x][y]))</span><br><span class="line">    &#123;</span><br><span class="line">        zbuffer[x][y] = d;</span><br><span class="line">        color[x][y] = d;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//否则在深度缓冲中已存在的片元离我们更近，保持不变</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="深度缓冲-相交三角形"><a href="#深度缓冲-相交三角形" class="headerlink" title="深度缓冲+相交三角形"></a>深度缓冲+相交三角形</h4><p>深度缓冲算法能否处理三角形相互穿插覆盖的情况呢？</p>
+<p><img src="13.png" alt="13.png"></p>
+<p>答案是肯定的，因为遮挡性测试是基于三角形片元层面进行操作的，而每个三角形内部片元的深度都是不同的，所以处理穿插三角形也完全没有问题：</p>
+<p><img src="14.png" alt="14.png"></p>
+<h4 id="深度缓冲-超采样"><a href="#深度缓冲-超采样" class="headerlink" title="深度缓冲+超采样"></a>深度缓冲+超采样</h4><p>那么深度缓冲和超采样在一起能否正常工作呢？答案也是肯定的，因为只要在超采样的每个采样点做深度测试即可：</p>
+<p><img src="15.png" alt="15.png"></p>
+<p>经过深度缓冲处理后的超采样颜色缓冲：</p>
+<p><img src="16.png" alt="16.png"></p>
+<p><img src="17.png" alt="17.png"></p>
+<p>最终输出到帧缓冲的颜色只需要对每像素的四个采样点颜色做加权平均处理即可：</p>
+<p><img src="18.png" alt="18.png"></p>
+<h4 id="深度缓冲遮挡性判断算法总结："><a href="#深度缓冲遮挡性判断算法总结：" class="headerlink" title="深度缓冲遮挡性判断算法总结："></a>深度缓冲遮挡性判断算法总结：</h4><ul>
+<li>每个采样点(超采样点)存储深度信息-注意不是每个像素！<ul>
+<li>深度缓冲需要常数的存储空间</li>
+<li>额外的存储空间不依赖于遮挡片元的数量</li>
+</ul>
+</li>
+<li>对于每个覆盖的采样点需要常数时间的深度测试<ul>
+<li>如果通过深度测试需要一次读取一次写入</li>
+<li>否则只需要一次读取操作</li>
+</ul>
+</li>
+<li>不仅适用于三角形：只要能够计算当前屏幕上采样点的当前深度即可</li>
+</ul>
+<h3 id="半透明物体混合"><a href="#半透明物体混合" class="headerlink" title="半透明物体混合"></a>半透明物体混合</h3><p>那么如果模型是半透明的，相互遮挡关系如何处理呢？基本思路是通过$alpha$来表达当前物体的不透明度：</p>
+<p>$alpha$值位于0到1之间，描述了物体的不透明度，$alpha$为1表示物体是不透明的，$alpha$值越低，透明度越高，衰减为0表示完全透明：</p>
+<p><img src="19.png" alt="19.png"></p>
+<p>除了对真个物体应用一个透明度外，还可以逐像素应用透明度，也就是常说的透明度通道，可以使用透明度通道将两张图片合成一张：</p>
+<p><img src="20.png" alt="20.png"></p>
+<p>当初次进行这种图片合成时，利用$alpha$通道将背景和前景色混合，可能会出现一些意想不到的情况，物体的边缘会出现一些黑色轮廓($fringing$):</p>
+<p><img src="21.png" alt="21.png"></p>
+<p>接下来我们从数学层面深度分析下这种现象出现的原因，以及如何避免该问题。</p>
+<h4 id="over-操作符-alpha-合成"><a href="#over-操作符-alpha-合成" class="headerlink" title="$over$操作符($alpha$合成)"></a>$over$操作符($alpha$合成)</h4><p>$over$操作符所要作的就是将透明度为$a_{B}$的图片$B$合成混合到透明度为$a_{A}$的图片$A$上。</p>
+<p>这里拿有色玻璃来举例说明，有两块有色玻璃，B是偏红色，A是偏黄色的，如果将B放在A上，呈现效果如左图所示，如果将A放在B上，呈现效果如右图，显而易见，这两者得到的结果是不一样的，也就是说$over$操作是不可交换的：</p>
+<p><img src="22.png" alt="22.png"></p>
+<p>如果对图片采用相同的操作，效果也一样，左边是一张考拉的图片和它的$alpha$通道，中间这张是纽约市图片，将两个图片合成混合后结果如右侧图片所示：</p>
+<p><img src="23.png" alt="23.png"></p>
+<p>那么问题来了,$over$操作符到底是如何运作的，如何将两个像素的颜色值混合？</p>
+<h5 id="over-操作符-非预乘"><a href="#over-操作符-非预乘" class="headerlink" title="$over$操作符:非预乘"></a>$over$操作符:非预乘</h5><p>假设我们想要将透明度为$a_{B}$的图片$B$合成到透明度为$a_{A}$的图片$A$上，我们可以尝试这样做：</p>
+<p>首先图片$A和B$的颜色均有三个通道组成$rgb$：</p>
+<p>$A = (A_r,A_g,A_b)$</p>
+<p>$B = (B_r,B_g,B_b)$</p>
+<p>第一步对颜色合成：</p>
+<p>$C = a_{B}B + (1-a_{B})a_{A}A$</p>
+<p>第二步单独对$alpha$通道合成：</p>
+<p>$a_{C} = a_{B} + (1-a_{B})a_{A}$</p>
+<p><img src="24.png" alt="24.png"></p>
+<p>这种想法感觉很自然很合理，但是通过这种方式合成的图片在物体边缘处会形成暗色轮廓($fringing$)，取而代之我们可以采用预乘$alpha$的方式。</p>
+<h5 id="over-操作符-预乘"><a href="#over-操作符-预乘" class="headerlink" title="$over$操作符:预乘"></a>$over$操作符:预乘</h5><p>与非预乘的方式不同，不会对颜色通道和$alpha$通道单独做处理，预乘方式会首先将各图片的颜色乘以对应的$alpha$通道(预乘),然后再对图片合成：</p>
+<p>首先将图片$A$的颜色与其$alpha$通道相乘：</p>
+<p>$A^丶 = (a_{A}A_{r},a_{A}A_{g},a_{A}A_{b},a_{A})$</p>
+<p>然后将图片$B$的颜色与其$alpha$通道相乘：</p>
+<p>$B^丶 = (a_{B}B_{r},a_{B}B_{g},a_{B}B_{b},a_{B})$</p>
+<p>基于$a_{B}$混合$A^丶和B^丶$:</p>
+<p>$C^丶 = B^丶 + (1-a_{B})A^丶$</p>
+<p>最后通过将$C^丶$除以$a_{C}$“取消预乘”:</p>
+<p>$(C_r,C_g,C_b,a_C)  =&gt; (C_r/a_C,C_g/a_C,C_b/a_C)$</p>
+<p><img src="25.png" alt="25.png"></p>
+<p>本质上，$A^丶和B^丶$存储记录的是比原始原色更暗的版本，以及颜色衰减系数(相应的$alpha$值)，合成的颜色$C^丶$是基于原始的$over$操作符实现的，也就是$B^丶$(已经预乘过,所以不需要乘以$a_{B}$),加上$B$允许通过的颜色即$1-a_{B}$，乘以$A^丶$(已经预乘过,所以不需要乘以$a_{A}$),这里合成颜色和$alpha$采用一致的策略，并没有单独处理$alpha$通道，最后通过将$C^丶$除以$a_{C}$“取消预乘”。</p>
+<p>这里为什么要将最后的颜色通道除以$a_{C}$呢？因为最开始由于预乘操作，$A^丶和B^丶$都是原始像素颜色的衰减变暗版本，所以这里需要除以最后的$alpha$值，$a_{C}$来恢复原始原色。这个除法操作和齐次坐标很像，可以把不同的颜色比做空间中不同的方向，而颜色的不同$alpha$值可以认为是沿着该方向上不同的点。通过预乘的方式可以显著改善图片合成的行为。下边就举几个例子来说明：</p>
+<h5 id="上采样-非预乘-预乘"><a href="#上采样-非预乘-预乘" class="headerlink" title="上采样(非预乘/预乘)"></a>上采样(非预乘/预乘)</h5><p>假设我们要对一张透明度为$a$的图片上采样，然后将其贴到一张背景图片上，图片$B$背景为绿色，中间有一个蓝色小方块。</p>
+<p><img src="26.png" alt="26.png"></p>
+<p>首先使用非预乘方式：</p>
+<p>分别对$alpha$和颜色上采样(双线性插值)，但是这时问题就来了，由于原始图片有一个绿色背景，对颜色上采样后，方块边缘会出现绿色和蓝色的混合色，基于这个结果执行$over$操作符，会在合成后的图片方块边缘形成明显的暗绿色边缘。</p>
+<p>如果使用预乘方式：<br>首先对原始图片预乘$alpha$，对预乘后的图片上采样，这样就可以消除原始图片绿色背景的暗影，因为经过预乘后背景的绿色就已经被完全消除掉了，最后再执行$over$操作符，结果就自然多了。</p>
+<p><img src="27.png" alt="27.png"></p>
+<h5 id="下采样-非预乘-预乘"><a href="#下采样-非预乘-预乘" class="headerlink" title="下采样(非预乘/预乘)"></a>下采样(非预乘/预乘)</h5><p>考虑对一张有$alpha$通道的纹理做预过滤，生成$Mipmap$：</p>
+<p><img src="28.png" alt="28.png"></p>
+<p>首先考虑非预乘的方式，放大纹理到树叶边缘，左侧两个像素是绿色的，右侧两个像素的红色的，透明度通道左侧是完全不透明，右侧是完全透明的，如果采用原始方式直接处理，会对四个像素加权平均，过滤后的颜色值是类似于棕色的，透明度通道是0.5的灰度值，基于这个结果将图片合成到白色背景上，会得到类似于淡黄色的叶子颜色：</p>
+<p><img src="29.png" alt="29.png"></p>
+<p>而采用预乘的方式，过滤后的颜色会变成暗绿色(绿色和黑色的混合)，$alpha$仍然为0.5的灰度值，最后通过取消预乘将颜色除以$alpha$，结果就得到了更明亮的绿色了：</p>
+<p><img src="30.png" alt="30.png"></p>
+<h5 id="合成多张图片"><a href="#合成多张图片" class="headerlink" title="合成多张图片"></a>合成多张图片</h5><p>假设现在要合成多张图片，将透明度为$a_{C}$的图片$C$合成到透明度为$a_{B}$的图片$B$上，然后合成到透明度为$a_{A}$的图片A上：</p>
+<p>预乘$alpha$在多次合成后是闭合的(closed)，而非预乘则不会。</p>
+<p><img src="31.png" alt="31.png"></p>
+<h5 id="总结预乘-alpha-的优势"><a href="#总结预乘-alpha-的优势" class="headerlink" title="总结预乘$alpha$的优势"></a>总结预乘$alpha$的优势</h5><ul>
+<li>合成操作对所有通道(颜色通道和$alpha$通道)行为都是一致的</li>
+<li>对于$over$操作符来说所需的算术运算更少</li>
+<li>多次合成操作后是闭合的</li>
+<li>对有$alpha$通道的图片上采样/下采样有更准确更好的表达</li>
+<li>先天适合光栅化管线(齐次坐标的齐次除法/取消预乘的除法操作)</li>
+</ul>
+<h4 id="单独绘制半透明物体策略"><a href="#单独绘制半透明物体策略" class="headerlink" title="单独绘制半透明物体策略"></a>单独绘制半透明物体策略</h4><p>假设所有图元都是半透明的，并且图片的颜色也都是经过$alpha$预乘的，这里是光栅化一张图片的常用策略，伪代码如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">over</span>(<span class="params">c1, c2</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> c1.<span class="property">rgba</span> + (<span class="number">1</span>-c1.<span class="property">a</span>) * c2.<span class="property">rgba</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">update_color_buffer</span>(<span class="params">x, y, sample_color, sample_depth</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_">pass_depth_test</span>(sample_depth, zbuffer[x][y]))</span><br><span class="line">    &#123;</span><br><span class="line">        color[x][y] = <span class="title function_">over</span>(sample_color, color[x][y]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注：这里有一个前提假设：即半透明三角形必须经过事先排序的，必须从后往前绘制，应为$over$操作符是不可交换的。</strong></p>
+<p>但是在光栅化管线中对三角形排序是一件很麻烦的事，除此之外如果两个三角形彼此相互遮挡该如何排序呢？光栅化管线中渲染半透明物体是一件很痛苦的事：）</p>
+<ul>
+<li>$alpha\ Buffer$</li>
+<li>$order\ Independent\ Transparency(OIT)$</li>
+</ul>
+<h4 id="绘制不透明物体和半透明物体"><a href="#绘制不透明物体和半透明物体" class="headerlink" title="绘制不透明物体和半透明物体"></a>绘制不透明物体和半透明物体</h4><p>如果场景中包含有不透明三角形和半透明三角形，如何对其进行混合呢?</p>
+<ul>
+<li>首先基于深度缓冲策略以任何顺序绘制不透明物体，如果通过深度测试，更新颜色缓冲和深度缓冲</li>
+<li>禁用深度缓冲写入，从后向前渲染半透明物体，如果通过深度测试，将半透明片元通过$over$操作符写入相应采样点的颜色缓冲。注意这一步不只执行深度测试，不做深度写入。并且渲染的半透明三角形首先是需要排序的。</li>
+</ul>
+<p><img src="32.png" alt="32.png"></p>
+<h2 id="总结光栅化渲染管线-完结"><a href="#总结光栅化渲染管线-完结" class="headerlink" title="总结光栅化渲染管线(完结)"></a>总结光栅化渲染管线(完结)</h2><p>光栅化管线的最终目的是将一些输入最终转换成一张图片。输入包含有以下几块内容：</p>
+<p>首先是三角形顶点属性，例如位置，纹理坐标等，当然还有需要采样的纹理：</p>
+<p><img src="33.png" alt="33.png"></p>
+<p>其实是矩阵信息：</p>
+<ol>
+<li>对象到相机空间的变换矩阵，本质上就是需要对物体应用什么样的变换来造成移动相机的错觉，使用$4X4$相机矩阵的逆矩阵即可</li>
+<li>投影变换：从三维空间到二维空间的投影矩阵，可以是正交投影或者透视投影</li>
+<li>输出图片的宽高$(W,H)$</li>
+</ol>
+<p><img src="34.png" alt="34.png"></p>
+<h3 id="变换到相机空间"><a href="#变换到相机空间" class="headerlink" title="变换到相机空间"></a>变换到相机空间</h3><p>光栅化管线每次处理一个三角形，有了三角形的三个顶点属性，相机矩阵和投影矩阵后，对于每个三角形，首先将其从世界空间变换到相机空间，只需要对三角形三个顶点应用相机矩阵的逆矩阵即可：</p>
+<p><img src="35.png" alt="35.png"></p>
+<h3 id="从相机空间到-NDC-空间"><a href="#从相机空间到-NDC-空间" class="headerlink" title="从相机空间到$NDC$空间"></a>从相机空间到$NDC$空间</h3><p>对三角形顶点应用投影矩阵将其从转换到$NDC$空间，也就是将顶点从$frustum$变换到$[-1,1]^3$的单位立方体中</p>
+<p><img src="36.png" alt="36.png"></p>
+<h3 id="裁剪"><a href="#裁剪" class="headerlink" title="裁剪"></a>裁剪</h3><ul>
+<li>丢弃完全位于$NDC$外部的三角形，已经完全在屏幕范围外，不需要进一步处理</li>
+<li>完全位于内部的三角形保留</li>
+<li>裁剪部分位于$NDC$内部的三角形，这一步会生成新的三角形<br>经过这一步处理，就有所有位于$NDC$内部的三角形了</li>
+</ul>
+<p><img src="37.png" alt="37.png"></p>
+<h3 id="从-NDC-到屏幕空间"><a href="#从-NDC-到屏幕空间" class="headerlink" title="从$NDC$到屏幕空间"></a>从$NDC$到屏幕空间</h3><p>接下来执行透视除法，将顶点的$xy$从$NDC$空间变换到屏幕空间。基于事先定义的图片宽高$(W,H)$</p>
+<p><img src="38.png" alt="38.png"></p>
+<h3 id="初始化三角形-三角形预处理"><a href="#初始化三角形-三角形预处理" class="headerlink" title="初始化三角形(三角形预处理)"></a>初始化三角形(三角形预处理)</h3><p>在对三角形光栅化处理前，需要预计算很多数据用于后续的片元例如：</p>
+<ul>
+<li>三角形边方程</li>
+<li>属性方程</li>
+<li>等等</li>
+</ul>
+<p><img src="39.png" alt="39.png"></p>
+<h3 id="采样覆盖率计算"><a href="#采样覆盖率计算" class="headerlink" title="采样覆盖率计算"></a>采样覆盖率计算</h3><p>依据上一步提供的预计算结果，测试每个采样点，是否被三角形所覆盖，如果在三角形内部，则基于重心坐标插值来计算采样点的属性($uv$等)</p>
+<p><img src="40.png" alt="40.png"></p>
+<h3 id="纹理采样"><a href="#纹理采样" class="headerlink" title="纹理采样"></a>纹理采样</h3><p>基于插值得到的采样点$uv$，对纹理采样，这个过程可能涉及到双线性插值，$Mipmap$三线性插值等，无论如何这一步获取到了像素的颜色：</p>
+<p><img src="41.png" alt="41.png"></p>
+<h3 id="深度缓冲"><a href="#深度缓冲" class="headerlink" title="深度缓冲"></a>深度缓冲</h3><p>有了像素颜色后，需要判断是否将颜色写入颜色缓冲中，因此需要执行深度测试，如果当前片元离我们更近，将该片元的深度值写入深度缓冲，同时将采样得到的颜色只写入颜色缓冲：</p>
+<p><img src="42.png" alt="42.png"></p>
+<h2 id="现代图形渲染管线"><a href="#现代图形渲染管线" class="headerlink" title="现代图形渲染管线"></a>现代图形渲染管线</h2><p>现代图形渲染API例如openGL和Direct3D等，和我们之前讨论过的渲染管线没有本质区别，其核心框架也遵循以上几个步骤：</p>
+<p><img src="43.png" alt="43.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+              <a href="/tags/Math/" rel="tag"># Math</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/09/Computer-Graphic06-%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7/" rel="prev" title="Computer-Graphic06-纹理采样">
+                  <i class="fa fa-angle-left"></i> Computer-Graphic06-纹理采样
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">99k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Kenshin627/BlogGiscus","repo_id":"R_kgDOJ-E6Aw","category":"Announcements","category_id":"DIC_kwDOJ-E6A84CYCOU","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"dark_dimmed","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false,"tagMode":false});</script></body>
+</html>
