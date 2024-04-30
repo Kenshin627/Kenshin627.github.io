@@ -21,12 +21,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Computer Graphic07-深度缓冲和透明度回顾光栅化管线光栅化渲染管线以一些三角形顶点做为输入，将这些数据发送到渲染管线(显卡硬件)，经过一系列处理过程，最终绘制生成一张图片的过程。  截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$u">
+    <meta name="description" content="截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样...)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer Graphic07-深度缓冲和透明度">
 <meta property="og:url" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/index.html">
 <meta property="og:site_name" content="Pixel World">
-<meta property="og:description" content="Computer Graphic07-深度缓冲和透明度回顾光栅化管线光栅化渲染管线以一些三角形顶点做为输入，将这些数据发送到渲染管线(显卡硬件)，经过一系列处理过程，最终绘制生成一张图片的过程。  截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$u">
+<meta property="og:description" content="截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样...)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/0.png">
 <meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/1.png">
@@ -73,7 +73,7 @@
 <meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/42.png">
 <meta property="og:image" content="http://example.com/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/43.png">
 <meta property="article:published_time" content="2023-06-02T12:18:00.000Z">
-<meta property="article:modified_time" content="2024-04-30T08:49:56.142Z">
+<meta property="article:modified_time" content="2024-04-30T09:39:18.994Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Math">
@@ -242,7 +242,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="Computer Graphic07-深度缓冲和透明度 | Pixel World">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样...)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -264,7 +264,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-30 16:49:56" itemprop="dateModified" datetime="2024-04-30T16:49:56+08:00">2024-04-30</time>
+      <time title="修改时间：2024-04-30 17:39:18" itemprop="dateModified" datetime="2024-04-30T17:39:18+08:00">2024-04-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -305,6 +305,7 @@
     </span>
 </div>
 
+            <div class="post-description">截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样...)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)</div>
         </div>
       </header>
 

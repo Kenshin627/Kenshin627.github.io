@@ -21,12 +21,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Computer-Graphic03-空间变换-上(Spatial Transformation)本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来">
+    <meta name="description" content="本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来再变换到相机空间(即我们观看的视角,就像拿个相机拍照一样,我们是从哪个角度对场景进行观察的),即$">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer Graphic03-空间变换-上">
 <meta property="og:url" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/index.html">
 <meta property="og:site_name" content="Pixel World">
-<meta property="og:description" content="Computer-Graphic03-空间变换-上(Spatial Transformation)本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来">
+<meta property="og:description" content="本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来再变换到相机空间(即我们观看的视角,就像拿个相机拍照一样,我们是从哪个角度对场景进行观察的),即$">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/1.png">
 <meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/2.jpg">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/22.png">
 <meta property="og:image" content="http://example.com/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/18.jpg">
 <meta property="article:published_time" content="2023-05-03T04:00:57.000Z">
-<meta property="article:modified_time" content="2024-04-29T12:32:58.539Z">
+<meta property="article:modified_time" content="2024-04-30T09:44:47.211Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Math">
@@ -208,7 +208,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="Computer Graphic03-空间变换-上 | Pixel World">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来再变换到相机空间(即我们观看的视角,就像拿个相机拍照一样,我们是从哪个角度对场景进行观察的),即$mvp$矩阵中的"$m(model Matrix)$和$v(view Matrix)$".这一系列操作即光栅化渲染管线的第一个阶段,也是理解光栅化背后原理的基础.本章将介绍涉及图形学的基础变换。">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -230,7 +230,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-29 20:32:58" itemprop="dateModified" datetime="2024-04-29T20:32:58+08:00">2024-04-29</time>
+      <time title="修改时间：2024-04-30 17:44:47" itemprop="dateModified" datetime="2024-04-30T17:44:47+08:00">2024-04-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -271,6 +271,7 @@
     </span>
 </div>
 
+            <div class="post-description">本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来再变换到相机空间(即我们观看的视角,就像拿个相机拍照一样,我们是从哪个角度对场景进行观察的),即$mvp$矩阵中的"$m(model Matrix)$和$v(view Matrix)$".这一系列操作即光栅化渲染管线的第一个阶段,也是理解光栅化背后原理的基础.本章将介绍涉及图形学的基础变换。</div>
         </div>
       </header>
 
