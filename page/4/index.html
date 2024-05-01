@@ -49,6 +49,30 @@
 
 
 
+  <!-- require APlayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+  <!-- require MetingJS -->
+  <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+  <meting-js
+    server="netease"
+    type="playlist"
+    fixed="true"
+    id="8647182734"
+    auto=""
+    mini="true"
+    autoplay="true"
+    theme=""
+    loop="all"
+    order="random"
+    preload="auto"
+    volume="0.7"
+    mutex="true"
+    list-folded="true"
+    list-max-height="340px"
+    storage-name="metingjs" >
+  </meting-js>
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -278,13 +302,6 @@
 <li>向上方向（up Direction）：$\vec{t}$</li>
 </ul>
 <p>根据这些信息，我们可以构造一个以$\mathbf{e}$为原点的uvw标准正交基。</p>
-<ul>
-<li>向量正交化</li>
-<li>将$\mathbf{e}$移动到原点</li>
-<li>旋转$\vec{g}$ 到-z方向</li>
-<li>旋转$\vec{t}$到y方向</li>
-<li>旋转$\vec{g}\times \vec{t}$到x方向。</li>
-</ul>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/06/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2/#more" rel="contents">
@@ -405,7 +422,6 @@
 <p>$3\times 3$矩阵行列式：</p>
 <p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}&amp;m_{13}\\ m_{21}&amp;m_{22}&amp;m_{23}\\ m_{31}&amp;m_{32}&amp;m_{33}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21} = m_{11}m_{22}m_{33} + m_{12}m_{23}m_{31} + m_{13}m_{21}m_{32} - m_{13}m_{22}m_{31} - m_{12}m_{21}m_{33} - m_{11}m_{23}m_{32} = m_{11}(m_{22}m_{33} - m_{23}m_{32}) + m_{12}(m_{23}m_{31} - m_{21}m_{33}) + m_{13}(m_{21}m_{32} - m_{22}m_{31})$</p>
 <p><img src="1.png" alt="3x3矩阵行列式"></p>
-<p>如果将$X\times 3$矩阵的行解释为3个向量，那么该矩阵的行列式等价于3个向量的三重积。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/#more" rel="contents">
@@ -524,7 +540,7 @@
 <p><em>注：本文所有推导和公式均使用列向量形式。</em></p>
 <p><img src="1.jpg" alt="alt"></p>
 <h2 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h2><h3 id="缩放（Scale）"><a href="#缩放（Scale）" class="headerlink" title="缩放（Scale）"></a>缩放（Scale）</h3><h3 id="沿主轴缩放"><a href="#沿主轴缩放" class="headerlink" title="沿主轴缩放"></a>沿主轴缩放</h3><p>最简单的缩放是沿每个轴线应用单独的或均匀缩放。</p>
-<h4 id="均匀缩放"><a href="#均匀缩放" class="headerlink" title="均匀缩放"></a>均匀缩放</h4><p>保留原始对象的角度和比例， 使被缩放对象统一增大或者减少s因子。</p>
+<h4 id="均匀缩放"><a href="#均匀缩放" class="headerlink" title="均匀缩放"></a>均匀缩放</h4>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/20/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/#more" rel="contents">
@@ -646,7 +662,6 @@
 <h2 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h2><p>在线性代数中，矩阵是排列成行和列的矩形数字网格。矩阵可以定义为数字的二维数组。因此向量是标量的数组，而矩阵是向量的数组。</p>
 <h3 id="矩阵维度和表示法"><a href="#矩阵维度和表示法" class="headerlink" title="矩阵维度和表示法"></a>矩阵维度和表示法</h3><p>通过计算矩阵包含的行数和列数来定义矩阵的大小，对于具有$r$行和$c$列的矩阵，称为 $r \times c$矩阵。<br>当希望引用矩阵中的各个元素时，可以使用下标表示法。符号$m_{ij}$表示矩阵$Mi行j列$对应的元素。需要注意的是，矩阵初始索引为1,并不是0.</p>
 <h3 id="方阵（Square-Matrice）"><a href="#方阵（Square-Matrice）" class="headerlink" title="方阵（Square Matrice）"></a>方阵（Square Matrice）</h3><p>具有相同行数和列数的矩阵称为方形矩阵，方阵的对角元素是行和列索引相同的元素。例如 $3\times3$矩阵M的对角元素是$m_{11},m_{22},m_{33}$。<br>如果矩阵中所有的非对角元素都为零，则该矩阵为对角矩阵（Diagonal Matrix）。</p>
-<h3 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a>单位矩阵</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5/#more" rel="contents">
@@ -771,7 +786,6 @@
 <h2 id="为什么需要标准正交基"><a href="#为什么需要标准正交基" class="headerlink" title="为什么需要标准正交基"></a>为什么需要标准正交基</h2><p>定义这样的坐标系,带来的一点好处就是, 空间中任意一矢量,都可以分解到标准正交基的三个轴上,需要用到前边向量投影的相关知识. 即<strong>矢量可以表示为基矢量的线性组合</strong>.<br><img src="1.jpg" alt="alt"></p>
 <p>$||\vec{b_⊥}|| = ||\vec{b}|| \cos\theta$</p>
 <p>此时的$\vec{a}$为单位向量,即$||\vec{a}|| = 1$</p>
-<p>因此 $||\vec{b_⊥}|| = ||\vec{b}||||\vec{a}|| \cos\theta = \mathbf{b}.\mathbf{a}$</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/#more" rel="contents">
@@ -891,10 +905,6 @@
 <p>$V_{column} = \begin{bmatrix}1\\ 2\\ 3\end{bmatrix}$</p>
 <p>$V_{row} = \begin{bmatrix}1&amp;2&amp;-1\end{bmatrix}$</p>
 <h2 id="几何定义"><a href="#几何定义" class="headerlink" title="几何定义"></a>几何定义</h2><p>从几何学上讲,向量是具有大小和方向的<strong>有向线段</strong>.讨论向量在空间中的哪个位置,是没有意义的,<strong>向量不具备位置属性</strong>.向量是一种相对偏移量的表示方法.如下图二维笛卡尔坐标系中,向量U和V是相等的.</p>
-<ul>
-<li>大小: 矢量的长度,矢量可以具有任何非负长度.</li>
-<li>方向:空间中指定的方向.</li>
-</ul>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/05/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F/#more" rel="contents">
@@ -1046,7 +1056,7 @@
 <p>$\lim_{h \to \infty}(1+\frac{1}{h})^h=e$</p>
 <p>$\lim_{h \to 0}(1+h)^{\frac{1}{h}}=e$</p>
 <h1 id="对数函数和指数函数求导"><a href="#对数函数和指数函数求导" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h1></blockquote>
-<h2 id="对数函数和指数函数求导-1"><a href="#对数函数和指数函数求导-1" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h2><p>$令f(x)=\log_bx$</p>
+<h2 id="对数函数和指数函数求导-1"><a href="#对数函数和指数函数求导-1" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/#more" rel="contents">
@@ -1167,7 +1177,6 @@
 <p>对于任意的x $-1 &lt;= sinx &lt;=1$  $-1 &lt;=cosx &lt;= 1$</p>
 <p>应用三明治定理 $\lim_{x \to \infty} \frac{sinx}{x} = 0$</p>
 <h2 id="其他情况"><a href="#其他情况" class="headerlink" title="其他情况"></a>其他情况</h2><p>考虑极限$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$<br>这次的三角函数是余弦, 且要在 π/2 的附近求值. 这既不是小数的情况也不是大数的情况, 因此很明显, 之前的情况都不适用.<strong><em>面对 x → a 的极限, 而a != 0 时, 有一个很好的一般原则, 那就是用 t = x − a作替换, 将问题转化为 t→0</em></strong></p>
-<p>$\lim_{x \to \frac{\pi}{2}}\frac{cosx}{x-\frac{\pi}{2}}$</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/04/02/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%9E%81%E9%99%90%E5%92%8C%E5%AF%BC%E6%95%B0/#more" rel="contents">
@@ -1292,9 +1301,6 @@
 <li>函数f在x = b处左连续,即 ${\lim_{x \to b^-} f(x)} = f(b)$</li>
 </ul>
 <p><strong><em>★介值定理</em></strong></p>
-<blockquote>
-<p>$如果f(x)在[a, b]上连续, 并且f(a) &lt; 0且f(b) &gt; 0,那么在区间(a, b) 上至少有一点 c, 使得 f(c) = 0. 代之以 f(a) &gt; 0 且 f(b) &lt; 0, 同样成立.$</p>
-</blockquote>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/30/%E8%BF%9E%E7%BB%AD%E6%80%A7%E5%92%8C%E5%8F%AF%E5%AF%BC%E6%80%A7/#more" rel="contents">
@@ -1419,7 +1425,7 @@
 <p>cot(θ) = 1/tan(θ)</p>
 </blockquote>
 <h2 id="常用三角函数速记表"><a href="#常用三角函数速记表" class="headerlink" title="常用三角函数速记表"></a>常用三角函数速记表</h2><p><img src="2.jpg" alt="alt"></p>
-<h2 id="计算三角函数"><a href="#计算三角函数" class="headerlink" title="计算三角函数"></a>计算三角函数</h2><h3 id="参考角"><a href="#参考角" class="headerlink" title="参考角"></a>参考角</h3>
+<h2 id="计算三角函数"><a href="#计算三角函数" class="headerlink" title="计算三角函数"></a>计算三角函数</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/29/%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0/#more" rel="contents">
