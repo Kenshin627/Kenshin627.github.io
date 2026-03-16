@@ -150,7 +150,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -192,6 +192,368 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/08/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%8C%85%E5%9B%B4%E7%9B%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/08/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%8C%85%E5%9B%B4%E7%9B%92/" class="post-title-link" itemprop="url">图形学的数学基础（十二）：几何图元-包围盒</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-08 21:54:43" itemprop="dateCreated datePublished" datetime="2022-09-08T21:54:43+08:00">2022-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-24 17:10:48" itemprop="dateModified" datetime="2024-04-24T17:10:48+08:00">2024-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="图形学的数学基础（十二）：几何图元-包围盒-Bounding-Box"><a href="#图形学的数学基础（十二）：几何图元-包围盒-Bounding-Box" class="headerlink" title="图形学的数学基础（十二）：几何图元-包围盒($Bounding Box$)"></a>图形学的数学基础（十二）：几何图元-包围盒($Bounding Box$)</h1><p>包围盒是一种求解离散点集最优包围空间的算法,基本思想是用体积稍大且特性简单的几何形状来近似代替复杂的几何对象。包围盒常用于几何物体的碰撞检测，ray-tracing中光线求交等。常用的包围盒有两种，$AABB与OBB$，AABB包围盒是轴对齐的，而$OBB$是有向的。</p>
+<h2 id="AABB"><a href="#AABB" class="headerlink" title="$AABB$"></a>$AABB$</h2><p>$AABB$是$Axially\;Aligned\;Bounding\;Box$的缩写，三维$AABB$是一个简单的6面盒子，每一面都与一个基向量形成的面平行，这个盒子不一定是立方体，盒子的长度宽度高度可以各自不同。</p>
+<h3 id="重要属性"><a href="#重要属性" class="headerlink" title="重要属性"></a>重要属性</h3><p>几何体$AABB$包围盒内的点满足以下不等式：</p>
+<p>$x_{min} &lt;= x &lt;= x_{max}$</p>
+<p>$y_{min} &lt;= y &lt;= y_{max}$</p>
+<p>$z_{min} &lt;= z &lt;= z_{max}$</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/08/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E5%8C%85%E5%9B%B4%E7%9B%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/" class="post-title-link" itemprop="url">图形学的数学基础（十一）：几何图元-重心坐标</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-06 21:45:54" itemprop="dateCreated datePublished" datetime="2022-09-06T21:45:54+08:00">2022-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-24 16:25:39" itemprop="dateModified" datetime="2024-04-24T16:25:39+08:00">2024-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="图形学的数学基础（十一）：几何图元-重心坐标"><a href="#图形学的数学基础（十一）：几何图元-重心坐标" class="headerlink" title="图形学的数学基础（十一）：几何图元-重心坐标"></a>图形学的数学基础（十一）：几何图元-重心坐标</h1><p><img src="1.jpg" alt="重心坐标"></p>
+<h2 id="定义重心坐标-Barycentric-Coordinates"><a href="#定义重心坐标-Barycentric-Coordinates" class="headerlink" title="定义重心坐标($Barycentric\;Coordinates$)"></a>定义重心坐标($Barycentric\;Coordinates$)</h2><p>对于空间内的三角形$\triangle{v_1v_2v_3}$和任意一点$\textbf{p}$，必定唯一存在三个数$b_1,b_2,b_3$,满足：</p>
+<p>$b_1+b_2+b_3 = 1$</p>
+<p>$\textbf{p} = b_1\textbf{v}_1 + b_2\textbf{v}_2+ b_3\textbf{v}_3$</p>
+<p>则$b_1,b_2,b_3$就称为$\textbf{p}$点在此三角形$\triangle{v_1v_2v_3}$上的重心坐标.</p>
+<p>重心坐标表示了三角形每个顶点对该点的权重（贡献），重心坐标可以用来三角形光栅化顶点的属性插值，比如说uv 颜色 法线的线性插值。</p>
+<p>重心坐标也是一种坐标系统，类似于普通笛卡尔坐标系，但有一个区别就是，重心坐标的三个分量之和为1：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/" class="post-title-link" itemprop="url">图形学的数学基础（十）：几何图元-三角形</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-06 15:56:46" itemprop="dateCreated datePublished" datetime="2022-09-06T15:56:46+08:00">2022-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-24 16:23:06" itemprop="dateModified" datetime="2024-04-24T16:23:06+08:00">2024-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>814</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="图形学的数学基础（十）：几何图元-三角形"><a href="#图形学的数学基础（十）：几何图元-三角形" class="headerlink" title="图形学的数学基础（十）：几何图元-三角形"></a>图形学的数学基础（十）：几何图元-三角形</h1><p>三角形在图形学中具有重要意义。复杂三维对象的表面都是由庞大三角形网格组成（$Triangle\;Mesh$），本章将介绍三角形基本属性，重点是重心坐标。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>定义一个三角形，只需要三个顶点即可，这些点的顺序至关重要，因为它们的顺序决定了三角面的正反，在右手系中，当从三角形正面看时，通常按逆时针方向枚举点（右手螺旋定则）。</p>
+<p><img src="1.jpg" alt="三角形定义"></p>
+<p>边向量，边长 顶点定义如下：</p>
+<p>$\vec{e_1} = \textbf{v}_3 - \textbf{v}_2$</p>
+<p>$\vec{e_2} = \textbf{v}_1 - \textbf{v}_3$</p>
+<p>$\vec{e_3} = \textbf{v}_2 - \textbf{v}_1$</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/06/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E5%87%A0%E4%BD%95%E5%9B%BE%E5%85%83-%E4%B8%89%E8%A7%92%E5%BD%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1052,401 +1414,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/" class="post-title-link" itemprop="url">图形学的数学基础（二）：标准正交基/坐标系</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-02 08:46:17" itemprop="dateCreated datePublished" datetime="2022-05-02T08:46:17+08:00">2022-05-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 10:03:55" itemprop="dateModified" datetime="2024-04-26T10:03:55+08:00">2024-04-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（二）：标准正交基-坐标系"><a href="#图形学的数学基础（二）：标准正交基-坐标系" class="headerlink" title="图形学的数学基础（二）：标准正交基/坐标系"></a>图形学的数学基础（二）：标准正交基/坐标系</h1><h2 id="标准正交基"><a href="#标准正交基" class="headerlink" title="标准正交基"></a>标准正交基</h2><p>对于三维空间任意三个向量,如果它们满足</p>
-<ul>
-<li>$||\vec{u}|| = ||\vec{v}|| = ||\vec{w}|| = 1$</li>
-<li>$\vec{u}.\vec{v} = \vec{v}.\vec{w} = \vec{u}.\vec{w} = 0$</li>
-<li>$\vec{w} = \vec{u} \times \vec{v}$ (右手系)</li>
-</ul>
-<p>即向量长度都为1,相互垂直, 这样的三个向量构成的坐标系称为<strong>标准正交基</strong>,$\vec{u} ,\vec{v},\vec{w}$称为标准正交基的<strong>基矢量</strong>.</p>
-<h2 id="为什么需要标准正交基"><a href="#为什么需要标准正交基" class="headerlink" title="为什么需要标准正交基"></a>为什么需要标准正交基</h2><p>定义这样的坐标系,带来的一点好处就是, 空间中任意一矢量,都可以分解到标准正交基的三个轴上,需要用到前边向量投影的相关知识. 即<strong>矢量可以表示为基矢量的线性组合</strong>.<br><img src="1.jpg" alt="alt"></p>
-<p>$||\vec{b_⊥}|| = ||\vec{b}|| \cos\theta$</p>
-<p>此时的$\vec{a}$为单位向量,即$||\vec{a}|| = 1$</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%9F%BA-%E5%9D%90%E6%A0%87%E7%B3%BB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F/" class="post-title-link" itemprop="url">图形学的数学基础（一）：向量</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-01 08:46:17" itemprop="dateCreated datePublished" datetime="2022-05-01T08:46:17+08:00">2022-05-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-26 10:03:46" itemprop="dateModified" datetime="2024-04-26T10:03:46+08:00">2024-04-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="图形学的数学基础（一）：向量"><a href="#图形学的数学基础（一）：向量" class="headerlink" title="图形学的数学基础（一）：向量"></a>图形学的数学基础（一）：向量</h1><h2 id="前边的话"><a href="#前边的话" class="headerlink" title="前边的话"></a>前边的话</h2><p>本系列是阅读《3D数学基础： 图形和游戏开发（第二版）》整理汇总的学习笔记，整个系列的结构排布基于原书的章节安排，针对其中的每个知识点做了适当的补充和拓展，其中不免有遗漏和错误之处，望各位读者批评指正。本篇文章做为该系列的第一章，主要介绍向量相关内容，涉及空间中向量的几何意义，各种运算，重点介绍点乘和叉乘的几何解释及在图形学中的应用场景。</p>
-<h2 id="数学定义"><a href="#数学定义" class="headerlink" title="数学定义"></a>数学定义</h2><p>对于数学家来说向量是一个数组，数组的长度代表向量所在的空间维度。程序中表示向量通常有两种方式，行向量（$Row Vector$）和列向量（$Column Vector$）,至于为什么要区分两种书写方式,我们放到矩阵章节再详细说明.</p>
-<p>$V_{column} = \begin{bmatrix}1\\ 2\\ 3\end{bmatrix}$</p>
-<p>$V_{row} = \begin{bmatrix}1&amp;2&amp;-1\end{bmatrix}$</p>
-<h2 id="几何定义"><a href="#几何定义" class="headerlink" title="几何定义"></a>几何定义</h2><p>从几何学上讲,向量是具有大小和方向的<strong>有向线段</strong>.讨论向量在空间中的哪个位置,是没有意义的,<strong>向量不具备位置属性</strong>.向量是一种相对偏移量的表示方法.如下图二维笛卡尔坐标系中,向量U和V是相等的.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%90%91%E9%87%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">指数函数和对数函数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-03 14:17:37" itemprop="dateCreated datePublished" datetime="2022-04-03T14:17:37+08:00">2022-04-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-31 20:33:15" itemprop="dateModified" datetime="2022-08-31T20:33:15+08:00">2022-08-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>589</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="指数法则"><a href="#指数法则" class="headerlink" title="指数法则"></a>指数法则</h2><blockquote>
-<ol>
-<li><p>$b^0=1$</p>
-</li>
-<li><p>$b^1=b$</p>
-</li>
-<li><p>$b^xb^y=b^{x+y}$</p>
-</li>
-<li><p>$\frac{b^x}{b^y}=b^{x-y}$</p>
-</li>
-<li><p>$(b^x)^y=b^{xy}$</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="对数法则"><a href="#对数法则" class="headerlink" title="对数法则"></a>对数法则</h2><blockquote>
-<ol>
-<li><p>$b^{\log_by}=y$</p>
-</li>
-<li><p>$\log_b1=0$</p>
-</li>
-<li><p>$\log_bb=1$</p>
-</li>
-<li><p>$\log_b{(xy)}=\log_bx+\log_by$</p>
-</li>
-<li><p>$\log_b(\frac{x}{y})=\log_bx-\log_by$</p>
-</li>
-<li><p>$\log_b(x^y)=y\log_bx$</p>
-</li>
-<li><p>$\log_bx=\frac{\log_cx}{\log_cb}$</p>
-</li>
-<li><p>$\log_xy=\frac{1}{\log_yx}$</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="e"><a href="#e" class="headerlink" title="e"></a>e</h2><p>关于e的四个定义:</p>
-<blockquote>
-<p>$\lim_{h \to \infty}(1+\frac{r}{h})^h=e^r$</p>
-<p>$\lim_{h \to 0}(1+rh)^{\frac{1}{h}}=e^r$</p>
-<p>$\lim_{h \to \infty}(1+\frac{1}{h})^h=e$</p>
-<p>$\lim_{h \to 0}(1+h)^{\frac{1}{h}}=e$</p>
-<h1 id="对数函数和指数函数求导"><a href="#对数函数和指数函数求导" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h1></blockquote>
-<h2 id="对数函数和指数函数求导-1"><a href="#对数函数和指数函数求导-1" class="headerlink" title="对数函数和指数函数求导"></a>对数函数和指数函数求导</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/03/%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E5%92%8C%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1459,7 +1426,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
@@ -1471,14 +1438,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">115k</span>
+    <span title="站点总字数">116k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:57</span>
+    <span title="站点阅读时长">7:01</span>
   </span>
 </div>
 <div class="busuanzi-count">

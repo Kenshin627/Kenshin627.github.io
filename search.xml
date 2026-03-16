@@ -4,6 +4,93 @@
   
     
     <entry>
+      <title>RealTime Rendering03-PCSS</title>
+      <link href="/2026/03/25/RealTime-Rendering03-PCSS/"/>
+      <url>/2026/03/25/RealTime-Rendering03-PCSS/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="PCSS"><a href="#PCSS" class="headerlink" title="PCSS"></a>PCSS</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Computer Graphic </tag>
+            
+            <tag> Math </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>RealTime Rendering02-Shadow Mapping</title>
+      <link href="/2025/03/20/RealTime-Rendering02-Shadow-Mapping/"/>
+      <url>/2025/03/20/RealTime-Rendering02-Shadow-Mapping/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="Shadow-Mapping"><a href="#Shadow-Mapping" class="headerlink" title="Shadow Mapping"></a>Shadow Mapping</h1><h2 id="Basis"><a href="#Basis" class="headerlink" title="Basis"></a>Basis</h2><p><img src="01.png" alt="01.png"></p><ul><li>第一个pass从光源位置和方向构造相机的viewProjectionMatrix，渲染深度图</li><li>第二个pass将采样点转换到光照空间，比较深度判定遮挡性, 以下为shadowMap第二个pass计算阴影的关键代码：</li></ul><p><strong>VertexShader</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 460 core</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">0</span>) in vec3 aPos;</span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">1</span>) in vec3 aNormal;</span><br><span class="line"><span class="built_in">layout</span>(location = <span class="number">2</span>) in vec2 aTexCoords;</span><br><span class="line"></span><br><span class="line">out vsOut</span><br><span class="line">&#123;</span><br><span class="line">  vec3 FragPos;</span><br><span class="line">  vec3 Normal;</span><br><span class="line">  vec3 TexCoords;</span><br><span class="line">  vec3 FragPosLightSpace;</span><br><span class="line">&#125; vs_out;</span><br><span class="line"></span><br><span class="line">uniform mat4 projection;</span><br><span class="line">uniform mat4 view;</span><br><span class="line">uniform mat4 model;</span><br><span class="line">uniform mat4 lightSpaceMatrix;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vs_out.FragPos = model * <span class="built_in">vec4</span>(aPos, <span class="number">1.0</span>);</span><br><span class="line">  vs_out.Normal = <span class="built_in">transpose</span>(<span class="built_in">inverse</span>(<span class="built_in">mat3</span>(model))) * aNormal;</span><br><span class="line">  vs_out.TexCoords = aTexCoords;</span><br><span class="line">  vs_out.FragPosLightSpace = lightSpaceMatrix * <span class="built_in">vec4</span>(vs_out.FragPos, <span class="number">1.0</span>);</span><br><span class="line">  gl_Position = projection * view * <span class="built_in">vec4</span>(vs_out.FragPos, <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p><strong>FragmentShader</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 460 core</span></span><br><span class="line"></span><br><span class="line">in vsOut</span><br><span class="line">&#123;</span><br><span class="line">  vec3 FragPos;</span><br><span class="line">  vec3 Normal;</span><br><span class="line">  vec3 TexCoords;</span><br><span class="line">  vec3 FragPosLightSpace;</span><br><span class="line">&#125; fs_in;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">float</span> <span class="title">shadowCalculation</span><span class="params">(vec4 fragPosLightSpace)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vec3 projCoords = fragPoslightSpace.xyz / fragPoslightSpace.w;</span><br><span class="line">  projCoords = projCoords * <span class="number">0.5</span> + <span class="number">0.5</span>;</span><br><span class="line">  <span class="type">float</span> closestDepth = <span class="built_in">texture</span>(shadowMap, projCoords.xy).r;</span><br><span class="line">  <span class="type">float</span> currentDepth = projCoords.z;</span><br><span class="line">  <span class="type">float</span> shadow = currentDepth &gt; closestDepth? <span class="number">1.0</span> : <span class="number">0.0</span>;</span><br><span class="line">  <span class="keyword">return</span> shadow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h2 id="Shadow-acne"><a href="#Shadow-acne" class="headerlink" title="Shadow acne"></a>Shadow acne</h2><p>Shadow Acne是实时渲染中常见的阴影走样瑕疵，表现为阴影表面出现的条纹状或摩尔纹图案.</p><h3 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h3><ol><li>阴影贴图的分辨率限制</li></ol><ul><li>阴影贴图（Shadow Map）是从光源视角渲染的深度图，分辨率有限</li><li>当物体距离光源较远时，多个屏幕像素（fragments）会采样到阴影贴图中的同一个纹素（texel）</li></ul><ol><li>倾斜角度原因</li></ol><ul><li>当光源以倾斜角度照射表面时，阴影贴图的纹素也是倾斜的</li><li>当物体距离光源较远时，多个屏幕像素（fragments）会采样到阴影贴图中的同一个纹素（texel）</li><li>由于数值精度问题，有些片段被认为在表面之上（受光），有些被认为在表面之下（阴影）</li></ul><p><img src="02.png" alt="02.png"></p><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>Shadow Bias（阴影偏移）：在将深度写入阴影贴图时，减去一个小的偏移量（bias），或者在进行阴影测试时，给当前片段的深度加上一个偏移，这样确保表面片段不会被错误地判定为在阴影中。<br><img src="03.png" alt="03.png"></p><p>常量形式的bias:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> bias = <span class="number">0.005</span>;</span><br><span class="line"><span class="type">float</span> shadow = currentDepth - bias &gt; closestDepth  ? <span class="number">1.0</span> : <span class="number">0.0</span>;  </span><br></pre></td></tr></table></figure></p><p>固定偏移虽然能解决场景部分问题，但仍然存在缺陷：</p><ul><li>表面与光源夹角很大（接近平行）：固定bias不够，仍然会出现Shadow Acne</li><li>表面正对光源（垂直）：固定bias可能过大，导致Peter Panning<br>引入动态计算bias可以解决这个问题，根据光源方向与表面法线的夹角， 动态调整bias大小，光源与表面夹角越大，越平行，一个纹素会对应更多的像素，需要更大的bias避免shadowAcne：</li></ul><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> bias = <span class="built_in">max</span>(<span class="number">0.05</span> * (<span class="number">1.0</span> - <span class="built_in">dot</span>(normal, lightDir)), <span class="number">0.005</span>);  </span><br></pre></td></tr></table></figure><p>但是shadowBias过大会引入另外一个新的问题，物体和阴影会明显分离， 解决这个问题的办法是在生成阴影贴图时渲染背面剔除正面，存储较大的深度值, 这样就可以避免设置过大的bias造成阴影分离现象, 可以理解为生成的阴影图中已经隐形的引入了一个bias:</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glCullFace</span>(GL_FRONT);</span><br><span class="line"><span class="built_in">RenderSceneToDepthMap</span>();</span><br><span class="line"><span class="built_in">glCullFace</span>(GL_BACK); </span><br></pre></td></tr></table></figure><h2 id="PCF"><a href="#PCF" class="headerlink" title="PCF"></a>PCF</h2><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> shadow = <span class="number">0.0</span>;</span><br><span class="line"><span class="type">vec2</span> texelSize = <span class="number">1.0</span> / <span class="built_in">textureSize</span>(shadowMap, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> x = <span class="number">-1</span>; x &lt;= <span class="number">1</span>; ++x)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> y = <span class="number">-1</span>; y &lt;= <span class="number">1</span>; ++y)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="type">float</span> pcfDepth = <span class="built_in">texture</span>(shadowMap, projCoords.xy + <span class="type">vec2</span>(x, y) * texelSize).r;</span><br><span class="line">    shadow += currentDepth - bias &gt; pcfDepth? <span class="number">1.0</span> : <span class="number">0.0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">shadow /= <span class="number">9.0</span>;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Computer Graphic </tag>
+            
+            <tag> Math </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>RealTime Rendering01-TBN矩阵和TBN空间</title>
+      <link href="/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/"/>
+      <url>/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="TBN矩阵和TBN空间"><a href="#TBN矩阵和TBN空间" class="headerlink" title="TBN矩阵和TBN空间"></a>TBN矩阵和TBN空间</h1><p>法线贴图采样得到的法线往往在切线空间，也就是顶点的“局部空间”，需要乘以TBN矩阵将法线从切线空间转换到世界空间下才能进行光照计算，而顶点中一般仅提供TBN中的T和N，Bitangent需要经过施密特正交化计算得出：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vec3 T = <span class="built_in">normalize</span>(<span class="built_in">vec3</span>(model * <span class="built_in">vec4</span>(aTangent, <span class="number">0.0</span>)));</span><br><span class="line">  vec3 N = <span class="built_in">normalize</span>(<span class="built_in">vec3</span>(model * <span class="built_in">vec4</span>(aNormal, <span class="number">0.0</span>)));</span><br><span class="line">  T = <span class="built_in">normalize</span>(T - <span class="built_in">dot</span>(T, N) * N);</span><br><span class="line">  vec3 B = <span class="built_in">cross</span>(N, T);</span><br><span class="line">  mat3 TBN = <span class="built_in">mat3</span>(T, B, N);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer Graphic </category>
+          
+          <category> Math </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Computer Graphic </tag>
+            
+            <tag> Math </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Computer-Graphic10-辐射度量学</title>
       <link href="/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/"/>
       <url>/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/</url>
