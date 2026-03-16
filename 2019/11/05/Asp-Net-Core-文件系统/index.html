@@ -19,36 +19,36 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Asp.Net Core 文件系统ASP.NET Core 具有很多针对文件读取的应用。比如我们倾向于采用JSON文件来定义配置，所以应用就会涉及针对配置文件读取。如果用户发送一个针对物理文件的HTTP请求，应用会根据指定的路径读取目标文件的内容并对请求予以响应。在一个ASP.NET Core MVC应用中，针对View的动态编译会涉及到根据预定义的路径映射关系来读取目标View文件。这些不同应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Asp.Net Core 文件系统">
-<meta property="og:url" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:url" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="Asp.Net Core 文件系统ASP.NET Core 具有很多针对文件读取的应用。比如我们倾向于采用JSON文件来定义配置，所以应用就会涉及针对配置文件读取。如果用户发送一个针对物理文件的HTTP请求，应用会根据指定的路径读取目标文件的内容并对请求予以响应。在一个ASP.NET Core MVC应用中，针对View的动态编译会涉及到根据预定义的路径映射关系来读取目标View文件。这些不同应用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg">
-<meta property="og:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider2.jpg">
-<meta property="og:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider3.jpg">
-<meta property="og:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider4.jpg">
-<meta property="og:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider5.jpg">
-<meta property="og:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider6.jpg">
-<meta property="og:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider7.jpg">
+<meta property="og:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg">
+<meta property="og:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider2.jpg">
+<meta property="og:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider3.jpg">
+<meta property="og:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider4.jpg">
+<meta property="og:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider5.jpg">
+<meta property="og:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider6.jpg">
+<meta property="og:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider7.jpg">
 <meta property="article:published_time" content="2019-11-05T08:43:00.000Z">
 <meta property="article:modified_time" content="2021-10-29T14:03:17.469Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Asp.Net Core">
 <meta property="article:tag" content="文件系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg">
+<meta name="twitter:image" content="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/IFileProvider1.jpg">
 
 
-<link rel="canonical" href="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+<link rel="canonical" href="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/","path":"2019/11/05/Asp-Net-Core-文件系统/","title":"Asp.Net Core 文件系统"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/","path":"2019/11/05/Asp-Net-Core-文件系统/","title":"Asp.Net Core 文件系统"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Asp.Net Core 文件系统 | Pixel World</title>
@@ -215,7 +215,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2019/11/05/Asp-Net-Core-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -392,7 +392,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

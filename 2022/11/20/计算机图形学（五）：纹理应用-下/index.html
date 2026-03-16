@@ -19,38 +19,38 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="计算机图形学（五）：纹理应用-下上一章介绍了凹凸贴图,凹凸贴图可以提升粗糙mesh细节表现,凹凸贴图其实没有改变表面的几何结构,仅仅是通过法线的扰动影响了着色而已,因此产生的问题就是,在特定角度观察或者观察物体边缘或阴影时,问题就暴露出来了,这是因为没有考虑高程带来的视差和遮挡。因为mesh信息没有提供对应的深度变化，在$z-buffer$深度测试时，不会对被遮挡的顶点做深度测试，因此不会产生应有">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机图形学（五）：纹理应用-下">
-<meta property="og:url" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/index.html">
+<meta property="og:url" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="计算机图形学（五）：纹理应用-下上一章介绍了凹凸贴图,凹凸贴图可以提升粗糙mesh细节表现,凹凸贴图其实没有改变表面的几何结构,仅仅是通过法线的扰动影响了着色而已,因此产生的问题就是,在特定角度观察或者观察物体边缘或阴影时,问题就暴露出来了,这是因为没有考虑高程带来的视差和遮挡。因为mesh信息没有提供对应的深度变化，在$z-buffer$深度测试时，不会对被遮挡的顶点做深度测试，因此不会产生应有">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/1.jpg">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/2.png">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/3.png">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/4.png">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/5.jpg">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/6.jpg">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/7.png">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/8.png">
-<meta property="og:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/9.jpg">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/1.jpg">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/2.png">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/3.png">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/4.png">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/5.jpg">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/6.jpg">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/7.png">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/8.png">
+<meta property="og:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/9.jpg">
 <meta property="article:published_time" content="2022-11-20T12:00:10.000Z">
 <meta property="article:modified_time" content="2024-04-26T01:51:55.100Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/1.jpg">
+<meta name="twitter:image" content="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/1.jpg">
 
 
-<link rel="canonical" href="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/">
+<link rel="canonical" href="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/","path":"2022/11/20/计算机图形学（五）：纹理应用-下/","title":"计算机图形学（五）：纹理应用-下"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/","path":"2022/11/20/计算机图形学（五）：纹理应用-下/","title":"计算机图形学（五）：纹理应用-下"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>计算机图形学（五）：纹理应用-下 | Pixel World</title>
@@ -217,7 +217,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2022/11/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8-%E4%B8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -402,7 +402,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

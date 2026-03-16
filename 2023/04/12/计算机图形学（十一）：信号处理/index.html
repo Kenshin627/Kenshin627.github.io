@@ -19,34 +19,34 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="计算机图形学（十一）：信号处理在图形学中,通常要处理些连续变量的函数:图片是你见过的第一个例子，但是当你继续探索图形学的时候，你会遇到很多类似的情况.就其本质而言,计算机无法直接表达连续的函数,必须使用有限的位数表达他们- 采样(将函数的值离散的存储起来,在需要时进行重建).本章首先用数字音频的具体一维例子来总结采样和重构。然后，我们继续介绍在一维和二维的采样和重构基础上的基本数学和算法。最后，我">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机图形学（十一）：信号处理">
-<meta property="og:url" content="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/index.html">
+<meta property="og:url" content="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="计算机图形学（十一）：信号处理在图形学中,通常要处理些连续变量的函数:图片是你见过的第一个例子，但是当你继续探索图形学的时候，你会遇到很多类似的情况.就其本质而言,计算机无法直接表达连续的函数,必须使用有限的位数表达他们- 采样(将函数的值离散的存储起来,在需要时进行重建).本章首先用数字音频的具体一维例子来总结采样和重构。然后，我们继续介绍在一维和二维的采样和重构基础上的基本数学和算法。最后，我">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/1.jpg">
-<meta property="og:image" content="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/2.png">
-<meta property="og:image" content="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/3.jpg">
-<meta property="og:image" content="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/4.jpg">
-<meta property="og:image" content="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/5.jpg">
+<meta property="og:image" content="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/1.jpg">
+<meta property="og:image" content="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/2.png">
+<meta property="og:image" content="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/3.jpg">
+<meta property="og:image" content="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/4.jpg">
+<meta property="og:image" content="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/5.jpg">
 <meta property="article:published_time" content="2023-04-12T13:30:00.000Z">
 <meta property="article:modified_time" content="2024-04-26T01:53:45.477Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Signal Processing">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/1.jpg">
+<meta name="twitter:image" content="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/1.jpg">
 
 
-<link rel="canonical" href="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">
+<link rel="canonical" href="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/","path":"2023/04/12/计算机图形学（十一）：信号处理/","title":"计算机图形学（十一）：信号处理"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/","path":"2023/04/12/计算机图形学（十一）：信号处理/","title":"计算机图形学（十一）：信号处理"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>计算机图形学（十一）：信号处理 | Pixel World</title>
@@ -213,7 +213,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%EF%BC%9A%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -385,7 +385,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

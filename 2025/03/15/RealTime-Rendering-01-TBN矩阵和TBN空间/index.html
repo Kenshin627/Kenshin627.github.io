@@ -19,12 +19,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="TBN矩阵和TBN空间法线贴图采样得到的法线往往在切线空间，也就是顶点的“局部空间”，需要乘以TBN矩阵将法线从切线空间转换到世界空间下才能进行光照计算，而顶点中一般仅提供TBN中的T和N，Bitangent需要经过施密特正交化计算得出： 12345678void main()&#123;  vec3 T &#x3D; normalize(vec3(model * vec4(aTangent, 0.0)))">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RealTime Rendering01-TBN矩阵和TBN空间">
-<meta property="og:url" content="http://example.com/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/index.html">
+<meta property="og:url" content="http://kenshin.uno/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="TBN矩阵和TBN空间法线贴图采样得到的法线往往在切线空间，也就是顶点的“局部空间”，需要乘以TBN矩阵将法线从切线空间转换到世界空间下才能进行光照计算，而顶点中一般仅提供TBN中的T和N，Bitangent需要经过施密特正交化计算得出： 12345678void main()&#123;  vec3 T &#x3D; normalize(vec3(model * vec4(aTangent, 0.0)))">
 <meta property="og:locale" content="zh_CN">
@@ -36,11 +36,11 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/">
+<link rel="canonical" href="http://kenshin.uno/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/","path":"2025/03/15/RealTime-Rendering-01-TBN矩阵和TBN空间/","title":"RealTime Rendering01-TBN矩阵和TBN空间"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/","path":"2025/03/15/RealTime-Rendering-01-TBN矩阵和TBN空间/","title":"RealTime Rendering01-TBN矩阵和TBN空间"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>RealTime Rendering01-TBN矩阵和TBN空间 | Pixel World</title>
@@ -207,7 +207,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/03/15/RealTime-Rendering-01-TBN%E7%9F%A9%E9%98%B5%E5%92%8CTBN%E7%A9%BA%E9%97%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -361,7 +361,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

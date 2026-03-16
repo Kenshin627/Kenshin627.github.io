@@ -19,36 +19,36 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="interface概述TypeScript的核心原则之一是对值所具有的结构进行类型检查,它有时被称做”鸭式辩型法”或”结构型子类型化”.TypeScript里接口的作用就是为这些类型命名和为你的代码和第三方代码定义契约. 可选属性 &amp; 只读属性 函数类型 索引签名通过定义key和value的类型宽泛的描述接口”形状”.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="interface">
-<meta property="og:url" content="http://example.com/2021/10/31/interface/index.html">
+<meta property="og:url" content="http://kenshin.uno/2021/10/31/interface/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="interface概述TypeScript的核心原则之一是对值所具有的结构进行类型检查,它有时被称做”鸭式辩型法”或”结构型子类型化”.TypeScript里接口的作用就是为这些类型命名和为你的代码和第三方代码定义契约. 可选属性 &amp; 只读属性 函数类型 索引签名通过定义key和value的类型宽泛的描述接口”形状”.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/1.png">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/2.png">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/3.png">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/4.png">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/5.png">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/6.png">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/8.png">
-<meta property="og:image" content="http://example.com/2021/10/31/interface/7.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/1.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/2.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/3.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/4.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/5.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/6.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/8.png">
+<meta property="og:image" content="http://kenshin.uno/2021/10/31/interface/7.png">
 <meta property="article:published_time" content="2021-10-31T12:57:40.000Z">
 <meta property="article:modified_time" content="2021-11-01T14:35:53.529Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="typeScript">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/10/31/interface/1.png">
+<meta name="twitter:image" content="http://kenshin.uno/2021/10/31/interface/1.png">
 
 
-<link rel="canonical" href="http://example.com/2021/10/31/interface/">
+<link rel="canonical" href="http://kenshin.uno/2021/10/31/interface/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/10/31/interface/","path":"2021/10/31/interface/","title":"interface"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2021/10/31/interface/","path":"2021/10/31/interface/","title":"interface"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>interface | Pixel World</title>
@@ -215,7 +215,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/interface/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2021/10/31/interface/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -370,7 +370,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -19,58 +19,58 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Computer-Graphic08-空间数据结构本篇文章我们讨论当场景复杂度大幅增加时，如何进行高效的几何查询。现实世界中的真实场景极其复杂，那么从计算的角度我们如何处理这些复杂的场景呢？其中很重要的一个用例就是光线追踪：用于光线和场景求交。  光线三角形求交声明一个三角形，三个顶点分别是$p_0,p_1,p_2$, 定义一条光线，从$o$出发，沿着$d$方向行进，光线的参数化方程可以定义如下：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer-Graphic08-空间数据结构">
-<meta property="og:url" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:url" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="Computer-Graphic08-空间数据结构本篇文章我们讨论当场景复杂度大幅增加时，如何进行高效的几何查询。现实世界中的真实场景极其复杂，那么从计算的角度我们如何处理这些复杂的场景呢？其中很重要的一个用例就是光线追踪：用于光线和场景求交。  光线三角形求交声明一个三角形，三个顶点分别是$p_0,p_1,p_2$, 定义一条光线，从$o$出发，沿着$d$方向行进，光线的参数化方程可以定义如下：">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/0.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/1.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/2.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/4.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/5.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/6.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/7.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/8.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/9.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/10.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/11.png">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/12.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/13.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/14.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/15.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/16.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/17.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/18.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/19.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/20.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/21.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/22.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/23.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/24.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/25.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/26.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/27.jpg">
-<meta property="og:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/28.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/0.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/1.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/2.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/4.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/5.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/6.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/7.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/8.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/9.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/10.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/11.png">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/12.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/13.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/14.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/15.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/16.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/17.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/18.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/19.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/20.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/21.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/22.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/23.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/24.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/25.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/26.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/27.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/28.jpg">
 <meta property="article:published_time" content="2024-07-06T12:18:00.000Z">
 <meta property="article:modified_time" content="2024-07-06T03:06:00.598Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/0.png">
+<meta name="twitter:image" content="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/0.png">
 
 
-<link rel="canonical" href="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+<link rel="canonical" href="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/","path":"2024/07/06/Computer-Graphic08-空间数据结构/","title":"Computer-Graphic08-空间数据结构"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/","path":"2024/07/06/Computer-Graphic08-空间数据结构/","title":"Computer-Graphic08-空间数据结构"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Computer-Graphic08-空间数据结构 | Pixel World</title>
@@ -237,7 +237,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -541,7 +541,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:03</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -19,41 +19,41 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="辐射度量学上一章文章我们讨论了颜色, 一个重要结论就是光的颜色和其波长有关, 也就是电磁场的震动频率. 对于人眼的视觉系统来说, 只有很窄范围的波长是可见的, 被称为可见频谱.  但是渲染不仅仅只是关于颜色, 如果我们只知道一张图片上每个点的波长, 那么呈现的图片将是不完整的, 我们还需要知道多少光命中了该点, 或者说场景中有多少光量进入了摄像机. 从某种意义上说，这两个组件一起构成了我们最终的图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer-Graphic10-辐射度量学">
-<meta property="og:url" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/index.html">
+<meta property="og:url" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="辐射度量学上一章文章我们讨论了颜色, 一个重要结论就是光的颜色和其波长有关, 也就是电磁场的震动频率. 对于人眼的视觉系统来说, 只有很窄范围的波长是可见的, 被称为可见频谱.  但是渲染不仅仅只是关于颜色, 如果我们只知道一张图片上每个点的波长, 那么呈现的图片将是不完整的, 我们还需要知道多少光命中了该点, 或者说场景中有多少光量进入了摄像机. 从某种意义上说，这两个组件一起构成了我们最终的图">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/01.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/02.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/03.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/04.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/05.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/06.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/07.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/08.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/09.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/10.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/11.jpg">
-<meta property="og:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/12.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/01.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/02.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/03.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/04.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/05.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/06.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/07.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/08.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/09.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/10.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/11.jpg">
+<meta property="og:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/12.jpg">
 <meta property="article:published_time" content="2024-07-20T03:35:04.000Z">
 <meta property="article:modified_time" content="2024-07-20T07:55:18.915Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/01.jpg">
+<meta name="twitter:image" content="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/01.jpg">
 
 
-<link rel="canonical" href="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
+<link rel="canonical" href="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/","path":"2024/07/20/Computer-Graphic10-辐射度量学/","title":"Computer-Graphic10-辐射度量学"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/","path":"2024/07/20/Computer-Graphic10-辐射度量学/","title":"Computer-Graphic10-辐射度量学"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Computer-Graphic10-辐射度量学 | Pixel World</title>
@@ -220,7 +220,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2024/07/20/Computer-Graphic10-%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -435,7 +435,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:03</span>
   </span>
 </div>
 <div class="busuanzi-count">
