@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#000"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#000">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ZFighting为什么是 1&#x2F;zGPU 硬件深度缓冲区通常不会存储物体在相机前距离的线性表示。相反，深度缓冲区存储的值与世界空间深度的倒数成正比。在本文中，用 d 表示存储在深度缓冲区中的值（ [0, 1] 范围内），用 z 表示世界空间深度，即相机viewSpace下lookAt方向的实际距离，以世界单位（如米）表示。一般来说，它们之间的关系具有以下形式：  实际上准确的表示应该是这样：  那">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RealTime Rendering04-zFighting">
+<meta property="og:url" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/index.html">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="ZFighting为什么是 1&#x2F;zGPU 硬件深度缓冲区通常不会存储物体在相机前距离的线性表示。相反，深度缓冲区存储的值与世界空间深度的倒数成正比。在本文中，用 d 表示存储在深度缓冲区中的值（ [0, 1] 范围内），用 z 表示世界空间深度，即相机viewSpace下lookAt方向的实际距离，以世界单位（如米）表示。一般来说，它们之间的关系具有以下形式：  实际上准确的表示应该是这样：  那">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/01.png">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/02.png">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/03.png">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/04.png">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/05.png">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/06.png">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/07.png">
+<meta property="og:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/08.png">
+<meta property="article:published_time" content="2025-03-25T11:30:06.000Z">
+<meta property="article:modified_time" content="2026-03-16T14:22:33.115Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Computer Graphic">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/01.png">
+
+
+<link rel="canonical" href="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/","path":"2025/03/25/RealTime-Rendering04-zFighting/","title":"RealTime Rendering04-zFighting"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RealTime Rendering04-zFighting | Pixel World</title>
+  
+
+
+
+
+
+
+
+
+  <!-- require APlayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+  <!-- require MetingJS -->
+  <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+  <meting-js
+    server="netease"
+    type="playlist"
+    fixed="true"
+    id="8647182734"
+    auto=""
+    mini="true"
+    autoplay="true"
+    theme=""
+    loop="all"
+    order="random"
+    preload="auto"
+    volume="0.7"
+    mutex="true"
+    list-folded="true"
+    list-max-height="340px"
+    storage-name="metingjs" >
+  </meting-js>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Pixel World</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZFighting"><span class="nav-number">1.</span> <span class="nav-text">ZFighting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-1-z"><span class="nav-number">1.1.</span> <span class="nav-text">为什么是 1&#x2F;z</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">深度图可视化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReverseZ"><span class="nav-number">1.3.</span> <span class="nav-text">ReverseZ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prevent-z-fighting"><span class="nav-number">1.4.</span> <span class="nav-text">Prevent z-fighting</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/author.png">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kenshin627" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/97340526/" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;97340526&#x2F;" rel="noopener me" target="_blank"><i class="fa-brands fa-bilibili fa-fw"></i>BiliBili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=11906050" title="网易云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;11906050" rel="noopener me" target="_blank"><i class="fa-solid fa-music fa-fw"></i>网易云</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/03/25/RealTime-Rendering04-zFighting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RealTime Rendering04-zFighting | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RealTime Rendering04-zFighting
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-25 19:30:06" itemprop="dateCreated datePublished" datetime="2025-03-25T19:30:06+08:00">2025-03-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-16 22:22:33" itemprop="dateModified" datetime="2026-03-16T22:22:33+08:00">2026-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="ZFighting"><a href="#ZFighting" class="headerlink" title="ZFighting"></a>ZFighting</h1><h2 id="为什么是-1-z"><a href="#为什么是-1-z" class="headerlink" title="为什么是 1/z"></a>为什么是 1/z</h2><p>GPU 硬件深度缓冲区通常不会存储物体在相机前距离的线性表示。相反，深度缓冲区存储的值与世界空间深度的倒数成正比。<br>在本文中，用 d 表示存储在深度缓冲区中的值（ [0, 1] 范围内），用 z 表示世界空间深度，即相机viewSpace下lookAt方向的实际距离，以世界单位（如米）表示。一般来说，它们之间的关系具有以下形式：</p>
+<p><img src="01.png" alt="01.png"></p>
+<p>实际上准确的表示应该是这样：</p>
+<p><img src="02.png" alt="02.png"></p>
+<p>那么为什么要选择这种特定的形式呢？主要有两个原因。</p>
+<ol>
+<li>这是由透视投影矩阵造成的<br><img src="03.png" alt="03.png"></li>
+<li>1/z 在屏幕空间中是线性的。因此在光栅化时很容易在三角形上插值 d，而且在HiZ、earlyZ和zBuffer中压缩都更容易实现。</li>
+</ol>
+<h2 id="深度图可视化"><a href="#深度图可视化" class="headerlink" title="深度图可视化"></a>深度图可视化</h2><p><img src="04.png" alt="04.png"></p>
+<p>垂直轴d表示裁剪空间也就是存储在zBuffer中的非线性深度值，范围从[0， 1], 水平轴是viewSpace下的线性深度值，d和z呈倒数关系。刻度标记表示不同的深度缓冲区值。为了直观说明问题，我模拟了一个 4 位规范化整数深度缓冲区，因此有 16 个均匀分布的刻度标记。<br>将刻度标记水平追踪到它们与 1/z曲线相交的地方，然后向下到底部轴。这就是不同值在世界空间深度范围内的分布位置。<br>上图显示了 D3D 和类似 API 中使用的”标准”、普通的深度映射。可以观察到1/z曲线如何导致值在近平面附近聚集，而靠近远平面的值则分布得相当散。<br>也很容易看出为什么近平面对深度精度有如此深远的影响。拉近近平面会使 d 范围急剧上升向1/z曲线的渐近线，导致值的分布更加不均衡：</p>
+<p><img src="05.png" alt="05.png"></p>
+<p>同样，在这种背景下很容易看出为什么将远平面一直推到无穷远并没有太大影响。这只是意味着将 d 范围稍微向下延伸到 1/z=0</p>
+<p><img src="06.png" alt="06.png"></p>
+<p>那浮点深度表现会如何呢？下图添加了对应于模拟浮点格式的刻度标记，该格式有3位指数和3位尾数：<br>现在在 [0, 1] 范围内有 40 个不同的值——比以前多得多，但它们中的大多数都无用地在近平面附近聚集，而实际上并不需要在那里有更多的精度。</p>
+<p><img src="07.png" alt="07.png"></p>
+<h2 id="ReverseZ"><a href="#ReverseZ" class="headerlink" title="ReverseZ"></a>ReverseZ</h2><p>一个现在广为人知的技巧是反转深度范围，将近平面映射到 d=1，将远平面映射到 d=0：</p>
+<p><img src="08.png" alt="08.png"></p>
+<p>好多了！现在浮点数的准对数分布在某种程度上抵消了1/z的非线性，在近平面给你与整数深度缓冲区相似的精度，而在其他地方则大大提高了精度。只有当你向外移动时，精度才会缓慢下降。<br>所有之前的图表都假设 [0, 1] 作为投影后的深度范围，这是 D3D 的惯例。那 OpenGL 呢？<br>OpenGL 默认假设 [-1, 1] 的投影后深度范围。这对整数格式没有影响，但对于浮点数，所有精度都无用卡在了中间。（该值稍后被映射到 [0, 1] 以存储在深度缓冲区中，但这没有帮助，因为最初映射到 [-1, 1] 已经破坏了远半范围的所有精度。）而且根据对称性，ReverseZ技巧在这里不起作用。<br>幸运的是，在OpenGL 中，可以通过广泛支持的 ARB_clip_control 扩展（现在在 OpenGL 4.5 中也是核心功能 glClipControl）来修复这个问题。</p>
+<h2 id="Prevent-z-fighting"><a href="#Prevent-z-fighting" class="headerlink" title="Prevent z-fighting"></a>Prevent z-fighting</h2><p>第一个也是最重要的技巧是：<strong>永远不要让物体以某些三角形紧密重叠的方式放置得过于靠近</strong>。 通过在两个物体之间创建一个小偏移，你可以完全消除这两个物体之间的 Z-fighting。对于容器和平面的情况，我们可以轻松地将容器稍微向正 Y 方向（向上）移动。容器位置的微小变化可能根本不会引起注意，却能完全减少 Z-fighting。然而，这需要对每个物体进行手动干预，并进行彻底测试，以确保场景中的任何物体都不会产生 Z-fighting。</p>
+<p><strong>第二个技巧是尽可能将近平面设置得远一些</strong>。 在之前的章节中，我们已经讨论过，当靠近近平面时精度非常大，因此如果我们把近平面从观察者处移远，我们在整个视锥体范围内都将获得显著更高的精度。然而，将近平面设置得太远可能会导致近处物体被裁剪，因此通常需要通过调整和实验来找出场景的最佳近平面距离。</p>
+<p><strong>另一个以一些性能为代价的好技巧是使用更高精度的深度缓冲区</strong>。 大多数深度缓冲区的精度为 24 位，但现在大多数 GPU 都支持 32 位深度缓冲区，显著提高了精度。因此，以一些性能为代价，你将获得深度测试的更高精度，从而减少 Z-fighting。</p>
+<p><strong>最后一个即上文提到过的reverseZ</strong>。通过反转z值，将近平面映射到 d=1，将远平面映射到 d=0，从而抵消1/z的非线性。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+              <a href="/tags/Math/" rel="tag"># Math</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/25/RealTime-Rendering03-PCSS/" rel="prev" title="RealTime Rendering03-PCSS">
+                  <i class="fa fa-angle-left"></i> RealTime Rendering03-PCSS
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/03/28/RealTime-Rendering05-faceCulling/" rel="next" title="RealTime Rendering05-faceCulling">
+                  RealTime Rendering05-faceCulling <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">126k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">7:37</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Kenshin627/BlogGiscus","repo_id":"R_kgDOJ-E6Aw","category":"Announcements","category_id":"DIC_kwDOJ-E6A84CYCOU","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"dark_dimmed","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false,"tagMode":false});</script></body>
+</html>
