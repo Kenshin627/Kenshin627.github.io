@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#000"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#000">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="PickGPU Pick为场景中的每个对象分配一个唯一的颜色，将所有对象渲染到一个FBO中，拾取时基于鼠标指针在屏幕上的位置索引FBO中的颜色值。如果该颜色与某个对象匹配，则该对象被选中。以下是绘制到SelectionBuffer和从SelectionBuffer读取的详细步骤： Drawing to Selection Buffer首先需要一个单的pass将物体分配的颜色写入单独的FBO，这里需">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RealTime-Rendering16-Pick">
+<meta property="og:url" content="http://kenshin.uno/2025/11/13/RealTime-Rendering16-Pick/index.html">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="PickGPU Pick为场景中的每个对象分配一个唯一的颜色，将所有对象渲染到一个FBO中，拾取时基于鼠标指针在屏幕上的位置索引FBO中的颜色值。如果该颜色与某个对象匹配，则该对象被选中。以下是绘制到SelectionBuffer和从SelectionBuffer读取的详细步骤： Drawing to Selection Buffer首先需要一个单的pass将物体分配的颜色写入单独的FBO，这里需">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-13T05:10:00.000Z">
+<meta property="article:modified_time" content="2026-03-21T06:53:09.240Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Computer Graphic">
+<meta property="article:tag" content="Realtime Rendering">
+<meta property="article:tag" content="Interaction">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://kenshin.uno/2025/11/13/RealTime-Rendering16-Pick/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2025/11/13/RealTime-Rendering16-Pick/","path":"2025/11/13/RealTime-Rendering16-Pick/","title":"RealTime-Rendering16-Pick"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RealTime-Rendering16-Pick | Pixel World</title>
+  
+
+
+
+
+
+
+
+
+  <!-- require APlayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+  <!-- require MetingJS -->
+  <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+  <meting-js
+    server="netease"
+    type="playlist"
+    fixed="true"
+    id="8647182734"
+    auto=""
+    mini="true"
+    autoplay="true"
+    theme=""
+    loop="all"
+    order="random"
+    preload="auto"
+    volume="0.7"
+    mutex="true"
+    list-folded="true"
+    list-max-height="340px"
+    storage-name="metingjs" >
+  </meting-js>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Pixel World</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pick"><span class="nav-number">1.</span> <span class="nav-text">Pick</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU-Pick"><span class="nav-number">1.1.</span> <span class="nav-text">GPU Pick</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Drawing-to-Selection-Buffer"><span class="nav-number">1.1.1.</span> <span class="nav-text">Drawing to Selection Buffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reading-from-Selection-Buffer"><span class="nav-number">1.1.2.</span> <span class="nav-text">Reading from Selection Buffer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IndexToColor-amp-ColorToIndex"><span class="nav-number">1.1.3.</span> <span class="nav-text">IndexToColor &amp; ColorToIndex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#glReadPixels"><span class="nav-number">1.1.4.</span> <span class="nav-text">glReadPixels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pipeline"><span class="nav-number">1.1.5.</span> <span class="nav-text">pipeline</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-Pick"><span class="nav-number">1.2.</span> <span class="nav-text">CPU Pick</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Construct-ViewRay"><span class="nav-number">1.2.1.</span> <span class="nav-text">Construct ViewRay</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">坐标转换流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#screenSpace-gt-NDC"><span class="nav-number">1.2.1.1.1.</span> <span class="nav-text">screenSpace-&gt;NDC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NDC-gt-worldSpace"><span class="nav-number">1.2.1.1.2.</span> <span class="nav-text">NDC-&gt;worldSpace</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Construct-ViewRay-1"><span class="nav-number">1.2.1.1.3.</span> <span class="nav-text">Construct ViewRay</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/author.png">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kenshin627" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/97340526/" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;97340526&#x2F;" rel="noopener me" target="_blank"><i class="fa-brands fa-bilibili fa-fw"></i>BiliBili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=11906050" title="网易云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;11906050" rel="noopener me" target="_blank"><i class="fa-solid fa-music fa-fw"></i>网易云</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/11/13/RealTime-Rendering16-Pick/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RealTime-Rendering16-Pick | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RealTime-Rendering16-Pick
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-11-13 13:10:00" itemprop="dateCreated datePublished" datetime="2025-11-13T13:10:00+08:00">2025-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 14:53:09" itemprop="dateModified" datetime="2026-03-21T14:53:09+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Interaction/" itemprop="url" rel="index"><span itemprop="name">Interaction</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>901</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Pick"><a href="#Pick" class="headerlink" title="Pick"></a>Pick</h1><h2 id="GPU-Pick"><a href="#GPU-Pick" class="headerlink" title="GPU Pick"></a>GPU Pick</h2><p>为场景中的每个对象分配一个唯一的颜色，将所有对象渲染到一个FBO中，拾取时基于鼠标指针在屏幕上的位置索引FBO中的颜色值。如果该颜色与某个对象匹配，则该对象被选中。以下是绘制到SelectionBuffer和从SelectionBuffer读取的详细步骤：</p>
+<h3 id="Drawing-to-Selection-Buffer"><a href="#Drawing-to-Selection-Buffer" class="headerlink" title="Drawing to Selection Buffer"></a>Drawing to Selection Buffer</h3><p>首先需要一个单的pass将物体分配的颜色写入单独的FBO，这里需要处理几件事：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>创建帧缓冲区</td>
+<td>创建一个与渲染屏幕分辨率相同的帧缓冲区</td>
+</tr>
+<tr>
+<td>2</td>
+<td>分配唯一索引</td>
+<td>为每个对象分配一个唯一的索引值（通常是从 1 开始的整数）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>索引转颜色</td>
+<td>将索引值转换为 32 位颜色值 (r, g, b, a)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>渲染</td>
+<td>用索引转换得到的颜色将对象绘制到帧缓冲区</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Reading-from-Selection-Buffer"><a href="#Reading-from-Selection-Buffer" class="headerlink" title="Reading from Selection Buffer"></a>Reading from Selection Buffer</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>获取鼠标位置</td>
+<td>从屏幕获取鼠标坐标 (x, y)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>读取像素</td>
+<td>使用 glReadPixels() 读取鼠标位置的颜色值</td>
+</tr>
+<tr>
+<td>3</td>
+<td>颜色转索引</td>
+<td>将帧缓冲区中的颜色值转换回对象索引值</td>
+</tr>
+<tr>
+<td>4</td>
+<td>命中检测</td>
+<td>如果索引值非零，表示选中了对象</td>
+</tr>
+<tr>
+<td>5</td>
+<td>未命中检测</td>
+<td>如果索引值为零，表示未选中任何对象</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="IndexToColor-amp-ColorToIndex"><a href="#IndexToColor-amp-ColorToIndex" class="headerlink" title="IndexToColor &amp; ColorToIndex"></a>IndexToColor &amp; ColorToIndex</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index to color</span></span><br><span class="line"><span class="type">int</span> index = ...;</span><br><span class="line"><span class="type">int</span> r = index &amp; <span class="number">0xFF</span>;</span><br><span class="line"><span class="type">int</span> g = index &gt;&gt; <span class="number">8</span> &amp; <span class="number">0xFF</span>;</span><br><span class="line"><span class="type">int</span> b = index &gt;&gt; <span class="number">16</span> &amp; <span class="number">0xFF</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// normalized color value: 0 ~ 1</span></span><br><span class="line">Color color = [r/<span class="number">255</span>, g/<span class="number">255</span>, b/<span class="number">255</span>, <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// color (r, g, b) to index</span></span><br><span class="line">Color color = ...;    <span class="comment">// array of (r, g, b) components</span></span><br><span class="line"><span class="type">int</span> index = color[<span class="number">0</span>] + (color[<span class="number">1</span>] &lt;&lt; <span class="number">8</span>) + (color[<span class="number">1</span>] &lt;&lt; <span class="number">16</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="glReadPixels"><a href="#glReadPixels" class="headerlink" title="glReadPixels"></a>glReadPixels</h3><p>在opengl中读取FBO纹理附件像素值通过glReadPixels函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">glReadPixels</span><span class="params">(GLint x,</span></span></span><br><span class="line"><span class="params"><span class="function">    GLint y,</span></span></span><br><span class="line"><span class="params"><span class="function">    GLsizei width,</span></span></span><br><span class="line"><span class="params"><span class="function">    GLsizei height,</span></span></span><br><span class="line"><span class="params"><span class="function">    GLenum format,</span></span></span><br><span class="line"><span class="params"><span class="function">    GLenum type,</span></span></span><br><span class="line"><span class="params"><span class="function">    GLvoid * data)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>其中xy表示像素位置， 即屏幕空间鼠标指针的位置，width和height表示要读取的像素区域大小</p>
+<h3 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 渲染场景到selectionBuffer</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">render</span>(<span class="params">objects, camera</span>) </span><br><span class="line">    &#123;</span><br><span class="line">        gl.<span class="title function_">bindFramebuffer</span>(gl.<span class="property">FRAMEBUFFER</span>, <span class="variable language_">this</span>.<span class="property">framebuffer</span>);</span><br><span class="line">        gl.<span class="title function_">clearColor</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>); <span class="comment">// 背景为黑色（索引0）</span></span><br><span class="line">        gl.<span class="title function_">clear</span>(gl.<span class="property">COLOR_BUFFER_BIT</span> | gl.<span class="property">DEPTH_BUFFER_BIT</span>);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        objects.<span class="title function_">forEach</span>(<span class="function">(<span class="params">obj, index</span>) =&gt;</span> </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">const</span> color = <span class="title class_">SelectionBuffer</span>.<span class="title function_">encodeIndex</span>(index + <span class="number">1</span>); <span class="comment">// 索引从1开始</span></span><br><span class="line">            obj.<span class="title function_">renderWithColor</span>(color, camera); <span class="comment">// 用纯色渲染</span></span><br><span class="line">        &#125;);        </span><br><span class="line">        gl.<span class="title function_">bindFramebuffer</span>(gl.<span class="property">FRAMEBUFFER</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 读取鼠标位置的对象索引</span></span><br><span class="line">    <span class="title function_">read</span>(<span class="params">x, y</span>) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">const</span> webglY = <span class="variable language_">this</span>.<span class="property">height</span> - y;</span><br><span class="line">        gl.<span class="title function_">bindFramebuffer</span>(gl.<span class="property">FRAMEBUFFER</span>, <span class="variable language_">this</span>.<span class="property">framebuffer</span>);</span><br><span class="line">        <span class="keyword">const</span> pixels = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(<span class="number">4</span>);</span><br><span class="line">        gl.<span class="title function_">readPixels</span>(x, webglY, <span class="number">1</span>, <span class="number">1</span>, gl.<span class="property">RGBA</span>, gl.<span class="property">UNSIGNED_BYTE</span>, pixels);</span><br><span class="line">        gl.<span class="title function_">bindFramebuffer</span>(gl.<span class="property">FRAMEBUFFER</span>, <span class="literal">null</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">SelectionBuffer</span>.<span class="title function_">decodeColor</span>(pixels);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CPU-Pick"><a href="#CPU-Pick" class="headerlink" title="CPU Pick"></a>CPU Pick</h2><h3 id="Construct-ViewRay"><a href="#Construct-ViewRay" class="headerlink" title="Construct ViewRay"></a>Construct ViewRay</h3><p>射线由起点和方向向量定义。对于透视相机，起点通常是相机位置，方向是从相机所在位置指向屏幕点击位置的向量。首先需要将屏幕空间坐标转换为世界空间中的坐标，然后减去相机位置得到方向向量。</p>
+<h4 id="坐标转换流程"><a href="#坐标转换流程" class="headerlink" title="坐标转换流程"></a>坐标转换流程</h4><p>屏幕坐标（通常原点在左上角） → 归一化设备坐标（NDC，范围[-1, 1]） → 视图空间 → 世界空间</p>
+<h5 id="screenSpace-gt-NDC"><a href="#screenSpace-gt-NDC" class="headerlink" title="screenSpace-&gt;NDC"></a>screenSpace-&gt;NDC</h5><p>假设鼠标点击坐标为 (mouseX, mouseY)，屏幕宽高为 viewportWidth、viewportHeight。注意Y轴方向：大多数窗口系统原点在左上角，Y向下为正，而NDC中Y向上为正，所以需要翻转Y。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将屏幕坐标 [0, width] 映射到 [-1, 1]</span></span><br><span class="line"><span class="comment">// 注意：Y轴需要翻转（屏幕Y向下，NDC Y向上）</span></span><br><span class="line"><span class="type">float</span> ndcX = (<span class="number">2.0f</span> * mouseX) / viewportWidth - <span class="number">1.0f</span>;</span><br><span class="line"><span class="type">float</span> ndcY = <span class="number">1.0f</span> - (<span class="number">2.0f</span> * mouseY) / viewportHeight;  <span class="comment">// 翻转Y轴</span></span><br><span class="line"><span class="type">float</span> ndcZ = <span class="number">-1.0f</span>;  <span class="comment">// 近裁剪面（指向屏幕内）</span></span><br><span class="line"><span class="type">float</span> ndcW = <span class="number">1.0f</span>;   <span class="comment">// 齐次坐标</span></span><br><span class="line"></span><br><span class="line"><span class="function">Vector4 <span class="title">ndcPos</span><span class="params">(ndcX, ndcY, ndcZ, ndcW)</span></span>;</span><br></pre></td></tr></table></figure>
+<h5 id="NDC-gt-worldSpace"><a href="#NDC-gt-worldSpace" class="headerlink" title="NDC-&gt;worldSpace"></a>NDC-&gt;worldSpace</h5><p>将viewProjectionMatrix的逆矩阵乘以ndcPos，得到鼠标指针在近裁剪平面上世界空间的位置：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 invViewProj = glm::<span class="built_in">inverse</span>(projectionMatrix * viewMatrix);</span><br><span class="line">glm::vec4 rayWorld = invViewProj * ndcPos;</span><br><span class="line">rayWorld /= rayWorld.w;</span><br></pre></td></tr></table></figure>
+<h5 id="Construct-ViewRay-1"><a href="#Construct-ViewRay-1" class="headerlink" title="Construct ViewRay"></a>Construct ViewRay</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 rayOrigin = cameraPosition;  <span class="comment">// 或者 rayNearWorld.xyz</span></span><br><span class="line">glm::vec3 rayDir = glm::<span class="built_in">normalize</span>(rayWorld.xyz - rayOrigin.xyz);</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+              <a href="/tags/Realtime-Rendering/" rel="tag"># Realtime Rendering</a>
+              <a href="/tags/Interaction/" rel="tag"># Interaction</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/05/RealTime-Rendering14-Advanced-GLSL/" rel="prev" title="RealTime-Rendering14-Advanced GLSL">
+                  <i class="fa fa-angle-left"></i> RealTime-Rendering14-Advanced GLSL
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/01/RealTime-Rendering17-Weighted-Blended-OIT/" rel="next" title="RealTime-Rendering17-Weighted Blended OIT">
+                  RealTime-Rendering17-Weighted Blended OIT <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">138k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:22</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Kenshin627/BlogGiscus","repo_id":"R_kgDOJ-E6Aw","category":"Announcements","category_id":"DIC_kwDOJ-E6A84CYCOU","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"dark_dimmed","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false,"tagMode":false});</script></body>
+</html>

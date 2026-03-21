@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#000"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#000">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="GPU Culling基于computeShader实现GPU的视锥剔除和遮挡剔除. frustumCullingGPU提出的第一步先判断包围盒是否完全位于视锥体外部，需要构造frustum的六个平面以及场景包围盒，循环frustum的6个面分别与包围盒求交，如果包围盒在任意一个平面的外部，则直接剔除。 1234567891011121314151617bool frustumCulling(ma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RealTime-Rendering15-GPU Culling">
+<meta property="og:url" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/index.html">
+<meta property="og:site_name" content="Pixel World">
+<meta property="og:description" content="GPU Culling基于computeShader实现GPU的视锥剔除和遮挡剔除. frustumCullingGPU提出的第一步先判断包围盒是否完全位于视锥体外部，需要构造frustum的六个平面以及场景包围盒，循环frustum的6个面分别与包围盒求交，如果包围盒在任意一个平面的外部，则直接剔除。 1234567891011121314151617bool frustumCulling(ma">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/01.png">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/02.png">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/03.png">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/04.png">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/05.png">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/06.png">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/07.png">
+<meta property="og:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/08.png">
+<meta property="article:published_time" content="2025-10-20T11:10:00.000Z">
+<meta property="article:modified_time" content="2026-03-21T06:30:59.737Z">
+<meta property="article:author" content="KenShin">
+<meta property="article:tag" content="Computer Graphic">
+<meta property="article:tag" content="Realtime Rendering">
+<meta property="article:tag" content="Performance">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/01.png">
+
+
+<link rel="canonical" href="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/","path":"2025/10/20/RealTime-Rendering15-GPU-Culling/","title":"RealTime-Rendering15-GPU Culling"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RealTime-Rendering15-GPU Culling | Pixel World</title>
+  
+
+
+
+
+
+
+
+
+  <!-- require APlayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+  <!-- require MetingJS -->
+  <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+  <meting-js
+    server="netease"
+    type="playlist"
+    fixed="true"
+    id="8647182734"
+    auto=""
+    mini="true"
+    autoplay="true"
+    theme=""
+    loop="all"
+    order="random"
+    preload="auto"
+    volume="0.7"
+    mutex="true"
+    list-folded="true"
+    list-max-height="340px"
+    storage-name="metingjs" >
+  </meting-js>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Pixel World</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">it's better be burning out than to fade away.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GPU-Culling"><span class="nav-number">1.</span> <span class="nav-text">GPU Culling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#frustumCulling"><span class="nav-number">1.1.</span> <span class="nav-text">frustumCulling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#extract-Planes-From-Matrix"><span class="nav-number">1.1.1.</span> <span class="nav-text">extract Planes From Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AABB-amp-Plane-intersectionTest"><span class="nav-number">1.1.2.</span> <span class="nav-text">AABB &amp; Plane intersectionTest</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OcclusionCulling"><span class="nav-number">1.2.</span> <span class="nav-text">OcclusionCulling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-HiZ"><span class="nav-number">1.2.1.</span> <span class="nav-text">Generate HiZ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OcclusionCulling-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">OcclusionCulling</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#projectAABBToScreen"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">projectAABBToScreen</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Calculate-HiZ-Level"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Calculate HiZ Level</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HiZ-Occlusion-Check"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">HiZ Occlusion Check</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generate-IndirectDrawCommand"><span class="nav-number">1.3.</span> <span class="nav-text">Generate IndirectDrawCommand</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KenShin"
+      src="/images/author.png">
+  <p class="site-author-name" itemprop="name">KenShin</p>
+  <div class="site-description" itemprop="description">it's better be burning out than to fade away.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kenshin627" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kenshin627" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/kenshin20207@163.com" title="E-Mail → kenshin20207@163.com" rel="noopener me"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/97340526/" title="BiliBili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;97340526&#x2F;" rel="noopener me" target="_blank"><i class="fa-brands fa-bilibili fa-fw"></i>BiliBili</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://music.163.com/#/user/home?id=11906050" title="网易云 → https:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;11906050" rel="noopener me" target="_blank"><i class="fa-solid fa-music fa-fw"></i>网易云</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RealTime-Rendering15-GPU Culling | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RealTime-Rendering15-GPU Culling
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-10-20 19:10:00" itemprop="dateCreated datePublished" datetime="2025-10-20T19:10:00+08:00">2025-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 14:30:59" itemprop="dateModified" datetime="2026-03-21T14:30:59+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="GPU-Culling"><a href="#GPU-Culling" class="headerlink" title="GPU Culling"></a>GPU Culling</h1><p>基于computeShader实现GPU的视锥剔除和遮挡剔除.</p>
+<h2 id="frustumCulling"><a href="#frustumCulling" class="headerlink" title="frustumCulling"></a>frustumCulling</h2><p>GPU提出的第一步先判断包围盒是否完全位于视锥体外部，需要构造frustum的六个平面以及场景包围盒，循环frustum的6个面分别与包围盒求交，如果包围盒在任意一个平面的外部，则直接剔除。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> frustumCulling(<span class="type">mat4</span> mvp, BoundingBox bbox)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">vec3</span> center = (bbox.<span class="built_in">min</span>.xyz + bbox.<span class="built_in">max</span>.xyz) * <span class="number">0</span>,<span class="number">5</span>;</span><br><span class="line">  <span class="type">vec3</span> extents = bbox.<span class="built_in">max</span>.xyz - center;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="type">vec3</span> normal = frustumPlanes[i].xyz;</span><br><span class="line">    <span class="type">float</span> d = frustumPlanes[i].w;</span><br><span class="line">    <span class="type">float</span> radius = <span class="built_in">dot</span>(extents, <span class="built_in">abs</span>(normal));</span><br><span class="line">    <span class="type">float</span> <span class="built_in">distance</span> = <span class="built_in">dot</span>(center, normal) + d;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">distance</span> &lt; -radius)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="extract-Planes-From-Matrix"><a href="#extract-Planes-From-Matrix" class="headerlink" title="extract Planes From Matrix"></a>extract Planes From Matrix</h3><p>而要获取构成frustum的六个面, 首先需要从viewprojection矩阵中提取这六个面.假设世界空间的某个向量$\vec{v} = (x,y,z,w)$, 矩阵$M = m_{ij}$是viewProjectionMatrix，使用$M$变换$\vec{v}$可以表示为矩阵和向量的乘法：</p>
+<p><img src="01.png" alt="01.png"></p>
+<p>其中 • 表示向量的点乘，$Row_i=(m_{i1},m_{i2}, m_{i3}, m_{i4})$表示矩阵$M$的第$i$行。</p>
+<p>经过此变换后，顶点$v^′$位于齐次裁剪空间中。在此空间中，视锥体实际上是一个轴对齐的盒状区域，其尺寸由具体API决定。若顶点$v^′$位于该盒内，则未经变换的顶点$v$便处于”未经变换的”视锥体内部。在OpenGL中，当$v^′$的分量满足以下不等式时，$v^′$位于该盒内：</p>
+<p>$−w^′&lt;x^′&lt;w^′$</p>
+<p>$−w^′&lt;y^′&lt;w^′$</p>
+<p>$−w^′&lt;z^′&lt;w^′$</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>−w′&lt;x′</td>
+<td>x′位于左裁剪平面的内侧半空间</td>
+</tr>
+<tr>
+<td>x′&lt;w′</td>
+<td>x′位于右裁剪平面的内侧半空间</td>
+</tr>
+<tr>
+<td>−w′&lt; y′</td>
+<td>y′位于下裁剪平面的内侧半空间</td>
+</tr>
+<tr>
+<td>y′&lt;w′</td>
+<td>y′位于上裁剪平面的内侧半空间</td>
+</tr>
+<tr>
+<td>−w′&lt;z′</td>
+<td>z′位于近裁剪平面的内侧半空间</td>
+</tr>
+<tr>
+<td>z′&lt;w′</td>
+<td>z′位于远裁剪平面的内侧半空间</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>现在假设我们要测试$x^′$是否位于左裁剪平面的内侧半空间。需要满足以下不等式：</p>
+<p>$−w^′&lt;x^′$</p>
+<p>利用本章开头的信息，我们可以将该不等式重写为：</p>
+<p>$−(\vec{v}⋅Row_4)&lt;(\vec{v}⋅Row_1)$</p>
+<p>这等价于：</p>
+<p>$0&lt;(\vec{v}⋅Row_4)+(\vec{v}⋅Row_1)$</p>
+<p>最终得到：</p>
+<p>$0&lt;\vec{v}⋅(Row_4+Row_1)$</p>
+<p>这实际上已经代表了“未经变换的”视锥体左裁剪平面的平面方程：</p>
+<p><img src="02.png" alt="02.png"></p>
+<p>w等于1，平面方程可以进一步简化为：</p>
+<p><img src="03.png" alt="03.png"></p>
+<p>这样就得到了标准平面方程：</p>
+<p><img src="04.png" alt="04.png"></p>
+<p>其中：</p>
+<p><img src="05.png" alt="05.png"></p>
+<p>至此，我们证明了视锥体的左裁剪平面可以直接从投影矩阵中提取。需要注意的是，所得平面方程是未归一化的（即平面的法向量不是单位向量），并且该法向量指向内侧半空间。这意味着，当顶点$v$位于左裁剪平面的内侧半空间时，有 $0&lt;ax+by+cz+d$。</p>
+<p>归一化平面的完整步骤:</p>
+<ol>
+<li>计算法线长度</li>
+</ol>
+<p><img src="06.png" alt="06.png"></p>
+<ol>
+<li>将平面方程的$abcd$都除以$|n|$</li>
+</ol>
+<p><img src="07.png" alt="07.png"></p>
+<ol>
+<li>得到归一化后的平面方程：</li>
+</ol>
+<p><img src="08.png" alt="08.png"></p>
+<h4 id="code"><a href="#code" class="headerlink" title="code"></a>code</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Frustum <span class="title">extractFrustum</span><span class="params">(<span class="type">const</span> glm::mat4&amp; viewProj)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Frustum frustum;</span><br><span class="line">    glm::mat4 m = glm::<span class="built_in">transpose</span>(viewProj); <span class="comment">// 转为列访问</span></span><br><span class="line">    </span><br><span class="line">    std::array&lt;glm::vec4, 6&gt; coeffs = &#123;</span><br><span class="line">        m[<span class="number">3</span>] + m[<span class="number">0</span>],  <span class="comment">// Left</span></span><br><span class="line">        m[<span class="number">3</span>] - m[<span class="number">0</span>],  <span class="comment">// Right</span></span><br><span class="line">        m[<span class="number">3</span>] + m[<span class="number">1</span>],  <span class="comment">// Bottom</span></span><br><span class="line">        m[<span class="number">3</span>] - m[<span class="number">1</span>],  <span class="comment">// Top</span></span><br><span class="line">        m[<span class="number">3</span>] + m[<span class="number">2</span>],  <span class="comment">// Near</span></span><br><span class="line">        m[<span class="number">3</span>] - m[<span class="number">2</span>]   <span class="comment">// Far</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">float</span> len = glm::<span class="built_in">length</span>(glm::<span class="built_in">vec3</span>(coeffs[i]));</span><br><span class="line">        frustum.planes[i].normal = glm::<span class="built_in">vec3</span>(coeffs[i]) / len;</span><br><span class="line">        frustum.planes[i].distance = coeffs[i].w / len;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> frustum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>References:</p>
+<p><a target="_blank" rel="noopener" href="https://www.gamedevs.org/uploads/fast-extraction-viewing-frustum-planes-from-world-view-projection-matrix.pdf">ExtractPlanes</a></p>
+<h3 id="AABB-amp-Plane-intersectionTest"><a href="#AABB-amp-Plane-intersectionTest" class="headerlink" title="AABB &amp; Plane intersectionTest"></a>AABB &amp; Plane intersectionTest</h3><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> TestAABBPlane(AABB b, Plane p) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Convert AABB to center-extents representation</span></span><br><span class="line">    Point c = (b.<span class="built_in">max</span> + b.<span class="built_in">min</span>) * <span class="number">0.5</span>f; <span class="comment">// Compute AABB center</span></span><br><span class="line">    Point e = b.<span class="built_in">max</span> - c; <span class="comment">// Compute positive extents</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Compute the projection interval radius of b onto L(t) = b.c + t * p.n</span></span><br><span class="line">    <span class="type">float</span> r = e[<span class="number">0</span>]*Abs(p.n[<span class="number">0</span>]) + e[<span class="number">1</span>]*Abs(p.n[<span class="number">1</span>]) + e[<span class="number">2</span>]*Abs(p.n[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Compute distance of box center from plane</span></span><br><span class="line">    <span class="type">float</span> s = Dot(p.n, c) - p.d;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Intersection occurs when distance s falls within [-r,+r] interval</span></span><br><span class="line">    <span class="keyword">return</span> Abs(s) &lt;= r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://gdbooks.gitbooks.io/3dcollisions/content/Chapter2/static_aabb_plane.html">aabb &amp; plane intersection</a></p>
+<h2 id="OcclusionCulling"><a href="#OcclusionCulling" class="headerlink" title="OcclusionCulling"></a>OcclusionCulling</h2><p>这里使用的遮挡剔除技术通过采样深度图比较判断深度的方式判断遮挡性，而场景中不同深度的物体包围盒对应的纹素空间比例是不一样的，离相机较远的物体一个像素可能会对应深度图的一片区域，因此，为了保证剔除的正确性，采用保守剔除策略，宁肯少剔除也不要错误剔除，需要事先对zBuffer手动生成mipmap，生成Hierarchy zBuffer，简写为HiZ。为什么不能使用硬件自动生成mipmap呢？因为硬件mipmap采用boxFilter的均值策略在此并不适用。这里为了防止误剔除，采用保守策略，mipmap要取最大值。</p>
+<h3 id="Generate-HiZ"><a href="#Generate-HiZ" class="headerlink" title="Generate HiZ"></a>Generate HiZ</h3><p>使用compute Shader实现手动mipmap：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 460 core</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span>(<span class="keyword">local_size_x</span> = <span class="number">16</span>, <span class="keyword">local_size_y</span> = <span class="number">16</span>) <span class="keyword">in</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输入纹理（上一级 Mip）</span></span><br><span class="line"><span class="keyword">layout</span>(<span class="keyword">binding</span> = <span class="number">0</span>, <span class="keyword">r32f</span>) <span class="keyword">uniform</span> <span class="keyword">readonly</span> <span class="type">image2D</span> srcDepth;</span><br><span class="line"><span class="comment">// 输出纹理（当前级 Mip）</span></span><br><span class="line"><span class="keyword">layout</span>(<span class="keyword">binding</span> = <span class="number">1</span>, <span class="keyword">r32f</span>) <span class="keyword">uniform</span> <span class="keyword">writeonly</span> <span class="type">image2D</span> dstDepth;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">ivec2</span> srcSize;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">ivec2</span> dstSize;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main() </span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">ivec2</span> dstCoord = <span class="type">ivec2</span>(<span class="built_in">gl_GlobalInvocationID</span>.xy);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (dstCoord.x &gt;= dstSize.x || dstCoord.y &gt;= dstSize.y) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 计算源坐标（2x2 降采样）</span></span><br><span class="line">    <span class="type">ivec2</span> srcCoord = dstCoord * <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 采样 2x2 区域，取最小深度（用于遮挡剔除，保留最近物体）</span></span><br><span class="line">    <span class="comment">// 如果是用于反射/折射，可能需要取最大深度</span></span><br><span class="line">    <span class="type">float</span> d0 = <span class="built_in">imageLoad</span>(srcDepth, srcCoord).r;</span><br><span class="line">    <span class="type">float</span> d1 = <span class="built_in">imageLoad</span>(srcDepth, srcCoord + <span class="type">ivec2</span>(<span class="number">1</span>, <span class="number">0</span>)).r;</span><br><span class="line">    <span class="type">float</span> d2 = <span class="built_in">imageLoad</span>(srcDepth, srcCoord + <span class="type">ivec2</span>(<span class="number">0</span>, <span class="number">1</span>)).r;</span><br><span class="line">    <span class="type">float</span> d3 = <span class="built_in">imageLoad</span>(srcDepth, srcCoord + <span class="type">ivec2</span>(<span class="number">1</span>, <span class="number">1</span>)).r;</span><br><span class="line">    </span><br><span class="line">    <span class="type">float</span> maxDepth = <span class="built_in">max</span>(<span class="built_in">max</span>(d0, d1), <span class="built_in">max</span>(d2, d3));</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">imageStore</span>(dstDepth, dstCoord, <span class="type">vec4</span>(maxDepth, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="OcclusionCulling-1"><a href="#OcclusionCulling-1" class="headerlink" title="OcclusionCulling"></a>OcclusionCulling</h3><p>有了HiZ就可以执行遮挡剔除了，首先第一步将AABB投影到屏幕空间</p>
+<h4 id="projectAABBToScreen"><a href="#projectAABBToScreen" class="headerlink" title="projectAABBToScreen"></a>projectAABBToScreen</h4><p>基于AABB的MinMax推导其8个顶点，将8个顶点依次投影到屏幕空间，计算xy的最小值最大值，即screenMin和screenMax，计算这个值的目的是为了推导aabb在纹理空间（屏幕空间）的覆盖范围，由此计算当前适合采样的HiZ层级.另外计算当前AABB的最小深度，用于后续深度判断：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> projectAABBToScreen(<span class="type">vec3</span> aabbMin, <span class="type">vec3</span> aabbMax, <span class="keyword">out</span> <span class="type">vec2</span> screenMin, <span class="keyword">out</span> <span class="type">vec2</span> screenMax, <span class="keyword">out</span> <span class="type">float</span> depthMin)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">vec3</span> corners[<span class="number">8</span>];</span><br><span class="line">  corners[<span class="number">0</span>] = <span class="type">vec3</span>(aabbMin.x, aabbMin.y, aabbMin.z);</span><br><span class="line">  corners[<span class="number">1</span>] = <span class="type">vec3</span>(aabbMax.x, aabbMin.y, aabbMin.z);</span><br><span class="line">  corners[<span class="number">2</span>] = <span class="type">vec3</span>(aabbMin.x, aabbMax.y, aabbMin.z);</span><br><span class="line">  corners[<span class="number">3</span>] = <span class="type">vec3</span>(aabbMax.x, aabbMax.y, aabbMin.z);</span><br><span class="line">  corners[<span class="number">4</span>] = <span class="type">vec3</span>(aabbMin.x, aabbMin.y, aabbMax.z);</span><br><span class="line">  corners[<span class="number">5</span>] = <span class="type">vec3</span>(aabbMax.x, aabbMin.y, aabbMax.z);</span><br><span class="line">  corners[<span class="number">6</span>] = <span class="type">vec3</span>(aabbMin.x, aabbMax.y, aabbMax.z);</span><br><span class="line">  corners[<span class="number">7</span>] = <span class="type">vec3</span>(aabbMax.x, aabbMax.y, aabbMax.z);</span><br><span class="line"></span><br><span class="line">  <span class="type">vec4</span> clipCorners[<span class="number">8</span>];</span><br><span class="line">  <span class="type">bool</span> bAllBehind = <span class="literal">true</span>;</span><br><span class="line">  screenMin = <span class="type">vec2</span>(<span class="number">1.0</span>, <span class="number">1.0</span>);</span><br><span class="line">  screenMax = <span class="type">vec2</span>(<span class="number">0.0</span>, <span class="number">0.0</span>);</span><br><span class="line">  depthMin = <span class="number">1.0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    clipCorners[i] = uViewProjectionMat * <span class="type">vec4</span>(corners[i], <span class="number">1.0</span>);</span><br><span class="line">    <span class="keyword">if</span>(clipCorners[i].w &gt; <span class="number">0.0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      bAllBehind = <span class="literal">false</span>;</span><br><span class="line">      <span class="type">vec3</span> ndc = clipCorners[i].xyz / clipCorners[i].w;</span><br><span class="line">      <span class="type">vec2</span> screenPos = ndc.xyz * <span class="number">0.5</span> + <span class="number">0.5</span>;</span><br><span class="line">      screenMin = <span class="built_in">min</span>(screenMin, screenPos);</span><br><span class="line">      screenMax = <span class="built_in">max</span>(screenMax, screenPos);</span><br><span class="line">      depthMin = <span class="built_in">min</span>(depthMin, ndc.z * <span class="number">0.5</span> + <span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(bAllBehind)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  screenMin = <span class="built_in">clamp</span>(screenMin, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">  screenMax = <span class="built_in">clamp</span>(screenMax, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Calculate-HiZ-Level"><a href="#Calculate-HiZ-Level" class="headerlink" title="Calculate HiZ Level"></a>Calculate HiZ Level</h4><p>上一步得到的screenMin和ScreenMax范围是[0, 1]，要想计算深度图的覆盖范围，还需要乘以纹理大小，然后取log2即可（参考mipmap）:</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AABB所有顶点都在相机后，直接剔除</span></span><br><span class="line"><span class="keyword">if</span>(projectAABBToScreen(aabbMin, aabbMax, screenMin, screenMax, depthMin))</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">vec2</span> pixelSize = (screenMax - screenMin) * uViewportSize;</span><br><span class="line"><span class="comment">//小于1个像素的物体视为不可见，直接剔除</span></span><br><span class="line"><span class="keyword">if</span>(pixelSize.x &lt; <span class="number">1.0</span> &amp;&amp; pixelSize.y &lt; <span class="number">1.0</span>)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">float</span> mipmapLevel = <span class="built_in">log2</span>(<span class="built_in">max</span>(pixelSize.x, pixelSize.y));</span><br><span class="line"><span class="type">int</span> mip = <span class="built_in">clamp</span>(<span class="type">int</span>(mipmapLevel), <span class="number">0</span>, uHizMipLevels - <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="HiZ-Occlusion-Check"><a href="#HiZ-Occlusion-Check" class="headerlink" title="HiZ Occlusion Check"></a>HiZ Occlusion Check</h4><p>确定了HiZ层级，就可以对其进行深度采样了，采样点使用AABB投影到屏幕空间的矩形的四个顶点及中心点共五次采样：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">vec2</span> samples[<span class="number">5</span>] = </span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">vec2</span>(screenMin.x, screenMin.y),</span><br><span class="line">  <span class="type">vec2</span>(screenMax.x, screenMin.y),</span><br><span class="line">  <span class="type">vec2</span>(screenMin.x, screenMax.y),</span><br><span class="line">  <span class="type">vec2</span>(screenMax.x, screenMax.y),</span><br><span class="line">  <span class="type">vec2</span>((screenMin.x + screenMax.x) * <span class="number">0.5</span>, (screenMin.y + screenMax.y) * <span class="number">0.5</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">float</span> maxDepth = <span class="number">0.0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">float</span> depth = <span class="built_in">textureLod</span>(uHiZMap, samples[i], mip).r;</span><br><span class="line">  <span class="comment">//由于HiZMap是上一帧的数据，先将其反投影的世界空间，然后投影到当前帧，矫正深度值</span></span><br><span class="line">  <span class="type">vec4</span> prevClipPos = <span class="type">vec4</span>(samples[i] * <span class="number">2.0</span> - <span class="number">1.0</span>, depth * <span class="number">2.0</span> - <span class="number">1.0</span>, <span class="number">1.0</span>);</span><br><span class="line">  <span class="type">vec4</span> worldPos = uPrevInvViewProj * prevClipPos;</span><br><span class="line">  worldPos.xyz /= worldPos.w;</span><br><span class="line"></span><br><span class="line">  <span class="type">vec4</span> currentClipPos = uViewProj * <span class="type">vec4</span>(worldPos.xyz, <span class="number">1.0</span>);</span><br><span class="line">  currentClipPos.xyz /= currentClipPos.w;</span><br><span class="line">  <span class="type">float</span> reprojectedDepth = currentClipPos.z + <span class="number">0.1</span> / <span class="number">9999.0</span>f;</span><br><span class="line">  maxDepth = <span class="built_in">max</span>(maxDepth, reprojectedDepth);</span><br><span class="line">  <span class="keyword">if</span>(depthMin &lt;= maxDepth)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="Generate-IndirectDrawCommand"><a href="#Generate-IndirectDrawCommand" class="headerlink" title="Generate IndirectDrawCommand"></a>Generate IndirectDrawCommand</h2><figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> idx = <span class="built_in">gl_GlobalInvocationID</span>.x;</span><br><span class="line">  <span class="keyword">if</span> (idx &gt;= bboxes.<span class="built_in">length</span>()) </span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  BoundingBox bbox = bboxs[idx];</span><br><span class="line">  <span class="keyword">if</span>(frustumCulling(bbox))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(hizCulling(bbox))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">uint</span> visibleIndex = <span class="built_in">atomicAdd</span>(visibleCount, <span class="number">1</span>);</span><br><span class="line">  outputCommands[visibleIndex] = inputCommands[idx];</span><br><span class="line">  outputCommands[visibleIndex].baseInstance = idx;<span class="comment">// 保持baseInstance不变，用于索引模型矩阵 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Graphic/" rel="tag"># Computer Graphic</a>
+              <a href="/tags/Realtime-Rendering/" rel="tag"># Realtime Rendering</a>
+              <a href="/tags/Performance/" rel="tag"># Performance</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/09/11/RealTime-Rendering11-Gaussian-Blur/" rel="prev" title="RealTime-Rendering11-Gaussian Blur">
+                  <i class="fa fa-angle-left"></i> RealTime-Rendering11-Gaussian Blur
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/10/20/RealTime-Rendering12-AABB-Plane-intersection/" rel="next" title="RealTime-Rendering12-AABB Plane intersection">
+                  RealTime-Rendering12-AABB Plane intersection <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">KenShin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">138k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:22</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"Kenshin627/BlogGiscus","repo_id":"R_kgDOJ-E6Aw","category":"Announcements","category_id":"DIC_kwDOJ-E6A84CYCOU","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"dark_dimmed","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":120,"height":240},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":0.5},"log":false,"tagMode":false});</script></body>
+</html>

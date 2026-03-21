@@ -150,18 +150,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -201,7 +201,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/11/05/RealTime-Rendering14-Advanced-GLSL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -219,7 +219,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">Computer-Graphic08-空间数据结构</a>
+          <a href="/2025/11/05/RealTime-Rendering14-Advanced-GLSL/" class="post-title-link" itemprop="url">RealTime-Rendering14-Advanced GLSL</a>
         </h2>
 
         <div class="post-meta-container">
@@ -229,9 +229,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-07-06 20:18:00 / 修改时间：11:06:00" itemprop="dateCreated datePublished" datetime="2024-07-06T20:18:00+08:00">2024-07-06</time>
+      <time title="创建时间：2025-11-05 10:10:00" itemprop="dateCreated datePublished" datetime="2025-11-05T10:10:00+08:00">2025-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 13:51:24" itemprop="dateModified" datetime="2026-03-21T13:51:24+08:00">2026-03-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,7 +249,11 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/GLSL/" itemprop="url" rel="index"><span itemprop="name">GLSL</span></a>
         </span>
     </span>
 
@@ -254,14 +264,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4k</span>
+      <span>471</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -272,16 +282,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Computer-Graphic08-空间数据结构"><a href="#Computer-Graphic08-空间数据结构" class="headerlink" title="Computer-Graphic08-空间数据结构"></a>Computer-Graphic08-空间数据结构</h1><p>本篇文章我们讨论当场景复杂度大幅增加时，如何进行高效的几何查询。现实世界中的真实场景极其复杂，那么从计算的角度我们如何处理这些复杂的场景呢？其中很重要的一个用例就是光线追踪：用于光线和场景求交。</p>
-<p><img src="0.png" alt="0.png"></p>
-<h2 id="光线三角形求交"><a href="#光线三角形求交" class="headerlink" title="光线三角形求交"></a>光线三角形求交</h2><p>声明一个三角形，三个顶点分别是$p_0,p_1,p_2$, 定义一条光线，从$o$出发，沿着$d$方向行进，光线的参数化方程可以定义如下：</p>
-<p>$\mathbf{r}(t) = \mathbf{o} + t\mathbf{d}$</p>
-<p>这里需要解决两个问题，第一个光线是否与三角形相交，第二个如果相交那么交点在哪里？</p>
-<p><img src="1.png" alt="1.png"></p>
-<p>首先将光线的参数化方程代入平面的隐式方程可得：</p>
+          <h1 id="Advanced-GLSL"><a href="#Advanced-GLSL" class="headerlink" title="Advanced GLSL"></a>Advanced GLSL</h1><h2 id="gl-PointSize"><a href="#gl-PointSize" class="headerlink" title="gl_PointSize"></a>gl_PointSize</h2><p>GLSL定义了一个叫做gl_PointSize输出变量，它是一个float变量，可以使用它来设置点的大小。在顶点着色器中修改点的大小的话，就可以对每个顶点设置不同的值了。<br>在顶点着色器中修改点大小的功能默认是禁用的，如果需要使用它的话，需要启用OpenGL的GL_PROGRAM_POINT_SIZE：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glEnable</span>(GL_PROGRAM_POINT_SIZE);</span><br></pre></td></tr></table></figure>
+<h2 id="gl-VertexID"><a href="#gl-VertexID" class="headerlink" title="gl_VertexID"></a>gl_VertexID</h2><p>整型变量gl_VertexID储存了正在绘制顶点的当前ID。当使用glDrawElements命令进行渲染的时候，这个变量会存储正在绘制顶点的当前索引。当使用glDrawArrays命令绘制的时候，这个变量会储存从渲染调用开始的已处理顶点数量。</p>
+<h2 id="gl-FragCoord"><a href="#gl-FragCoord" class="headerlink" title="gl_FragCoord"></a>gl_FragCoord</h2><p>gl_FragCoord的x和y分量是片段的屏幕坐标，其原点为窗口的左下角.z分量等于对应片段的深度值.</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;             </span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">gl_FragCoord</span>.x &lt; <span class="number">400</span>)</span><br><span class="line">        FragColor = <span class="type">vec4</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        FragColor = <span class="type">vec4</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/07/06/Computer-Graphic08-%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/#more" rel="contents">
+              <a class="btn" href="/2025/11/05/RealTime-Rendering14-Advanced-GLSL/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -312,7 +320,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2024/07/06/Computer-Graphic09-%E9%A2%9C%E8%89%B2/">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/11/03/RealTime-Rendering13-DeferredShading/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -330,7 +338,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/07/06/Computer-Graphic09-%E9%A2%9C%E8%89%B2/" class="post-title-link" itemprop="url">Computer-Graphic09-颜色</a>
+          <a href="/2025/11/03/RealTime-Rendering13-DeferredShading/" class="post-title-link" itemprop="url">RealTime-Rendering13-DeferredShading</a>
         </h2>
 
         <div class="post-meta-container">
@@ -341,14 +349,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-07-06 11:18:00" itemprop="dateCreated datePublished" datetime="2024-07-06T11:18:00+08:00">2024-07-06</time>
+      <time title="创建时间：2025-11-03 08:10:00" itemprop="dateCreated datePublished" datetime="2025-11-03T08:10:00+08:00">2025-11-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-07-20 01:45:42" itemprop="dateModified" datetime="2024-07-20T01:45:42+08:00">2024-07-20</time>
+      <time title="修改时间：2026-03-21 11:55:33" itemprop="dateModified" datetime="2026-03-21T11:55:33+08:00">2026-03-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -360,7 +368,11 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
         </span>
     </span>
 
@@ -371,360 +383,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h1><h2 id="颜色是什么"><a href="#颜色是什么" class="headerlink" title="颜色是什么"></a>颜色是什么</h2><p><strong><strong>光线就是震荡的电磁场, 颜色就是频率</strong></strong></p>
-<p><img src="01.jpg" alt="01.png"></p>
-<p>电磁场震荡的频率决定了光线的颜色.</p>
-<p>那么光线的波长和频率之间有什么关系呢?</p>
-<p>波长和频率其实本质上表征的是一件事情, 但是使用了不同的方式来表达而已.</p>
-<p>$wavelength = 1 / frequency$</p>
-<p>$frequency = 1 / wavelength$</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/07/06/Computer-Graphic09-%E9%A2%9C%E8%89%B2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/10/05/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%B8%89-Rasterize-%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/05/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%B8%89-Rasterize-%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2/" class="post-title-link" itemprop="url">从零实现软渲染(三)：Rasterize/绘制三角形</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-05 09:25:07" itemprop="dateCreated datePublished" datetime="2023-10-05T09:25:07+08:00">2023-10-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-01 17:40:55" itemprop="dateModified" datetime="2024-05-01T17:40:55+08:00">2024-05-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/Soft-Renderer/" itemprop="url" rel="index"><span itemprop="name">Soft Renderer</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="从零实现软渲染-三-：Rasterize-绘制三角形"><a href="#从零实现软渲染-三-：Rasterize-绘制三角形" class="headerlink" title="从零实现软渲染(三)：Rasterize/绘制三角形"></a>从零实现软渲染(三)：Rasterize/绘制三角形</h1><p>在上一篇文章《窗口系统/viewport》中，通过SDL库我们搭建了一个简易的窗口系统，并通过SDL内置API在屏幕中心绘制了一个矩形来测试RenderLoop。<br>本章我们将实现自己的渲染器，用它绘制一个三角形。但在开始前，让我们先回顾下渲染的核心概念。</p>
-<p>渲染器有两个核心任务：解决<strong><em>可见性</em></strong>和<strong><em>着色</em></strong>。解决可见性通常有两种方式：<strong><em>光栅化</em></strong>和<strong><em>光追</em></strong>。这两种常用的算法用于解决渲染中的可见性问题, 即找到哪些物体在相机下的视口是可见的.<br></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/05/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%B8%89-Rasterize-%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/10/03/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%BA%8C-%EF%BC%9A%E7%AA%97%E5%8F%A3%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/03/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%BA%8C-%EF%BC%9A%E7%AA%97%E5%8F%A3%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">从零实现软渲染(二)：窗口系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-03 20:25:07" itemprop="dateCreated datePublished" datetime="2023-10-03T20:25:07+08:00">2023-10-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-01 10:22:33" itemprop="dateModified" datetime="2024-05-01T10:22:33+08:00">2024-05-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/Soft-Renderer/" itemprop="url" rel="index"><span itemprop="name">Soft Renderer</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="后续文章发布计划"><a href="#后续文章发布计划" class="headerlink" title="后续文章发布计划"></a>后续文章发布计划</h1><p>在正式开始本章内容之前，我对专栏后续的更新计划/大纲做了详细梳理，大家可以对整体框架结构及涉及到的知识点有个初步的认识。</p>
-<p>在后续的文章更新过程中会基本按照上图框架的内容和顺序逐步展开深入，每一个大的分类代表了渲染系统中的一个组件，正常情况下会做为一篇单独的文章出现，内容过多会拆分为上下两篇（PBR…），另外相对较难或者比较重要的知识点会单独拉出来做为一个专项，预计总共会更新25篇文章左右，从易到难，由浅入深实现整个渲染系统。本系列不涉及图形API，但是shader抽象类会模仿GLSL语言规范的写法和命名方式，使大家有更强的代入感。那么废话不多说，接下来我们正式开始本篇文章的第一个主题：窗口系统的构建。<br></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/03/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%BA%8C-%EF%BC%9A%E7%AA%97%E5%8F%A3%E7%B3%BB%E7%BB%9F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/10/01/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%B8%80-%EF%BC%9A%E5%BA%8F%E7%AB%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/01/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%B8%80-%EF%BC%9A%E5%BA%8F%E7%AB%A0/" class="post-title-link" itemprop="url">从零实现软渲染(一)：序章</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-10-01 17:52:04" itemprop="dateCreated datePublished" datetime="2023-10-01T17:52:04+08:00">2023-10-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-01 10:20:04" itemprop="dateModified" datetime="2024-05-01T10:20:04+08:00">2024-05-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/Soft-Renderer/" itemprop="url" rel="index"><span itemprop="name">Soft Renderer</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>864</span>
+      <span>790</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -742,580 +401,1008 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="何为软渲染-为什么要学习它"><a href="#何为软渲染-为什么要学习它" class="headerlink" title="何为软渲染,为什么要学习它"></a>何为软渲染,为什么要学习它</h1><p>本系列文章将会从零手实现一个mini软渲染器(光栅化), 何谓软渲染? 我们为什么需要学习它? 我们知道复杂的图形渲染一般都是由GPU来处理的,所谓软渲染就是用CPU来模拟GPU的行为,在CPU端完全实现图形的绘制, 这其中包含一系列复杂微妙的过程,但整体上可以将其划分为两个大的模块: <strong>可见性和着色</strong>,这其中又包含若干细节:</p>
-<p><strong>可见性:</strong></p>
+          <h1 id="Deferred-Shading"><a href="#Deferred-Shading" class="headerlink" title="Deferred Shading"></a>Deferred Shading</h1><h2 id="Combining-deferred-rendering-with-forward-rendering"><a href="#Combining-deferred-rendering-with-forward-rendering" class="headerlink" title="Combining deferred rendering with forward rendering"></a>Combining deferred rendering with forward rendering</h2><ol>
+<li>延迟渲染 GBufferPass + lightingPass</li>
+<li>2.将zBuffer通过blitFrameBuffer拷贝到新的FBO</li>
+<li>基于deferred Shading生成的zBuffer执行前向渲染</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">GBufferPass</span>();</span><br><span class="line"><span class="built_in">LightingPass</span>();</span><br><span class="line"><span class="built_in">glBindFramebuffer</span>(GL_READ_FRAMEBUFFER, gBuffer);</span><br><span class="line"><span class="built_in">glBindFramebuffer</span>(GL_DRAW_FRAMEBUFFER, <span class="number">0</span>); <span class="comment">// write to default framebuffer</span></span><br><span class="line"><span class="built_in">glBlitFramebuffer</span>(</span><br><span class="line">    <span class="number">0</span>, <span class="number">0</span>, SCR_WIDTH, SCR_HEIGHT, <span class="number">0</span>, <span class="number">0</span>, SCR_WIDTH, SCR_HEIGHT, GL_DEPTH_BUFFER_BIT, GL_NEAREST</span><br><span class="line">    );</span><br><span class="line"><span class="built_in">glBindFramebuffer</span>(GL_FRAMEBUFFER, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">ForwardRenderingPass</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="A-larger-number-of-lights"><a href="#A-larger-number-of-lights" class="headerlink" title="A larger number of lights"></a>A larger number of lights</h2><p>通常情况下，当我们渲染一个复杂光照场景下的片段着色器时，我们会计算场景中每一个光源的贡献，不管它们离这个片段有多远。很大一部分的光源根本就不会到达这个片段，所以为什么我们还要浪费这么多光照运算呢？<br>隐藏在光体积背后的核心思想就是计算光源的半径，或是体积，也就是光能够到达片段的范围。由于大部分光源都使用了某种形式的衰减(Attenuation)，我们可以用它来计算光源能够到达的最远距离，或者说是半径。接下来只需要对那些在一个或多个光体积内的片段进行繁重的光照运算就行了。这可以给我们省下来很可观的计算量，因为我们现在只在需要的情况下计算光照。<br>这个方法的难点就是需要计算出一个光源光体积的大小，或者是半径。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> constant  = <span class="number">1.0</span>; </span><br><span class="line"><span class="type">float</span> linear    = <span class="number">0.7</span>;</span><br><span class="line"><span class="type">float</span> quadratic = <span class="number">1.8</span>;</span><br><span class="line"><span class="type">float</span> lightMax  = std::<span class="built_in">fmaxf</span>(std::<span class="built_in">fmaxf</span>(lightColor.r, lightColor.g), lightColor.b);</span><br><span class="line"><span class="type">float</span> radius    = </span><br><span class="line">  (-linear +  std::<span class="built_in">sqrtf</span>(linear * linear - <span class="number">4</span> * quadratic * (constant - (<span class="number">256.0</span> / <span class="number">5.0</span>) * lightMax))) </span><br><span class="line">  / (<span class="number">2</span> * quadratic); </span><br></pre></td></tr></table></figure>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">struct Light &#123;</span><br><span class="line">    [...]</span><br><span class="line">    <span class="type">float</span> Radius;</span><br><span class="line">&#125;; </span><br><span class="line">  </span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    [...]</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; NR_LIGHTS; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// calculate distance between light source and current fragment</span></span><br><span class="line">        <span class="type">float</span> <span class="built_in">distance</span> = <span class="built_in">length</span>(lights[i].Position - FragPos);</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">distance</span> &lt; lights[i].Radius)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// do expensive lighting</span></span><br><span class="line">            [...]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面那个片段着色器在实际情况下不能真正地工作，并且它只演示了我们可以不知怎样能使用光体积减少光照运算。然而事实上，你的GPU和GLSL并不擅长优化循环和分支。这一缺陷的原因是GPU中着色器的运行是高度并行的，大部分的架构要求对于一个大的线程集合，GPU需要对它运行完全一样的着色器代码从而获得高效率。这通常意味着一个着色器运行时总是执行一个if语句所有的分支从而保证着色器运行都是一样的，这使得我们之前的半径检测优化完全变得无用，我们仍然在对所有光源计算光照！<br>使用光体积更好的方法是渲染一个实际的球体，并根据光体积的半径缩放。这些球的中心放置在光源的位置，由于它是根据光体积半径缩放的，这个球体正好覆盖了光的可视体积。这就是我们的技巧：我们使用大体相同的延迟片段着色器来渲染球体。因为球体产生了完全匹配于受影响像素的着色器调用，我们只渲染了受影响的像素而跳过其它的像素。下面这幅图展示了这一技巧：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/03/RealTime-Rendering13-DeferredShading/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/10/20/RealTime-Rendering12-AABB-Plane-intersection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/10/20/RealTime-Rendering12-AABB-Plane-intersection/" class="post-title-link" itemprop="url">RealTime-Rendering12-AABB Plane intersection</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-10-20 19:10:00" itemprop="dateCreated datePublished" datetime="2025-10-20T19:10:00+08:00">2025-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 11:15:10" itemprop="dateModified" datetime="2026-03-21T11:15:10+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/intersectionTest/" itemprop="url" rel="index"><span itemprop="name">intersectionTest</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>450</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="AABB-Plane-intersection"><a href="#AABB-Plane-intersection" class="headerlink" title="AABB Plane intersection"></a>AABB Plane intersection</h1><p>核心判定逻辑：计算AABB中心到平面的有符号距离（signed distance），并与AABB在平面法线方向上的投影半径（projection interval radius）进行比较。</p>
+<p><strong>平面由法向量n和到原点的距离d定义：</strong></p>
+<p>$x\cdot \vec{n} = d$</p>
+<p><strong>AABB由最小角点 min 和最大角点 max 定义，可以将其转换为中心-半边长（center-extents）表示：</strong></p>
+<p>中心点：$c = (min + max) / 2$</p>
+<p>正半边长：$e = max - c$</p>
+<p><strong>投影半径计算：</strong></p>
+<p>AABB在平面法线n方向上的投影半径r为各轴向半边长在法线方向上的绝对值之和，这实际上是AABB在法线方向上的最大”半径”——从中心到最远顶点的投影距离，<strong>直观理解可以表示为AABB在法线方向投影的覆盖范围</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/10/20/RealTime-Rendering12-AABB-Plane-intersection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/10/20/RealTime-Rendering15-GPU-Culling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/10/20/RealTime-Rendering15-GPU-Culling/" class="post-title-link" itemprop="url">RealTime-Rendering15-GPU Culling</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-10-20 19:10:00" itemprop="dateCreated datePublished" datetime="2025-10-20T19:10:00+08:00">2025-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 14:30:59" itemprop="dateModified" datetime="2026-03-21T14:30:59+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="GPU-Culling"><a href="#GPU-Culling" class="headerlink" title="GPU Culling"></a>GPU Culling</h1><p>基于computeShader实现GPU的视锥剔除和遮挡剔除.</p>
+<h2 id="frustumCulling"><a href="#frustumCulling" class="headerlink" title="frustumCulling"></a>frustumCulling</h2><p>GPU提出的第一步先判断包围盒是否完全位于视锥体外部，需要构造frustum的六个平面以及场景包围盒，循环frustum的6个面分别与包围盒求交，如果包围盒在任意一个平面的外部，则直接剔除。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> frustumCulling(<span class="type">mat4</span> mvp, BoundingBox bbox)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">vec3</span> center = (bbox.<span class="built_in">min</span>.xyz + bbox.<span class="built_in">max</span>.xyz) * <span class="number">0</span>,<span class="number">5</span>;</span><br><span class="line">  <span class="type">vec3</span> extents = bbox.<span class="built_in">max</span>.xyz - center;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="type">vec3</span> normal = frustumPlanes[i].xyz;</span><br><span class="line">    <span class="type">float</span> d = frustumPlanes[i].w;</span><br><span class="line">    <span class="type">float</span> radius = <span class="built_in">dot</span>(extents, <span class="built_in">abs</span>(normal));</span><br><span class="line">    <span class="type">float</span> <span class="built_in">distance</span> = <span class="built_in">dot</span>(center, normal) + d;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">distance</span> &lt; -radius)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="extract-Planes-From-Matrix"><a href="#extract-Planes-From-Matrix" class="headerlink" title="extract Planes From Matrix"></a>extract Planes From Matrix</h3><p>而要获取构成frustum的六个面, 首先需要从viewprojection矩阵中提取这六个面.假设世界空间的某个向量$\vec{v} = (x,y,z,w)$, 矩阵$M = m_{ij}$是viewProjectionMatrix，使用$M$变换$\vec{v}$可以表示为矩阵和向量的乘法：</p>
+<p><img src="01.png" alt="01.png"></p>
+<p>其中 • 表示向量的点乘，$Row_i=(m_{i1},m_{i2}, m_{i3}, m_{i4})$表示矩阵$M$的第$i$行。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/10/20/RealTime-Rendering15-GPU-Culling/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/09/11/RealTime-Rendering11-Gaussian-Blur/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/09/11/RealTime-Rendering11-Gaussian-Blur/" class="post-title-link" itemprop="url">RealTime-Rendering11-Gaussian Blur</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-09-11 20:30:00" itemprop="dateCreated datePublished" datetime="2025-09-11T20:30:00+08:00">2025-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 18:06:42" itemprop="dateModified" datetime="2026-03-21T18:06:42+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Gaussian-Blur"><a href="#Gaussian-Blur" class="headerlink" title="Gaussian Blur"></a>Gaussian Blur</h1><h2 id="Gaussian-Function"><a href="#Gaussian-Function" class="headerlink" title="Gaussian Function"></a>Gaussian Function</h2><p>高斯函数（或正态分布函数）在各个领域中被广泛应用。标准差 σ 决定了数据在均值周围的分散程度。较大的标准差会使数据分布得更分散。（体现在高斯模糊上就是图片会变的更糊）</p>
+<p><img src="01.png" alt="01.png"></p>
+<p>高斯函数的函数图像类似钟形如下图所示：</p>
+<p><img src="02.png" alt="02.png"></p>
+<h2 id="In-Compute-Grahpic"><a href="#In-Compute-Grahpic" class="headerlink" title="In Compute Grahpic"></a>In Compute Grahpic</h2><p>在图像处理中，高斯函数通过与输入图像和高斯滤波器（核）进行二维卷积，用于平滑或模糊输入图像，或从源图像中去除噪声。在计算机图形学中，高斯模糊用于柔化阴影贴图的硬边缘，或创建泛光（bloom）效果。</p>
+<p><img src="03.png" alt="03.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/09/11/RealTime-Rendering11-Gaussian-Blur/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/09/10/RealTime-Rendering10-Gamma-Correction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/09/10/RealTime-Rendering10-Gamma-Correction/" class="post-title-link" itemprop="url">RealTime-Rendering10-Gamma Correction</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-09-10 16:30:00" itemprop="dateCreated datePublished" datetime="2025-09-10T16:30:00+08:00">2025-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 02:30:18" itemprop="dateModified" datetime="2026-03-21T02:30:18+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Gamma-Correction"><a href="#Gamma-Correction" class="headerlink" title="Gamma Correction"></a>Gamma Correction</h1><h2 id="人类视觉与物理亮度"><a href="#人类视觉与物理亮度" class="headerlink" title="人类视觉与物理亮度"></a>人类视觉与物理亮度</h2><p>人类的眼睛对暗部变化更敏感，对亮部变化较迟钝。显示器利用这一特性，在有限的位深（通常是 8 位）下，将更多精度分配给暗部，从而在视觉上提供更均匀的亮度分布。</p>
+<h2 id="显示器的非线性"><a href="#显示器的非线性" class="headerlink" title="显示器的非线性"></a>显示器的非线性</h2><p>CRT 显示器（以及现代 LCD 模拟其行为）具有非线性响应。这种非线性特性实际上与人类视觉系统相匹配。输入电压与输出亮度之间的关系大致为：</p>
+<p><img src="01.png" alt="01.png"></p>
+<p>其中 γ≈2.2。这意味着如果我们在帧缓冲区中存储线性光照值，显示器会错误地显示它们，使暗部变得更暗。</p>
+<p><img src="02.png" alt="02.png"></p>
+<p><strong>显示器的伽马响应曲线。横轴是输入信号，纵轴是输出亮度。注意曲线在暗部更为陡峭。</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/09/10/RealTime-Rendering10-Gamma-Correction/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/08/20/RealTime-Rendering09-SSAO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/20/RealTime-Rendering09-SSAO/" class="post-title-link" itemprop="url">RealTime-Rendering09-SSAO</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-08-20 16:30:00" itemprop="dateCreated datePublished" datetime="2025-08-20T16:30:00+08:00">2025-08-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 11:17:38" itemprop="dateModified" datetime="2026-03-21T11:17:38+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Algorithm/ScreenSpace-Algorithm/" itemprop="url" rel="index"><span itemprop="name">ScreenSpace Algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="SSAO"><a href="#SSAO" class="headerlink" title="SSAO"></a>SSAO</h1><h2 id="G-Buffer"><a href="#G-Buffer" class="headerlink" title="G-Buffer"></a>G-Buffer</h2><p><img src="01.png" alt="01.png"></p>
+<h2 id="Normal-oriented-Hemisphere"><a href="#Normal-oriented-Hemisphere" class="headerlink" title="Normal-oriented Hemisphere"></a>Normal-oriented Hemisphere</h2><p>我们需要沿着表面法线方向生成大量的样本。由于对每个表面法线方向生成采样核心非常困难，也不合实际，一个可行的方案是先在切线空间(Tangent Space)内生成采样核心，法向量将指向正z方向。然后在采样时通过TBN矩阵将样本转换到世界空间。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::uniform_real_distribution&lt;GLfloat&gt; <span class="title">randomFloats</span><span class="params">(<span class="number">0.0</span>, <span class="number">1.0</span>)</span></span>; <span class="comment">// 随机浮点数，范围0.0 - 1.0</span></span><br><span class="line">std::default_random_engine generator;</span><br><span class="line">std::vector&lt;glm::vec3&gt; ssaoKernel;</span><br><span class="line"><span class="keyword">for</span> (GLuint i = <span class="number">0</span>; i &lt; <span class="number">64</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function">glm::vec3 <span class="title">sample</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        randomFloats(generator) * <span class="number">2.0</span> - <span class="number">1.0</span>, </span></span></span><br><span class="line"><span class="params"><span class="function">        randomFloats(generator) * <span class="number">2.0</span> - <span class="number">1.0</span>, </span></span></span><br><span class="line"><span class="params"><span class="function">        randomFloats(generator)</span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br><span class="line">    sample = glm::<span class="built_in">normalize</span>(sample);</span><br><span class="line">    sample *= <span class="built_in">randomFloats</span>(generator);</span><br><span class="line">    GLfloat scale = <span class="built_in">GLfloat</span>(i) / <span class="number">64.0</span>; </span><br><span class="line">    ssaoKernel.<span class="built_in">push_back</span>(sample);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在切线空间中以-1.0到1.0为范围变换x和y方向，并以0.0和1.0为范围变换样本的z方向(如果以-1.0到1.0为范围，采样核心就变成球型了)。由于采样核心将会沿着表面法线对齐，所得的样本矢量将会在半球里。<br>目前，所有的样本都是平均分布在采样核心里的，但是我们更希望将更多的采样放在靠近真正片段的遮蔽上，也就是将核心样本靠近原点分布。我们可以用一个加速插值函数实现它：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scale = <span class="built_in">lerp</span>(<span class="number">0.1f</span>, <span class="number">1.0f</span>, scale * scale);</span><br><span class="line">sample *= scale;</span><br><span class="line">ssaoKernel.<span class="built_in">push_back</span>(sample);  </span><br></pre></td></tr></table></figure>
+<p><img src="02.png" alt="02.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/08/20/RealTime-Rendering09-SSAO/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/06/20/RealTime-Rendering08-Instance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/06/20/RealTime-Rendering08-Instance/" class="post-title-link" itemprop="url">RealTime-Rendering08-Instance</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-06-20 09:36:52" itemprop="dateCreated datePublished" datetime="2025-06-20T09:36:52+08:00">2025-06-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-17 20:42:45" itemprop="dateModified" datetime="2026-03-17T20:42:45+08:00">2026-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Performance/" itemprop="url" rel="index"><span itemprop="name">Performance</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>750</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Instance"><a href="#Instance" class="headerlink" title="Instance"></a>Instance</h1><p>实例化这项技术能够让我们通过依次drawcall来绘制多个物体，来节省每次绘制物体时CPU -&gt; GPU的通信开销，它只需要一次drwacall即可。使用实例化渲染，只需要将glDrawArrays和glDrawElements的渲染调用分别改为glDrawArraysInstanced和glDrawElementsInstanced就可以了。这些渲染函数的实例化版本需要一个额外的参数，即绘制的实例数量(Instance Count)，它能够设置需要渲染的实例个数。这样只需要将必须的数据发送到GPU一次，然后使用一次drawcall用告诉GPU它应该如何绘制这些实例。GPU将会直接渲染这些实例，而不用频繁与CPU进行通信。</p>
+<h2 id="实例化对象属性传递的两种方式"><a href="#实例化对象属性传递的两种方式" class="headerlink" title="实例化对象属性传递的两种方式"></a>实例化对象属性传递的两种方式</h2><h3 id="UBO-or-SSBO"><a href="#UBO-or-SSBO" class="headerlink" title="UBO or SSBO"></a>UBO or SSBO</h3><p>在使用实例化渲染调用时，gl_InstanceID会从0开始，在每个实例被渲染时递增1。比如说正在渲染的第43个实例，那么顶点着色器中它的gl_InstanceID将会是42。因为每个实例都有唯一的ID，我们可以建立一个数组，将ID与位置值对应起来，将每个实例放置在世界的不同位置。</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 460 core</span></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">in</span> <span class="type">vec2</span> aPos;</span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">1</span>) <span class="keyword">in</span> <span class="type">vec3</span> aColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec3</span> fColor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec2</span> offsets[<span class="number">100</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">vec2</span> <span class="keyword">offset</span> = offsets[<span class="built_in">gl_InstanceID</span>];</span><br><span class="line">    <span class="built_in">gl_Position</span> = <span class="type">vec4</span>(aPos + <span class="keyword">offset</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">    fColor = aColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将实例属性统一写入UBO, 然后shader中通过gl_InstanceID来访问各自实例属性.</p>
+<h3 id="InstancedArray"><a href="#InstancedArray" class="headerlink" title="InstancedArray"></a>InstancedArray</h3><p>InstancedArray是将实例属性做为顶点属性基于inputAssembly的方式输入给顶点着色器.<br>使用顶点属性时，顶点着色器的每次运行都会让GLSL获取新一组适用于当前顶点的属性。而将顶点属性定义为一个InstancedArray时，顶点着色器就只需要对每个实例而不是每个顶点更新顶点属性的内容了。这允许逐顶点的数据使用普通的顶点属性，而对逐实例的数据使用实例化数组。这就要求我们对不同类型的顶点属性区分更新频率.openGL中提供了一个函数glVertexAttribDivisor。这个函数告诉了OpenGL该什么时候更新顶点属性的内容至新一组数据。它的第一个参数是需要的顶点属性，第二个参数是属性除数(Attribute Divisor)。默认情况下，属性除数是0，告诉OpenGL我们需要在顶点着色器的每次迭代时更新顶点属性。将它设置为1时，我们告诉OpenGL我们希望在渲染一个新实例的时候更新顶点属性。而设置为2时，我们希望每2个实例更新一次属性，以此类推。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/06/20/RealTime-Rendering08-Instance/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/05/17/RealTime-Rendering07-MSAA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/05/17/RealTime-Rendering07-MSAA/" class="post-title-link" itemprop="url">RealTime-Rendering07-MSAA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-05-17 20:08:55" itemprop="dateCreated datePublished" datetime="2025-05-17T20:08:55+08:00">2025-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 11:17:31" itemprop="dateModified" datetime="2026-03-21T11:17:31+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Anti-Aliasing/" itemprop="url" rel="index"><span itemprop="name">Anti Aliasing</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="MSAA"><a href="#MSAA" class="headerlink" title="MSAA"></a>MSAA</h1><p>现代GPU具备通过光栅化硬件渲染点、线和三角形图元的能力。GPU上的光栅化管线以被渲染图元的顶点作为输入，其中顶点位置由某个投影矩阵变换后产生的齐次裁剪空间坐标提供。这些位置用于确定当前渲染目标中三角形可见的像素集合。这个可见集合由两个因素决定：覆盖（coverage）和遮挡（occlusion）。覆盖通过执行某种测试来确定图元是否与给定像素重叠。在GPU中，覆盖率的计算是通过测试图元是否与位于每个像素精确中心的单个采样点重叠来实现的。<br>遮挡（Occlusion）用于判断被某个图元覆盖的像素是否同时被其他三角形覆盖，在GPU中通过ZBuffer来处理。ZBuffer存储了每个像素位置上相对于摄像机最近的图元深度值。当图元被光栅化时，其插值后的深度值会与深度缓冲中的数值进行比较，以确定该像素是否被遮挡。如果深度测试通过，深度缓冲中对应像素的值就会更新为新的最近深度值。关于深度测试需要注意的一点是，虽然它通常被描述为发生在像素着色之后，但几乎所有现代硬件都支持在着色之前执行某种形式的深度测试。这是一种优化手段，使得被遮挡的像素可以跳过像素着色。GPU仍然支持在像素着色之后执行深度测试，以便处理某些提前深度测试会产生错误结果的情况。其中一种情况是像素着色器手动指定深度值，因为此时图元的深度在像素着色器运行之前是未知的。<br>覆盖和遮挡共同决定了图元的可见性。由于可见性可以定义为X和Y的二维函数，我们可以将其视为一种信号，并使用信号处理领域的概念来描述其行为。例如，由于覆盖测试和深度测试是在渲染目标的每个像素位置上执行的，因此可见性的采样率由该渲染目标的X和Y分辨率决定。我们还应注意到，三角形和线具有不连续性，这意味着该信号不是带限的，因此在一般情况下，任何采样率都不足以完全避免混叠（aliasing）。<br>根本原因：像素是离散的，而几何边缘是连续的。当三角形边缘穿过像素时，像素要么完全着色，要么完全不着色，导致阶梯状锯齿（Jaggies）。几何边缘产生的锯齿状本质原因是采样率不足导致的.</p>
+<h2 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h2><p>是位于管线中最终处理过顶点的着色器之后到片段着色器之前所经过的所有的算法与过程的总和。光栅化会将一个图元的所有顶点作为输入，并将它转换为一系列的片段。顶点坐标理论上可以取任意值，但片段不行，因为它们受限于你窗口的分辨率。顶点坐标与片段之间几乎永远也不会有一对一的映射，所以光栅化必须以某种方式来决定每个顶点最终所在的片段/屏幕坐标。</p>
+<p><img src="01.png" alt="01.png"></p>
+<p>这里我们可以看到一个屏幕像素的网格，每个像素的中心包含有一个采样点(Sample Point)，它会被用来决定这个三角形是否遮盖了某个像素。图中红色的采样点被三角形所遮盖，在每一个遮住的像素处都会生成一个片段。虽然三角形边缘的一些部分也遮住了某些屏幕像素，但是这些像素的采样点并没有被三角形内部所遮盖，所以它们不会受到片段着色器的影响。<br>你现在可能已经清楚走样的原因了。完整渲染后的三角形在屏幕上会是这样的：</p>
+<p><img src="02.png" alt="02.png"></p>
+<p>由于屏幕像素总量的限制，有些边缘的像素能够被渲染出来，而有些则不会。结果就是我们使用了不光滑的边缘来渲染图元，导致之前讨论到的锯齿边缘。</p>
+<h2 id="Basis"><a href="#Basis" class="headerlink" title="Basis"></a>Basis</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/05/17/RealTime-Rendering07-MSAA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2025/03/28/RealTime-Rendering06-mipmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/03/28/RealTime-Rendering06-mipmap/" class="post-title-link" itemprop="url">RealTime Rendering06-mipmap</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-28 20:50:00" itemprop="dateCreated datePublished" datetime="2025-03-28T20:50:00+08:00">2025-03-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-21 11:17:26" itemprop="dateModified" datetime="2026-03-21T11:17:26+08:00">2026-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/" itemprop="url" rel="index"><span itemprop="name">Realtime Rendering</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Realtime-Rendering/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>899</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="MipMap"><a href="#MipMap" class="headerlink" title="MipMap"></a>MipMap</h1><h2 id="MipMap-1"><a href="#MipMap-1" class="headerlink" title="MipMap"></a>MipMap</h2><p>Mipmap（多级渐远纹理）是一种预先计算并存储的纹理图像序列，其中每个后续图像的分辨率都是前一个的一半。Mipmap一一种快速, 近似 方形的过滤<br>为什么需要 Mipmap？<br>当纹理在远处被渲染时，多个纹素（texel）会映射到单个像素上。如果直接使用原始高分辨率纹理：</p>
 <ul>
-<li>模型变换</li>
-<li>视图变换</li>
-<li>投影变换</li>
-<li>透视除法</li>
-<li>视口变换</li>
-<li>计算三角形包围盒</li>
-<li>三角形光栅化</li>
-<li>重心坐标插值</li>
-<li>视图变换</li>
-<li>深度缓冲</li>
-<li>相机模型构建</li>
+<li>像素只采样纹理中的一个点</li>
+<li>忽略了该像素覆盖的纹理区域</li>
+<li>导致摩尔纹（Moiré patterns）和闪烁</li>
 </ul>
-<p><strong>可见性解决的问题是,对于屏幕上的任意一个像素,场景模型中的哪个片元对它是可见的.</strong> 主要通过以下几个步骤完成:<br></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储开销</td>
+<td>比原始纹理多约 33% 的内存（1 + 1/4 + 1/16 + … ≈ 1.33）</td>
+</tr>
+<tr>
+<td>采样方式</td>
+<td>根据像素在纹理空间的投影大小，选择合适的 Mipmap 层级</td>
+</tr>
+<tr>
+<td>插值</td>
+<td>可在相邻层级间进行三线性插值（Trilinear Filtering）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Mipmap-层级选择"><a href="#Mipmap-层级选择" class="headerlink" title="Mipmap 层级选择"></a>Mipmap 层级选择</h3><p>通过计算纹理坐标在屏幕空间的导数（ddx, ddy）来确定：</p>
+<p><img src="01.png" alt="01.png"></p>
+<p><img src="02.png" alt="02.png"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2023/10/01/%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E8%BD%AF%E6%B8%B2%E6%9F%93-%E4%B8%80-%EF%BC%9A%E5%BA%8F%E7%AB%A0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/" class="post-title-link" itemprop="url">Computer Graphic07-深度缓冲和透明度</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-06-02 20:18:00" itemprop="dateCreated datePublished" datetime="2023-06-02T20:18:00+08:00">2023-06-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-30 17:39:18" itemprop="dateModified" datetime="2024-04-30T17:39:18+08:00">2024-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>17 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样...)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/05/09/Computer-Graphic06-%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/09/Computer-Graphic06-%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7/" class="post-title-link" itemprop="url">Computer-Graphic06-纹理采样</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-09 20:41:56" itemprop="dateCreated datePublished" datetime="2023-05-09T20:41:56+08:00">2023-05-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-30 17:41:01" itemprop="dateModified" datetime="2024-04-30T17:41:01+08:00">2024-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>顶点插值属性不仅仅是颜色值，而是某种可以进行纹理映射的纹理坐标，那么什么是纹理映射？纹理映射一个很好的类比就是包装一份礼物，我有一些彩纸，上面绘制了一些有趣的图案，还有一个平平无奇的立方体，只是一个扁平的盒子，我想把这个有趣的图案放在盒子上，该怎么做呢？把纸包裹在盒子上就行了，这本质上就是纹理映射，将二维图像包裹在三维表面上的方法。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/09/Computer-Graphic06-%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/05/07/Computer-Graphic05-mvp%E5%8F%98%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/07/Computer-Graphic05-mvp%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">Computer-Graphic05-mvp变换</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-07 10:00:00" itemprop="dateCreated datePublished" datetime="2023-05-07T10:00:00+08:00">2023-05-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-30 17:44:00" itemprop="dateModified" datetime="2024-04-30T17:44:00+08:00">2024-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>12 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>mvp空间变换:世界空间 -> 相机空间，相机空间 -> NDC空间，NDC空间 -> 屏幕空间</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/07/Computer-Graphic05-mvp%E5%8F%98%E6%8D%A2/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/05/06/Computer-Graphic04-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/06/Computer-Graphic04-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8B/" class="post-title-link" itemprop="url">Computer Graphic04-空间变换-下</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-06 12:00:57" itemprop="dateCreated datePublished" datetime="2023-05-06T12:00:57+08:00">2023-05-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-30 17:44:31" itemprop="dateModified" datetime="2024-04-30T17:44:31+08:00">2024-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>上一篇文章中介绍了旋转和反射变换,这章我们开始介绍剩下几种变换:缩放/平移/错切。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/06/Computer-Graphic04-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8B/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/" class="post-title-link" itemprop="url">Computer Graphic03-空间变换-上</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-03 12:00:57" itemprop="dateCreated datePublished" datetime="2023-05-03T12:00:57+08:00">2023-05-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-30 17:44:47" itemprop="dateModified" datetime="2024-04-30T17:44:47+08:00">2024-04-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本章将开始学习空间变换,空间变换在图形学中有非常广泛的应用,对于深入了解图形学底层有重要意义,特别在光栅化渲染管线中, 我们知道最初输入的顶点坐标都是在对象局部空间的($Local Space$), 需要经过一系列的变换将对象从局部空间变换到世界空间(物体摆放在场景的哪里,物体的相对位置关系),接下来再变换到相机空间(即我们观看的视角,就像拿个相机拍照一样,我们是从哪个角度对场景进行观察的),即$mvp$矩阵中的"$m(model Matrix)$和$v(view Matrix)$".这一系列操作即光栅化渲染管线的第一个阶段,也是理解光栅化背后原理的基础.本章将介绍涉及图形学的基础变换。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/03/Computer-Graphic03-%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2-%E4%B8%8A/">
+              <a class="btn" href="/2025/03/28/RealTime-Rendering06-mipmap/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1339,7 +1426,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -1362,14 +1449,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">126k</span>
+    <span title="站点总字数">138k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:37</span>
+    <span title="站点阅读时长">8:22</span>
   </span>
 </div>
 <div class="busuanzi-count">
