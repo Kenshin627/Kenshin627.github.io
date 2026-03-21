@@ -19,73 +19,73 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-corner-indicator.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.kenshin.uno","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样...)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer Graphic07-深度缓冲和透明度">
-<meta property="og:url" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/index.html">
+<meta property="og:url" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/index.html">
 <meta property="og:site_name" content="Pixel World">
 <meta property="og:description" content="截止到目前我们学习了如何将物体拜访到世界空间，如何将三维空间物体投影到二维屏幕上，以及对三角形光栅化，判断哪些像素被三角形所覆盖，接着基于重心坐标对三角形三个顶点插值得到采样点属性，拿到采样点片元的$uv$后可以对纹理采样, 这个过程涉及纹理过滤(双线性插值，最临近采样...)及$Mipmap$等，最后通过深度及透明度将这些片元混合输出到帧缓冲($FrameBuffer$)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/0.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/1.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/2.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/3.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/4.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/5.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/6.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/7.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/8.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/9.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/10.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/11.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/12.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/13.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/14.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/15.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/16.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/17.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/18.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/19.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/20.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/21.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/22.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/23.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/24.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/25.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/26.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/27.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/28.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/29.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/30.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/31.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/32.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/33.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/34.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/35.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/36.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/37.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/38.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/39.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/40.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/41.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/42.png">
-<meta property="og:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/43.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/0.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/1.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/2.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/3.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/4.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/5.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/6.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/7.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/8.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/9.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/10.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/11.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/12.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/13.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/14.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/15.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/16.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/17.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/18.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/19.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/20.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/21.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/22.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/23.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/24.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/25.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/26.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/27.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/28.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/29.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/30.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/31.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/32.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/33.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/34.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/35.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/36.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/37.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/38.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/39.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/40.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/41.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/42.png">
+<meta property="og:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/43.png">
 <meta property="article:published_time" content="2023-06-02T12:18:00.000Z">
 <meta property="article:modified_time" content="2024-04-30T09:39:18.994Z">
 <meta property="article:author" content="KenShin">
 <meta property="article:tag" content="Computer Graphic">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/0.png">
+<meta name="twitter:image" content="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/0.png">
 
 
-<link rel="canonical" href="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
+<link rel="canonical" href="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/","path":"2023/06/02/Computer-Graphic07-深度缓冲和透明度/","title":"Computer Graphic07-深度缓冲和透明度"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/","path":"2023/06/02/Computer-Graphic07-深度缓冲和透明度/","title":"Computer Graphic07-深度缓冲和透明度"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Computer Graphic07-深度缓冲和透明度 | Pixel World</title>
@@ -97,30 +97,6 @@
 
 
 
-
-  <!-- require APlayer -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-  <!-- require MetingJS -->
-  <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-  <meting-js
-    server="netease"
-    type="playlist"
-    fixed="true"
-    id="8647182734"
-    auto=""
-    mini="true"
-    autoplay="true"
-    theme=""
-    loop="all"
-    order="random"
-    preload="auto"
-    volume="0.7"
-    mutex="true"
-    list-folded="true"
-    list-max-height="340px"
-    storage-name="metingjs" >
-  </meting-js>
 
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
@@ -252,7 +228,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
+    <link itemprop="mainEntityOfPage" href="http://www.kenshin.uno/2023/06/02/Computer-Graphic07-%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2%E5%92%8C%E9%80%8F%E6%98%8E%E5%BA%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.png">
@@ -608,8 +584,6 @@
   </div>
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
-
-  <a href="https://github.com/kenshin627" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
