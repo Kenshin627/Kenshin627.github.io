@@ -1942,6 +1942,9 @@ pre code {
 .post-meta-item-icon {
   margin-right: 3px;
 }
+.post-meta-item-text {
+  display: none;
+}
 @media (max-width: 991px) {
   .post-meta-item-text {
     display: none;
@@ -2535,7 +2538,7 @@ header.header {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #634f88;
+  background: #c2f409;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
