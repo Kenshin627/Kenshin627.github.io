@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">86</span>
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -168,6 +168,258 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://www.kenshin.uno/2022/06/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">图形学的数学基础（六）：mvp变换</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-01 21:21:10" itemprop="dateCreated datePublished" datetime="2022-06-01T21:21:10+08:00">2022-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 10:02:23" itemprop="dateModified" datetime="2024-04-26T10:02:23+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="图形学的数学基础（六）：mvp变换"><a href="#图形学的数学基础（六）：mvp变换" class="headerlink" title="图形学的数学基础（六）：mvp变换"></a>图形学的数学基础（六）：mvp变换</h1><p>图形学的一个重要任务是将三维空间中的模型映射到二维平面(以像素为单位)，这是一个复杂的过程，取决于许多因素，包括但不限于相机的位置，方向，投影的类型（正交/透视），fov，和viewport宽高，对于所有复杂的矩阵变换，最好的做法是将其分解为几个更简单的矩阵乘积。大多数图形系统通过使用四个转换序列来实现mvp变换,以openGL为例：</p>
+<p><img src="1.png" alt="mvp变换"></p>
+<ol>
+<li><p><strong>worldMatrix</strong>：将视图从模型空间转换到世界空间。直白的说就是将模型摆放到世界坐标空间。这一步确立了世界空间中各模型的相对布局，摆放位置。</p>
+</li>
+<li><p><strong>viewMatrix</strong>：将视图从世界空间转换到相机空间。简单来讲就是：我们从何处，以什么样的视角观察世界。</p>
+</li>
+<li><p><strong>Projection</strong>：将视图从相机空间映射到$[-１,１]^３$，的单位立方体中，为下一步viewport变换做准备。</p>
+</li>
+<li><p><strong>viewport</strong>: 将视图从单位立方体映射到所需的屏幕空间（$screenSpace$），取决于输出图像的大小和位置。</p>
+</li>
+</ol>
+<p><img src="2.png" alt="mvp变换"></p>
+<h2 id="视图变换"><a href="#视图变换" class="headerlink" title="视图变换"></a>视图变换</h2><p>现实生活中，如果相机和所有物体一起移动（相对位置关系不变），则拍出来的照片也都是一样的。根据这个原理我们得出：将相机移动到原点，朝向-z方向，构造出一个变换矩阵$\textbf{M}_{view}$，其他物体随着相机一起移动（应用$\textbf{M}_{view}$）。即可完成viewTransform。如何构造$\textbf{M}_{view}$？将视图从世界空间转换到相机空间？首先需要定义相机参数：</p>
+<ul>
+<li>位置（eye Position）：$\mathbf{e}$</li>
+<li>观测方向（gaze Direction）：$\vec{g}$</li>
+<li>向上方向（up Direction）：$\vec{t}$</li>
+</ul>
+<p>根据这些信息，我们可以构造一个以$\mathbf{e}$为原点的uvw标准正交基。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/01/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9Amvp%E5%8F%98%E6%8D%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://www.kenshin.uno/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.png">
+      <meta itemprop="name" content="KenShin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pixel World">
+      <meta itemprop="description" content="it's better be burning out than to fade away.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Pixel World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/" class="post-title-link" itemprop="url">图形学的数学基础（五）：矩阵进阶</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-25 08:46:17" itemprop="dateCreated datePublished" datetime="2022-05-25T08:46:17+08:00">2022-05-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-26 10:02:04" itemprop="dateModified" datetime="2024-04-26T10:02:04+08:00">2024-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/" itemprop="url" rel="index"><span itemprop="name">Computer Graphic</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Graphic/Math/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">计算机图形学的数学基础</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="图形学的数学基础（五）：矩阵进阶"><a href="#图形学的数学基础（五）：矩阵进阶" class="headerlink" title="图形学的数学基础（五）：矩阵进阶"></a>图形学的数学基础（五）：矩阵进阶</h1><h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><p>对于方形矩阵，有一个特殊的标量称为矩阵的行列式（$Determinant$。方形矩阵$\textbf{M}$的行列式表示为$|\textbf{M}|$,也表示为“det M”。非方形矩阵的行列式是未定义的。</p>
+<h3 id="2-times-2-和-3-times-3-矩阵的行列式"><a href="#2-times-2-和-3-times-3-矩阵的行列式" class="headerlink" title="$2\times 2$和$3\times 3$矩阵的行列式"></a>$2\times 2$和$3\times 3$矩阵的行列式</h3><p>$2\times 2$矩阵行列式：</p>
+<p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}\\ m_{21}&amp;m_{22}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21}$</p>
+<p>$3\times 3$矩阵行列式：</p>
+<p>$\begin{vmatrix}M\end{vmatrix} = \begin{vmatrix}m_{11}&amp;m_{12}&amp;m_{13}\\ m_{21}&amp;m_{22}&amp;m_{23}\\ m_{31}&amp;m_{32}&amp;m_{33}\end{vmatrix} = m_{11}m_{22} - m_{12}m_{21} = m_{11}m_{22}m_{33} + m_{12}m_{23}m_{31} + m_{13}m_{21}m_{32} - m_{13}m_{22}m_{31} - m_{12}m_{21}m_{33} - m_{11}m_{23}m_{32} = m_{11}(m_{22}m_{33} - m_{23}m_{32}) + m_{12}(m_{23}m_{31} - m_{21}m_{33}) + m_{13}(m_{21}m_{32} - m_{22}m_{31})$</p>
+<p><img src="1.png" alt="3x3矩阵行列式"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/25/%E5%9B%BE%E5%BD%A2%E5%AD%A6%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%9B%E9%98%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -234,7 +486,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -353,7 +604,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -474,7 +724,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -598,7 +847,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -713,7 +961,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -865,7 +1112,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -985,7 +1231,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -1109,7 +1354,6 @@
     </span>
 
   
-    <span class="post-meta-break"></span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -1173,238 +1417,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://www.kenshin.uno/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/" class="post-title-link" itemprop="url">函数 图形和直线</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-03-29 08:43:19" itemprop="dateCreated datePublished" datetime="2022-03-29T08:43:19+08:00">2022-03-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-31 11:17:45" itemprop="dateModified" datetime="2022-03-31T11:17:45+08:00">2022-03-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/" itemprop="url" rel="index"><span itemprop="name">calculus</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/calculus/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>421</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="奇函数与偶函数"><a href="#奇函数与偶函数" class="headerlink" title="奇函数与偶函数"></a>奇函数与偶函数</h1><ul>
-<li>当对f定义域内所有的x都有f(-x) = -f(x)时,f是奇函数.奇函数的图像关于原点有180°的对称性.</li>
-<li>当对f定义域内所有的x都有f(-x) = f(x)时,f是偶函数,偶函数的图像关于y轴具有镜面对称性.</li>
-</ul>
-<h1 id="线性函数的图像"><a href="#线性函数的图像" class="headerlink" title="线性函数的图像"></a>线性函数的图像</h1><p>形如f(x) = mx + b的函数叫做线性函数,函数的图像为直线,斜率为m.</p>
-<p> <strong><em>点斜式</em></strong></p>
-<blockquote>
-<p>如果已知直线通过点(x0, y0),斜率为m,则它的方程为 y - y0 = m(x - x0)</p>
-<p>如果一条直线通过点 (x1, y1) 和 (x2, y2), 则它的斜率等于 (y2 − y1) / (x2 − x1)</p>
-</blockquote>
-<h1 id="常见函数及其图像"><a href="#常见函数及其图像" class="headerlink" title="常见函数及其图像"></a>常见函数及其图像</h1><h2 id="多项式"><a href="#多项式" class="headerlink" title="多项式"></a>多项式</h2><p>有许多函数是基于 x 的非负次幂建立起来的.你可以以 1、x、$x^2$、$x^3$等为基本项, 然后用实数同这些基本项做乘法, 最后把有限个这样的项加到一起.基本项 $x^n$ 的倍数叫作 $x^n$ 的系数.最大的幂指数n(该项系数不能为零) 叫作多项式的次数.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/29/%E5%87%BD%E6%95%B0-%E5%9B%BE%E5%BD%A2%E5%92%8C%E7%9B%B4%E7%BA%BF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://www.kenshin.uno/2021/11/22/Context/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.png">
-      <meta itemprop="name" content="KenShin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Pixel World">
-      <meta itemprop="description" content="it's better be burning out than to fade away.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Pixel World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/22/Context/" class="post-title-link" itemprop="url">Haskell03 - Context</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-22 11:46:20" itemprop="dateCreated datePublished" datetime="2021-11-22T11:46:20+08:00">2021-11-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2021-11-27 15:07:30" itemprop="dateModified" datetime="2021-11-27T15:07:30+08:00">2021-11-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Haskell/" itemprop="url" rel="index"><span itemprop="name">Haskell</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>510</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Functor"><a href="#Functor" class="headerlink" title="Functor"></a>Functor</h1><h2 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h2><p>This solution means that you’d have to rewrite a special version of every existing function you want to use in a Maybe! This greatly limits the usefulness of tools such as Maybe. It turns out Haskell has a type class that solves this problem, called Functor.</p>
-<h2 id="definition"><a href="#definition" class="headerlink" title="definition"></a>definition</h2><p>Maybe is a member of the Functor type class. The Functor type class requires only one definition: fmap.<br><img src="1.jpg" alt="alt"><br>_<strong>fmap provides an adapter</strong>_, Notice that we’re using &lt;$&gt;, which is a synonym for fmap (except it’s a binary operator rather than a function._<strong>This ability to transform the types of values inside a Maybe is the true power of the Functor type class.</strong>_<br><img src="2.jpg" alt="alt"></p>
-<p>Though fmap is the official function name, in practice the binary operator &lt;$&gt; is used much more frequently<br><img src="3.png" alt="alt"></p>
-<h1 id="Applicative"><a href="#Applicative" class="headerlink" title="Applicative"></a>Applicative</h1><p>_<strong>the Applicative type class allows you to use functions that are inside a context, such as Maybe or IO, Functor is a superclass of Applicative.</strong>_<br><img src="4.jpg" alt="alt"><br><img src="5.jpg" alt="alt"></p>
-<h2 id="The-pure-method"><a href="#The-pure-method" class="headerlink" title="The pure method"></a>The pure method</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/22/Context/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1428,15 +1440,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-      <span>站点总字数：</span>
-    <span title="站点总字数">138k</span>
+    <span title="站点总字数">142k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-      <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:22</span>
+    <span title="站点阅读时长">8:36</span>
   </span>
 </div>
 <div class="busuanzi-count">
